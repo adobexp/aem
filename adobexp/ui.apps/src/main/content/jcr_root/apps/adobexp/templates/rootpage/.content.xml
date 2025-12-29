@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0"
+    jcr:description="Base Template for White Label Site"
+    jcr:primaryType="cq:Template"
+    jcr:title="AdobeXP | Site Root Page"
+    allowedChildren="[/apps/adobexp/templates/localepage,/apps/adobexp/templates/directorypage]"
+    allowedPaths="[/content/(/.*)?]"
+    ranking="{Long}1">
+    <jcr:content
+        cq:designPath="/apps/settings/wcm/designs/adobexp"
+        cq:redirectTarget="https://www.adobexp.com"
+        jcr:primaryType="cq:PageContent"
+        sling:resourceType="adobexp/components/structure/rootpage"/>
+</jcr:root>

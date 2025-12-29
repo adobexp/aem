@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:description="Content Template for White Label Site"
+    jcr:primaryType="cq:Template"
+    jcr:title="AdobeXP | Content Page"
+    allowedChildren="[/apps/adobexp/templates/contentpage,/apps/adobexp/templates/directorypage,/conf/adobexp/settings/wcm/templates/.*]"
+    allowedPaths="[/content/(.*)?]"
+    ranking="{Long}3">
+    <jcr:content
+        cq:designPath="/apps/settings/wcm/designs/adobexp"
+        jcr:primaryType="cq:PageContent"
+        sling:resourceType="adobexp/components/structure/page">
+        <top
+            jcr:primaryType="nt:unstructured"
+            sling:resourceType="wcm/foundation/components/parsys"/>
+        <content
+            jcr:primaryType="nt:unstructured"
+            sling:resourceType="adobexp/components/global/container/container"/>
+        <bottom
+            jcr:primaryType="nt:unstructured"
+            sling:resourceType="wcm/foundation/components/parsys"/>
+    </jcr:content>
+</jcr:root>

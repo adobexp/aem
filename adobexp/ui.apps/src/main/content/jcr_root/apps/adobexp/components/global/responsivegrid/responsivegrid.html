@@ -1,0 +1,15 @@
+<sly data-sly-test="${wcmmode.edit}" data-sly-use.allowed="com.day.cq.wcm.foundation.model.AllowedComponents"></sly>
+
+<div data-sly-use.api="com.day.cq.wcm.foundation.model.responsivegrid.ResponsiveGrid" class="adobexp-component-container">
+    <sly data-sly-test.isAllowedApplicable="${allowed.isApplicable}"
+         data-sly-test="${isAllowedApplicable}"
+         data-sly-use.allowedTemplate="/libs/wcm/foundation/components/parsys/allowedcomponents/allowedcomponents-tpl.html"
+         data-sly-call="${allowedTemplate.allowedcomponents @ title=allowed.title, resourcesMap=allowed.resourcesMap,
+            placeholderCss=allowed.placeholderCssClass,
+            placeholderType=allowed.placeholderResourceType}"></sly>
+    <sly data-sly-test="${!isAllowedApplicable}"
+         data-sly-repeat.child="${api.paragraphs}"
+         data-sly-resource="${child.path @ resourceType=child.resourceType, decoration='true', cssClassName='adobexp-component'}"></sly>
+    <sly data-sly-test="${!isAllowedApplicable && wcmmode.edit}"
+         data-sly-resource="${resource.path @ resourceType='adobexp/components/content/responsivegrid/new', appendPath='/*', decorationTagName='div', cssClassName='new section adobexp-grid-newComponent'}"/>
+</div>

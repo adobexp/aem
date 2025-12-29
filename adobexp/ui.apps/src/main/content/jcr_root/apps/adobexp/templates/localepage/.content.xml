@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0"
+    jcr:description="Locale Template for White Label Site"
+    jcr:primaryType="cq:Template"
+    jcr:title="AdobeXP | Locale Page"
+    allowedChildren="[/apps/adobexp/templates/contentpage,/apps/adobexp/templates/directorypage,/conf/adobexp/settings/wcm/templates/.*]"
+    allowedPaths="[/content/(.*)?]"
+    ranking="{Long}2">
+    <jcr:content
+        cq:designPath="/apps/settings/wcm/designs/adobexp"
+        cq:allowedTemplates="[/conf/adobexp/settings/wcm/templates/.*,/apps/adobexp/templates/directorypage,/apps/adobexp/templates/contentpage]"
+        jcr:primaryType="cq:PageContent"
+        sling:resourceType="adobexp/components/structure/localepage"/>
+</jcr:root>
