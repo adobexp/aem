@@ -7,6 +7,21 @@
         <root
             cq:policy="adobexp/components/container/policy_adobexp_templatetypes_xf"
             jcr:primaryType="nt:unstructured"
-            sling:resourceType="wcm/core/components/policies/mapping"/>
+            sling:resourceType="wcm/core/components/policies/mapping">
+            <adobexp jcr:primaryType="nt:unstructured">
+                <components jcr:primaryType="nt:unstructured">
+                    <content jcr:primaryType="nt:unstructured">
+                        <image
+                            cq:policy="adobexp/components/content/image/policy_adobexp_cmp_image"
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="wcm/core/components/policies/mapping"/>
+                        <text
+                            cq:policy="adobexp/components/content/text/policy_adobexp_cmp_text"
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="wcm/core/components/policies/mapping"/>
+                    </content>
+                </components>
+            </adobexp>
+        </root>
     </jcr:content>
 </jcr:root>

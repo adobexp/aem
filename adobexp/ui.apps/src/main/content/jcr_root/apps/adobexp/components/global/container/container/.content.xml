@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0"
-    jcr:primaryType="cq:Component"
-    jcr:title="Container"
-    jcr:description="Standard Container Component, used to display child components and apply common style and layout on them."
-    sling:resourceSuperType="adobexp/components/global/container/v1/container"
-    componentGroup=".adobexp"/>

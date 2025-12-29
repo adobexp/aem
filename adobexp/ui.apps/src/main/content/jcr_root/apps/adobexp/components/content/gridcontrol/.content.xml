@@ -3,5 +3,5 @@
     jcr:primaryType="cq:Component"
     jcr:title="Grid Control"
     jcr:description="Grid Control Component, used to divide page in multiple columns."
-    sling:resourceSuperType="adobexp/components/global/gridcontrol/v1/gridcontrol"
-    componentGroup="Adobe XP Components - Global"/>
+    sling:resourceSuperType="adobexp/components/content/gridcontrol/v1/gridcontrol"
+    componentGroup="Adobe XP Components - Content"/>

@@ -3,7 +3,7 @@
     jcr:mixinTypes="[mix:lockable]"
     jcr:primaryType="cq:Template">
     <jcr:content
-        jcr:description="Generic template for empty experience fragments variations of My Site"
+        jcr:description="Generic template for empty experience fragments variations"
         jcr:primaryType="cq:PageContent"
-        jcr:title="ADOBE XP Components - Experience Fragment"/>
+        jcr:title="Adobe XP | Experience Fragment Page"/>
 </jcr:root>

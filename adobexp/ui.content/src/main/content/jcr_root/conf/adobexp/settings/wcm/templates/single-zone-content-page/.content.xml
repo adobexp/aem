@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0"
+    jcr:primaryType="cq:Template">
+    <jcr:content
+        cq:lastModified="{Date}2025-12-29T02:52:31.783Z"
+        cq:lastModifiedBy="admin"
+        cq:templateType="/conf/adobexp/settings/wcm/template-types/content-page"
+        jcr:description="Template provided by AdobeXP containing the header and footer powered by Experience Fragments and main zone which is empty to have any &quot;Adobe XP Components - Content&quot; category components."
+        jcr:primaryType="cq:PageContent"
+        jcr:title="AdobeXP | Single Zone Content Page"
+        status="draft"/>
+</jcr:root>
