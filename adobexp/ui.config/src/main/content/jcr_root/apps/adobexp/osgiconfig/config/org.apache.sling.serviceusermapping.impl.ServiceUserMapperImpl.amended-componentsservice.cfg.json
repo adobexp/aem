@@ -1,0 +1,6 @@
+{
+  "user.mapping": [
+    "adobexp.core:components-service=[clientlibs-service,sling-scripting]"
+  ]
+}
+
