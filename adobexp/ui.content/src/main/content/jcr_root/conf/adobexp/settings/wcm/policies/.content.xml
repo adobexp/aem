@@ -2,7 +2,6 @@
 <jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:rep="internal" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:sling="http://sling.apache.org/jcr/sling/1.0"
     jcr:mixinTypes="[rep:AccessControllable]"
     jcr:primaryType="cq:Page">
-    <rep:policy/>
     <adobexp jcr:primaryType="nt:unstructured">
         <components jcr:primaryType="nt:unstructured">
             <content jcr:primaryType="nt:unstructured">
@@ -146,8 +145,6 @@
             </content>
             <container jcr:primaryType="nt:unstructured">
                 <policy_adobexp_page_content
-                    jcr:lastModified="{Date}2025-12-29T02:47:06.756Z"
-                    jcr:lastModifiedBy="admin"
                     jcr:primaryType="nt:unstructured"
                     jcr:title="AdobeXP | Main Content Zone Policy"
                     sling:resourceType="wcm/core/components/policy/policy"
@@ -155,6 +152,14 @@
                     layoutDisabled="false">
                     <jcr:content jcr:primaryType="nt:unstructured"/>
                 </policy_adobexp_page_content>
+                <policy_adobexp_templatetypes_xf
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="AdobeXP | Template Types - XF Policy"
+                    sling:resourceType="wcm/core/components/policy/policy"
+                    components="group:Adobe XP Components - Content"
+                    layoutDisabled="false">
+                    <jcr:content jcr:primaryType="nt:unstructured"/>
+                </policy_adobexp_templatetypes_xf>
             </container>
         </components>
     </adobexp>
