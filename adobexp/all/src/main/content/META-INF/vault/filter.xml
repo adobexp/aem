@@ -16,5 +16,4 @@
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 <workspaceFilter version="1.0">
     <filter root="/apps/adobexp-packages"/>
-    <filter root="/apps/adobexp-vendor-packages"/>
 </workspaceFilter>
