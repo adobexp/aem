@@ -3,4 +3,4 @@
     jcr:primaryType="cq:Component"
     jcr:title="Adobe XP Components Page"
     sling:resourceSuperType="adobexp/components/global/pages/page/v1/page"
-    componentGroup=".hidden"/>
+    componentGroup=".adobexp"/>

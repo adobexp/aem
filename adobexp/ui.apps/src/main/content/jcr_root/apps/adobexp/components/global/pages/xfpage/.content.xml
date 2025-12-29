@@ -3,4 +3,4 @@
     jcr:primaryType="cq:Component"
     jcr:title="Adobe XP Components Experience Fragment"
     sling:resourceSuperType="cq/experience-fragments/components/xfpage"
-    componentGroup=".hidden"/>
+    componentGroup=".adobexp"/>
