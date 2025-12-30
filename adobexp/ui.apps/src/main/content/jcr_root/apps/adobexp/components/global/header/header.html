@@ -12,8 +12,10 @@
 */-->
 
 <sly data-sly-use.templates="adobexp/components/commons/v1/templates.html"/>
+<sly data-sly-use.header="com.adobexp.aem.core.components.models.HeaderModel"/>
+
 <!-- HEADER COMPONENT HTML MARKUP STARTS HERE -->
-<header data-component="header" class="header" data-sly-test="${properties.logoDarkImage || properties.logoLightImage || properties.headerTitle}">
+<header data-component="header" class="header" data-sly-test="${header.logoDarkImage || header.logoLightImage || header.headerTitle}">
     <!-- Hamburger menu toggle button -->
     <button class="header__menu-btn btn-icon-only" type="button" aria-label="Open menu">
         <svg class="header__menu-icon header__menu-icon-hamburger" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -25,22 +27,33 @@
     </button>
 
     <!-- Logo -->
-    <a href="${properties.logoLink @ context='uri'}" class="header__logo" aria-label="Home" data-sly-test="${properties.logoDarkImage || properties.logoLightImage}">
-        <img data-sly-test="${properties.logoDarkImage}" 
-            src="${properties.logoDarkImage @ context='uri'}" 
-            alt="${properties.logoDarkAlt || 'Logo'}" 
-            class="header__logo-img header__logo-img-dark"/>
-        <img data-sly-test="${properties.logoLightImage}" 
-            src="${properties.logoLightImage @ context='uri'}" 
-            alt="${properties.logoLightAlt || 'Logo'}" 
-            class="header__logo-img header__logo-img-light" 
-            style="display: none;"/>
-    </a>
+    <sly data-sly-test="${header.logoDarkImage || header.logoLightImage}">
+        <a data-sly-use.logoLinkFilter="${'adobexp/components/commons/v1/helper/checkProp.js' @ propName='link', propValue=header.logoLink}"
+            href="${logoLinkFilter.value}"
+            class="header__logo" 
+            aria-label="Home">
+            <sly data-sly-test="${header.logoDarkImage}">
+                <sly data-sly-use.darkLogoUrl="${'adobexp/components/commons/v1/helper/transformurls.js' @ internalUrl=header.logoDarkImage}">
+                    <img src="${darkLogoUrl}" 
+                        alt="${header.logoDarkAlt || 'Logo'}" 
+                        class="header__logo-img header__logo-img-dark"/>
+                </sly>
+            </sly>
+            <sly data-sly-test="${header.logoLightImage}">
+                <sly data-sly-use.lightLogoUrl="${'adobexp/components/commons/v1/helper/transformurls.js' @ internalUrl=header.logoLightImage}">
+                    <img src="${lightLogoUrl}" 
+                        alt="${header.logoLightAlt || 'Logo'}" 
+                        class="header__logo-img header__logo-img-light" 
+                        style="display: none;"/>
+                </sly>
+            </sly>
+        </a>
+    </sly>
 
     <!-- Logo Text Header Content -->
-    <div class="header__content" data-sly-test="${properties.headerTitle || properties.headerSubtitle}">
-        <p class="header__title" data-sly-test="${properties.headerTitle}">${properties.headerTitle}</p>
-        <p class="header__subtitle" data-sly-test="${properties.headerSubtitle}">${properties.headerSubtitle}</p>
+    <div class="header__content" data-sly-test="${header.headerTitle || header.headerSubtitle}">
+        <p class="header__title" data-sly-test="${header.headerTitle}">${header.headerTitle}</p>
+        <p class="header__subtitle" data-sly-test="${header.headerSubtitle}">${header.headerSubtitle}</p>
     </div>
 
     <!-- Theme Toggle Button -->
@@ -61,33 +74,45 @@
             <!-- Column 1: Accordion Menu -->
             <div class="header__overlay-column header__overlay-column--menu">
                 <nav class="header__overlay-nav" aria-label="Main navigation">
-                    <ul class="header__overlay-menu" data-sly-list.menuItem="${properties.menuItems}">
+                    <ul class="header__overlay-menu" data-sly-list.menuItem="${header.menuItems}">
                         <li class="header__overlay-menu-item">
                             <!-- Leaf Menu Option - Level 1 -->
-                            <sly data-sly-test="${menuItem.menuItemType == 'leaf'}">
-                                <a href="${menuItem.menuLink @ context='uri'}" class="header__overlay-menu-link">
+                            <sly data-sly-test="${menuItem.leaf}">
+                                <a data-sly-use.menuLinkFilter="${'adobexp/components/commons/v1/helper/checkProp.js' @ propName='link', propValue=menuItem.menuLink}"
+                                    href="${menuLinkFilter.value}" 
+                                    class="header__overlay-menu-link">
                                     <span>${menuItem.menuTitle}</span>
                                     <span class="header__overlay-link-desc" data-sly-test="${menuItem.menuDescription}">${menuItem.menuDescription}</span>
                                 </a>
                             </sly>
                             <!-- Menu Container - Level 1 -->
-                            <sly data-sly-test="${menuItem.menuItemType == 'container'}">
-                                <span class="header__overlay-menu-link">${menuItem.menuTitle}</span>
+                            <sly data-sly-test="${menuItem.container}">
+                                <span class="header__overlay-menu-link">
+                                    <span>${menuItem.menuTitle}</span>
+                                    <span class="header__overlay-link-desc" data-sly-test="${menuItem.menuDescription}">${menuItem.menuDescription}</span>
+                                </span>
                                 <ul class="header__overlay-submenu" data-sly-list.subMenuItem="${menuItem.subMenuItems}">
                                     <li class="header__overlay-submenu-item">
                                         <!-- Leaf Menu Option - Level 2 -->
-                                        <sly data-sly-test="${subMenuItem.subMenuItemType == 'leaf'}">
-                                            <a href="${subMenuItem.subMenuLink @ context='uri'}" class="header__overlay-submenu-link">
+                                        <sly data-sly-test="${subMenuItem.leaf}">
+                                            <a data-sly-use.subMenuLinkFilter="${'adobexp/components/commons/v1/helper/checkProp.js' @ propName='link', propValue=subMenuItem.subMenuLink}"
+                                                href="${subMenuLinkFilter.value}" 
+                                                class="header__overlay-submenu-link">
                                                 <span>${subMenuItem.subMenuTitle}</span>
                                                 <span class="header__overlay-link-desc" data-sly-test="${subMenuItem.subMenuDescription}">${subMenuItem.subMenuDescription}</span>
                                             </a>
                                         </sly>
                                         <!-- Menu Container - Level 2 -->
-                                        <sly data-sly-test="${subMenuItem.subMenuItemType == 'container'}">
-                                            <span class="header__overlay-submenu-link">${subMenuItem.subMenuTitle}</span>
+                                        <sly data-sly-test="${subMenuItem.container}">
+                                            <span class="header__overlay-submenu-link">
+                                                <span>${subMenuItem.subMenuTitle}</span>
+                                                <span class="header__overlay-link-desc" data-sly-test="${subMenuItem.subMenuDescription}">${subMenuItem.subMenuDescription}</span>
+                                            </span>
                                             <ul class="header__overlay-submenu header__overlay-submenu--level-3" data-sly-list.level3Item="${subMenuItem.level3MenuItems}">
                                                 <li class="header__overlay-submenu-item">
-                                                    <a href="${level3Item.level3MenuLink @ context='uri'}" class="header__overlay-submenu-link">
+                                                    <a data-sly-use.level3LinkFilter="${'adobexp/components/commons/v1/helper/checkProp.js' @ propName='link', propValue=level3Item.level3MenuLink}"
+                                                        href="${level3LinkFilter.value}" 
+                                                        class="header__overlay-submenu-link">
                                                         <span>${level3Item.level3MenuTitle}</span>
                                                         <span class="header__overlay-link-desc" data-sly-test="${level3Item.level3MenuDescription}">${level3Item.level3MenuDescription}</span>
                                                     </a>
@@ -105,12 +130,13 @@
             <!-- Column 2: Static Menu Options List -->
             <div class="header__overlay-column header__overlay-column--options">
                 <!-- Static Menu Options List -->
-                <ul class="header__overlay-options-list" data-sly-list.menuOption="${properties.menuOptions}">
+                <ul class="header__overlay-options-list" data-sly-list.menuOption="${header.menuOptions}">
                     <li class="header__overlay-option-item">
-                        <a href="${menuOption.optionLink @ context='uri'}" 
-                        class="header__overlay-option-link"
-                        target="${menuOption.optionNewTab == 'true' ? '_blank' : '_self'}"
-                        rel="${menuOption.optionNewTab == 'true' ? 'noopener noreferrer' : ''}">
+                        <a data-sly-use.optionLinkFilter="${'adobexp/components/commons/v1/helper/checkProp.js' @ propName='link', propValue=menuOption.optionLink}"
+                            href="${optionLinkFilter.value}" 
+                            class="header__overlay-option-link"
+                            target="${menuOption.optionNewTab ? '_blank' : '_self'}"
+                            rel="${menuOption.optionNewTab ? 'noopener noreferrer' : ''}">
                             <span class="header__overlay-option-title">${menuOption.optionTitle}</span>
                             <span class="header__overlay-option-subtitle" data-sly-test="${menuOption.optionDescription}">${menuOption.optionDescription}</span>
                         </a>
@@ -118,53 +144,53 @@
                 </ul>
 
                 <!-- Social Media Links -->
-                <sly data-sly-test="${properties.twitterLink || properties.facebookLink || properties.instagramLink || properties.linkedinLink || properties.pinterestLink || properties.youtubeLink}">
+                <sly data-sly-test="${header.hasSocialLinks}">
                     <div class="header__overlay-social" aria-label="Social media links">
-                        <h3 class="header__overlay-social-title">${properties.socialSectionTitle || 'Follow us'}</h3>
+                        <h3 class="header__overlay-social-title">${header.socialSectionTitle || 'Follow us'}</h3>
                         <ul class="header__overlay-social-list">
                             <!-- X (Twitter) -->
-                            <li class="header__overlay-social-item" data-sly-test="${properties.twitterLink}">
-                                <a class="header__overlay-social-link btn-icon-only" href="${properties.twitterLink @ context='uri'}" aria-label="X (formerly Twitter)" target="_blank" rel="noopener noreferrer">
+                            <li class="header__overlay-social-item" data-sly-test="${header.twitterLink}">
+                                <a class="header__overlay-social-link btn-icon-only" href="${header.twitterLink @ context='uri'}" aria-label="X (formerly Twitter)" target="_blank" rel="noopener noreferrer">
                                     <svg class="header__overlay-social-icon" viewBox="0 0 24 24" aria-hidden="true">
                                         <path fill="currentColor" d="M18.9 2H22l-6.8 7.8L23.2 22h-6.6l-5.2-7.1L5.2 22H2l7.4-8.5L1 2h6.8l4.7 6.4L18.9 2Zm-1.2 18h1.7L7.8 3.9H6L17.7 20Z"/>
                                     </svg>
                                 </a>
                             </li>
                             <!-- Facebook -->
-                            <li class="header__overlay-social-item" data-sly-test="${properties.facebookLink}">
-                                <a class="header__overlay-social-link btn-icon-only" href="${properties.facebookLink @ context='uri'}" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
+                            <li class="header__overlay-social-item" data-sly-test="${header.facebookLink}">
+                                <a class="header__overlay-social-link btn-icon-only" href="${header.facebookLink @ context='uri'}" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
                                     <svg class="header__overlay-social-icon" viewBox="0 0 24 24" aria-hidden="true">
                                         <path fill="currentColor" d="M13.5 22v-8h2.7l.4-3H13.5V9.1c0-.9.3-1.6 1.6-1.6h1.7V4.8c-.3 0-1.4-.1-2.7-.1-2.7 0-4.6 1.6-4.6 4.6V11H7v3h2.5v8h4z"/>
                                     </svg>
                                 </a>
                             </li>
                             <!-- Instagram -->
-                            <li class="header__overlay-social-item" data-sly-test="${properties.instagramLink}">
-                                <a class="header__overlay-social-link btn-icon-only" href="${properties.instagramLink @ context='uri'}" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+                            <li class="header__overlay-social-item" data-sly-test="${header.instagramLink}">
+                                <a class="header__overlay-social-link btn-icon-only" href="${header.instagramLink @ context='uri'}" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
                                     <svg class="header__overlay-social-icon" viewBox="0 0 24 24" aria-hidden="true">
                                         <path fill="currentColor" d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5Zm10 2H7a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3Zm-5 4.8A5.2 5.2 0 1 1 6.8 14 5.2 5.2 0 0 1 12 8.8Zm0 2A3.2 3.2 0 1 0 15.2 14 3.2 3.2 0 0 0 12 10.8ZM17.6 6.4a1 1 0 1 1-1 1 1 1 0 0 1 1-1Z"/>
                                     </svg>
                                 </a>
                             </li>
                             <!-- LinkedIn -->
-                            <li class="header__overlay-social-item" data-sly-test="${properties.linkedinLink}">
-                                <a class="header__overlay-social-link btn-icon-only" href="${properties.linkedinLink @ context='uri'}" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
+                            <li class="header__overlay-social-item" data-sly-test="${header.linkedinLink}">
+                                <a class="header__overlay-social-link btn-icon-only" href="${header.linkedinLink @ context='uri'}" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
                                     <svg class="header__overlay-social-icon" viewBox="0 0 24 24" aria-hidden="true">
                                         <path fill="currentColor" d="M6.5 6.8A2 2 0 1 1 6.5 3a2 2 0 0 1 0 3.8ZM5 21V9h3v12H5Zm5 0V9h2.9v1.6h.1a3.2 3.2 0 0 1 2.9-1.8c3.1 0 3.7 2 3.7 4.7V21h-3v-6.3c0-1.5 0-3.4-2.1-3.4s-2.4 1.6-2.4 3.3V21h-3Z"/>
                                     </svg>
                                 </a>
                             </li>
                             <!-- Pinterest -->
-                            <li class="header__overlay-social-item" data-sly-test="${properties.pinterestLink}">
-                                <a class="header__overlay-social-link btn-icon-only" href="${properties.pinterestLink @ context='uri'}" aria-label="Pinterest" target="_blank" rel="noopener noreferrer">
+                            <li class="header__overlay-social-item" data-sly-test="${header.pinterestLink}">
+                                <a class="header__overlay-social-link btn-icon-only" href="${header.pinterestLink @ context='uri'}" aria-label="Pinterest" target="_blank" rel="noopener noreferrer">
                                     <svg class="header__overlay-social-icon" viewBox="0 0 24 24" aria-hidden="true">
                                         <path fill="currentColor" d="M12 2a10 10 0 0 0-3.6 19.3c-.1-.8-.1-2 .1-2.9l1.3-5.3s-.3-.7-.3-1.7c0-1.6.9-2.8 2.1-2.8 1 0 1.5.7 1.5 1.6 0 1-.6 2.4-.9 3.8-.3 1.2.6 2.1 1.8 2.1 2.1 0 3.7-2.2 3.7-5.4 0-2.8-2-4.8-4.9-4.8-3.3 0-5.3 2.5-5.3 5.1 0 1 .4 2.1.9 2.7.1.1.1.3.1.4l-.3 1.3c-.1.4-.3.5-.6.3-1.2-.6-2-2.4-2-3.9 0-3.2 2.3-6.1 6.7-6.1 3.5 0 6.3 2.5 6.3 5.9 0 3.5-2.2 6.3-5.2 6.3-1 0-2-.5-2.3-1.2l-.6 2.1c-.2.9-.8 2.1-1.2 2.8A10 10 0 1 0 12 2Z"/>
                                     </svg>
                                 </a>
                             </li>
                             <!-- YouTube -->
-                            <li class="header__overlay-social-item" data-sly-test="${properties.youtubeLink}">
-                                <a class="header__overlay-social-link btn-icon-only" href="${properties.youtubeLink @ context='uri'}" aria-label="YouTube" target="_blank" rel="noopener noreferrer">
+                            <li class="header__overlay-social-item" data-sly-test="${header.youtubeLink}">
+                                <a class="header__overlay-social-link btn-icon-only" href="${header.youtubeLink @ context='uri'}" aria-label="YouTube" target="_blank" rel="noopener noreferrer">
                                     <svg class="header__overlay-social-icon" viewBox="0 0 24 24" aria-hidden="true">
                                         <path fill="currentColor" d="M21.6 7.2a2.7 2.7 0 0 0-1.9-1.9C18 4.8 12 4.8 12 4.8s-6 0-7.7.5A2.7 2.7 0 0 0 2.4 7.2 28.5 28.5 0 0 0 2 12a28.5 28.5 0 0 0 .4 4.8 2.7 2.7 0 0 0 1.9 1.9c1.7.5 7.7.5 7.7.5s6 0 7.7-.5a2.7 2.7 0 0 0 1.9-1.9A28.5 28.5 0 0 0 22 12a28.5 28.5 0 0 0-.4-4.8ZM10 15.5v-7l6 3.5-6 3.5Z"/>
                                     </svg>
@@ -178,4 +204,4 @@
     </div>
 </div>
 <!-- HEADER COMPONENT HTML MARKUP ENDS HERE -->
-<sly data-sly-call="${templates.placeholder @ isEmpty = (!properties.logoDarkImage || !properties.logoLightImage), classAppend='header'}"></sly>
+<sly data-sly-call="${templates.placeholder @ isEmpty = (!header.logoDarkImage || !header.logoLightImage), classAppend='header'}"></sly>
