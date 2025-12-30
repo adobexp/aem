@@ -156,7 +156,7 @@
                     jcr:primaryType="nt:unstructured"
                     jcr:title="AdobeXP | Template Types - XF Policy"
                     sling:resourceType="wcm/core/components/policy/policy"
-                    components="group:Adobe XP Components - Content"
+                    components="group:Adobe XP Components - Global"
                     layoutDisabled="false">
                     <jcr:content jcr:primaryType="nt:unstructured"/>
                 </policy_adobexp_templatetypes_xf>

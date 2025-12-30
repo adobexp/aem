@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="nt:unstructured"
+    jcr:title="Header"
+    sling:resourceType="cq/gui/components/authoring/dialog">
+    <content
+        jcr:primaryType="nt:unstructured"
+        sling:resourceType="granite/ui/components/coral/foundation/container">
+        <items jcr:primaryType="nt:unstructured">
+            <tabs
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="granite/ui/components/coral/foundation/tabs"
+                maximized="{Boolean}true">
+                <items jcr:primaryType="nt:unstructured">
+                    <!-- Tab 1: Logo -->
+                    <logo
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Logo"
+                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                        margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <!-- Dark Theme Logo -->
+                                            <logoDarkImage
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                                                fieldLabel="Dark Theme Logo"
+                                                fieldDescription="Select logo image for dark theme from DAM"
+                                                name="./logoDarkImage"
+                                                rootPath="/content/dam"/>
+                                            <logoDarkAlt
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Dark Logo Alt Text"
+                                                fieldDescription="Alternative text for the dark theme logo"
+                                                name="./logoDarkAlt"/>
+                                            <!-- Light Theme Logo -->
+                                            <logoLightImage
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                                                fieldLabel="Light Theme Logo"
+                                                fieldDescription="Select logo image for light theme from DAM"
+                                                name="./logoLightImage"
+                                                rootPath="/content/dam"/>
+                                            <logoLightAlt
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Light Logo Alt Text"
+                                                fieldDescription="Alternative text for the light theme logo"
+                                                name="./logoLightAlt"/>
+                                            <!-- Logo Link -->
+                                            <logoLink
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                                                fieldLabel="Logo Link"
+                                                fieldDescription="Select the target page for logo click"
+                                                name="./logoLink"
+                                                rootPath="/content"/>
+                                            <!-- Header Title -->
+                                            <headerTitle
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Header Title"
+                                                fieldDescription="Main title text displayed in the header"
+                                                name="./headerTitle"/>
+                                            <!-- Header Subtitle -->
+                                            <headerSubtitle
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Header Subtitle"
+                                                fieldDescription="Subtitle text displayed below the header title"
+                                                name="./headerSubtitle"/>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </logo>
+
+                    <!-- Tab 2: Overlay Column 1 - Accordion Menu -->
+                    <overlayColumn1
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Overlay Column 1"
+                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                        margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <menuDescription
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/text"
+                                                text="Configure the accordion menu items. Each item can be a Leaf Menu Option (with link) or a Menu Container (with sub-items)."/>
+                                            <!-- Level 1 Menu Items -->
+                                            <menuItems
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                                composite="{Boolean}true"
+                                                fieldLabel="Menu Items (Level 1)">
+                                                <field
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/container"
+                                                    name="./menuItems">
+                                                    <items jcr:primaryType="nt:unstructured">
+                                                        <menuItemType
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                            fieldLabel="Menu Type"
+                                                            name="menuItemType">
+                                                            <items jcr:primaryType="nt:unstructured">
+                                                                <leaf
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    text="Leaf Menu Option"
+                                                                    value="leaf"/>
+                                                                <container
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    text="Menu Container"
+                                                                    value="container"/>
+                                                            </items>
+                                                        </menuItemType>
+                                                        <menuTitle
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                            fieldLabel="Menu Title"
+                                                            name="menuTitle"
+                                                            required="{Boolean}true"/>
+                                                        <menuDescription
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+                                                            fieldLabel="Menu Description"
+                                                            fieldDescription="Description text (for Leaf Menu Option)"
+                                                            name="menuDescription"/>
+                                                        <menuLink
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                                                            fieldLabel="Menu Link"
+                                                            fieldDescription="Target link (for Leaf Menu Option)"
+                                                            name="menuLink"
+                                                            rootPath="/content"/>
+                                                        <!-- Level 2 Sub Menu Items -->
+                                                        <subMenuItems
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                                            composite="{Boolean}true"
+                                                            fieldLabel="Sub Menu Items (Level 2)"
+                                                            fieldDescription="Add sub-menu items (for Menu Container)">
+                                                            <field
+                                                                jcr:primaryType="nt:unstructured"
+                                                                sling:resourceType="granite/ui/components/coral/foundation/container"
+                                                                name="subMenuItems">
+                                                                <items jcr:primaryType="nt:unstructured">
+                                                                    <subMenuItemType
+                                                                        jcr:primaryType="nt:unstructured"
+                                                                        sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                                        fieldLabel="Sub Menu Type"
+                                                                        name="subMenuItemType">
+                                                                        <items jcr:primaryType="nt:unstructured">
+                                                                            <leaf
+                                                                                jcr:primaryType="nt:unstructured"
+                                                                                text="Leaf Menu Option"
+                                                                                value="leaf"/>
+                                                                            <container
+                                                                                jcr:primaryType="nt:unstructured"
+                                                                                text="Menu Container"
+                                                                                value="container"/>
+                                                                        </items>
+                                                                    </subMenuItemType>
+                                                                    <subMenuTitle
+                                                                        jcr:primaryType="nt:unstructured"
+                                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                        fieldLabel="Sub Menu Title"
+                                                                        name="subMenuTitle"
+                                                                        required="{Boolean}true"/>
+                                                                    <subMenuDescription
+                                                                        jcr:primaryType="nt:unstructured"
+                                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+                                                                        fieldLabel="Sub Menu Description"
+                                                                        name="subMenuDescription"/>
+                                                                    <subMenuLink
+                                                                        jcr:primaryType="nt:unstructured"
+                                                                        sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                                                                        fieldLabel="Sub Menu Link"
+                                                                        name="subMenuLink"
+                                                                        rootPath="/content"/>
+                                                                    <!-- Level 3 Sub Menu Items -->
+                                                                    <level3MenuItems
+                                                                        jcr:primaryType="nt:unstructured"
+                                                                        sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                                                        composite="{Boolean}true"
+                                                                        fieldLabel="Level 3 Menu Items"
+                                                                        fieldDescription="Add level 3 sub-menu items (for Menu Container)">
+                                                                        <field
+                                                                            jcr:primaryType="nt:unstructured"
+                                                                            sling:resourceType="granite/ui/components/coral/foundation/container"
+                                                                            name="level3MenuItems">
+                                                                            <items jcr:primaryType="nt:unstructured">
+                                                                                <level3MenuTitle
+                                                                                    jcr:primaryType="nt:unstructured"
+                                                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                                    fieldLabel="Menu Title"
+                                                                                    name="level3MenuTitle"
+                                                                                    required="{Boolean}true"/>
+                                                                                <level3MenuDescription
+                                                                                    jcr:primaryType="nt:unstructured"
+                                                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+                                                                                    fieldLabel="Menu Description"
+                                                                                    name="level3MenuDescription"/>
+                                                                                <level3MenuLink
+                                                                                    jcr:primaryType="nt:unstructured"
+                                                                                    sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                                                                                    fieldLabel="Menu Link"
+                                                                                    name="level3MenuLink"
+                                                                                    rootPath="/content"/>
+                                                                            </items>
+                                                                        </field>
+                                                                    </level3MenuItems>
+                                                                </items>
+                                                            </field>
+                                                        </subMenuItems>
+                                                    </items>
+                                                </field>
+                                            </menuItems>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </overlayColumn1>
+
+                    <!-- Tab 3: Overlay Column 2 - Options and Social Links -->
+                    <overlayColumn2
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Overlay Column 2"
+                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                        margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <!-- Menu Options List -->
+                                            <menuOptionsSection
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/heading"
+                                                level="4"
+                                                text="Menu Options"/>
+                                            <menuOptions
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                                composite="{Boolean}true"
+                                                fieldLabel="Menu Options List"
+                                                fieldDescription="Add menu option items">
+                                                <field
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/container"
+                                                    name="./menuOptions">
+                                                    <items jcr:primaryType="nt:unstructured">
+                                                        <optionTitle
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                            fieldLabel="Menu Title"
+                                                            name="optionTitle"
+                                                            required="{Boolean}true"/>
+                                                        <optionDescription
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+                                                            fieldLabel="Menu Description"
+                                                            name="optionDescription"/>
+                                                        <optionLink
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                                                            fieldLabel="Menu Target Link"
+                                                            name="optionLink"
+                                                            rootPath="/content"/>
+                                                        <optionNewTab
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                            fieldDescription="Check to open link in a new tab"
+                                                            name="optionNewTab"
+                                                            text="Open in New Tab"
+                                                            uncheckedValue="false"
+                                                            value="true"/>
+                                                    </items>
+                                                </field>
+                                            </menuOptions>
+
+                                            <!-- Social Media Links Section -->
+                                            <socialSection
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/heading"
+                                                level="4"
+                                                text="Social Media Links"/>
+                                            <socialSectionTitle
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Social Section Title"
+                                                fieldDescription="Title for the social media section (e.g., 'Follow us')"
+                                                name="./socialSectionTitle"
+                                                value="Follow us"/>
+                                            <!-- X (Twitter) -->
+                                            <twitterLink
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="X (Twitter) Link"
+                                                fieldDescription="URL for X (formerly Twitter) profile"
+                                                name="./twitterLink"/>
+                                            <!-- Facebook -->
+                                            <facebookLink
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Facebook Link"
+                                                fieldDescription="URL for Facebook profile"
+                                                name="./facebookLink"/>
+                                            <!-- Instagram -->
+                                            <instagramLink
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Instagram Link"
+                                                fieldDescription="URL for Instagram profile"
+                                                name="./instagramLink"/>
+                                            <!-- LinkedIn -->
+                                            <linkedinLink
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="LinkedIn Link"
+                                                fieldDescription="URL for LinkedIn profile"
+                                                name="./linkedinLink"/>
+                                            <!-- Pinterest -->
+                                            <pinterestLink
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Pinterest Link"
+                                                fieldDescription="URL for Pinterest profile"
+                                                name="./pinterestLink"/>
+                                            <!-- YouTube -->
+                                            <youtubeLink
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="YouTube Link"
+                                                fieldDescription="URL for YouTube channel"
+                                                name="./youtubeLink"/>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </overlayColumn2>
+                </items>
+            </tabs>
+        </items>
+    </content>
+</jcr:root>
