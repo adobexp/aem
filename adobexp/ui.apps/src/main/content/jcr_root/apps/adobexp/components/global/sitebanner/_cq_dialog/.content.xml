@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="nt:unstructured"
+    jcr:title="Site Banner"
+    sling:resourceType="cq/gui/components/authoring/dialog">
+    <content
+        granite:class="cmp-sitebanner__editor"
+        jcr:primaryType="nt:unstructured"
+        sling:resourceType="granite/ui/components/coral/foundation/container">
+        <items jcr:primaryType="nt:unstructured">
+            <tabs
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="granite/ui/components/coral/foundation/tabs"
+                maximized="{Boolean}true">
+                <items jcr:primaryType="nt:unstructured">
+                    <!-- Tab 1: Banner Configuration -->
+                    <configuration
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Configuration"
+                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                        margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <!-- Description -->
+                                            <bannerDescription
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/text"
+                                                text="Configure the scrolling banner messages. Each message will cycle through based on the configured duration. You can use basic HTML formatting: &lt;strong&gt;, &lt;b&gt;, &lt;em&gt;, &lt;i&gt;, and &lt;span class='site-badge info|success|warning|error'&gt; tags."/>
+                                            
+                                            <!-- Cycle Duration -->
+                                            <cycleDuration
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
+                                                fieldLabel="Cycle Duration (seconds)"
+                                                fieldDescription="Duration in seconds for each message to scroll across the banner. Default is 15 seconds."
+                                                name="./cycleDuration"
+                                                min="{Long}1"
+                                                max="{Long}60"
+                                                step="{Long}1"
+                                                value="{Long}15"/>
+                                            
+                                            <!-- Banner Messages Multifield -->
+                                            <messagesContainer
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/foundation/container">
+                                                <layout
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/foundation/layouts/container"/>
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <bannerMessages
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                                        composite="{Boolean}true"
+                                                        fieldLabel="Banner Messages">
+                                                        <field
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/container"
+                                                            name="./bannerMessages">
+                                                            <items jcr:primaryType="nt:unstructured">
+                                                                <messageText
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+                                                                    fieldLabel="Message Text"
+                                                                    fieldDescription="Enter the banner message. You can use HTML tags: &lt;strong&gt;, &lt;b&gt;, &lt;em&gt;, &lt;i&gt;, &lt;span class='site-badge info'&gt;."
+                                                                    name="messageText"
+                                                                    required="{Boolean}true"/>
+                                                            </items>
+                                                        </field>
+                                                    </bannerMessages>
+                                                </items>
+                                            </messagesContainer>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </configuration>
+                </items>
+            </tabs>
+        </items>
+    </content>
+</jcr:root>

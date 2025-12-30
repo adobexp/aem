@@ -3,4 +3,4 @@
           jcr:primaryType="cq:ClientLibraryFolder"
           allowProxy="{Boolean}true"
           categories="[adobexp.site]" 
-          embed="[adobexp.components.header.v1]"/>
+          embed="[adobexp.components.header.v1, adobexp.components.sitebanner.v1]"/>

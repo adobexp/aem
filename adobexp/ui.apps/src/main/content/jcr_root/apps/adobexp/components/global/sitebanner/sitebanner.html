@@ -1,0 +1,25 @@
+<!--/*
+    Site Banner Component - AEM Sightly Template
+    
+    This component renders a scrolling marquee banner with:
+    - Configurable messages (multifield)
+    - Configurable cycle duration
+    - HTML sanitization for inline formatting (strong, b, em, i, span with badges)
+*/-->
+
+<sly data-sly-use.templates="adobexp/components/commons/v1/templates.html"/>
+<sly data-sly-use.sitebanner="com.adobexp.aem.core.components.models.SiteBannerModel"/>
+
+<!-- SITE BANNER COMPONENT HTML MARKUP STARTS HERE -->
+<div data-sly-test="${sitebanner.hasMessages}"
+    class="site-banner"
+    data-component="site-banner"
+    data-messages="${sitebanner.messagesJson}"
+    data-cycle-duration="${sitebanner.cycleDuration}s">
+    <div class="site-banner__viewport" aria-label="Site banner">
+        <span class="site-banner__text" data-site-banner-text="1" aria-hidden="true"></span>
+    </div>
+</div>
+<!-- SITE BANNER COMPONENT HTML MARKUP ENDS HERE -->
+<sly data-sly-call="${templates.placeholder @ isEmpty = !sitebanner.hasMessages, classAppend='sitebanner'}"></sly>
+
