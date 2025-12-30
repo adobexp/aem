@@ -1,0 +1,16 @@
+<!DOCTYPE HTML>
+<html data-sly-use.page="com.adobexp.aem.core.components.models.Page"
+	lang="${page.language}"
+	data-sly-use.head="head.html"
+	data-sly-use.redirect="redirect.html">
+<head data-sly-call="${head.head @ page = page}"></head>
+<body class="${page.cssClassNames}" id="${page.id}"
+	data-cmp-data-layer-enabled="${page.data ? true : false}">
+	<sly
+		data-sly-test.isRedirectPage="${page.redirectTarget && (wcmmode.edit || wcmmode.preview)}"
+		data-sly-call="${redirect.redirect @ redirectTarget = page.redirectTarget}"></sly>
+	<sly data-sly-test="${!isRedirectPage}">
+		<sly data-sly-include="body.html"></sly>
+	</sly>
+</body>
+</html>

@@ -8,5 +8,5 @@
         jcr:description="Template provided by AdobeXP containing the header and footer powered by Experience Fragments and main zone which is empty to have any &quot;Adobe XP Components - Content&quot; category components."
         jcr:primaryType="cq:PageContent"
         jcr:title="AdobeXP | Single Zone Content Page"
-        status="draft"/>
+        status="enabled"/>
 </jcr:root>
