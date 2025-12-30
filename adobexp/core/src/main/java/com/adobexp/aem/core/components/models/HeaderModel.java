@@ -78,6 +78,18 @@ public interface HeaderModel {
     List<MenuOption> getMenuOptions();
 
     /**
+     * Gets the list of article teasers (Column 3).
+     * @return list of article teasers
+     */
+    List<ArticleTeaser> getArticleTeasers();
+
+    /**
+     * Checks if article teasers are configured.
+     * @return true if any article teaser is configured
+     */
+    boolean hasArticleTeasers();
+
+    /**
      * Gets the social section title.
      * @return social section title
      */
@@ -269,6 +281,41 @@ public interface HeaderModel {
          * @return true if should open in new tab
          */
         boolean isOptionNewTab();
+    }
+
+    /**
+     * Represents an article teaser item (Column 3).
+     */
+    interface ArticleTeaser {
+        /**
+         * Gets the article title.
+         * @return article title
+         */
+        String getArticleTitle();
+
+        /**
+         * Gets the article description.
+         * @return article description
+         */
+        String getArticleDescription();
+
+        /**
+         * Gets the article link.
+         * @return article link
+         */
+        String getArticleLink();
+
+        /**
+         * Gets the article teaser image path.
+         * @return article image path
+         */
+        String getArticleImage();
+
+        /**
+         * Gets the article image alt text.
+         * @return article image alt text
+         */
+        String getArticleImageAlt();
     }
 }
 

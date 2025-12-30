@@ -200,6 +200,33 @@
                     </div>
                 </sly>
             </div>
+
+            <!-- Column 3: Article Teasers -->
+            <sly data-sly-test="${header.hasArticleTeasers}">
+                <div class="header__overlay-column header__overlay-column--articles">
+                    <div class="header__overlay-articles">
+                        <sly data-sly-list.article="${header.articleTeasers}">
+                            <a data-sly-use.articleLinkFilter="${'adobexp/components/commons/v1/helper/checkProp.js' @ propName='link', propValue=article.articleLink}"
+                                href="${articleLinkFilter.value}" 
+                                class="header__overlay-article-link">
+                                <article class="header__overlay-article">
+                                    <sly data-sly-test="${article.articleImage}">
+                                        <sly data-sly-use.articleImgUrl="${'adobexp/components/commons/v1/helper/transformurls.js' @ internalUrl=article.articleImage}">
+                                            <img src="${articleImgUrl}" 
+                                                alt="${article.articleImageAlt || article.articleTitle || 'Article Image'}" 
+                                                class="header__overlay-article-image"/>
+                                        </sly>
+                                    </sly>
+                                    <div class="header__overlay-article-overlay">
+                                        <h3 class="header__overlay-article-title" data-sly-test="${article.articleTitle}">${article.articleTitle}</h3>
+                                        <p class="header__overlay-article-description" data-sly-test="${article.articleDescription}">${article.articleDescription}</p>
+                                    </div>
+                                </article>
+                            </a>
+                        </sly>
+                    </div>
+                </div>
+            </sly>
         </div>
     </div>
 </div>

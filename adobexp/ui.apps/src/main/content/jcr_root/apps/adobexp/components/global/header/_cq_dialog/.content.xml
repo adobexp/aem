@@ -466,6 +466,106 @@
                             </columns>
                         </items>
                     </overlayColumn2>
+
+                    <!-- Tab 4: Overlay Column 3 - Article Teasers -->
+                    <overlayColumn3
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Overlay Column 3"
+                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                        margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <!-- Article Teasers Section -->
+                                            <articleTeasersSection
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/heading"
+                                                level="4"
+                                                text="Article Teasers"/>
+                                            <articleTeasersDescription
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/text"
+                                                text="Configure article teasers to display in the overlay column 3. Each teaser displays an image, title, description and links to an article."/>
+                                            <articleTeasersContainer
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/foundation/container">
+                                                <layout
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/foundation/layouts/container"/>
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <articleTeasers
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                                        composite="{Boolean}true"
+                                                        fieldLabel="Article Teasers"
+                                                        fieldDescription="Add article teaser items">
+                                                        <field
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/container"
+                                                            name="./articleTeasers">
+                                                            <items jcr:primaryType="nt:unstructured">
+                                                                <!-- Collapsible wrapper for article teasers -->
+                                                                <wrapper
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    jcr:title="Click to expand article teaser"
+                                                                    sling:resourceType="granite/ui/components/foundation/container">
+                                                                    <layout
+                                                                        jcr:primaryType="nt:unstructured"
+                                                                        sling:resourceType="granite/ui/components/foundation/layouts/collapsible"/>
+                                                                    <items jcr:primaryType="nt:unstructured">
+                                                                        <articleTitle
+                                                                            jcr:primaryType="nt:unstructured"
+                                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                            fieldLabel="Article Title"
+                                                                            fieldDescription="Title of the article teaser"
+                                                                            name="articleTitle"
+                                                                            required="{Boolean}true"/>
+                                                                        <articleDescription
+                                                                            jcr:primaryType="nt:unstructured"
+                                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+                                                                            fieldLabel="Article Description"
+                                                                            fieldDescription="Short description of the article"
+                                                                            name="articleDescription"/>
+                                                                        <articleLink
+                                                                            jcr:primaryType="nt:unstructured"
+                                                                            sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                                                                            fieldLabel="Article Link"
+                                                                            fieldDescription="Link to the full article"
+                                                                            name="articleLink"
+                                                                            rootPath="/content"/>
+                                                                        <articleImage
+                                                                            jcr:primaryType="nt:unstructured"
+                                                                            sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                                                                            fieldLabel="Article Image"
+                                                                            fieldDescription="Select teaser image from DAM"
+                                                                            name="articleImage"
+                                                                            rootPath="/content/dam"/>
+                                                                        <articleImageAlt
+                                                                            jcr:primaryType="nt:unstructured"
+                                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                            fieldLabel="Image Alt Text"
+                                                                            fieldDescription="Alternative text for the article image"
+                                                                            name="articleImageAlt"/>
+                                                                    </items>
+                                                                </wrapper>
+                                                            </items>
+                                                        </field>
+                                                    </articleTeasers>
+                                                </items>
+                                            </articleTeasersContainer>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </overlayColumn3>
                 </items>
             </tabs>
         </items>

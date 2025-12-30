@@ -50,6 +50,7 @@ public class HeaderModelImpl implements HeaderModel {
     private static final String MENU_OPTIONS_NODE = "menuOptions";
     private static final String SUB_MENU_ITEMS_NODE = "subMenuItems";
     private static final String LEVEL3_MENU_ITEMS_NODE = "level3MenuItems";
+    private static final String ARTICLE_TEASERS_NODE = "articleTeasers";
     
     private static final String TYPE_LEAF = "leaf";
     private static final String TYPE_CONTAINER = "container";
@@ -105,6 +106,7 @@ public class HeaderModelImpl implements HeaderModel {
 
     private List<MenuItem> menuItems;
     private List<MenuOption> menuOptions;
+    private List<ArticleTeaser> articleTeasers;
 
     @PostConstruct
     protected void init() {
@@ -112,9 +114,11 @@ public class HeaderModelImpl implements HeaderModel {
         if (resource != null) {
             menuItems = parseMenuItems(resource);
             menuOptions = parseMenuOptions(resource);
+            articleTeasers = parseArticleTeasers(resource);
         } else {
             menuItems = Collections.emptyList();
             menuOptions = Collections.emptyList();
+            articleTeasers = Collections.emptyList();
         }
     }
 
@@ -301,6 +305,48 @@ public class HeaderModelImpl implements HeaderModel {
         return new MenuOptionImpl(optionTitle, optionDescription, optionLink, "true".equals(optionNewTab));
     }
 
+    /**
+     * Parse article teasers from the articleTeasers child node.
+     */
+    private List<ArticleTeaser> parseArticleTeasers(Resource componentResource) {
+        List<ArticleTeaser> teasers = new ArrayList<>();
+        Resource articleTeasersResource = componentResource.getChild(ARTICLE_TEASERS_NODE);
+        
+        if (articleTeasersResource != null) {
+            for (Resource teaserResource : articleTeasersResource.getChildren()) {
+                // Skip jcr: prefixed nodes
+                if (teaserResource.getName().startsWith("jcr:")) {
+                    continue;
+                }
+                ArticleTeaserImpl articleTeaser = parseArticleTeaser(teaserResource);
+                if (articleTeaser != null) {
+                    teasers.add(articleTeaser);
+                }
+            }
+        }
+        
+        return teasers;
+    }
+
+    /**
+     * Parse a single article teaser resource.
+     */
+    private ArticleTeaserImpl parseArticleTeaser(Resource teaserResource) {
+        ValueMap props = teaserResource.getValueMap();
+        
+        String articleTitle = props.get("articleTitle", String.class);
+        String articleDescription = props.get("articleDescription", String.class);
+        String articleLink = props.get("articleLink", String.class);
+        String articleImage = props.get("articleImage", String.class);
+        String articleImageAlt = props.get("articleImageAlt", String.class);
+        
+        if (StringUtils.isBlank(articleTitle)) {
+            return null;
+        }
+        
+        return new ArticleTeaserImpl(articleTitle, articleDescription, articleLink, articleImage, articleImageAlt);
+    }
+
     // Getter implementations
     @Override
     public String getLogoDarkImage() {
@@ -390,6 +436,16 @@ public class HeaderModelImpl implements HeaderModel {
             || StringUtils.isNotBlank(linkedinLink)
             || StringUtils.isNotBlank(pinterestLink)
             || StringUtils.isNotBlank(youtubeLink);
+    }
+
+    @Override
+    public List<ArticleTeaser> getArticleTeasers() {
+        return articleTeasers;
+    }
+
+    @Override
+    public boolean hasArticleTeasers() {
+        return articleTeasers != null && !articleTeasers.isEmpty();
     }
 
     // Inner classes for menu structures
@@ -568,6 +624,51 @@ public class HeaderModelImpl implements HeaderModel {
         @Override
         public boolean isOptionNewTab() {
             return optionNewTab;
+        }
+    }
+
+    /**
+     * Implementation of ArticleTeaser interface.
+     */
+    public static class ArticleTeaserImpl implements ArticleTeaser {
+        private final String articleTitle;
+        private final String articleDescription;
+        private final String articleLink;
+        private final String articleImage;
+        private final String articleImageAlt;
+
+        public ArticleTeaserImpl(String articleTitle, String articleDescription, String articleLink, 
+                                String articleImage, String articleImageAlt) {
+            this.articleTitle = articleTitle;
+            this.articleDescription = articleDescription;
+            this.articleLink = articleLink;
+            this.articleImage = articleImage;
+            this.articleImageAlt = articleImageAlt;
+        }
+
+        @Override
+        public String getArticleTitle() {
+            return articleTitle;
+        }
+
+        @Override
+        public String getArticleDescription() {
+            return articleDescription;
+        }
+
+        @Override
+        public String getArticleLink() {
+            return articleLink;
+        }
+
+        @Override
+        public String getArticleImage() {
+            return articleImage;
+        }
+
+        @Override
+        public String getArticleImageAlt() {
+            return articleImageAlt;
         }
     }
 }
