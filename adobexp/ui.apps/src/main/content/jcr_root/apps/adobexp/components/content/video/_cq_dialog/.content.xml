@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="nt:unstructured"
+    jcr:title="Video"
+    sling:resourceType="cq/gui/components/authoring/dialog">
+    <content
+        granite:class="cmp-video__editor"
+        jcr:primaryType="nt:unstructured"
+        sling:resourceType="granite/ui/components/coral/foundation/container">
+        <items jcr:primaryType="nt:unstructured">
+            <tabs
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="granite/ui/components/coral/foundation/tabs"
+                maximized="{Boolean}true">
+                <items jcr:primaryType="nt:unstructured">
+                    <!-- Tab 1: Video Settings -->
+                    <videoSettings
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Video Settings"
+                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                        margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <!-- Video Path (DAM) -->
+                                            <videoPath
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                                                fieldLabel="Video"
+                                                fieldDescription="Select video file from DAM"
+                                                name="./videoPath"
+                                                rootPath="/content/dam"
+                                                required="{Boolean}true"/>
+                                            <!-- Show Play Toggle -->
+                                            <showPlayToggle
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                fieldDescription="Check to show the play/pause button on the video"
+                                                name="./showPlayToggle"
+                                                text="Show Play/Pause Button"
+                                                checked="{Boolean}true"
+                                                uncheckedValue="false"
+                                                value="true"/>
+                                            <!-- Show Mute Toggle -->
+                                            <showMuteToggle
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                fieldDescription="Check to show the mute/unmute button on the video"
+                                                name="./showMuteToggle"
+                                                text="Show Mute/Unmute Button"
+                                                checked="{Boolean}true"
+                                                uncheckedValue="false"
+                                                value="true"/>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </videoSettings>
+
+                    <!-- Tab 2: Teaser Overlay -->
+                    <teaserOverlay
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Teaser Overlay"
+                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                        margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <!-- Video Title -->
+                                            <videoTitle
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Video Title"
+                                                fieldDescription="Title displayed on the teaser overlay"
+                                                name="./videoTitle"/>
+                                            <!-- Video Description -->
+                                            <videoDescription
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+                                                fieldLabel="Video Description"
+                                                fieldDescription="Description displayed on the teaser overlay"
+                                                name="./videoDescription"/>
+                                            <!-- Video Link (Path or URL) -->
+                                            <videoHref
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                                                fieldLabel="Teaser Link"
+                                                fieldDescription="Select a content page from /content or enter an absolute URL (including protocol, e.g., https://example.com)"
+                                                name="./videoHref"
+                                                rootPath="/content"/>
+                                            <!-- Open in New Tab -->
+                                            <openInNewTab
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                fieldDescription="Check to open the link in a new tab"
+                                                name="./openInNewTab"
+                                                text="Open in New Tab"
+                                                uncheckedValue="false"
+                                                value="true"/>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </teaserOverlay>
+                </items>
+            </tabs>
+        </items>
+    </content>
+</jcr:root>

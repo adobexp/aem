@@ -1,0 +1,58 @@
+<!--/*
+    Video Component - AEM Sightly Template
+    
+    This component renders a responsive video player with:
+    - Optional teaser overlay with title and description
+    - Play/Pause toggle button
+    - Mute/Unmute toggle button
+    - Configurable link on the teaser overlay
+*/-->
+
+<sly data-sly-use.templates="adobexp/components/commons/v1/templates.html"/>
+<sly data-sly-use.video="com.adobexp.aem.core.components.models.VideoModel"/>
+
+<sly data-sly-use.clientlib="/libs/granite/sightly/templates/clientlib.html">
+    <sly data-sly-call="${clientlib.all @ categories='adobexp.components.video.v1', async=true}"/>
+</sly>
+
+<!-- VIDEO COMPONENT HTML MARKUP STARTS HERE -->
+<section
+    class="video"
+    data-component="video"
+    aria-label="Video"
+    data-sly-test="${video.videoPath}"
+    data-video-title="${video.videoTitle}"
+    data-video-description="${video.videoDescription}"
+    data-sly-use.linkFilter="${'adobexp/components/commons/v1/helper/checkProp.js' @ propName='link', propValue=video.videoHref}"
+    data-video-href="${linkFilter.value}"
+    data-video-target="${video.openInNewTab ? '_blank' : '_self'}"
+    data-show-play-toggle="${video.showPlayToggle ? 'true' : 'false'}"
+    data-show-mute-toggle="${video.showMuteToggle ? 'true' : 'false'}">
+    
+    <!-- Play/Pause toggle button -->
+    <button class="video__play-toggle btn-theme-auto btn-icon-only" type="button" data-video-play-toggle aria-label="Pause video">
+        <!-- Icon injected by JS (play/pause) -->
+    </button>
+    
+    <!-- Mute/Unmute toggle button -->
+    <button class="video__mute-toggle btn-theme-auto btn-icon-only" type="button" data-video-mute-toggle aria-label="Unmute video">
+        <!-- Icon injected by JS (speaker muted/unmuted) -->
+    </button>
+    
+    <!-- Video player -->
+    <sly data-sly-use.videoUrl="${'adobexp/components/commons/v1/helper/transformurls.js' @ internalUrl=video.videoPath}">
+        <video
+            class="video__player"
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="auto">
+            <source src="${videoUrl}" type="video/mp4" />
+        </video>
+    </sly>
+</section>
+<!-- VIDEO COMPONENT HTML MARKUP ENDS HERE -->
+
+<sly data-sly-call="${templates.placeholder @ isEmpty = !video.videoPath, classAppend='video'}"></sly>
+

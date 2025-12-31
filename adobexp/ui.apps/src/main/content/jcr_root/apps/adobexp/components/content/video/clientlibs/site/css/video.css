@@ -1,0 +1,160 @@
+/**
+ * Video Component CSS
+ * Styles for the video player with teaser overlay
+ */
+
+/* ============================================
+   Video Base Styles
+   ============================================ */
+.video {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    background: var(--site-body-bg, #ffffff);
+}
+
+/* ============================================
+   Teaser Overlay Styles
+   ============================================ */
+.video__teaser-overlay {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    background: var(--video-teaser-overlay-bg, var(--article-tile-overlay-bg, rgba(0, 0, 0, 0.5)));
+    padding: 10px 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 0;
+    pointer-events: none;
+    max-height: var(--video-collapsed-height, 60px);
+    overflow: hidden;
+    transition: max-height 0.8s ease, padding 0.8s ease;
+    will-change: max-height;
+}
+
+.video__teaser-overlay--link {
+    pointer-events: auto;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+}
+
+.video:hover .video__teaser-overlay,
+.video:focus-within .video__teaser-overlay {
+    max-height: var(--video-expanded-height, 260px);
+    padding: 24px;
+}
+
+/* ============================================
+   Teaser Title Styles
+   ============================================ */
+.video__teaser-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--primary-text-color, #f8fafc);
+    margin: 0;
+    line-height: 1.4;
+    width: 100%;
+    transition: transform 0.8s ease;
+}
+
+.video:hover .video__teaser-title,
+.video:focus-within .video__teaser-title {
+    transform: translateY(-10px);
+}
+
+/* ============================================
+   Teaser Description Styles
+   ============================================ */
+.video__teaser-description {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--secondary-text-color, #cbd5e1);
+    line-height: 1.5;
+    margin: 0;
+    width: 100%;
+    opacity: 0;
+    transform: translateY(24px);
+    margin-top: 0;
+    transition: opacity 0.8s ease 0.18s, transform 0.8s ease 0.18s, margin-top 0.8s ease 0.18s;
+}
+
+.video:hover .video__teaser-description,
+.video:focus-within .video__teaser-description {
+    opacity: 1;
+    transform: translateY(0);
+    margin-top: 14px;
+}
+
+/* ============================================
+   Video Control Buttons
+   ============================================ */
+.video .video__mute-toggle {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    z-index: 2;
+}
+
+.video .video__play-toggle {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    z-index: 2;
+}
+
+.video .video__mute-toggle,
+.video .video__play-toggle {
+    position: absolute !important;
+    transform: translateZ(0);
+}
+
+.video .video__mute-toggle svg,
+.video .video__play-toggle svg {
+    width: 18px;
+    height: 18px;
+    display: block;
+}
+
+.video .video__mute-toggle:hover,
+.video .video__play-toggle:hover {
+    position: absolute !important;
+    transform: translateZ(0) scale(1.05);
+}
+
+/* ============================================
+   Video Player Styles
+   ============================================ */
+.video__player {
+    width: 100%;
+    display: block;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+    background: #000;
+}
+
+/* ============================================
+   Hide Native Video Controls
+   ============================================ */
+video::-webkit-media-controls,
+video::-webkit-media-controls-panel,
+video::-webkit-media-controls-play-button,
+video::-webkit-media-controls-start-playback-button,
+video::-webkit-media-controls-overlay-play-button,
+video::-webkit-media-controls-timeline,
+video::-webkit-media-controls-current-time-display,
+video::-webkit-media-controls-time-remaining-display,
+video::-webkit-media-controls-mute-button,
+video::-webkit-media-controls-volume-slider,
+video::-webkit-media-controls-fullscreen-button,
+video::-webkit-media-controls-toggle-closed-captions-button {
+    display: none !important;
+    -webkit-appearance: none !important;
+}
+
+video::-moz-media-controls {
+    display: none !important;
+}
