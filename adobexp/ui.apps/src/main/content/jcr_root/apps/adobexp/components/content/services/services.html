@@ -1,0 +1,45 @@
+<!--/*
+    Services Component - AEM Sightly Template
+    
+    This component renders a services section with:
+    - Component title (H2)
+    - List of service items with:
+      - SVG icon from DAM
+      - Service headline (H3)
+      - Service description (paragraph)
+*/-->
+
+<sly data-sly-use.templates="adobexp/components/commons/v1/templates.html"/>
+<sly data-sly-use.services="com.adobexp.aem.core.components.models.ServicesModel"/>
+
+<!-- SERVICES COMPONENT HTML MARKUP STARTS HERE -->
+<section class="services" data-component="services" aria-label="Services" data-sly-test="${services.servicesTitle || services.hasServiceItems}">
+    <div class="services__inner">
+        <div class="services__layout">
+            <h2 class="services__title" data-sly-test="${services.servicesTitle}">${services.servicesTitle}</h2>
+
+            <div class="services__items" role="list" data-sly-test="${services.hasServiceItems}">
+                <sly data-sly-list.item="${services.serviceItems}">
+                    <article class="services__item" role="listitem">
+                        <sly data-sly-test="${item.serviceIcon}">
+                            <sly data-sly-use.iconUrl="${'adobexp/components/commons/v1/helper/transformurls.js' @ internalUrl=item.serviceIcon}">
+                                <img class="services__icon" 
+                                    src="${iconUrl}" 
+                                    alt="${item.serviceHeadline || 'Service Icon'}"
+                                    aria-hidden="true"
+                                    data-svg-inline/>
+                            </sly>
+                        </sly>
+                        <div>
+                            <h3 class="services__item-title" data-sly-test="${item.serviceHeadline}">${item.serviceHeadline}</h3>
+                            <p class="services__item-desc" data-sly-test="${item.serviceDescription}">${item.serviceDescription}</p>
+                        </div>
+                    </article>
+                </sly>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- SERVICES COMPONENT HTML MARKUP ENDS HERE -->
+<sly data-sly-call="${templates.placeholder @ isEmpty = !services.servicesTitle, classAppend='services'}"></sly>
+

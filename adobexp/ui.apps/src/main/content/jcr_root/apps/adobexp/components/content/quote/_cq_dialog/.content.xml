@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="nt:unstructured"
+    jcr:title="Quote"
+    sling:resourceType="cq/gui/components/authoring/dialog">
+    <content
+        granite:class="cmp-quote__editor"
+        jcr:primaryType="nt:unstructured"
+        sling:resourceType="granite/ui/components/coral/foundation/container">
+        <items jcr:primaryType="nt:unstructured">
+            <tabs
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="granite/ui/components/coral/foundation/tabs"
+                maximized="{Boolean}true">
+                <items jcr:primaryType="nt:unstructured">
+                    <!-- Tab 1: Quote Content -->
+                    <content
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Content"
+                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                        margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <!-- Component Title Text Field -->
+                                            <quoteTitle
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Component Title"
+                                                fieldDescription="Enter the component title text (e.g., 'Quote')"
+                                                name="./quoteTitle"/>
+                                            
+                                            <!-- Primary Quote Text Area -->
+                                            <quotePrimaryText
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+                                                fieldLabel="Primary Quote Text"
+                                                fieldDescription="Enter the main quote text"
+                                                name="./quotePrimaryText"
+                                                rows="{Long}4"
+                                                required="{Boolean}true"/>
+                                            
+                                            <!-- Muted Quote Text Area -->
+                                            <quoteMutedText
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+                                                fieldLabel="Muted Quote Text"
+                                                fieldDescription="Enter the secondary/muted quote text (displayed in lighter color)"
+                                                name="./quoteMutedText"
+                                                rows="{Long}2"/>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </content>
+                    
+                    <!-- Tab 2: Author Information -->
+                    <author
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Author"
+                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                        margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <!-- Avatar SVG from DAM -->
+                                            <quoteAvatar
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                                                fieldLabel="Author Avatar (SVG)"
+                                                fieldDescription="Select an SVG avatar from DAM. If not provided, a default avatar will be displayed."
+                                                name="./quoteAvatar"
+                                                rootPath="/content/dam"/>
+                                            
+                                            <!-- Author Name Text Field -->
+                                            <authorName
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Author Name"
+                                                fieldDescription="Enter the author's name"
+                                                name="./authorName"/>
+                                            
+                                            <!-- Author Organisation Text Field -->
+                                            <authorOrganisation
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Author Organisation"
+                                                fieldDescription="Enter the author's organisation or company name"
+                                                name="./authorOrganisation"/>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </author>
+                </items>
+            </tabs>
+        </items>
+    </content>
+</jcr:root>

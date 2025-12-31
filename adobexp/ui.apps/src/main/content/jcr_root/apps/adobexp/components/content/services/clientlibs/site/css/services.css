@@ -1,0 +1,209 @@
+/**
+ * Services Component CSS
+ * Styles for the services section with icon cards
+ */
+
+/* ============================================
+   Services Base Styles
+   ============================================ */
+.services {
+    width: 100%;
+    padding: 40px 20px;
+    color: var(--standard-primary-site-text-color, #111827);
+    background: transparent;
+}
+
+.theme-dark .services,
+.services.theme-dark {
+    background: var(--site-body-bg, #1e1e1e);
+    color: var(--standard-primary-site-text-color, #ffffff);
+}
+
+.services__inner {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.services__layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+}
+
+/* ============================================
+   Services Title Styles
+   ============================================ */
+.services__title {
+    font-size: clamp(40px, 6vw, 64px);
+    line-height: 1.05;
+    font-weight: 400;
+    margin: 0;
+    letter-spacing: -0.02em;
+}
+
+/* ============================================
+   Services Items Grid
+   ============================================ */
+.services__items {
+    display: grid;
+    grid-template-columns: 1fr;
+}
+
+/* ============================================
+   Service Item Card Styles
+   ============================================ */
+.services__item {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: 16px;
+    padding: 24px 0;
+    border-top: 1px dashed var(--services-divider-color, rgba(0, 0, 0, 0.12));
+}
+
+.services__item:first-child {
+    border-top: 1px dashed var(--services-divider-color, rgba(0, 0, 0, 0.12));
+}
+
+/* ============================================
+   Service Icon Styles
+   ============================================ */
+.services__icon {
+    width: 56px;
+    height: 56px;
+    display: block;
+    color: var(--standard-primary-site-text-color, #111827);
+    opacity: 0.75;
+    transition: color 0.3s ease;
+}
+
+/* Styles for inlined SVGs - enables theme-based color changes */
+.services__icon[data-svg-inlined] {
+    stroke: currentColor;
+    fill: none;
+}
+
+.services__icon[data-svg-inlined] [fill="currentColor"] {
+    fill: currentColor;
+}
+
+/* ============================================
+   Service Item Title Styles
+   ============================================ */
+.services__item-title {
+    font-size: 20px;
+    line-height: 1.2;
+    font-weight: 500;
+    margin: 0 0 8px;
+    color: var(--standard-primary-site-text-color, #111827);
+}
+
+/* ============================================
+   Service Item Description Styles
+   ============================================ */
+.services__item-desc {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.35;
+    color: var(--standard-secondary-site-text-color, #6b7280);
+}
+
+/* ============================================
+   Responsive Styles - Tablet (768px+)
+   ============================================ */
+@media (min-width: 768px) {
+    .services {
+        padding: 56px 24px;
+    }
+    
+    .services__layout {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+    
+    .services__items {
+        grid-template-columns: 1fr 1fr;
+        column-gap: 64px;
+        row-gap: 0;
+        border-top: 1px dashed var(--services-divider-color, rgba(0, 0, 0, 0.12));
+    }
+    
+    .services__item {
+        grid-template-columns: 1fr;
+        gap: 10px;
+        padding: 40px 0;
+        border-top: none;
+        position: relative;
+    }
+    
+    .services__item:nth-child(-n+2) {
+        border-bottom: 1px dashed var(--services-divider-color, rgba(0, 0, 0, 0.12));
+    }
+    
+    .services__item:nth-child(odd) {
+        padding-right: 64px;
+    }
+    
+    .services__item:nth-child(even) {
+        padding-left: 64px;
+    }
+    
+    .services__item:nth-child(odd)::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: 1px;
+        background: repeating-linear-gradient(to bottom, var(--services-divider-color, rgba(0, 0, 0, 0.12)) 0 2px, transparent 2px 6px);
+        opacity: 0.7;
+    }
+    
+    .services__icon {
+        width: 64px;
+        height: 64px;
+        opacity: 0.85;
+    }
+    
+    .services__item-title {
+        font-size: 22px;
+    }
+}
+
+/* ============================================
+   Responsive Styles - Desktop (1100px+)
+   ============================================ */
+@media (min-width: 1100px) {
+    .services__layout {
+        grid-template-columns: 360px 1fr;
+        gap: 0;
+        align-items: start;
+    }
+    
+    .services__items {
+        border-top: none;
+        padding-left: 64px;
+        position: relative;
+    }
+    
+    .services__items::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 1px;
+        background: repeating-linear-gradient(to bottom, var(--services-divider-color, rgba(0, 0, 0, 0.12)) 0 2px, transparent 2px 6px);
+        opacity: 0.7;
+    }
+    
+    .services__item:nth-child(odd) {
+        padding-right: 56px;
+    }
+    
+    .services__item:nth-child(even) {
+        padding-left: 56px;
+    }
+}
+
+

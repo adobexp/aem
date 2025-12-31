@@ -1,0 +1,59 @@
+<!--/*
+    Quote Component - AEM Sightly Template
+    
+    This component renders a quote section with:
+    - Component title label
+    - Primary quote text
+    - Muted/secondary quote text
+    - Author avatar (SVG from DAM or default)
+    - Author name
+    - Author organisation
+*/-->
+
+<sly data-sly-use.templates="adobexp/components/commons/v1/templates.html"/>
+<sly data-sly-use.quote="com.adobexp.aem.core.components.models.QuoteModel"/>
+
+<!-- QUOTE COMPONENT HTML MARKUP STARTS HERE -->
+<section class="quote" data-component="quote" aria-label="Quote" data-sly-test="${quote.quotePrimaryText}">
+    <div class="quote__inner">
+        <figure class="quote__card">
+            <div class="quote__content">
+                <div class="quote__label" data-sly-test="${quote.quoteTitle}">${quote.quoteTitle}</div>
+                <blockquote class="quote__text">
+                    ${quote.quotePrimaryText}
+                    <span class="quote__text-muted" data-sly-test="${quote.quoteMutedText}">${quote.quoteMutedText}</span>
+                </blockquote>
+
+                <figcaption class="quote__meta" data-sly-test="${quote.authorName || quote.authorOrganisation}">
+                    <div class="quote__avatar" aria-hidden="true">
+                        <!-- Author Avatar from DAM -->
+                        <sly data-sly-test="${quote.quoteAvatar}">
+                            <sly data-sly-use.avatarUrl="${'adobexp/components/commons/v1/helper/transformurls.js' @ internalUrl=quote.quoteAvatar}">
+                                <img class="quote__avatar-icon" 
+                                    src="${avatarUrl}" 
+                                    alt="Avatar" 
+                                    aria-hidden="true"
+                                    data-svg-inline/>
+                            </sly>
+                        </sly>
+                        <!-- Default Avatar SVG (when no custom avatar is provided) -->
+                        <sly data-sly-test="${!quote.quoteAvatar}">
+                            <img class="quote__avatar-icon" 
+                                src="/etc.clientlibs/adobexp/components/content/quote/clientlibs/site/resources/avatar.svg" 
+                                alt="Avatar" 
+                                aria-hidden="true"
+                                data-svg-inline/>
+                        </sly>
+                    </div>
+                    <div class="quote__byline">
+                        <div class="quote__name" data-sly-test="${quote.authorName}">${quote.authorName}</div>
+                        <div class="quote__org" data-sly-test="${quote.authorOrganisation}">${quote.authorOrganisation}</div>
+                    </div>
+                </figcaption>
+            </div>
+        </figure>
+    </div>
+</section>
+<!-- QUOTE COMPONENT HTML MARKUP ENDS HERE -->
+<sly data-sly-call="${templates.placeholder @ isEmpty = !quote.quotePrimaryText, classAppend='quote'}"></sly>
+
