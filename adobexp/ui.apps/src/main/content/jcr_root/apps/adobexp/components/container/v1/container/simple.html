@@ -14,20 +14,11 @@
   ~ limitations under the License.
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
 <template data-sly-template.simple="${ @ container}">
-    <sly data-sly-test="${wcmmode.edit}" data-sly-use.allowed="com.day.cq.wcm.foundation.AllowedComponentList"></sly>
-    <div data-sly-use.templates="adobexp/components/commons/v1/templates.html"
-         id="${container.id}"
-         class="cmp-container${wcmmode.edit ? ' {0}': '' @ format=[allowed.cssClass]}"
+    <div id="${container.id}"
+         class="cmp-container"
          aria-label="${container.accessibilityLabel}"
          role="${container.roleAttribute}"
          style="${container.backgroundStyle @ context='styleString'}">
-        <sly data-sly-test.isAllowedApplicable="${allowed.isApplicable}"
-             data-sly-use.allowedTemplate="allowedcomponents.html"
-             data-sly-call="${allowedTemplate.allowedcomponents @ title=allowed.title, components=allowed.components}"></sly>
-        <sly data-sly-test="${!isAllowedApplicable}"
-             data-sly-set.items="${container.children || container.items}"
-             data-sly-repeat="${items}" data-sly-resource="${item.resource || item.path @ decoration=true}"></sly>
-        <sly data-sly-test="${!isAllowedApplicable && !wcmmode.disabled}"
-             data-sly-resource="${resource.path @ resourceType='adobexp/components/container/v1/container/new', appendPath='/*', decorationTagName='div', cssClassName='new section'}" />
+         <sly data-sly-resource="${resource @ resourceType='wcm/foundation/components/responsivegrid'}"></sly>
     </div>
 </template>

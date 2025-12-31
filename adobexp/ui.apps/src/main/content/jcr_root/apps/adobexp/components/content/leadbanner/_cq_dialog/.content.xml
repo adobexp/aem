@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="nt:unstructured"
+    jcr:title="Lead Banner"
+    sling:resourceType="cq/gui/components/authoring/dialog">
+    <content
+        granite:class="cmp-leadbanner__editor"
+        jcr:primaryType="nt:unstructured"
+        sling:resourceType="granite/ui/components/coral/foundation/container">
+        <items jcr:primaryType="nt:unstructured">
+            <tabs
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="granite/ui/components/coral/foundation/tabs"
+                maximized="{Boolean}true">
+                <items jcr:primaryType="nt:unstructured">
+                    <!-- Tab 1: Content Configuration -->
+                    <content
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Content"
+                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                        margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <!-- Primary Headline Text Field -->
+                                            <primaryHeadline
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Primary Headline"
+                                                fieldDescription="Enter the primary headline text (e.g., 'Publicis Production')"
+                                                name="./primaryHeadline"
+                                                required="{Boolean}true"/>
+                                            
+                                            <!-- Secondary Headline Items Multifield -->
+                                            <secondaryHeadlineItemsContainer
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/foundation/container">
+                                                <layout
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/foundation/layouts/container"/>
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <secondaryHeadlineItems
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                                        composite="{Boolean}true"
+                                                        fieldLabel="Secondary Headline Items"
+                                                        fieldDescription="Add images with their alt text and corresponding secondary headline text. Each secondary headline will cycle with its image.">
+                                                        <field
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/container"
+                                                            name="./secondaryHeadlineItems">
+                                                            <items jcr:primaryType="nt:unstructured">
+                                                                <!-- DAM Asset Picker -->
+                                                                <stackImage
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                                                                    fieldLabel="Stack Image"
+                                                                    fieldDescription="Select an image from DAM to display in the media stack"
+                                                                    name="stackImage"
+                                                                    rootPath="/content/dam"
+                                                                    filter="hierarchyNotFile"/>
+                                                                <!-- Alt Text for Image -->
+                                                                <stackImageAlt
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                    fieldLabel="Image Alt Text"
+                                                                    fieldDescription="Alternative text for the stack image"
+                                                                    name="stackImageAlt"/>
+                                                                <!-- Secondary Headline Text -->
+                                                                <secondaryHeadlineText
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                    fieldLabel="Secondary Headline Text"
+                                                                    fieldDescription="Enter the secondary headline text that will cycle (e.g., 'powers creativity...'). This will be added as a data-strings attribute."
+                                                                    name="secondaryHeadlineText"
+                                                                    required="{Boolean}true"/>
+                                                            </items>
+                                                        </field>
+                                                    </secondaryHeadlineItems>
+                                                </items>
+                                            </secondaryHeadlineItemsContainer>
+                                            
+                                            <!-- Secondary Text (Text Area) -->
+                                            <secondaryText
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+                                                fieldLabel="Secondary Text"
+                                                fieldDescription="Enter the secondary paragraph text that appears below the headlines. Use &lt;br/&gt; for line breaks."
+                                                name="./secondaryText"
+                                                rows="{Long}4"/>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </content>
+                </items>
+            </tabs>
+        </items>
+    </content>
+</jcr:root>

@@ -1,0 +1,48 @@
+<!--/*
+    Lead Banner Component - AEM Sightly Template
+    
+    This component renders a lead banner with:
+    - Primary headline
+    - Animated secondary headline with cycling text
+    - Stacked image deck that cycles with the text
+    - Secondary paragraph text
+*/-->
+
+<sly data-sly-use.templates="adobexp/components/commons/v1/templates.html"/>
+<sly data-sly-use.leadBanner="com.adobexp.aem.core.components.models.LeadBannerModel"/>
+
+<!-- LEAD BANNER COMPONENT HTML MARKUP STARTS HERE -->
+<div data-component="lead-banner" class="lead-banner" data-sly-test="${leadBanner.primaryHeadline || leadBanner.hasSecondaryHeadlineItems}">
+    <div class="lead-banner__content">
+        <div class="lead-banner__main-headline">
+            <!-- Media Stack -->
+            <sly data-sly-test="${leadBanner.hasSecondaryHeadlineItems}">
+                <div class="lead-banner__media-stack" data-lead-banner-image-stack aria-hidden="true">
+                    <sly data-sly-list.item="${leadBanner.secondaryHeadlineItems}">
+                        <sly data-sly-test="${item.stackImage}">
+                            <sly data-sly-use.imgUrl="${'adobexp/components/commons/v1/helper/transformurls.js' @ internalUrl=item.stackImage}">
+                                <img class="lead-banner__stack-item" 
+                                    src="${imgUrl}" 
+                                    alt="${item.stackImageAlt || ''}"/>
+                            </sly>
+                        </sly>
+                    </sly>
+                </div>
+            </sly>
+            
+            <!-- Headline Text -->
+            <div class="lead-banner__headline-text">
+                <h1 class="lead-banner__headline-primary" data-sly-test="${leadBanner.primaryHeadline}">${leadBanner.primaryHeadline}</h1>
+                <sly data-sly-test="${leadBanner.hasSecondaryHeadlineItems}">
+                    <h1 class="lead-banner__headline-secondary" 
+                        data-strings="${leadBanner.secondaryHeadlineStringsJson}">${leadBanner.firstSecondaryHeadlineText}</h1>
+                </sly>
+            </div>
+        </div>
+        
+        <!-- Secondary Text -->
+        <p class="lead-banner__secondary-text" data-sly-test="${leadBanner.secondaryText}">${leadBanner.secondaryText @ context='html'}</p>
+    </div>
+</div>
+<!-- LEAD BANNER COMPONENT HTML MARKUP ENDS HERE -->
+<sly data-sly-call="${templates.placeholder @ isEmpty = !leadBanner.primaryHeadline, classAppend='lead-banner'}"></sly>
