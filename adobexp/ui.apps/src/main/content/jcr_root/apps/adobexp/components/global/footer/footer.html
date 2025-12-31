@@ -1,0 +1,81 @@
+<!--/*
+    Footer Component - AEM Sightly Template
+    
+    This component renders a responsive footer with:
+    - Heading, lead text, and email link
+    - Main menu navigation column
+    - Useful links navigation column
+    - Privacy policy link and copyright text
+    - Curtain reveal effect on desktop
+*/-->
+
+<sly data-sly-use.templates="adobexp/components/commons/v1/templates.html"/>
+<sly data-sly-use.footer="com.adobexp.aem.core.components.models.FooterModel"/>
+
+<!-- FOOTER COMPONENT HTML MARKUP STARTS HERE -->
+<footer class="footer" data-component="footer" aria-label="Footer" 
+        data-sly-test="${footer.footerHeading || footer.footerLead || footer.footerEmail || footer.hasMainMenuItems || footer.hasUsefulMenuItems}">
+    <div class="footer__surface">
+        <div class="footer__grid">
+            <!-- Left Section: Heading, Lead, Email -->
+            <div class="footer__left">
+                <h2 class="footer__heading" data-sly-test="${footer.footerHeading}">${footer.footerHeading}</h2>
+                <p class="footer__lead" data-sly-test="${footer.footerLead}">${footer.footerLead}</p>
+                <sly data-sly-test="${footer.footerEmail}">
+                    <a class="footer__email" href="mailto:${footer.footerEmail}">${footer.footerEmail}</a>
+                </sly>
+            </div>
+
+            <!-- Main Menu Column -->
+            <sly data-sly-test="${footer.mainMenuTitle || footer.hasMainMenuItems}">
+                <nav class="footer__col" aria-label="${footer.mainMenuTitle || 'Menu'}">
+                    <div class="footer__col-title" data-sly-test="${footer.mainMenuTitle}">${footer.mainMenuTitle}</div>
+                    <ul class="footer__links" data-sly-test="${footer.hasMainMenuItems}">
+                        <sly data-sly-list.menuItem="${footer.mainMenuItems}">
+                            <li>
+                                <a data-sly-use.menuLinkFilter="${'adobexp/components/commons/v1/helper/checkProp.js' @ propName='link', propValue=menuItem.menuItemLink}"
+                                    href="${menuLinkFilter.value}"
+                                    class="footer__link"
+                                    target="${menuItem.external ? '_blank' : '_self'}"
+                                    rel="${menuItem.external ? 'noopener noreferrer' : ''}">${menuItem.menuItemTitle}</a>
+                            </li>
+                        </sly>
+                    </ul>
+                </nav>
+            </sly>
+
+            <!-- Useful Menu Column -->
+            <sly data-sly-test="${footer.usefulMenuTitle || footer.hasUsefulMenuItems}">
+                <nav class="footer__col" aria-label="${footer.usefulMenuTitle || 'Useful'}">
+                    <div class="footer__col-title" data-sly-test="${footer.usefulMenuTitle}">${footer.usefulMenuTitle}</div>
+                    <ul class="footer__links" data-sly-test="${footer.hasUsefulMenuItems}">
+                        <sly data-sly-list.usefulItem="${footer.usefulMenuItems}">
+                            <li>
+                                <a data-sly-use.usefulLinkFilter="${'adobexp/components/commons/v1/helper/checkProp.js' @ propName='link', propValue=usefulItem.usefulItemLink}"
+                                    href="${usefulLinkFilter.value}"
+                                    class="footer__link"
+                                    target="${usefulItem.external ? '_blank' : '_self'}"
+                                    rel="${usefulItem.external ? 'noopener noreferrer' : ''}">${usefulItem.usefulItemTitle}</a>
+                            </li>
+                        </sly>
+                    </ul>
+                </nav>
+            </sly>
+        </div>
+
+        <div class="footer__divider"></div>
+
+        <!-- Bottom Section: Privacy Policy & Copyright -->
+        <div class="footer__bottom">
+            <sly data-sly-test="${footer.privacyPolicyTitle && footer.privacyPolicyLink}">
+                <a data-sly-use.privacyLinkFilter="${'adobexp/components/commons/v1/helper/checkProp.js' @ propName='link', propValue=footer.privacyPolicyLink}"
+                    href="${privacyLinkFilter.value}"
+                    class="footer__legal">${footer.privacyPolicyTitle}</a>
+            </sly>
+            <div class="footer__copyright" data-sly-test="${footer.copyrightText}">${footer.copyrightText}</div>
+        </div>
+    </div>
+</footer>
+<!-- FOOTER COMPONENT HTML MARKUP ENDS HERE -->
+<sly data-sly-call="${templates.placeholder @ isEmpty = (!footer.footerHeading && !footer.footerLead && !footer.footerEmail), classAppend='footer'}"></sly>
+

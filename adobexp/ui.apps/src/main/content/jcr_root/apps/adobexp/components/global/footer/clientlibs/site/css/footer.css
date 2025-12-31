@@ -1,0 +1,243 @@
+/**
+ * Footer Component CSS
+ * 
+ * NOTE: The curtain reveal effect is DISABLED in AEM because:
+ * - AEM's DOM structure uses container wrappers (top, main-content, bottom)
+ * - The footer is nested inside experience fragment containers
+ * - This is fundamentally incompatible with the curtain effect
+ * 
+ * The footer displays in normal document flow in AEM.
+ */
+
+/* ============================================
+   Footer Base Styles (Normal Flow for AEM)
+   ============================================ */
+.footer {
+    position: relative;
+    z-index: auto;
+    pointer-events: auto;
+}
+
+/* ============================================
+   Footer Surface
+   ============================================ */
+.footer__surface {
+    pointer-events: auto;
+    background: var(--footer-bg, var(--site-body-bg, #ffffff));
+    color: var(--site-body-text, #111827);
+    border-radius: 0;
+    margin: 0;
+    padding: 48px 48px 28px;
+    box-shadow: none;
+    overflow: hidden;
+}
+
+/* Theme-scoped tokens (inherit from site theme) */
+.footer__surface {
+    --footer-muted: color-mix(in srgb, var(--site-body-text, #111827) 72%, transparent);
+    --footer-divider: color-mix(in srgb, var(--site-body-text, #111827) 14%, transparent);
+}
+
+/* ============================================
+   Footer Grid Layout
+   ============================================ */
+.footer__grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 0.8fr;
+    gap: 40px;
+    align-items: start;
+}
+
+/* ============================================
+   Footer Left Section (Heading, Lead, Email)
+   ============================================ */
+.footer__heading {
+    font-size: 48px;
+    line-height: 1.05;
+    font-weight: 500;
+    margin: 0 0 18px;
+    letter-spacing: -0.02em;
+}
+
+.footer__lead {
+    margin: 0 0 10px;
+    color: var(--footer-muted);
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.footer__email {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--site-body-text, #111827);
+    text-decoration: none;
+    font-size: 16px;
+    position: relative;
+}
+
+.footer__email::after {
+    content: "↗";
+    display: inline-block;
+    transform: translateY(-1px);
+    opacity: 0.9;
+}
+
+/* ============================================
+   Center-to-edges Underline Hover Animation
+   ============================================ */
+.footer__email::before,
+.footer__link::after,
+.footer__legal::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -6px;
+    height: 2px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 0.35s ease;
+    pointer-events: none;
+}
+
+/* Email uses ::before to keep ::after reserved for the ↗ icon */
+.footer__email::before {
+    bottom: -8px;
+}
+
+.footer__email:hover::before {
+    transform: scaleX(1);
+}
+
+/* ============================================
+   Footer Column Navigation
+   ============================================ */
+.footer__col-title {
+    margin: 10px 0 12px;
+    color: color-mix(in srgb, var(--site-body-text, #111827) 55%, transparent);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.footer__links {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 6px;
+}
+
+.footer__link {
+    color: var(--site-body-text, #111827);
+    text-decoration: none;
+    font-size: 14px;
+    line-height: 1.6;
+    position: relative;
+    display: inline-block;
+}
+
+.footer__link:hover::after {
+    transform: scaleX(1);
+}
+
+/* ============================================
+   Footer Divider
+   ============================================ */
+.footer__divider {
+    height: 1px;
+    background: var(--footer-divider);
+    margin: 34px 0 14px;
+}
+
+/* ============================================
+   Footer Bottom Section (Legal & Copyright)
+   ============================================ */
+.footer__bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+}
+
+.footer__legal {
+    color: color-mix(in srgb, var(--site-body-text, #111827) 60%, transparent);
+    font-size: 14px;
+    text-decoration: none;
+    position: relative;
+    display: inline-block;
+}
+
+.footer__legal:hover {
+    color: var(--site-body-text, #111827);
+}
+
+.footer__legal:hover::after {
+    transform: scaleX(1);
+}
+
+.footer__copyright {
+    color: color-mix(in srgb, var(--site-body-text, #111827) 60%, transparent);
+    font-size: 14px;
+}
+
+/* ============================================
+   Focus Styles for Accessibility
+   ============================================ */
+.footer__email:focus-visible,
+.footer__link:focus-visible,
+.footer__legal:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 4px;
+    border-radius: 6px;
+}
+
+/* ============================================
+   Responsive Styles (Mobile)
+   ============================================ */
+@media (max-width: 768px) {
+    .footer__surface {
+        padding: 28px 20px 20px;
+        border-radius: 0;
+    }
+
+    .footer__grid {
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas:
+            "left left"
+            "menu useful";
+        gap: 22px 24px;
+    }
+
+    .footer__left {
+        grid-area: left;
+    }
+
+    /* Target the two nav columns by their aria-labels (stable + no markup changes needed) */
+    .footer__col[aria-label="Menu"],
+    .footer__col:first-of-type {
+        grid-area: menu;
+    }
+
+    .footer__col[aria-label="Useful"],
+    .footer__col:last-of-type {
+        grid-area: useful;
+    }
+
+    .footer__heading {
+        font-size: 34px;
+    }
+
+    .footer__divider {
+        margin: 22px 0 12px;
+    }
+
+    .footer__bottom {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+}
+
