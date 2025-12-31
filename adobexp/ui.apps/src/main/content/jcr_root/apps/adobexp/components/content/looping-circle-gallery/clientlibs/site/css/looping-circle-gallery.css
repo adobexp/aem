@@ -1,0 +1,170 @@
+/**
+ * Looping Circle Gallery Component CSS
+ * Styles for the rotating circular gallery with overlay message and flip animations
+ */
+
+/* ============================================
+   Looping Circle Gallery Base Styles
+   ============================================ */
+.looping-circle-gallery {
+    width: 100%;
+    min-height: 800px;
+    position: relative;
+    padding: 40px 20px;
+    background: var(--site-body-bg, #ffffff);
+}
+
+/* ============================================
+   Gallery Center Container
+   ============================================ */
+.looping-circle-gallery__center {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: min(720px, 92vw);
+    aspect-ratio: 1/1;
+}
+
+/* ============================================
+   Overlay Message Styles
+   ============================================ */
+.looping-circle-gallery__overlay {
+    position: absolute;
+    left: 10px;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 3;
+    width: auto;
+    padding: 22px 20px;
+    border-radius: 18px;
+    text-align: center;
+    background: var(--looping-circle-gallery-overlay-bg, rgba(0, 0, 0, 0.5));
+    color: var(--looping-circle-gallery-overlay-text, #ffffff);
+    font-family: var(--looping-circle-gallery-font, "Instrument Serif", "Hubot Sans", "Framer Display", serif);
+    font-size: clamp(28px, 4.3vw, 56px);
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    pointer-events: none;
+    backdrop-filter: blur(2px);
+}
+
+/* ============================================
+   Stage (Rotating Container) Styles
+   ============================================ */
+.looping-circle-gallery__stage {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-origin: 50% 50%;
+    animation: looping-circle-gallery-spin var(--looping-circle-gallery-rotation-duration, 30s) linear infinite;
+}
+
+/* ============================================
+   Individual Item Styles
+   ============================================ */
+.looping-circle-gallery__item {
+    --count: 8;
+    --radius: min(290px, 34vw);
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) rotate(calc(360deg / var(--count) * var(--i))) translateY(calc(-1 * var(--radius)));
+    transform-origin: center;
+}
+
+/* ============================================
+   Card Styles
+   ============================================ */
+.looping-circle-gallery__card {
+    width: 120px;
+    height: 170px;
+    border-radius: 16px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.18);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.14);
+    transition: transform 0.25s ease;
+    perspective: 900px;
+}
+
+/* ============================================
+   Image Styles
+   ============================================ */
+.looping-circle-gallery__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: saturate(0.85) contrast(1.05);
+}
+
+/* ============================================
+   Flip Animation State
+   ============================================ */
+.looping-circle-gallery__item.is-flipping .looping-circle-gallery__card {
+    animation: looping-circle-gallery-flip var(--looping-circle-gallery-flip-duration, 1.6s) ease-in-out;
+}
+
+/* ============================================
+   Keyframe Animations
+   ============================================ */
+@keyframes looping-circle-gallery-spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes looping-circle-gallery-flip {
+    0% {
+        transform: rotateY(0deg);
+    }
+    50% {
+        transform: rotateY(180deg);
+    }
+    100% {
+        transform: rotateY(360deg);
+    }
+}
+
+/* ============================================
+   Responsive Styles - Mobile
+   ============================================ */
+@media (max-width: 520px) {
+    .looping-circle-gallery {
+        min-height: 520px;
+    }
+    
+    .looping-circle-gallery__overlay {
+        padding: 16px 16px;
+        border-radius: 14px;
+        font-size: 32px;
+    }
+    
+    .looping-circle-gallery__card {
+        width: 92px;
+        height: 132px;
+        border-radius: 14px;
+    }
+    
+    .looping-circle-gallery__item {
+        --radius: min(220px, 46vw);
+    }
+}
+
+/* ============================================
+   Reduced Motion Preference
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+    .looping-circle-gallery__stage {
+        animation: none;
+    }
+    
+    .looping-circle-gallery__item.is-flipping .looping-circle-gallery__card {
+        animation: none;
+    }
+}
+

@@ -1,0 +1,52 @@
+<!--/*
+    Looping Circle Gallery Component - AEM Sightly Template
+    
+    This component renders a visually engaging gallery with:
+    - 8 images arranged in a circular rotating layout
+    - An overlay message displayed in the center
+    - Smooth rotation animation
+    - Random card flip effects
+*/-->
+
+<sly data-sly-use.templates="adobexp/components/commons/v1/templates.html"/>
+<sly data-sly-use.gallery="com.adobexp.aem.core.components.models.LoopingCircleGalleryModel"/>
+
+<sly data-sly-use.clientlib="/libs/granite/sightly/templates/clientlib.html">
+    <sly data-sly-call="${clientlib.all @ categories='adobexp.components.looping-circle-gallery.v1', async=true}"/>
+</sly>
+
+<!-- LOOPING CIRCLE GALLERY COMPONENT HTML MARKUP STARTS HERE -->
+<section class="looping-circle-gallery" 
+         data-component="looping-circle-gallery" 
+         aria-label="Looping circle gallery"
+         data-sly-test="${gallery.hasImages || gallery.galleryMessage}">
+    
+    <!-- Gallery Overlay Message -->
+    <div class="looping-circle-gallery__overlay" 
+         aria-label="Gallery message"
+         data-sly-test="${gallery.galleryMessage}">
+        ${gallery.galleryMessage}
+    </div>
+    
+    <!-- Gallery Stage with Rotating Images -->
+    <div class="looping-circle-gallery__center" aria-hidden="true">
+        <div class="looping-circle-gallery__stage">
+            <!-- Gallery Items (8 cards on a circular path) -->
+            <sly data-sly-list.image="${gallery.galleryImages}">
+                <div class="looping-circle-gallery__item" style="--i:${image.index @ context='styleToken'};">
+                    <div class="looping-circle-gallery__card">
+                        <sly data-sly-use.imageUrl="${'adobexp/components/commons/v1/helper/transformurls.js' @ internalUrl=image.imagePath}">
+                            <img class="looping-circle-gallery__img" 
+                                 src="${imageUrl}" 
+                                 alt="${image.imageAlt || 'Gallery image'}"/>
+                        </sly>
+                    </div>
+                </div>
+            </sly>
+        </div>
+    </div>
+</section>
+<!-- LOOPING CIRCLE GALLERY COMPONENT HTML MARKUP ENDS HERE -->
+
+<sly data-sly-call="${templates.placeholder @ isEmpty = !gallery.hasImages, classAppend='looping-circle-gallery'}"></sly>
+
