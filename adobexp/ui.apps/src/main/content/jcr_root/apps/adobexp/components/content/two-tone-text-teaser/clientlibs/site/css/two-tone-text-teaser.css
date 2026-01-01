@@ -1,0 +1,93 @@
+/**
+ * Two Tone Text Teaser Component CSS
+ * Styles for the two-tone text teaser with primary/secondary text and CTA button
+ */
+
+/* ============================================
+   Text Base Styles
+   ============================================ */
+.text {
+    width: 100%;
+    padding: 20px;
+    color: var(--primary-text-color, #111827);
+    font-family: "Hubot Sans", "Framer Display", "Instrument Serif", "Segoe UI", Arial, sans-serif;
+    font-synthesis: weight style;
+}
+
+.text__paragraph {
+    margin: 0;
+    font-size: var(--standard-site-font-size, 16px);
+    font-weight: var(--standard-site-font-weight, 400);
+    line-height: 1.6;
+    color: var(--standard-primary-site-text-color, #111827);
+}
+
+.text__primary {
+    color: var(--standard-primary-site-text-color, #111827);
+}
+
+.text__secondary {
+    color: var(--standard-secondary-site-text-color, #4b5563);
+}
+
+.text__paragraph strong,
+.text__paragraph b {
+    font-weight: 700;
+    text-shadow: 0.5px 0 0 currentColor, -0.5px 0 0 currentColor;
+}
+
+.text__paragraph em,
+.text__paragraph i {
+    font-style: italic;
+}
+
+.text__paragraph strong em,
+.text__paragraph strong i,
+.text__paragraph b em,
+.text__paragraph b i,
+.text__paragraph em strong,
+.text__paragraph i strong,
+.text__paragraph em b,
+.text__paragraph i b {
+    font-style: italic;
+    font-weight: 700;
+    text-shadow: 0.5px 0 0 currentColor, -0.5px 0 0 currentColor;
+}
+
+@media (max-width: 768px) {
+    .text {
+        padding: 10px;
+    }
+}
+
+/* ============================================
+   Two Tone Text Teaser Styles
+   ============================================ */
+.two-tone-text-teaser {
+    width: 100%;
+    padding: 20px;
+}
+
+.theme-dark .two-tone-text-teaser,
+.two-tone-text-teaser.theme-dark {
+    background-color: var(--two-tone-text-teaser-bg, #1e1e1e);
+}
+
+@media (max-width: 768px) {
+    .two-tone-text-teaser {
+        padding: 10px;
+    }
+}
+
+.two-tone-text-teaser__container {
+    max-width: 980px;
+    margin: 0 auto;
+}
+
+.two-tone-text-teaser__cta {
+    margin-top: 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+

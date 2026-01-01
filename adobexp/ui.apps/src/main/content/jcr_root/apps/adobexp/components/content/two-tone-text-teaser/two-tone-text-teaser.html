@@ -1,0 +1,43 @@
+<!--/*
+    Two Tone Text Teaser Component - AEM Sightly Template
+    
+    This component renders a text teaser with:
+    - Primary text (displayed in primary color)
+    - Secondary text (displayed in secondary color)
+    - Optional CTA button with link
+*/-->
+
+<sly data-sly-use.templates="adobexp/components/commons/v1/templates.html"/>
+<sly data-sly-use.teaser="com.adobexp.aem.core.components.models.TwoToneTextTeaserModel"/>
+
+<!-- TWO TONE TEXT TEASER COMPONENT HTML MARKUP STARTS HERE -->
+<section class="two-tone-text-teaser" data-component="two-tone-text-teaser" data-sly-test="${teaser.primaryText || teaser.secondaryText}">
+    <div class="two-tone-text-teaser__container">
+        <section class="text text-size-32" data-component="text">
+            <p class="text__paragraph">
+                <span class="text__primary" data-sly-test="${teaser.primaryText}">${teaser.primaryText}</span>
+                <span class="text__secondary" data-sly-test="${teaser.secondaryText}">${teaser.secondaryText}</span>
+            </p>
+            <sly data-sly-test="${teaser.ctaText && teaser.ctaLink}">
+                <div class="two-tone-text-teaser__cta">
+                    <a data-sly-use.ctaLinkFilter="${'adobexp/components/commons/v1/helper/checkProp.js' @ propName='link', propValue=teaser.ctaLink}"
+                        class="cta-button" 
+                        href="${ctaLinkFilter.value}"
+                        target="${teaser.ctaLinkExternal ? '_blank' : '_self'}"
+                        rel="${teaser.ctaLinkExternal ? 'noopener noreferrer' : ''}"
+                        aria-label="${teaser.ctaText}">
+                        <span>${teaser.ctaText}</span>
+                        <span class="btn-theme-auto btn-icon-only cta-button__icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" width="20" height="20" stroke-width="1.5" aria-hidden="true">
+                                <path d="M5 12h14m-6 6 6-6m-6-6 6 6"></path>
+                            </svg>
+                        </span>
+                    </a>
+                </div>
+            </sly>
+        </section>
+    </div>
+</section>
+<!-- TWO TONE TEXT TEASER COMPONENT HTML MARKUP ENDS HERE -->
+<sly data-sly-call="${templates.placeholder @ isEmpty = (!teaser.primaryText && !teaser.secondaryText), classAppend='two-tone-text-teaser'}"></sly>
+
