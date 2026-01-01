@@ -1,0 +1,144 @@
+/**
+ * Comparison Component CSS
+ * Styles for the comparison grid with three columns
+ */
+
+/* ============================================
+   Comparison Base Styles
+   ============================================ */
+.comparison {
+    width: 100%;
+    padding: 28px 20px;
+    background: var(--site-body-bg, #ffffff);
+    color: var(--standard-primary-site-text-color, #111827);
+}
+
+.comparison__inner {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.comparison__title {
+    margin: 0 0 20px;
+    font-size: 44px;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+}
+
+/* ============================================
+   Comparison Grid Styles
+   ============================================ */
+.comparison__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0;
+    border-left: 1px solid var(--comparison-divider, var(--services-divider-color, rgba(0, 0, 0, 0.12)));
+    border-right: 1px solid var(--comparison-divider, var(--services-divider-color, rgba(0, 0, 0, 0.12)));
+}
+
+.comparison__col {
+    padding: 28px 28px 20px;
+    min-height: 360px;
+    position: relative;
+}
+
+.comparison__col + .comparison__col {
+    border-left: 1px solid var(--comparison-divider, var(--services-divider-color, rgba(0, 0, 0, 0.12)));
+}
+
+/* ============================================
+   Column Heading Styles
+   ============================================ */
+.comparison__heading {
+    margin: 0 0 8px;
+    font-size: 32px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    line-height: 1.1;
+}
+
+.comparison__heading-num {
+    font-variant-numeric: tabular-nums;
+    margin-right: 8px;
+}
+
+/* ============================================
+   Column Description Styles
+   ============================================ */
+.comparison__desc {
+    margin: 0 0 22px;
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--standard-secondary-site-text-color, #6b7280);
+    max-width: 340px;
+}
+
+/* ============================================
+   List Item Styles
+   ============================================ */
+.comparison__list {
+    margin: 0;
+    padding: 22px 0 0;
+    list-style: none;
+    border-top: 1px dashed var(--comparison-dash, var(--services-divider-color, rgba(0, 0, 0, 0.12)));
+}
+
+.comparison__item {
+    padding: 10px 0;
+    font-size: 14px;
+    color: color-mix(in srgb, var(--standard-primary-site-text-color, #111827) 62%, transparent);
+}
+
+.comparison__item + .comparison__item {
+    border-top: 1px dashed var(--comparison-dash, var(--services-divider-color, rgba(0, 0, 0, 0.12)));
+}
+
+/* ============================================
+   Dark Theme Support
+   ============================================ */
+.theme-dark .comparison,
+.comparison.theme-dark {
+    --comparison-divider: var(--services-divider-color, rgba(255, 255, 255, 0.12));
+    --comparison-dash: var(--services-divider-color, rgba(255, 255, 255, 0.12));
+}
+
+/* ============================================
+   Responsive Styles
+   ============================================ */
+@media (max-width: 900px) {
+    .comparison__title {
+        font-size: 38px;
+    }
+    .comparison__heading {
+        font-size: 28px;
+    }
+}
+
+@media (max-width: 768px) {
+    .comparison {
+        padding: 22px 10px;
+    }
+    .comparison__title {
+        font-size: 34px;
+        margin-bottom: 16px;
+    }
+    .comparison__grid {
+        grid-template-columns: 1fr;
+        border-left: none;
+        border-right: none;
+    }
+    .comparison__col {
+        padding: 22px 16px 16px;
+        min-height: 0;
+    }
+    .comparison__col + .comparison__col {
+        border-left: none;
+        border-top: 1px solid var(--comparison-divider, var(--services-divider-color, rgba(0, 0, 0, 0.12)));
+    }
+    .comparison__desc {
+        max-width: none;
+    }
+}
+

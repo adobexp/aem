@@ -1,0 +1,51 @@
+<!--/*
+    Comparison Component - AEM Sightly Template
+    
+    This component renders a comparison section with:
+    - Section title
+    - Three-column grid layout
+    - Each column with optional heading number, title, description, and list items
+*/-->
+
+<sly data-sly-use.templates="adobexp/components/commons/v1/templates.html"/>
+<sly data-sly-use.comparison="com.adobexp.aem.core.components.models.ComparisonModel"/>
+
+<!-- COMPARISON COMPONENT HTML MARKUP STARTS HERE -->
+<section class="comparison" data-component="comparison" aria-label="Comparison" data-sly-test="${comparison.hasContent}">
+    <div class="comparison__inner">
+        <!-- Section Title -->
+        <h2 class="comparison__title" data-sly-test="${comparison.title}">${comparison.title}</h2>
+
+        <!-- Comparison Grid -->
+        <div class="comparison__grid" role="list">
+            <!-- Iterate through columns -->
+            <sly data-sly-list.column="${comparison.columns}">
+                <article class="comparison__col" role="listitem" 
+                         aria-label="${column.columnTitle}" 
+                         data-sly-test="${column.hasContent}">
+                    
+                    <!-- Column Heading -->
+                    <h3 class="comparison__heading" data-sly-test="${column.columnTitle}">
+                        <span class="comparison__heading-num" data-sly-test="${column.headingNum}">${column.headingNum}</span>${column.columnTitle}
+                    </h3>
+                    
+                    <!-- Column Description -->
+                    <p class="comparison__desc" data-sly-test="${column.description}">${column.description}</p>
+                    
+                    <!-- Column List Items -->
+                    <sly data-sly-test="${column.items && column.items.size > 0}">
+                        <ul class="comparison__list">
+                            <sly data-sly-list.item="${column.items}">
+                                <li class="comparison__item">${item.itemText}</li>
+                            </sly>
+                        </ul>
+                    </sly>
+                </article>
+            </sly>
+        </div>
+    </div>
+</section>
+<!-- COMPARISON COMPONENT HTML MARKUP ENDS HERE -->
+
+<sly data-sly-call="${templates.placeholder @ isEmpty = !comparison.hasContent, classAppend='comparison'}"></sly>
+
