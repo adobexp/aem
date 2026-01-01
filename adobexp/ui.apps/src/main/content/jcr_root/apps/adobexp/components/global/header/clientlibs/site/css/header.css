@@ -19,21 +19,8 @@
 }
 
 .header__menu-btn {
+    /* Visuals/animation are driven by global .btn-theme-* + .btn-icon-only */
     flex-shrink: 0;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 8px;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: inherit;
-    transition: background-color 0.2s ease;
-}
-
-.header__menu-btn:hover {
-    background-color: rgba(255, 255, 255, 0.1);
 }
 
 .header__menu-icon {
@@ -108,57 +95,14 @@
    Theme Toggle Button
    ============================================ */
 .header__theme-toggle {
+    /* Visuals/animation are driven by global .btn-theme-* + .btn-icon-only */
     margin-left: auto;
     flex-shrink: 0;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 8px;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: inherit;
-    transition: background-color 0.2s ease;
-}
-
-.header__theme-toggle:hover {
-    background-color: rgba(255, 255, 255, 0.1);
 }
 
 .header__theme-icon {
     width: 20px;
     height: 20px;
-}
-
-/* ============================================
-   Icon Button Base Styles
-   ============================================ */
-.btn-icon-only {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    padding: 8px;
-    border: none;
-    border-radius: 8px;
-    background: transparent;
-    color: inherit;
-    cursor: pointer;
-    transition: background-color 0.2s ease, color 0.2s ease;
-}
-
-.btn-icon-only:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-}
-
-.btn-theme-dark {
-    color: var(--primary-text-color, #f8fafc);
-}
-
-.btn-theme-light {
-    color: var(--primary-text-color, #1e293b);
 }
 
 /* ============================================

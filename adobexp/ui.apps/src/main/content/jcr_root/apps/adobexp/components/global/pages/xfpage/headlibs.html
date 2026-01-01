@@ -21,12 +21,10 @@
      <link data-sly-test="${head.design}" href="${head.design}" rel="stylesheet" type="text/css" />
 
      <!--/* Site Theme CSS Variables - Generated from Context-Aware Configuration */-->
-     <sly data-sly-use.headTheme="head.theme.html"
-     data-sly-call="${headTheme.themeStyles}"></sly>
-
-     <sly data-sly-use.clientLib="/libs/granite/sightly/templates/clientlib.html"
-     data-sly-call="${clientlib.css @ categories='adobexp.site'}"/>
-
+     <sly data-sly-use.headTheme="head.theme.html" data-sly-call="${headTheme.themeStyles}"></sly>
+     <sly data-sly-use.clientLib="/libs/granite/sightly/templates/clientlib.html" data-sly-call="${clientlib.css @ categories='adobexp.base'}"/>
+     <sly data-sly-use.clientLib="/libs/granite/sightly/templates/clientlib.html" data-sly-call="${clientlib.css @ categories='adobexp.site'}"/>
+     
      <!--/* Include Context Hub */-->
      <sly data-sly-resource="${'contexthub' @ resourceType='granite/contexthub/components/contexthub'}"/>
 </template>
