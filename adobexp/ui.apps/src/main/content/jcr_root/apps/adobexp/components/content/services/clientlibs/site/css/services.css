@@ -10,13 +10,11 @@
     width: 100%;
     padding: 40px 20px;
     color: var(--standard-primary-site-text-color, #111827);
-    background: transparent;
 }
 
-.theme-dark .services,
-.services.theme-dark {
-    background: var(--site-body-bg, #1e1e1e);
-    color: var(--standard-primary-site-text-color, #ffffff);
+/* Background only applied with modifier class */
+.services--with-bg {
+    background: var(--services-bg, var(--site-body-bg));
 }
 
 .services__inner {
@@ -115,19 +113,19 @@
     .services {
         padding: 56px 24px;
     }
-    
+
     .services__layout {
         grid-template-columns: 1fr;
         gap: 18px;
     }
-    
+
     .services__items {
         grid-template-columns: 1fr 1fr;
         column-gap: 64px;
         row-gap: 0;
         border-top: 1px dashed var(--services-divider-color, rgba(0, 0, 0, 0.12));
     }
-    
+
     .services__item {
         grid-template-columns: 1fr;
         gap: 10px;
@@ -135,19 +133,19 @@
         border-top: none;
         position: relative;
     }
-    
+
     .services__item:nth-child(-n+2) {
         border-bottom: 1px dashed var(--services-divider-color, rgba(0, 0, 0, 0.12));
     }
-    
+
     .services__item:nth-child(odd) {
         padding-right: 64px;
     }
-    
+
     .services__item:nth-child(even) {
         padding-left: 64px;
     }
-    
+
     .services__item:nth-child(odd)::after {
         content: "";
         position: absolute;
@@ -158,13 +156,13 @@
         background: repeating-linear-gradient(to bottom, var(--services-divider-color, rgba(0, 0, 0, 0.12)) 0 2px, transparent 2px 6px);
         opacity: 0.7;
     }
-    
+
     .services__icon {
         width: 64px;
         height: 64px;
         opacity: 0.85;
     }
-    
+
     .services__item-title {
         font-size: 22px;
     }
@@ -179,13 +177,13 @@
         gap: 0;
         align-items: start;
     }
-    
+
     .services__items {
         border-top: none;
         padding-left: 64px;
         position: relative;
     }
-    
+
     .services__items::before {
         content: "";
         position: absolute;
@@ -196,14 +194,12 @@
         background: repeating-linear-gradient(to bottom, var(--services-divider-color, rgba(0, 0, 0, 0.12)) 0 2px, transparent 2px 6px);
         opacity: 0.7;
     }
-    
+
     .services__item:nth-child(odd) {
         padding-right: 56px;
     }
-    
+
     .services__item:nth-child(even) {
         padding-left: 56px;
     }
 }
-
-

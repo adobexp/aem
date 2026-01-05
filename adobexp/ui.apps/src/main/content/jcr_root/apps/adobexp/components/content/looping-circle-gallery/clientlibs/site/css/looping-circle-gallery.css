@@ -23,7 +23,7 @@
     top: 50%;
     transform: translate(-50%, -50%);
     width: min(720px, 92vw);
-    aspect-ratio: 1/1;
+    aspect-ratio: 1 / 1;
 }
 
 /* ============================================
@@ -40,14 +40,18 @@
     padding: 22px 20px;
     border-radius: 18px;
     text-align: center;
-    background: var(--looping-circle-gallery-overlay-bg, rgba(0, 0, 0, 0.5));
     color: var(--looping-circle-gallery-overlay-text, #ffffff);
-    font-family: var(--looping-circle-gallery-font, "Instrument Serif", "Hubot Sans", "Framer Display", serif);
+    font-family: "Instrument Serif", "Hubot Sans", "Framer Display", serif;
     font-size: clamp(28px, 4.3vw, 56px);
     line-height: 1.05;
     letter-spacing: -0.01em;
     pointer-events: none;
     backdrop-filter: blur(2px);
+}
+
+/* Background only applied with modifier class on parent */
+.looping-circle-gallery--with-bg .looping-circle-gallery__overlay {
+    background: var(--looping-circle-gallery-overlay-bg, rgba(0, 0, 0, 0.5));
 }
 
 /* ============================================
@@ -137,19 +141,19 @@
     .looping-circle-gallery {
         min-height: 520px;
     }
-    
+
     .looping-circle-gallery__overlay {
         padding: 16px 16px;
         border-radius: 14px;
         font-size: 32px;
     }
-    
+
     .looping-circle-gallery__card {
         width: 92px;
         height: 132px;
         border-radius: 14px;
     }
-    
+
     .looping-circle-gallery__item {
         --radius: min(220px, 46vw);
     }
@@ -162,9 +166,8 @@
     .looping-circle-gallery__stage {
         animation: none;
     }
-    
+
     .looping-circle-gallery__item.is-flipping .looping-circle-gallery__card {
         animation: none;
     }
 }
-

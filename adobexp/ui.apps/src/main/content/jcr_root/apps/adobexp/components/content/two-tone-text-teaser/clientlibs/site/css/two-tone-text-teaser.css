@@ -68,9 +68,17 @@
     padding: 20px;
 }
 
-.theme-dark .two-tone-text-teaser,
-.two-tone-text-teaser.theme-dark {
+/* Background only applied with modifier class */
+/* Dark theme with background modifier */
+.theme-dark .two-tone-text-teaser--with-bg,
+.two-tone-text-teaser.theme-dark.two-tone-text-teaser--with-bg {
     background-color: var(--two-tone-text-teaser-bg, #1e1e1e);
+}
+
+/* Light theme with background modifier */
+.theme-light .two-tone-text-teaser--with-bg,
+.two-tone-text-teaser.theme-light.two-tone-text-teaser--with-bg {
+    background-color: var(--two-tone-text-teaser-bg, var(--site-body-bg));
 }
 
 @media (max-width: 768px) {
@@ -90,4 +98,3 @@
     align-items: center;
     gap: 12px;
 }
-
