@@ -1,0 +1,137 @@
+<!--/*
+    Blob Image Section Component - AEM Sightly Template
+    
+    This component renders a content section with:
+    - Badge title
+    - Main headline
+    - Description text
+    - Primary image or video with clip-path shapes
+    - Optional icon badge overlay
+    - Optional overlay image (circular)
+    - Optional overlay card (with image, title, subtitle)
+    - Optional CTA pill button
+    - Configurable shape patterns and alignment
+    
+    Note: Theme (dark/light) is controlled via page template, not this component.
+    
+    Supported Variations:
+    - Media: Image / Video (auto-detected)
+    - Alignment: Image Left / Image Right
+    - Shape: V1 to V6
+*/-->
+
+<sly data-sly-use.templates="adobexp/components/commons/v1/templates.html"/>
+<sly data-sly-use.blobImageSection="com.adobexp.aem.core.components.models.BlobImageSectionModel"/>
+
+<!-- BLOB IMAGE SECTION COMPONENT HTML MARKUP STARTS HERE -->
+<section 
+    class="blob-image-section ${blobImageSection.withBackground ? 'blob-image-section--with-bg' : ''} ${blobImageSection.withCardBackground ? 'blob-image-section--with-card-bg' : ''} ${blobImageSection.imageAlignment} ${blobImageSection.shapePattern}" 
+    data-component="blob-image-section" 
+    aria-label="${blobImageSection.mainTitle || 'Image Section'}"
+    data-sly-test="${blobImageSection.mainTitle || blobImageSection.effectiveMediaPath}">
+    
+    <div class="blob-image-section__inner">
+        <div class="blob-image-section__card">
+            <div class="blob-image-section__layout">
+                <!-- Content Section -->
+                <div class="blob-image-section__content">
+                    <!-- Badge -->
+                    <span class="blob-image-section__badge" data-sly-test="${blobImageSection.badgeTitle}">${blobImageSection.badgeTitle}</span>
+                    
+                    <!-- Main Title -->
+                    <h2 class="blob-image-section__title" data-sly-test="${blobImageSection.mainTitle}">${blobImageSection.mainTitle}</h2>
+                    
+                    <!-- Description -->
+                    <p class="blob-image-section__description" data-sly-test="${blobImageSection.description}">${blobImageSection.description @ context='html'}</p>
+                </div>
+                
+                <!-- Images/Media Section -->
+                <div class="blob-image-section__images" data-sly-test="${blobImageSection.effectiveMediaPath}">
+                    <!-- Primary Blob Media Container -->
+                    <div class="blob-image-section__blob-primary">
+                        <!-- Video Rendering -->
+                        <sly data-sly-test="${blobImageSection.video}">
+                            <sly data-sly-use.videoUrl="${'adobexp/components/commons/v1/helper/transformurls.js' @ internalUrl=blobImageSection.effectiveMediaPath}">
+                                <video muted playsinline loop data-start-time="${blobImageSection.videoStartTime || '0'}">
+                                    <source src="${videoUrl}" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                            </sly>
+                        </sly>
+                        
+                        <!-- Image Rendering -->
+                        <sly data-sly-test="${!blobImageSection.video}">
+                            <sly data-sly-use.imgUrl="${'adobexp/components/commons/v1/helper/transformurls.js' @ internalUrl=blobImageSection.effectiveMediaPath}">
+                                <img src="${imgUrl}" 
+                                     alt="${blobImageSection.effectiveMediaAlt || blobImageSection.mainTitle || 'Image'}" 
+                                     loading="lazy">
+                            </sly>
+                        </sly>
+                    </div>
+                    
+                    <!-- Icon Badge Overlay -->
+                    <sly data-sly-test="${blobImageSection.hasIconBadge}">
+                        <div class="blob-image-section__icon-badge blob-image-section__icon-badge--circle ${blobImageSection.iconBadgePosition}" aria-hidden="true">
+                            <sly data-sly-use.iconUrl="${'adobexp/components/commons/v1/helper/transformurls.js' @ internalUrl=blobImageSection.iconBadgeImage}">
+                                <img src="${iconUrl}" 
+                                     alt="${blobImageSection.iconBadgeAlt || ''}" 
+                                     aria-hidden="true">
+                            </sly>
+                        </div>
+                    </sly>
+                    
+                    <!-- Overlay Image (Circular) -->
+                    <sly data-sly-test="${blobImageSection.hasOverlayImage}">
+                        <div class="blob-image-section__overlay-image ${blobImageSection.overlayImagePosition}">
+                            <sly data-sly-use.overlayImgUrl="${'adobexp/components/commons/v1/helper/transformurls.js' @ internalUrl=blobImageSection.overlayImagePath}">
+                                <img src="${overlayImgUrl}" 
+                                     alt="${blobImageSection.overlayImageAlt || ''}" 
+                                     loading="lazy">
+                            </sly>
+                        </div>
+                    </sly>
+                    
+                    <!-- Overlay Card -->
+                    <sly data-sly-test="${blobImageSection.hasOverlayCard}">
+                        <div class="blob-image-section__overlay-card ${blobImageSection.overlayCardPosition}">
+                            <div class="blob-image-section__overlay-card-image" data-sly-test="${blobImageSection.overlayCardImagePath}">
+                                <sly data-sly-use.cardImgUrl="${'adobexp/components/commons/v1/helper/transformurls.js' @ internalUrl=blobImageSection.overlayCardImagePath}">
+                                    <img src="${cardImgUrl}" 
+                                         alt="${blobImageSection.overlayCardTitle || ''}" 
+                                         loading="lazy">
+                                </sly>
+                            </div>
+                            <div class="blob-image-section__overlay-card-content">
+                                <p class="blob-image-section__overlay-card-title" data-sly-test="${blobImageSection.overlayCardTitle}">${blobImageSection.overlayCardTitle}</p>
+                                <p class="blob-image-section__overlay-card-subtitle" data-sly-test="${blobImageSection.overlayCardSubtitle}">${blobImageSection.overlayCardSubtitle}</p>
+                            </div>
+                        </div>
+                    </sly>
+                    
+                    <!-- CTA Pill Button -->
+                    <sly data-sly-test="${blobImageSection.hasCtaLink}">
+                        <div class="blob-image-section__overlay-cta ${blobImageSection.ctaPosition}">
+                            <sly data-sly-use.ctaUrl="${'adobexp/components/commons/v1/helper/transformurls.js' @ internalUrl=blobImageSection.ctaLink}">
+                                <a class="cta-pill" 
+                                   href="${ctaUrl}" 
+                                   aria-label="${blobImageSection.ctaText}"
+                                   target="${blobImageSection.ctaExternal ? '_blank' : ''}"
+                                   rel="${blobImageSection.ctaExternal ? 'noopener noreferrer' : ''}">
+                                    <span class="cta-pill__text">${blobImageSection.ctaText}</span>
+                                    <span class="cta-pill__icon" aria-hidden="true">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                                            <path d="M9 18l6-6-6-6"></path>
+                                        </svg>
+                                    </span>
+                                </a>
+                            </sly>
+                        </div>
+                    </sly>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- BLOB IMAGE SECTION COMPONENT HTML MARKUP ENDS HERE -->
+
+<sly data-sly-call="${templates.placeholder @ isEmpty = (!blobImageSection.mainTitle && !blobImageSection.effectiveMediaPath), classAppend='blob-image-section'}"></sly>

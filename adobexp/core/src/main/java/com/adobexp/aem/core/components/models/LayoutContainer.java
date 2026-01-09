@@ -27,6 +27,13 @@ import org.osgi.annotation.versioning.ConsumerType;
 public interface LayoutContainer {
 
     /**
+     * Name of the resource property that indicates the id that should be used by the container component.
+     *
+     * @since com.adobexp.aem.core.components.models 1.0.0
+     */
+    String PN_ID = "id";
+
+    /**
      * Name of the resource property that indicates the layout that should be used by the container component.
      *
      * @since com.adobexp.aem.core.components.models 1.0.0
@@ -89,6 +96,16 @@ public interface LayoutContainer {
      * @since com.adobexp.aem.core.components.models 12.20.0
      */
     default String getRoleAttribute() {
+        return null;
+    }
+
+    /**
+     * Returns an id that should be used by the container component.
+     *
+     * @return an id for the container
+     * @since com.adobexp.aem.core.components.models 1.0.0
+     */
+    default String getId() {
         return null;
     }
 }

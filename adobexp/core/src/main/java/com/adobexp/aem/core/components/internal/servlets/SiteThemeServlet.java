@@ -130,6 +130,12 @@ public class SiteThemeServlet extends SlingSafeMethodsServlet {
         writer.println("  --cta-pill-dark-hover-bg: " + getOrDefault(config, c -> c.darkCtaPillHoverBg(), "#e0e0e0") + ";");
         writer.println("  --cta-pill-dark-icon-bg: " + getOrDefault(config, c -> c.darkCtaPillIconBg(), "#000000") + ";");
         writer.println("  --cta-pill-dark-icon-color: " + getOrDefault(config, c -> c.darkCtaPillIconColor(), "#ffffff") + ";");
+        writer.println("  /* CTA Pill base variables (mapped from dark theme) */");
+        writer.println("  --cta-pill-bg: var(--cta-pill-dark-bg);");
+        writer.println("  --cta-pill-text: var(--cta-pill-dark-text);");
+        writer.println("  --cta-pill-hover-bg: var(--cta-pill-dark-hover-bg);");
+        writer.println("  --cta-pill-icon-bg: var(--cta-pill-dark-icon-bg);");
+        writer.println("  --cta-pill-icon-color: var(--cta-pill-dark-icon-color);");
         writer.println();
         writer.println("  /* TwoToneTextTeaser */");
         writer.println("  --two-tone-text-teaser-bg: var(--site-body-bg);");
@@ -311,6 +317,12 @@ public class SiteThemeServlet extends SlingSafeMethodsServlet {
         writer.println("  --cta-pill-light-hover-bg: " + getOrDefault(config, c -> c.lightCtaPillHoverBg(), "#333333") + ";");
         writer.println("  --cta-pill-light-icon-bg: " + getOrDefault(config, c -> c.lightCtaPillIconBg(), "#ffffff") + ";");
         writer.println("  --cta-pill-light-icon-color: " + getOrDefault(config, c -> c.lightCtaPillIconColor(), "#000000") + ";");
+        writer.println("  /* CTA Pill base variables (mapped from light theme) */");
+        writer.println("  --cta-pill-bg: var(--cta-pill-light-bg);");
+        writer.println("  --cta-pill-text: var(--cta-pill-light-text);");
+        writer.println("  --cta-pill-hover-bg: var(--cta-pill-light-hover-bg);");
+        writer.println("  --cta-pill-icon-bg: var(--cta-pill-light-icon-bg);");
+        writer.println("  --cta-pill-icon-color: var(--cta-pill-light-icon-color);");
         writer.println();
         writer.println("  /* TwoToneTextTeaser */");
         writer.println("  --two-tone-text-teaser-bg: var(--site-body-bg);");
@@ -425,8 +437,8 @@ public class SiteThemeServlet extends SlingSafeMethodsServlet {
         writer.println("  --faq-item-hover-bg: " + getOrDefault(config, c -> c.lightFaqItemHoverBg(), "#e5e7eb") + ";");
         writer.println();
         writer.println("  /* BlobImageSection */");
-        writer.println("  --blob-image-section-bg: " + getOrDefault(config, c -> c.lightBlobImageSectionBg(), "linear-gradient(180deg, var(--site-body-bg) 0%, var(--main-theme-color) 50%, var(--site-body-bg) 100%)") + ";");
-        writer.println("  --blob-image-section-card-bg: " + getOrDefault(config, c -> c.lightBlobImageSectionCardBg(), "#eef6ff") + ";");
+        writer.println("  --blob-image-section-bg: " + getOrDefault(config, c -> c.lightBlobImageSectionBg(), "linear-gradient(180deg, var(--site-body-bg) 0%, #aafbff 10%, var(--main-theme-color) 50%, #aafbff 90%, var(--site-body-bg) 100%)") + ";");
+        writer.println("  --blob-image-section-card-bg: " + getOrDefault(config, c -> c.lightBlobImageSectionCardBg(), "#f2fffd") + ";");
         writer.println("  --blob-image-section-badge-bg: " + getOrDefault(config, c -> c.lightBlobImageSectionBadgeBg(), "#ffffff") + ";");
         writer.println("  --blob-image-section-badge-border: " + getOrDefault(config, c -> c.lightBlobImageSectionBadgeBorder(), "#e5e7eb") + ";");
         writer.println("  --blob-image-section-badge-text: " + getOrDefault(config, c -> c.lightBlobImageSectionBadgeText(), "#3b82f6") + ";");

@@ -1,0 +1,557 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="nt:unstructured"
+    jcr:title="Blob Image Section"
+    sling:resourceType="cq/gui/components/authoring/dialog"
+    extraClientlibs="[adobexp.components.blobimagesection.editor]">
+    <content
+        granite:class="cmp-blob-image-section__editor"
+        jcr:primaryType="nt:unstructured"
+        sling:resourceType="granite/ui/components/coral/foundation/container">
+        <items jcr:primaryType="nt:unstructured">
+            <tabs
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="granite/ui/components/coral/foundation/tabs"
+                maximized="{Boolean}true">
+                <items jcr:primaryType="nt:unstructured">
+                    <!-- Tab 1: Content Configuration -->
+                    <content
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Content"
+                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                        margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <!-- Badge Title -->
+                                            <badgeTitle
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Badge Title"
+                                                fieldDescription="Text displayed in the badge area (e.g., 'WHO WE ARE', 'VIDEO DEMO')"
+                                                name="./badgeTitle"/>
+                                            <!-- Main Title -->
+                                            <mainTitle
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Main Title"
+                                                fieldDescription="The main headline text for the section"
+                                                name="./mainTitle"
+                                                required="{Boolean}true"/>
+                                            <!-- Description -->
+                                            <description
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+                                                fieldLabel="Description"
+                                                fieldDescription="The description text that appears below the title"
+                                                name="./description"
+                                                rows="{Long}4"/>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </content>
+
+                    <!-- Tab 2: Primary Media -->
+                    <primaryMedia
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Primary Media"
+                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                        margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <!-- Media Type Selection -->
+                                            <mediaType
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                fieldLabel="Media Type"
+                                                fieldDescription="Select the type of media to display in the blob-shaped container"
+                                                name="./mediaType">
+                                                <granite:data
+                                                    jcr:primaryType="nt:unstructured"
+                                                    cmp-blob-image-section-hook="mediaType"/>
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <image
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="Image"
+                                                        value="image"
+                                                        selected="{Boolean}true"/>
+                                                    <video
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="Video"
+                                                        value="video"/>
+                                                </items>
+                                            </mediaType>
+                                            
+                                            <!-- Primary Image Path -->
+                                            <primaryAssetPath
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                                                fieldLabel="Image"
+                                                fieldDescription="Select an image from DAM to display in the blob-shaped container"
+                                                name="./primaryAssetPath"
+                                                rootPath="/content/dam"
+                                                required="{Boolean}true">
+                                                <granite:data
+                                                    jcr:primaryType="nt:unstructured"
+                                                    cmp-blob-image-section-hook="primaryAssetPath"/>
+                                            </primaryAssetPath>
+                                            <!-- Primary Image Alt Text -->
+                                            <primaryAssetAlt
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Image Alt Text"
+                                                fieldDescription="Alternative text for the image (for accessibility)"
+                                                name="./primaryAssetAlt">
+                                                <granite:data
+                                                    jcr:primaryType="nt:unstructured"
+                                                    cmp-blob-image-section-hook="primaryAssetAlt"/>
+                                            </primaryAssetAlt>
+                                            
+                                            <!-- Primary Video Path -->
+                                            <primaryVideoPath
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                                                fieldLabel="Video"
+                                                fieldDescription="Select a video file (MP4, WebM, etc.) from DAM. Video will auto-play when visible."
+                                                name="./primaryVideoPath"
+                                                rootPath="/content/dam">
+                                                <granite:data
+                                                    jcr:primaryType="nt:unstructured"
+                                                    cmp-blob-image-section-hook="primaryVideoPath"/>
+                                            </primaryVideoPath>
+                                            <!-- Primary Video Alt Text -->
+                                            <primaryVideoAlt
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Video Alt Text"
+                                                fieldDescription="Alternative text for the video (for accessibility)"
+                                                name="./primaryVideoAlt">
+                                                <granite:data
+                                                    jcr:primaryType="nt:unstructured"
+                                                    cmp-blob-image-section-hook="primaryVideoAlt"/>
+                                            </primaryVideoAlt>
+                                            <!-- Video Start Time -->
+                                            <videoStartTime
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
+                                                fieldLabel="Video Start Time (seconds)"
+                                                fieldDescription="Time in seconds to skip at the beginning of the video (e.g., 0.5, 1, 2)"
+                                                name="./videoStartTime"
+                                                min="{Double}0"
+                                                step="{Double}0.1">
+                                                <granite:data
+                                                    jcr:primaryType="nt:unstructured"
+                                                    cmp-blob-image-section-hook="videoStartTime"/>
+                                            </videoStartTime>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </primaryMedia>
+
+                    <!-- Tab 3: CTA (Call to Action) -->
+                    <ctaConfig
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="CTA Button"
+                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                        margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <ctaDescription
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/text"
+                                                text="Configure the call-to-action pill button that appears as an overlay on the image section."/>
+                                            <!-- CTA Link -->
+                                            <ctaLink
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                                                fieldLabel="CTA Link"
+                                                fieldDescription="URL for the CTA button. Can be internal page path or external URL."
+                                                name="./ctaLink"
+                                                rootPath="/content"/>
+                                            <!-- CTA Text -->
+                                            <ctaText
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="CTA Button Text"
+                                                fieldDescription="Text displayed on the CTA button (e.g., 'Start creating', 'Learn more')"
+                                                name="./ctaText"/>
+                                            <!-- CTA External -->
+                                            <ctaExternal
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                fieldDescription="Open the CTA link in a new browser tab"
+                                                name="./ctaExternal"
+                                                text="Open in new tab"
+                                                uncheckedValue="false"
+                                                value="true"/>
+                                            <!-- CTA Position -->
+                                            <ctaPosition
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                fieldLabel="CTA Position"
+                                                fieldDescription="Position of the CTA button overlay on the image"
+                                                name="./ctaPosition">
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <bottomLeft
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="Bottom Left"
+                                                        value="blob-image-section__overlay-cta--bottom-left"
+                                                        selected="{Boolean}true"/>
+                                                    <bottomRight
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="Bottom Right"
+                                                        value="blob-image-section__overlay-cta--bottom-right"/>
+                                                    <topLeft
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="Top Left"
+                                                        value="blob-image-section__overlay-cta--top-left"/>
+                                                    <topRight
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="Top Right"
+                                                        value="blob-image-section__overlay-cta--top-right"/>
+                                                </items>
+                                            </ctaPosition>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </ctaConfig>
+
+                    <!-- Tab 4: Overlay Elements -->
+                    <overlayElements
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Overlay Elements"
+                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                        margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <!-- Overlay Image Section -->
+                                            <overlayImageHeading
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/heading"
+                                                level="{Long}4"
+                                                text="Overlay Image"/>
+                                            <overlayImageDescription
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/text"
+                                                text="A circular image overlay that appears on top of the main blob shape."/>
+                                            <!-- Overlay Image Path -->
+                                            <overlayImagePath
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                                                fieldLabel="Overlay Image"
+                                                fieldDescription="Select a circular overlay image from DAM"
+                                                name="./overlayImagePath"
+                                                rootPath="/content/dam"/>
+                                            <!-- Overlay Image Alt -->
+                                            <overlayImageAlt
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Overlay Image Alt Text"
+                                                fieldDescription="Alternative text for the overlay image"
+                                                name="./overlayImageAlt"/>
+                                            <!-- Overlay Image Position -->
+                                            <overlayImagePosition
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                fieldLabel="Overlay Image Position"
+                                                fieldDescription="Position of the overlay image"
+                                                name="./overlayImagePosition">
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <bottomRight
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="Bottom Right"
+                                                        value="blob-image-section__overlay-image--bottom-right"
+                                                        selected="{Boolean}true"/>
+                                                    <bottomLeft
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="Bottom Left"
+                                                        value="blob-image-section__overlay-image--bottom-left"/>
+                                                    <topRight
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="Top Right"
+                                                        value="blob-image-section__overlay-image--top-right"/>
+                                                    <topLeft
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="Top Left"
+                                                        value="blob-image-section__overlay-image--top-left"/>
+                                                </items>
+                                            </overlayImagePosition>
+
+                                            <!-- Spacer -->
+                                            <spacer1
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/hidden"/>
+
+                                            <!-- Overlay Card Section -->
+                                            <overlayCardHeading
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/heading"
+                                                level="{Long}4"
+                                                text="Overlay Card"/>
+                                            <overlayCardDescription
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/text"
+                                                text="A pill-shaped card with image, title, and subtitle that appears as an overlay."/>
+                                            <!-- Overlay Card Image Path -->
+                                            <overlayCardImagePath
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                                                fieldLabel="Overlay Card Image"
+                                                fieldDescription="Select an image for the overlay card from DAM"
+                                                name="./overlayCardImagePath"
+                                                rootPath="/content/dam"/>
+                                            <!-- Overlay Card Title -->
+                                            <overlayCardTitle
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Overlay Card Title"
+                                                fieldDescription="Title text for the overlay card (e.g., 'New York')"
+                                                name="./overlayCardTitle"/>
+                                            <!-- Overlay Card Subtitle -->
+                                            <overlayCardSubtitle
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Overlay Card Subtitle"
+                                                fieldDescription="Subtitle text for the overlay card (e.g., '253 Broadway')"
+                                                name="./overlayCardSubtitle"/>
+                                            <!-- Overlay Card Position -->
+                                            <overlayCardPosition
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                fieldLabel="Overlay Card Position"
+                                                fieldDescription="Position of the overlay card"
+                                                name="./overlayCardPosition">
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <bottomRight
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="Bottom Right"
+                                                        value="blob-image-section__overlay-card--bottom-right"
+                                                        selected="{Boolean}true"/>
+                                                    <bottomLeft
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="Bottom Left"
+                                                        value="blob-image-section__overlay-card--bottom-left"/>
+                                                    <topRight
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="Top Right"
+                                                        value="blob-image-section__overlay-card--top-right"/>
+                                                    <topLeft
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="Top Left"
+                                                        value="blob-image-section__overlay-card--top-left"/>
+                                                </items>
+                                            </overlayCardPosition>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </overlayElements>
+
+                    <!-- Tab 5: Icon Badge -->
+                    <iconBadge
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Icon Badge"
+                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                        margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <iconBadgeDescription
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/text"
+                                                text="Configure an optional icon badge that appears as a circular overlay on the image section."/>
+                                            <!-- Icon Badge Image -->
+                                            <iconBadgeImage
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                                                fieldLabel="Icon Badge Image"
+                                                fieldDescription="Select an icon image (SVG recommended) from DAM for the badge overlay"
+                                                name="./iconBadgeImage"
+                                                rootPath="/content/dam"/>
+                                            <!-- Icon Badge Alt Text -->
+                                            <iconBadgeAlt
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Icon Badge Alt Text"
+                                                fieldDescription="Alternative text for the icon badge (for accessibility)"
+                                                name="./iconBadgeAlt"/>
+                                            <!-- Icon Badge Position -->
+                                            <iconBadgePosition
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                fieldLabel="Icon Badge Position"
+                                                fieldDescription="Position of the icon badge on the image"
+                                                name="./iconBadgePosition">
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <bottomLeft
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="Bottom Left"
+                                                        value="blob-image-section__icon-badge--bottom-left"
+                                                        selected="{Boolean}true"/>
+                                                    <bottomRight
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="Bottom Right"
+                                                        value="blob-image-section__icon-badge--bottom-right"/>
+                                                    <topLeft
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="Top Left"
+                                                        value="blob-image-section__icon-badge--top-left"/>
+                                                    <topRight
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="Top Right"
+                                                        value="blob-image-section__icon-badge--top-right"/>
+                                                </items>
+                                            </iconBadgePosition>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </iconBadge>
+
+                    <!-- Tab 6: Style Options -->
+                    <styleOptions
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Style Options"
+                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                        margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <!-- Shape Pattern Dropdown -->
+                                            <shapePattern
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                fieldLabel="Shape Pattern"
+                                                fieldDescription="Select the clip-path shape pattern for the image/video container"
+                                                name="./shapePattern">
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <v1
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="Shape V1 - Vertical Wavy Pattern"
+                                                        value="blob-image-section--shape-v1"
+                                                        selected="{Boolean}true"/>
+                                                    <v2
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="Shape V2 - Horizontal Wavy Pattern"
+                                                        value="blob-image-section--shape-v2"/>
+                                                    <v3
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="Shape V3 - Two Curved Shapes Pattern"
+                                                        value="blob-image-section--shape-v3"/>
+                                                    <v4
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="Shape V4 - Round Capsule Pattern"
+                                                        value="blob-image-section--shape-v4"/>
+                                                    <v5
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="Shape V5 - Four Vertical Capsule Pattern"
+                                                        value="blob-image-section--shape-v5"/>
+                                                    <v6
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="Shape V6 - Mushroom View"
+                                                        value="blob-image-section--shape-v6"/>
+                                                </items>
+                                            </shapePattern>
+                                            <!-- Image Alignment Dropdown -->
+                                            <imageAlignment
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                fieldLabel="Image Alignment"
+                                                fieldDescription="Position of the image/video relative to the content"
+                                                name="./imageAlignment">
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <left
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="Image Left / Content Right"
+                                                        value="blob-image-section--image-left"
+                                                        selected="{Boolean}true"/>
+                                                    <right
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="Image Right / Content Left"
+                                                        value="blob-image-section--image-right"/>
+                                                </items>
+                                            </imageAlignment>
+                                            <!-- With Background Checkbox -->
+                                            <withBackground
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                fieldDescription="Apply a background color to the section"
+                                                name="./withBackground"
+                                                text="Apply Background Color"
+                                                checked="{Boolean}true"
+                                                uncheckedValue="false"
+                                                value="true"/>
+                                            <!-- With Card Background Checkbox -->
+                                            <withCardBackground
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                fieldDescription="Apply a background color to the card container"
+                                                name="./withCardBackground"
+                                                text="Apply Card Background"
+                                                checked="{Boolean}true"
+                                                uncheckedValue="false"
+                                                value="true"/>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </styleOptions>
+                </items>
+            </tabs>
+        </items>
+    </content>
+</jcr:root>

@@ -72,6 +72,13 @@ public class LayoutContainerImpl implements LayoutContainer {
     private String roleAttribute;
 
     /**
+     * The role attribute.
+     */
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
+    private String id;
+
+    /**
      * The current style for this component.
      */
     @ScriptVariable(injectionStrategy = InjectionStrategy.OPTIONAL)
@@ -112,5 +119,11 @@ public class LayoutContainerImpl implements LayoutContainer {
     @Nullable
     public String getRoleAttribute() {
         return roleAttribute;
+    }
+
+    @Override
+    @Nullable
+    public String getId() {
+        return id;
     }
 }

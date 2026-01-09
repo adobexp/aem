@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="0" height="0">
+  <defs>
+    <!-- V6: Organic blob shape (large rounded) -->
+    <clipPath id="blobClipV6" clipPathUnits="objectBoundingBox">
+      <path d="M0.5,0 C0.78,0 1,0.15 1,0.35 L1,0.5 C1,0.55 0.95,0.6 0.9,0.6 L0.85,0.6 C0.75,0.6 0.7,0.7 0.7,0.8 L0.7,0.85 C0.7,0.93 0.62,1 0.5,1 C0.38,1 0.3,0.93 0.3,0.85 L0.3,0.8 C0.3,0.7 0.25,0.6 0.15,0.6 L0.1,0.6 C0.05,0.6 0,0.55 0,0.5 L0,0.35 C0,0.15 0.22,0 0.5,0 Z" />
+    </clipPath>
+  </defs>
+</svg>

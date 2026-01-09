@@ -1,0 +1,12 @@
+{
+  "org.apache.sling.commons.log.pattern": "{0,date,yyyy-MM-dd HH:mm:ss.SSS} {4} [{3}] {5}",
+  "org.apache.sling.commons.log.names": [
+    "org.apache.sling.engine.impl.SlingRequestProcessorImpl",
+    "org.apache.sling.engine.impl.filter.AbstractSlingFilterChain",
+    "org.apache.sling.engine.impl.helper.ClientAbortException",
+    "org.eclipse.jetty.io.EofException"
+  ],
+  "org.apache.sling.commons.log.level": "OFF",
+  "org.apache.sling.commons.log.file": "logs/client-abort.log",
+  "org.apache.sling.commons.log.additiv": false
+}

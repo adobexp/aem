@@ -61,7 +61,7 @@
                                                 value="responsiveGrid"/>
                                         </items>
                                     </type>
-                                    <disableLayout
+                                    <!-- <disableLayout
                                         jcr:primaryType="nt:unstructured"
                                         sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
                                         fieldDescription="Check to disable layout selection in edit dialog."
@@ -122,7 +122,7 @@
                                         <granite:data
                                             jcr:primaryType="nt:unstructured"
                                             cmp-container-v1-dialog-policy-hook="backgroundColorAllowedSwatches"/>
-                                    </backgroundColorAllowedSwatches>
+                                    </backgroundColorAllowedSwatches> -->
                                 </items>
                             </container>
                         </items>

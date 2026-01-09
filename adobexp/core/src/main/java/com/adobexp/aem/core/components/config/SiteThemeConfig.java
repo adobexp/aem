@@ -645,13 +645,13 @@ public @interface SiteThemeConfig {
     String darkBlobImageSectionBg() default "linear-gradient(180deg, #0c0c0c 0%, var(--site-body-bg) 100%)";
 
     @Property(label = "Blob Image Section Background (Light)", description = "Blob image section background in light theme")
-    String lightBlobImageSectionBg() default "linear-gradient(180deg, var(--site-body-bg) 0%, var(--main-theme-color) 50%, var(--site-body-bg) 100%)";
+    String lightBlobImageSectionBg() default "linear-gradient(180deg, var(--site-body-bg) 0%, #aafbff 10%, var(--main-theme-color) 50%, #aafbff 90%, var(--site-body-bg) 100%)";
 
     @Property(label = "Blob Image Section Card Background (Dark)", description = "Blob image section card background in dark theme")
     String darkBlobImageSectionCardBg() default "#2a2a2a";
 
     @Property(label = "Blob Image Section Card Background (Light)", description = "Blob image section card background in light theme")
-    String lightBlobImageSectionCardBg() default "#eef6ff";
+    String lightBlobImageSectionCardBg() default "#f2fffd";
 
     @Property(label = "Blob Image Section Badge Background (Dark)", description = "Blob image section badge background in dark theme")
     String darkBlobImageSectionBadgeBg() default "#363636";
