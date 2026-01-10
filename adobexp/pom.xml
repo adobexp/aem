@@ -12,7 +12,10 @@
  |  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  |  See the License for the specific language governing permissions and
  |  limitations under the License.
---><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.adobexp.aem</groupId>
   <artifactId>adobexp</artifactId>
@@ -158,22 +161,25 @@
               </goals>
               <configuration>
                 <bnd>
-Bundle-Category: ${componentGroupName}
+                  Bundle-Category: ${componentGroupName}
 
-# loosen javax.annotation import versioning (common AEM / uber-jar mismatch)
-Import-Package: javax.annotation;version=0.0.0,*
+                  # loosen javax.annotation import versioning (common AEM / uber-jar mismatch)
+                  Import-Package: javax.annotation;version=0.0.0,*
 
-# export all com.adobexp.* packages (project API) for HTL "data-sly-use" visibility
-Export-Package: com.adobexp.*;version="${project.version}"
+                  # export all com.adobexp.* packages (project API) for HTL "data-sly-use"
+                  visibility
+                  Export-Package: com.adobexp.*;version="${project.version}"
 
-# reproducible builds (https://github.com/bndtools/bnd/issues/3521)
--noextraheaders: true
--snapshot: SNAPSHOT
+                  # reproducible builds (https://github.com/bndtools/bnd/issues/3521)
+                  -noextraheaders: true
+                  -snapshot: SNAPSHOT
 
-Bundle-DocURL:
--plugin org.apache.sling.caconfig.bndplugin.ConfigurationClassScannerPlugin
--plugin org.apache.sling.bnd.models.ModelsScannerPlugin
-                                </bnd>
+                  # Sling CAConfig BND Plugin - generates Sling-CAConfig-Classes header
+                  -plugin.caconfig: org.apache.sling.caconfig.bndplugin.ConfigurationClassScannerPlugin
+                  
+                  # Sling Models BND Plugin - generates Sling-Model-Classes header
+                  -plugin.models: org.apache.sling.bnd.models.ModelsScannerPlugin
+                </bnd>
               </configuration>
             </execution>
           </executions>
@@ -269,7 +275,8 @@ Bundle-DocURL:
             <validatorsSettings>
               <jackrabbit-nodetypes>
                 <options>
-                  <!-- use the nodetypes and namespaces from the aem-nodetypes.jar provided in the plugin dependencies -->
+                  <!-- use the nodetypes and namespaces from the aem-nodetypes.jar provided in the
+                  plugin dependencies -->
                   <cnds>tccl:aem.cnd</cnds>
                 </options>
               </jackrabbit-nodetypes>
@@ -320,7 +327,8 @@ Bundle-DocURL:
           <artifactId>build-helper-maven-plugin</artifactId>
           <version>3.0.0</version>
         </plugin>
-        <!--This plugin's configuration is used to store Eclipse
+        <!--This
+        plugin's configuration is used to store Eclipse
                     m2e settings only. It has no influence on the Maven build itself. -->
         <plugin>
           <groupId>org.eclipse.m2e</groupId>
@@ -339,48 +347,48 @@ Bundle-DocURL:
                     </goals>
                   </pluginExecutionFilter>
                   <action>
-                    <ignore/>
+                    <ignore />
                   </action>
                 </pluginExecution>
                 <pluginExecution>
                   <pluginExecutionFilter>
                     <groupId>
-                                            org.apache.maven.plugins
-                                        </groupId>
+                      org.apache.maven.plugins
+                    </groupId>
                     <artifactId>
-                                            maven-dependency-plugin
-                                        </artifactId>
+                      maven-dependency-plugin
+                    </artifactId>
                     <versionRange>
-                                            [2.2,)
-                                        </versionRange>
+                      [2.2,)
+                    </versionRange>
                     <goals>
                       <goal>copy-dependencies</goal>
                       <goal>unpack</goal>
                     </goals>
                   </pluginExecutionFilter>
                   <action>
-                    <ignore/>
+                    <ignore />
                   </action>
                 </pluginExecution>
                 <pluginExecution>
                   <pluginExecutionFilter>
                     <groupId>
-                                            org.codehaus.mojo
-                                        </groupId>
+                      org.codehaus.mojo
+                    </groupId>
                     <artifactId>
-                                            build-helper-maven-plugin
-                                        </artifactId>
+                      build-helper-maven-plugin
+                    </artifactId>
                     <versionRange>
-                                            [1.5,)
-                                        </versionRange>
+                      [1.5,)
+                    </versionRange>
                     <goals>
                       <goal>
-                                                reserve-network-port
-                                            </goal>
+                        reserve-network-port
+                      </goal>
                     </goals>
                   </pluginExecutionFilter>
                   <action>
-                    <ignore/>
+                    <ignore />
                   </action>
                 </pluginExecution>
               </pluginExecutions>
@@ -536,7 +544,8 @@ Bundle-DocURL:
                     <goal>install</goal>
                   </goals>
                   <configuration>
-                    <targetURL>http://${aem.publish.host}:${aem.publish.port}/crx/packmgr/service.jsp</targetURL>
+                    <targetURL>
+                      http://${aem.publish.host}:${aem.publish.port}/crx/packmgr/service.jsp</targetURL>
                   </configuration>
                 </execution>
               </executions>
@@ -678,10 +687,10 @@ Bundle-DocURL:
         <scope>provided</scope>
       </dependency>
       <dependency>
-          <groupId>org.jetbrains</groupId>
-          <artifactId>annotations</artifactId>
-          <version>17.0.0</version>
-          <scope>provided</scope>
+        <groupId>org.jetbrains</groupId>
+        <artifactId>annotations</artifactId>
+        <version>17.0.0</version>
+        <scope>provided</scope>
       </dependency>
       <!-- Testing -->
       <dependency>
@@ -743,6 +752,17 @@ Bundle-DocURL:
         <artifactId>slf4j-test</artifactId>
         <version>1.0.1</version>
         <scope>test</scope>
+      </dependency>
+      <!-- wcm.io Context-Aware Configuration Editor -->
+      <dependency>
+        <groupId>io.wcm</groupId>
+        <artifactId>io.wcm.caconfig.editor</artifactId>
+        <version>1.16.6</version>
+      </dependency>
+      <dependency>
+        <groupId>io.wcm</groupId>
+        <artifactId>io.wcm.caconfig.extensions</artifactId>
+        <version>1.9.6</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
