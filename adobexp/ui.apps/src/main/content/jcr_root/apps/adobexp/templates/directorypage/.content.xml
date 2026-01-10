@@ -3,12 +3,11 @@
     jcr:description="This page must be used to create structure of the website. This page offers redirect functionality."
     jcr:primaryType="cq:Template"
     jcr:title="AdobeXP | Directory Page"
-    allowedChildren="[/apps/adobexp/templates/config-editor,/apps/adobexp/templates/contentpage,/apps/adobexp/templates/directorypage,/conf/adobexp/settings/wcm/templates/.*]"
     allowedPaths="[/content/(.*)?]"
     ranking="{Long}1">
     <jcr:content
         cq:redirectTarget="https://www.adobexp.com"
-        cq:allowedTemplates="[/conf/adobexp/settings/wcm/templates/.*,/apps/adobexp/templates/directorypage]"
+        cq:allowedTemplates="[/conf/adobexp/settings/wcm/templates/.*,/apps/adobexp/templates/directorypage,/apps/adobexp/templates/config-editor]"
         jcr:primaryType="cq:PageContent"
         sling:resourceType="adobexp/components/structure/directorypage"/>
 </jcr:root>
