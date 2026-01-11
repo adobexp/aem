@@ -28,12 +28,15 @@
                   data-sly-call="${allowedTemplate.allowedcomponents @ title=allowed.title, resourcesMap=allowed.resourcesMap,
                      placeholderCss=allowed.placeholderCssClass,
                      placeholderType=allowed.placeholderResourceType}"></sly>
-             <sly data-sly-test="${!isAllowedApplicable}"
-                  data-sly-repeat.child="${api.paragraphs}"
-                  data-sly-resource="${child.resource @ decoration=!wcmmode.disabled, cssClassName=child.cssClass}"></sly>
+            <sly data-sly-test="${!isAllowedApplicable}"
+                 data-sly-repeat.child="${api.paragraphs}"
+                 data-sly-resource="${child.resource @ decoration=!wcmmode.disabled, cssClassName=child.cssClass}"></sly>
                   
-             <sly data-sly-test="${!isAllowedApplicable && !wcmmode.disabled}"
-                  data-sly-resource="${resource.path @ resourceType='adobexp/components/container/v1/container/new', appendPath='/*', decorationTagName='div', cssClassName='new section aem-Grid-newComponent'}"/>
+            <sly data-sly-test="${!isAllowedApplicable && !wcmmode.disabled}">
+                <div class="new section aem-Grid-newComponent">
+                    <sly data-sly-resource="${resource.path @ resourceType='wcm/foundation/components/parsys/newpar', appendPath='/*'}"/>
+                </div>
+            </sly>
          </div>
     </main>
 </template>

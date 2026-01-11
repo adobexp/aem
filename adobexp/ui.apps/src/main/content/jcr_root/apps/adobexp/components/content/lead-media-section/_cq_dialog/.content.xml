@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="nt:unstructured"
+    jcr:title="Lead Media Section"
+    sling:resourceType="cq/gui/components/authoring/dialog"
+    extraClientlibs="[adobexp.components.leadmediasection.editor]">
+    <content
+        granite:class="cmp-lead-media-section__editor"
+        jcr:primaryType="nt:unstructured"
+        sling:resourceType="granite/ui/components/coral/foundation/container">
+        <items jcr:primaryType="nt:unstructured">
+            <tabs
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="granite/ui/components/coral/foundation/tabs"
+                maximized="{Boolean}true">
+                <items jcr:primaryType="nt:unstructured">
+                    <!-- Tab 1: Content Configuration -->
+                    <content
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Content"
+                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                        margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <!-- Section Title -->
+                                            <title
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Title"
+                                                fieldDescription="The main headline text for the section"
+                                                name="./title"
+                                                required="{Boolean}true"/>
+                                            <!-- Description -->
+                                            <description
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+                                                fieldLabel="Description"
+                                                fieldDescription="The description text that appears below the title"
+                                                name="./description"
+                                                rows="{Long}4"/>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </content>
+
+                    <!-- Tab 2: Media Configuration -->
+                    <mediaConfig
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Media"
+                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                        margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <!-- Media Type Selection -->
+                                            <mediaType
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                fieldLabel="Media Type"
+                                                fieldDescription="Select whether to display an image or video"
+                                                name="./mediaType">
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <image
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="Image"
+                                                        value="image"
+                                                        selected="{Boolean}true"/>
+                                                    <video
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="Video"
+                                                        value="video"/>
+                                                </items>
+                                            </mediaType>
+                                            
+                                            <!-- Image Path (shown when mediaType = image) -->
+                                            <imagePath
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                                                fieldLabel="Image"
+                                                fieldDescription="Select an image from DAM to display in the media frame"
+                                                name="./imagePath"
+                                                rootPath="/content/dam"/>
+                                            <!-- Image Alt Text (shown when mediaType = image) -->
+                                            <imageAlt
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Image Alt Text"
+                                                fieldDescription="Alternative text for the image (for accessibility)"
+                                                name="./imageAlt"/>
+                                            
+                                            <!-- Video Path (shown when mediaType = video) -->
+                                            <videoPath
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                                                fieldLabel="Video"
+                                                fieldDescription="Select a video file (MP4, WebM, etc.) from DAM. Video will auto-play when visible."
+                                                name="./videoPath"
+                                                rootPath="/content/dam"/>
+                                            <!-- Video Start Time (shown when mediaType = video) -->
+                                            <videoStartTime
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
+                                                fieldLabel="Video Start Time (seconds)"
+                                                fieldDescription="Time in seconds to skip at the beginning of the video (e.g., 0.5, 1, 2)"
+                                                name="./videoStartTime"
+                                                min="{Double}0"
+                                                step="{Double}0.1"/>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </mediaConfig>
+
+                    <!-- Tab 3: CTA (Call to Action) -->
+                    <ctaConfig
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="CTA Button"
+                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                        margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <ctaDescription
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/text"
+                                                text="Configure the call-to-action pill button that appears below the description."/>
+                                            <!-- CTA Text -->
+                                            <ctaText
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="CTA Button Text"
+                                                fieldDescription="Text displayed on the CTA button (e.g., 'Try for Free', 'Learn More')"
+                                                name="./ctaText"/>
+                                            <!-- CTA Link -->
+                                            <ctaLink
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                                                fieldLabel="CTA Link"
+                                                fieldDescription="URL for the CTA button. Can be internal page path or external URL."
+                                                name="./ctaLink"
+                                                rootPath="/content"/>
+                                            <!-- CTA External -->
+                                            <ctaExternal
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                fieldDescription="Open the CTA link in a new browser tab"
+                                                name="./ctaExternal"
+                                                text="Open in new tab"
+                                                uncheckedValue="false"
+                                                value="true"/>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </ctaConfig>
+
+                    <!-- Tab 4: Icon Badge -->
+                    <iconBadgeConfig
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Icon Badge"
+                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                        margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <iconBadgeDescription
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/text"
+                                                text="Select the icon badge to display in the card. Each icon represents a different context or action."/>
+                                            <!-- Icon Badge Type -->
+                                            <iconBadgeType
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                fieldLabel="Icon Badge Type"
+                                                fieldDescription="Select the icon style for the badge"
+                                                name="./iconBadgeType">
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <arrow
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="Arrow (Go/External Link)"
+                                                        value="arrow"
+                                                        selected="{Boolean}true"/>
+                                                    <play
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="Play (Video Content)"
+                                                        value="play"/>
+                                                    <image
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="Image/Photo (Product Showcase)"
+                                                        value="image"/>
+                                                    <video
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="Video Camera (Video Presentations)"
+                                                        value="video"/>
+                                                </items>
+                                            </iconBadgeType>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </iconBadgeConfig>
+
+                    <!-- Tab 5: Style Options -->
+                    <styleOptions
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Style Options"
+                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                        margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <!-- Media Alignment -->
+                                            <mediaAlignment
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                fieldLabel="Media Alignment"
+                                                fieldDescription="Position of the media relative to the content"
+                                                name="./mediaAlignment">
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <right
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="Media Right / Content Left"
+                                                        value="lead-media-section--media-right"
+                                                        selected="{Boolean}true"/>
+                                                    <left
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="Media Left / Content Right"
+                                                        value="lead-media-section--media-left"/>
+                                                </items>
+                                            </mediaAlignment>
+                                            <!-- With Background Checkbox -->
+                                            <withBackground
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                fieldDescription="Apply a background color to the section"
+                                                name="./withBackground"
+                                                text="Apply Background Color"
+                                                checked="{Boolean}true"
+                                                uncheckedValue="false"
+                                                value="true"/>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </styleOptions>
+                </items>
+            </tabs>
+        </items>
+    </content>
+</jcr:root>

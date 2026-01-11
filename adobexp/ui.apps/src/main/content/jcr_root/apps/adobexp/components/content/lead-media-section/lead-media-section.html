@@ -1,0 +1,127 @@
+<!--/*
+    Lead Media Section Component - AEM Sightly Template
+    
+    This component renders a modern content section with:
+    - Title headline
+    - Description text
+    - Icon badge (4 different SVG options)
+    - Primary image or video with bordered frame
+    - CTA pill button
+    - Left/Right media alignment
+    
+    Supported Variations:
+    - Media Type: Image / Video
+    - Alignment: Media Left / Media Right
+    
+    Note: Theme (dark/light) is controlled via page template, not this component.
+    
+    Icon Badge Types:
+    1. Arrow - Go/External Link
+    2. Play - Video Content
+    3. Image - Product Showcase
+    4. Video Camera - Video Presentations
+*/-->
+
+<sly data-sly-use.templates="adobexp/components/commons/v1/templates.html"/>
+
+<!-- LEAD MEDIA SECTION COMPONENT HTML MARKUP STARTS HERE -->
+<section 
+    class="lead-media-section ${properties.withBackground == 'true' ? 'lead-media-section--with-bg' : ''} ${properties.mediaAlignment || 'lead-media-section--media-right'}" 
+    data-component="lead-media-section" 
+    aria-label="${properties.title || 'Lead Media Section'}"
+    data-sly-test="${properties.title || properties.imagePath || properties.videoPath}">
+    
+    <div class="lead-media-section__inner">
+        <div class="lead-media-section__layout">
+            <!-- Content Card -->
+            <div class="lead-media-section__card">
+                <!-- Icon Badge -->
+                <div class="lead-media-section__icon-badge" aria-hidden="true">
+                    <!-- Arrow Icon (Default) -->
+                    <sly data-sly-test="${properties.iconBadgeType == 'arrow' || !properties.iconBadgeType}">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M7 17L17 7M17 7H7M17 7V17" />
+                        </svg>
+                    </sly>
+                    <!-- Play Icon -->
+                    <sly data-sly-test="${properties.iconBadgeType == 'play'}">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                            <polygon points="5 3 19 12 5 21 5 3" />
+                        </svg>
+                    </sly>
+                    <!-- Image Icon -->
+                    <sly data-sly-test="${properties.iconBadgeType == 'image'}">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                            <circle cx="8.5" cy="8.5" r="1.5" />
+                            <polyline points="21 15 16 10 5 21" />
+                        </svg>
+                    </sly>
+                    <!-- Video Camera Icon -->
+                    <sly data-sly-test="${properties.iconBadgeType == 'video'}">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M23 7l-7 5 7 5V7z" />
+                            <rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
+                        </svg>
+                    </sly>
+                </div>
+                
+                <!-- Content -->
+                <div class="lead-media-section__content">
+                    <!-- Title -->
+                    <h2 class="lead-media-section__title" data-sly-test="${properties.title}">${properties.title}</h2>
+                    
+                    <!-- Description -->
+                    <p class="lead-media-section__description" data-sly-test="${properties.description}">${properties.description @ context='html'}</p>
+                </div>
+                
+                <!-- CTA Button -->
+                <sly data-sly-test="${properties.ctaText && properties.ctaLink}">
+                    <div class="lead-media-section__cta">
+                        <sly data-sly-use.ctaUrl="${'adobexp/components/commons/v1/helper/transformurls.js' @ internalUrl=properties.ctaLink}">
+                            <a class="cta-pill" 
+                               href="${ctaUrl}" 
+                               aria-label="${properties.ctaText}"
+                               target="${properties.ctaExternal == 'true' ? '_blank' : ''}"
+                               rel="${properties.ctaExternal == 'true' ? 'noopener noreferrer' : ''}">
+                                <span class="cta-pill__text">${properties.ctaText}</span>
+                                <span class="cta-pill__icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                                        <path d="M9 18l6-6-6-6"></path>
+                                    </svg>
+                                </span>
+                            </a>
+                        </sly>
+                    </div>
+                </sly>
+            </div>
+
+            <!-- Media Container -->
+            <div class="lead-media-section__media" data-sly-test="${properties.imagePath || properties.videoPath}">
+                <div class="lead-media-section__media-frame">
+                    <!-- Video Rendering -->
+                    <sly data-sly-test="${properties.mediaType == 'video' && properties.videoPath}">
+                        <sly data-sly-use.videoUrl="${'adobexp/components/commons/v1/helper/transformurls.js' @ internalUrl=properties.videoPath}">
+                            <video muted playsinline loop data-start-time="${properties.videoStartTime || '0'}">
+                                <source src="${videoUrl}" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </sly>
+                    </sly>
+                    
+                    <!-- Image Rendering (default) -->
+                    <sly data-sly-test="${properties.mediaType != 'video' && properties.imagePath}">
+                        <sly data-sly-use.imgUrl="${'adobexp/components/commons/v1/helper/transformurls.js' @ internalUrl=properties.imagePath}">
+                            <img src="${imgUrl}" 
+                                 alt="${properties.imageAlt || properties.title || 'Image'}" 
+                                 loading="lazy">
+                        </sly>
+                    </sly>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- LEAD MEDIA SECTION COMPONENT HTML MARKUP ENDS HERE -->
+
+<sly data-sly-call="${templates.placeholder @ isEmpty = (!properties.title && !properties.imagePath && !properties.videoPath), classAppend='lead-media-section'}"></sly>
