@@ -608,6 +608,24 @@ public @interface SiteThemeConfig {
     @Property(label = "Masonry Gallery Item Background (Light)", description = "Masonry gallery item background in light theme")
     String lightMasonryGalleryItemBg() default "rgba(0, 0, 0, 0.03)";
 
+    @Property(label = "Masonry Gallery Lightbox Background (Dark)", description = "Masonry gallery lightbox background in dark theme")
+    String darkMasonryGalleryLightboxBg() default "rgba(10, 10, 10, 0.95)";
+
+    @Property(label = "Masonry Gallery Lightbox Background (Light)", description = "Masonry gallery lightbox background in light theme")
+    String lightMasonryGalleryLightboxBg() default "rgba(10, 10, 10, 0.95)";
+
+    @Property(label = "Masonry Gallery Lightbox Title Color (Dark)", description = "Masonry gallery lightbox title color in dark theme")
+    String darkMasonryGalleryLightboxTitleColor() default "#ffffff";
+
+    @Property(label = "Masonry Gallery Lightbox Title Color (Light)", description = "Masonry gallery lightbox title color in light theme")
+    String lightMasonryGalleryLightboxTitleColor() default "#ffffff";
+
+    @Property(label = "Masonry Gallery Lightbox Title Background (Dark)", description = "Masonry gallery lightbox title background in dark theme")
+    String darkMasonryGalleryLightboxTitleBg() default "rgba(0, 0, 0, 0.7)";
+
+    @Property(label = "Masonry Gallery Lightbox Title Background (Light)", description = "Masonry gallery lightbox title background in light theme")
+    String lightMasonryGalleryLightboxTitleBg() default "rgba(0, 0, 0, 0.7)";
+
     // ==================== COMPARISON VARIABLES ====================
 
     @Property(label = "Comparison Background (Dark)", description = "Comparison section background in dark theme")

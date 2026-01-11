@@ -239,6 +239,9 @@ public class SiteThemeServlet extends SlingSafeMethodsServlet {
         writer.println("  /* MasonryGallery */");
         writer.println("  --masonry-gallery-bg: " + getOrDefault(config, c -> c.darkMasonryGalleryBg(), "linear-gradient(180deg, #0c0c0c 0%, var(--site-body-bg) 100%)") + ";");
         writer.println("  --masonry-gallery-item-bg: " + getOrDefault(config, c -> c.darkMasonryGalleryItemBg(), "rgba(255, 255, 255, 0.05)") + ";");
+        writer.println("  --masonry-gallery-lightbox-bg: " + getOrDefault(config, c -> c.darkMasonryGalleryLightboxBg(), "rgba(10, 10, 10, 0.95)") + ";");
+        writer.println("  --masonry-gallery-lightbox-title-color: " + getOrDefault(config, c -> c.darkMasonryGalleryLightboxTitleColor(), "#ffffff") + ";");
+        writer.println("  --masonry-gallery-lightbox-title-bg: " + getOrDefault(config, c -> c.darkMasonryGalleryLightboxTitleBg(), "rgba(0, 0, 0, 0.7)") + ";");
         writer.println();
         writer.println("  /* Comparison */");
         writer.println("  --comparison-bg: " + getOrDefault(config, c -> c.darkComparisonBg(), "linear-gradient(180deg, #0c0c0c 0%, var(--site-body-bg) 100%)") + ";");
@@ -426,6 +429,9 @@ public class SiteThemeServlet extends SlingSafeMethodsServlet {
         writer.println("  /* MasonryGallery */");
         writer.println("  --masonry-gallery-bg: " + getOrDefault(config, c -> c.lightMasonryGalleryBg(), "linear-gradient(180deg, var(--site-body-bg) 0%, var(--main-theme-color) 50%, var(--site-body-bg) 100%)") + ";");
         writer.println("  --masonry-gallery-item-bg: " + getOrDefault(config, c -> c.lightMasonryGalleryItemBg(), "rgba(0, 0, 0, 0.03)") + ";");
+        writer.println("  --masonry-gallery-lightbox-bg: " + getOrDefault(config, c -> c.lightMasonryGalleryLightboxBg(), "rgba(10, 10, 10, 0.95)") + ";");
+        writer.println("  --masonry-gallery-lightbox-title-color: " + getOrDefault(config, c -> c.lightMasonryGalleryLightboxTitleColor(), "#ffffff") + ";");
+        writer.println("  --masonry-gallery-lightbox-title-bg: " + getOrDefault(config, c -> c.lightMasonryGalleryLightboxTitleBg(), "rgba(0, 0, 0, 0.7)") + ";");
         writer.println();
         writer.println("  /* Comparison */");
         writer.println("  --comparison-bg: " + getOrDefault(config, c -> c.lightComparisonBg(), "linear-gradient(180deg, var(--site-body-bg) 0%, #aafbff 10%, var(--main-theme-color) 50%, #aafbff 90%, var(--site-body-bg) 100%)") + ";");
