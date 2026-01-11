@@ -1,0 +1,78 @@
+<!--/*
+    Marquee Carousel Component - AEM Sightly Template
+    
+    This component renders an infinite scrolling marquee carousel with:
+    - Title headline
+    - CTA pill button
+    - Horizontal scrolling image cards
+    - Pause on hover functionality
+    - Support for manual images or DAM folder selection
+    
+    Supported Variations:
+    - Image Source: Manual (multifield) / DAM Folder
+    - Background: With / Without
+    
+    Note: Theme (dark/light) is controlled via page template, not this component.
+*/-->
+
+<sly data-sly-use.templates="adobexp/components/commons/v1/templates.html"/>
+<sly data-sly-use.carousel="com.adobexp.aem.core.components.models.MarqueeCarouselModel"/>
+
+<sly data-sly-use.clientlib="/libs/granite/sightly/templates/clientlib.html">
+    <sly data-sly-call="${clientlib.all @ categories='adobexp.components.marqueecarousel.v1', async=true}"/>
+</sly>
+
+<!-- MARQUEE CAROUSEL COMPONENT HTML MARKUP STARTS HERE -->
+<section 
+    class="marquee-carousel ${properties.withBackground == 'true' ? 'marquee-carousel--with-bg' : ''}" 
+    data-component="marquee-carousel"
+    data-marquee-pause="${properties.pauseOnHover != 'false' ? 'true' : 'false'}"
+    aria-label="${properties.title || 'Image Carousel'}"
+    data-sly-test="${properties.title || carousel.hasImages}">
+    
+    <div class="marquee-carousel__inner">
+        <!-- Title -->
+        <h2 class="marquee-carousel__title" data-sly-test="${properties.title}">${properties.title}</h2>
+        
+        <!-- CTA Button -->
+        <sly data-sly-test="${properties.ctaText && properties.ctaLink}">
+            <div class="marquee-carousel__cta">
+                <sly data-sly-use.ctaUrl="${'adobexp/components/commons/v1/helper/transformurls.js' @ internalUrl=properties.ctaLink}">
+                    <a class="marquee-carousel__cta-button" 
+                       href="${ctaUrl}" 
+                       aria-label="${properties.ctaText}"
+                       target="${properties.ctaExternal == 'true' ? '_blank' : ''}"
+                       rel="${properties.ctaExternal == 'true' ? 'noopener noreferrer' : ''}">
+                        <span class="marquee-carousel__cta-text">${properties.ctaText}</span>
+                        <span class="marquee-carousel__cta-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                                <path d="M9 18l6-6-6-6"></path>
+                            </svg>
+                        </span>
+                    </a>
+                </sly>
+            </div>
+        </sly>
+    </div>
+
+    <!-- Marquee Track Container -->
+    <div class="marquee-carousel__track-container" 
+         data-marquee-speed="${properties.marqueeSpeed}"
+         data-sly-test="${carousel.hasImages}">
+        <div class="marquee-carousel__track">
+            <!-- Image Cards from Sling Model (handles both manual and DAM folder) -->
+            <sly data-sly-list.image="${carousel.carouselImages}">
+                <div class="marquee-carousel__card">
+                    <sly data-sly-use.imageUrl="${'adobexp/components/commons/v1/helper/transformurls.js' @ internalUrl=image.imagePath}">
+                        <img src="${imageUrl}" 
+                             alt="${image.imageAlt || 'Carousel image'}" 
+                             loading="lazy">
+                    </sly>
+                </div>
+            </sly>
+        </div>
+    </div>
+</section>
+<!-- MARQUEE CAROUSEL COMPONENT HTML MARKUP ENDS HERE -->
+
+<sly data-sly-call="${templates.placeholder @ isEmpty = !carousel.hasImages && !properties.title, classAppend='marquee-carousel'}"></sly>

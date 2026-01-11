@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="nt:unstructured"
+    jcr:title="Marquee Carousel"
+    sling:resourceType="cq/gui/components/authoring/dialog"
+    extraClientlibs="[adobexp.components.marqueecarousel.editor]">
+    <content
+        granite:class="cmp-marquee-carousel__editor"
+        jcr:primaryType="nt:unstructured"
+        sling:resourceType="granite/ui/components/coral/foundation/container">
+        <items jcr:primaryType="nt:unstructured">
+            <tabs
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="granite/ui/components/coral/foundation/tabs"
+                maximized="{Boolean}true">
+                <items jcr:primaryType="nt:unstructured">
+                    <!-- Tab 1: Content Configuration -->
+                    <content
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Content"
+                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                        margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <!-- Section Title -->
+                                            <title
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Title"
+                                                fieldDescription="The main headline text for the marquee section (e.g., 'Ready To Create?')"
+                                                name="./title"/>
+                                            <!-- CTA Text -->
+                                            <ctaText
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="CTA Button Text"
+                                                fieldDescription="Text displayed on the CTA button (e.g., 'Get Started For Free')"
+                                                name="./ctaText"/>
+                                            <!-- CTA Link -->
+                                            <ctaLink
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                                                fieldLabel="CTA Link"
+                                                fieldDescription="URL for the CTA button. Can be internal page path or external URL."
+                                                name="./ctaLink"
+                                                rootPath="/content"/>
+                                            <!-- CTA External -->
+                                            <ctaExternal
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                fieldDescription="Open the CTA link in a new browser tab"
+                                                name="./ctaExternal"
+                                                text="Open in new tab"
+                                                uncheckedValue="false"
+                                                value="true"/>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </content>
+
+                    <!-- Tab 2: Images Configuration -->
+                    <imagesConfig
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Images"
+                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                        margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <imagesDescription
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/text"
+                                                text="Configure images for the marquee carousel. Images will scroll horizontally in an infinite loop."/>
+                                            
+                                            <!-- Image Source Selection -->
+                                            <imageSource
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                fieldLabel="Image Source"
+                                                fieldDescription="Select how to add images to the carousel"
+                                                name="./imageSource">
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <manual
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="Add Images Manually"
+                                                        value="manual"
+                                                        selected="{Boolean}true"/>
+                                                    <damFolder
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="Select DAM Folder"
+                                                        value="damFolder"/>
+                                                </items>
+                                            </imageSource>
+                                            
+                                            <!-- Manual Images Multifield (shown when imageSource = manual) -->
+                                            <carouselImagesContainer
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/foundation/container">
+                                                <layout
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/foundation/layouts/container"/>
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <carouselImages
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                                        composite="{Boolean}true"
+                                                        fieldLabel="Carousel Images"
+                                                        fieldDescription="Add images to display in the marquee carousel">
+                                                        <field
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/container"
+                                                            name="./carouselImages">
+                                                            <items jcr:primaryType="nt:unstructured">
+                                                                <!-- Collapsible wrapper for image items -->
+                                                                <wrapper
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    jcr:title="Click to expand image"
+                                                                    sling:resourceType="granite/ui/components/foundation/container">
+                                                                    <layout
+                                                                        jcr:primaryType="nt:unstructured"
+                                                                        sling:resourceType="granite/ui/components/foundation/layouts/collapsible"/>
+                                                                    <items jcr:primaryType="nt:unstructured">
+                                                                        <imagePath
+                                                                            jcr:primaryType="nt:unstructured"
+                                                                            sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                                                                            fieldLabel="Image"
+                                                                            fieldDescription="Select an image from the DAM"
+                                                                            name="imagePath"
+                                                                            required="{Boolean}true"
+                                                                            rootPath="/content/dam"/>
+                                                                        <imageAlt
+                                                                            jcr:primaryType="nt:unstructured"
+                                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                            fieldLabel="Alt Text"
+                                                                            fieldDescription="Alternative text for the image (for accessibility)"
+                                                                            name="imageAlt"/>
+                                                                    </items>
+                                                                </wrapper>
+                                                            </items>
+                                                        </field>
+                                                    </carouselImages>
+                                                </items>
+                                            </carouselImagesContainer>
+                                            
+                                            <!-- DAM Folder Path (shown when imageSource = damFolder) -->
+                                            <damFolderPath
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                                                fieldLabel="DAM Folder"
+                                                fieldDescription="Select a DAM folder. All images from this folder will be displayed in the carousel."
+                                                name="./damFolderPath"
+                                                rootPath="/content/dam"
+                                                filter="hierarchyNotFile"/>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </imagesConfig>
+
+                    <!-- Tab 3: Settings -->
+                    <settings
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Settings"
+                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                        margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <settingsDescription
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/text"
+                                                text="Configure the marquee animation settings and style options."/>
+                                            <!-- Marquee Speed -->
+                                            <marqueeSpeed
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
+                                                fieldLabel="Animation Duration (seconds)"
+                                                fieldDescription="Duration for one complete scroll cycle in seconds. Leave empty to use default (40s). Lower values = faster scrolling."
+                                                name="./marqueeSpeed"
+                                                min="{Double}5"
+                                                max="{Double}120"
+                                                step="{Double}1"/>
+                                            <!-- Pause on Hover -->
+                                            <pauseOnHover
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                fieldDescription="Pause the carousel animation when user hovers over it"
+                                                name="./pauseOnHover"
+                                                text="Pause on Hover"
+                                                checked="{Boolean}true"
+                                                uncheckedValue="false"
+                                                value="true"/>
+                                            <!-- With Background -->
+                                            <withBackground
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                fieldDescription="Apply a background color to the section (controlled by theme)"
+                                                name="./withBackground"
+                                                text="Apply Background Color"
+                                                checked="{Boolean}true"
+                                                uncheckedValue="false"
+                                                value="true"/>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </settings>
+                </items>
+            </tabs>
+        </items>
+    </content>
+</jcr:root>

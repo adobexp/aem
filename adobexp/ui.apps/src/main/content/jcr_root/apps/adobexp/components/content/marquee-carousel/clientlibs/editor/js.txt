@@ -1,0 +1,2 @@
+#base=js
+marquee-carousel-dialog.js
