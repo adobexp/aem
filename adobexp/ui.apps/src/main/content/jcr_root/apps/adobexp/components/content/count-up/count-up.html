@@ -1,0 +1,58 @@
+<!--/*
+    Count Up Component - AEM Sightly Template
+    
+    This component renders an animated statistics counter section with:
+    - Title headline
+    - Subtitle description
+    - Multiple counter items with count-up animation
+    - Configurable values, units, and labels
+    
+    Supported Variations:
+    - With/Without Background
+    - Custom animation duration
+    - Multiple unit options (M, K, B, %, +, custom)
+    
+    Note: Theme (dark/light) is controlled via page template, not this component.
+*/-->
+
+<sly data-sly-use.templates="adobexp/components/commons/v1/templates.html"/>
+<sly data-sly-use.countUp="com.adobexp.aem.core.components.models.CountUpModel"/>
+
+<!-- COUNT UP COMPONENT HTML MARKUP STARTS HERE -->
+<section 
+    class="count-up ${countUp.withBackground ? 'count-up--with-bg' : ''}" 
+    data-component="count-up" 
+    data-duration="${countUp.duration}"
+    aria-label="${countUp.title || 'Statistics'}"
+    data-sly-test="${countUp.title || countUp.hasCounterItems}">
+    
+    <div class="count-up__inner">
+        <!-- Header Section -->
+        <sly data-sly-test="${countUp.title || countUp.subtitle}">
+            <div class="count-up__header">
+                <!-- Title -->
+                <h2 class="count-up__title" data-sly-test="${countUp.title}">${countUp.title}</h2>
+                <!-- Subtitle -->
+                <p class="count-up__subtitle" data-sly-test="${countUp.subtitle}">${countUp.subtitle @ context='html'}</p>
+            </div>
+        </sly>
+
+        <!-- Counter Items -->
+        <div class="count-up__items" role="list" data-sly-test="${countUp.hasCounterItems}">
+            <sly data-sly-list.item="${countUp.counterItems}">
+                <article class="count-up__item" role="listitem">
+                    <p class="count-up__value" 
+                       data-count-up
+                       data-start="${item.startValue}"
+                       data-end="${item.endValue}"
+                       data-unit="${item.unit}"
+                       data-decimals="${item.decimals}">${item.startValue}${item.unit}</p>
+                    <p class="count-up__label" data-sly-test="${item.label}">${item.label}</p>
+                </article>
+            </sly>
+        </div>
+    </div>
+</section>
+<!-- COUNT UP COMPONENT HTML MARKUP ENDS HERE -->
+
+<sly data-sly-call="${templates.placeholder @ isEmpty = (!countUp.title && !countUp.hasCounterItems), classAppend='count-up'}"></sly>
