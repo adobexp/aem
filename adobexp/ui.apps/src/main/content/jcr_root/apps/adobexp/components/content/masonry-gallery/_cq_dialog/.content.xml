@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="nt:unstructured"
+    jcr:title="Masonry Gallery"
+    sling:resourceType="cq/gui/components/authoring/dialog"
+    extraClientlibs="[adobexp.components.masonrygallery.editor]">
+    <content
+        granite:class="cmp-masonry-gallery__editor"
+        jcr:primaryType="nt:unstructured"
+        sling:resourceType="granite/ui/components/coral/foundation/container">
+        <items jcr:primaryType="nt:unstructured">
+            <tabs
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="granite/ui/components/coral/foundation/tabs"
+                maximized="{Boolean}true">
+                <items jcr:primaryType="nt:unstructured">
+                    <!-- Tab 1: Gallery Media -->
+                    <galleryMedia
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Gallery Media"
+                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                        margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <!-- Media Source Selection -->
+                                            <mediaSourceType
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                fieldLabel="Media Source"
+                                                fieldDescription="Choose how to populate the gallery media items"
+                                                name="./mediaSourceType">
+                                                <granite:data
+                                                    jcr:primaryType="nt:unstructured"
+                                                    cmp-masonry-gallery-hook="mediaSourceType"/>
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <manual
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="Add Media Manually"
+                                                        value="manual"
+                                                        selected="{Boolean}true"/>
+                                                    <damFolder
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="Select DAM Folder"
+                                                        value="damFolder"/>
+                                                </items>
+                                            </mediaSourceType>
+
+                                            <!-- Multifield for Manual Media Items -->
+                                            <mediaItems
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                                composite="{Boolean}true"
+                                                fieldLabel="Media Items"
+                                                fieldDescription="Add images and videos to the gallery. Click 'Add Item' to add more.">
+                                                <granite:data
+                                                    jcr:primaryType="nt:unstructured"
+                                                    cmp-masonry-gallery-hook="mediaItems"/>
+                                                <field
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/container"
+                                                    name="./mediaItems">
+                                                    <items jcr:primaryType="nt:unstructured">
+                                                        <!-- Media Type Selection -->
+                                                        <mediaType
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                            fieldLabel="Media Type"
+                                                            fieldDescription="Select image or video"
+                                                            name="./mediaType">
+                                                            <items jcr:primaryType="nt:unstructured">
+                                                                <image
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    text="Image"
+                                                                    value="image"
+                                                                    selected="{Boolean}true"/>
+                                                                <video
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    text="Video"
+                                                                    value="video"/>
+                                                            </items>
+                                                        </mediaType>
+                                                        <!-- Media Path -->
+                                                        <mediaPath
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                                                            fieldLabel="Media Path"
+                                                            fieldDescription="Select an image or video from DAM"
+                                                            name="./mediaPath"
+                                                            rootPath="/content/dam"
+                                                            required="{Boolean}true"/>
+                                                        <!-- Media Title (Optional) -->
+                                                        <mediaTitle
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                            fieldLabel="Title (Optional)"
+                                                            fieldDescription="Title text displayed on hover overlay"
+                                                            name="./mediaTitle"/>
+                                                        <!-- Media Alt Text -->
+                                                        <mediaAlt
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                            fieldLabel="Alt Text"
+                                                            fieldDescription="Alternative text for accessibility"
+                                                            name="./mediaAlt"/>
+                                                        <!-- Video Start Time (only for videos) -->
+                                                        <videoStartTime
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
+                                                            fieldLabel="Video Start Time (seconds)"
+                                                            fieldDescription="Time in seconds to skip at the beginning of the video (for videos only)"
+                                                            name="./videoStartTime"
+                                                            min="{Double}0"
+                                                            step="{Double}0.1"/>
+                                                    </items>
+                                                </field>
+                                            </mediaItems>
+
+                                            <!-- DAM Folder Path -->
+                                            <damFolderPath
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                                                fieldLabel="DAM Folder"
+                                                fieldDescription="Select a folder from DAM. All images and videos will be automatically loaded from this folder."
+                                                name="./damFolderPath"
+                                                rootPath="/content/dam"
+                                                filter="folder">
+                                                <granite:data
+                                                    jcr:primaryType="nt:unstructured"
+                                                    cmp-masonry-gallery-hook="damFolderPath"/>
+                                            </damFolderPath>
+
+                                            <!-- Default Video Start Time for DAM Folder -->
+                                            <defaultVideoStartTime
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
+                                                fieldLabel="Default Video Start Time (seconds)"
+                                                fieldDescription="Default start time for all videos loaded from the DAM folder"
+                                                name="./defaultVideoStartTime"
+                                                min="{Double}0"
+                                                step="{Double}0.1">
+                                                <granite:data
+                                                    jcr:primaryType="nt:unstructured"
+                                                    cmp-masonry-gallery-hook="defaultVideoStartTime"/>
+                                            </defaultVideoStartTime>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </galleryMedia>
+
+                    <!-- Tab 2: CTA (Call to Action) -->
+                    <ctaConfig
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="CTA Button"
+                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                        margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <ctaDescription
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/text"
+                                                text="Configure the call-to-action button that appears below the gallery grid."/>
+                                            <!-- CTA Link -->
+                                            <ctaLink
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                                                fieldLabel="CTA Link"
+                                                fieldDescription="URL for the CTA button. Can be internal page path or external URL."
+                                                name="./ctaLink"
+                                                rootPath="/content"/>
+                                            <!-- CTA Text -->
+                                            <ctaText
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="CTA Button Text"
+                                                fieldDescription="Text displayed on the CTA button (e.g., 'View All Work', 'See More')"
+                                                name="./ctaText"/>
+                                            <!-- CTA External -->
+                                            <ctaExternal
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                fieldDescription="Open the CTA link in a new browser tab"
+                                                name="./ctaExternal"
+                                                text="Open in new tab"
+                                                uncheckedValue="false"
+                                                value="true"/>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </ctaConfig>
+
+                    <!-- Tab 3: Style Options -->
+                    <styleOptions
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Style Options"
+                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                        margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <!-- With Background Checkbox -->
+                                            <withBackground
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                fieldDescription="Apply a background color to the gallery section"
+                                                name="./withBackground"
+                                                text="Apply Background Color"
+                                                checked="{Boolean}true"
+                                                uncheckedValue="false"
+                                                value="true"/>
+                                            <!-- Show Title Overlay -->
+                                            <showTitleOverlay
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                fieldDescription="Display title overlay on hover for items that have titles configured"
+                                                name="./showTitleOverlay"
+                                                text="Show Title Overlay on Hover"
+                                                checked="{Boolean}true"
+                                                uncheckedValue="false"
+                                                value="true"/>
+                                            <!-- Aria Label -->
+                                            <ariaLabel
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Aria Label"
+                                                fieldDescription="Accessible label for the gallery section (e.g., 'Photo Gallery', 'Media Gallery')"
+                                                name="./ariaLabel"
+                                                value="Gallery"/>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </styleOptions>
+                </items>
+            </tabs>
+        </items>
+    </content>
+</jcr:root>

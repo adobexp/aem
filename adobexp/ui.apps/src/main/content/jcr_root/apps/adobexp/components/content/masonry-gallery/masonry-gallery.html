@@ -1,0 +1,102 @@
+<!--/*
+    Masonry Gallery Component - AEM Sightly Template
+    
+    This component renders a responsive masonry-style gallery supporting:
+    - Both images and videos in any grid position
+    - Videos play on hover (desktop) or when scrolled into view (mobile)
+    - Videos are always muted with no controls
+    - Custom video start time
+    - Title overlay with grey transparent background (centered)
+    - Gradient fade at the bottom matching the theme background
+    - CTA button at the bottom
+    
+    Media Source Options:
+    - Manual: Add media items individually with optional titles and video start times
+    - DAM Folder: Automatically load all images/videos from a selected DAM folder
+    
+    Note: Theme (dark/light) is controlled via page template, not this component.
+*/-->
+
+<sly data-sly-use.templates="adobexp/components/commons/v1/templates.html"/>
+<sly data-sly-use.masonryGallery="com.adobexp.aem.core.components.models.MasonryGalleryModel"/>
+
+<!-- MASONRY GALLERY COMPONENT HTML MARKUP STARTS HERE -->
+<section 
+    class="masonry-gallery ${masonryGallery.withBackground ? 'masonry-gallery--with-bg' : ''}" 
+    data-component="masonry-gallery" 
+    aria-label="${masonryGallery.ariaLabel || 'Gallery'}"
+    data-sly-test="${masonryGallery.hasMediaItems}">
+    
+    <div class="masonry-gallery__container">
+        <div class="masonry-gallery__grid">
+            
+            <!-- Iterate through gallery items -->
+            <sly data-sly-list.item="${masonryGallery.galleryItems}">
+                
+                <!-- Image Item -->
+                <sly data-sly-test="${!item.video}">
+                    <div class="masonry-gallery__item">
+                        <sly data-sly-use.imgUrl="${'adobexp/components/commons/v1/helper/transformurls.js' @ internalUrl=item.mediaPath}">
+                            <img class="masonry-gallery__image" 
+                                 src="${imgUrl}" 
+                                 alt="${item.mediaAlt || item.mediaTitle || 'Gallery image'}" 
+                                 loading="lazy"/>
+                        </sly>
+                        <!-- Title Overlay (if enabled and title exists) -->
+                        <sly data-sly-test="${masonryGallery.showTitleOverlay && item.mediaTitle}">
+                            <div class="masonry-gallery__overlay">
+                                <span class="masonry-gallery__title">${item.mediaTitle}</span>
+                            </div>
+                        </sly>
+                    </div>
+                </sly>
+                
+                <!-- Video Item -->
+                <sly data-sly-test="${item.video}">
+                    <div class="masonry-gallery__item" data-video-start="${item.videoStartTime || masonryGallery.defaultVideoStartTime || '0'}">
+                        <div class="masonry-gallery__video-wrapper">
+                            <sly data-sly-use.videoUrl="${'adobexp/components/commons/v1/helper/transformurls.js' @ internalUrl=item.mediaPath}">
+                                <video class="masonry-gallery__video" muted loop playsinline preload="metadata">
+                                    <source src="${videoUrl}" type="video/mp4"/>
+                                    Your browser does not support the video tag.
+                                </video>
+                            </sly>
+                        </div>
+                        <!-- Title Overlay (if enabled and title exists) -->
+                        <sly data-sly-test="${masonryGallery.showTitleOverlay && item.mediaTitle}">
+                            <div class="masonry-gallery__overlay">
+                                <span class="masonry-gallery__title">${item.mediaTitle}</span>
+                            </div>
+                        </sly>
+                    </div>
+                </sly>
+                
+            </sly>
+            
+        </div>
+        
+        <!-- CTA Section -->
+        <sly data-sly-test="${masonryGallery.hasCtaLink}">
+            <div class="masonry-gallery__cta">
+                <sly data-sly-use.ctaUrl="${'adobexp/components/commons/v1/helper/transformurls.js' @ internalUrl=masonryGallery.ctaLink}">
+                    <a class="cta-button" 
+                       href="${ctaUrl}" 
+                       aria-label="${masonryGallery.ctaText}"
+                       target="${masonryGallery.ctaExternal ? '_blank' : ''}"
+                       rel="${masonryGallery.ctaExternal ? 'noopener noreferrer' : ''}">
+                        <span>${masonryGallery.ctaText}</span>
+                        <span class="btn-theme-auto btn-icon-only cta-button__icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" width="20" height="20" stroke-width="1.5" aria-hidden="true">
+                                <path d="M5 12h14m-6 6 6-6m-6-6 6 6"></path>
+                            </svg>
+                        </span>
+                    </a>
+                </sly>
+            </div>
+        </sly>
+        
+    </div>
+</section>
+<!-- MASONRY GALLERY COMPONENT HTML MARKUP ENDS HERE -->
+
+<sly data-sly-call="${templates.placeholder @ isEmpty = !masonryGallery.hasMediaItems, classAppend='masonry-gallery'}"></sly>
