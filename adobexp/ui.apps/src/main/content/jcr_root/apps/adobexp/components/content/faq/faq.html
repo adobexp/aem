@@ -1,0 +1,48 @@
+<!--/*
+    FAQ Component - AEM Sightly Template
+    
+    This component renders a FAQ accordion section with:
+    - Section title (H2)
+    - List of FAQ items with:
+      - Question (H3)
+      - Answer (paragraph)
+    - Expandable/collapsible behavior (only one item expanded at a time)
+*/-->
+
+<sly data-sly-use.templates="adobexp/components/commons/v1/templates.html"/>
+<sly data-sly-use.faq="com.adobexp.aem.core.components.models.FaqModel"/>
+
+<!-- FAQ COMPONENT HTML MARKUP STARTS HERE -->
+<section class="faq${faq.withBackground ? ' faq--with-bg' : ''}" 
+         data-component="faq" 
+         aria-label="${faq.faqTitle || 'Frequently Asked Questions'}" 
+         data-sly-test="${faq.faqTitle || faq.hasFaqItems}">
+    <div class="faq__inner">
+        <!-- Title -->
+        <h2 class="faq__title" data-sly-test="${faq.faqTitle}">${faq.faqTitle}</h2>
+
+        <div class="faq__items" role="list" data-sly-test="${faq.hasFaqItems}">
+            <sly data-sly-list.item="${faq.faqItems}">
+                <article class="faq__item" role="listitem" data-expanded="${item.expanded ? 'true' : 'false'}">
+                    <button class="faq__question" 
+                            aria-expanded="${item.expanded ? 'true' : 'false'}" 
+                            aria-controls="faq-answer-${itemList.index}">
+                        <h3 class="faq__question-text">${item.question}</h3>
+                        <span class="faq__icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </span>
+                    </button>
+                    <div class="faq__answer" id="faq-answer-${itemList.index}">
+                        <div class="faq__answer-inner">
+                            <div class="faq__answer-content">${item.answer @ context='html'}</div>
+                        </div>
+                    </div>
+                </article>
+            </sly>
+        </div>
+    </div>
+</section>
+<!-- FAQ COMPONENT HTML MARKUP ENDS HERE -->
+<sly data-sly-call="${templates.placeholder @ isEmpty = !faq.faqTitle && !faq.hasFaqItems, classAppend='faq'}"></sly>

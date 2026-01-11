@@ -624,6 +624,9 @@ public @interface SiteThemeConfig {
 
     // ==================== FAQ VARIABLES ====================
 
+    @Property(label = "FAQ Background (Dark)", description = "FAQ section background in dark theme")
+    String darkFaqBg() default "linear-gradient(180deg, #0c0c0c 0%, var(--site-body-bg) 100%)";
+
     @Property(label = "FAQ Background (Light)", description = "FAQ section background in light theme")
     String lightFaqBg() default "linear-gradient(180deg, var(--site-body-bg) 0%, var(--main-theme-color) 50%, var(--site-body-bg) 100%)";
 
@@ -631,7 +634,7 @@ public @interface SiteThemeConfig {
     String darkFaqItemBg() default "#2a2a2a";
 
     @Property(label = "FAQ Item Background (Light)", description = "FAQ item background in light theme")
-    String lightFaqItemBg() default "#ffffff";
+    String lightFaqItemBg() default "#f2fffd";
 
     @Property(label = "FAQ Item Hover Background (Dark)", description = "FAQ item hover background in dark theme")
     String darkFaqItemHoverBg() default "#333333";
@@ -698,7 +701,7 @@ public @interface SiteThemeConfig {
     String darkLeadMediaSectionCardBg() default "#2a2a2a";
 
     @Property(label = "Lead Media Section Card Background (Light)", description = "Lead media section card background in light theme")
-    String lightLeadMediaSectionCardBg() default "#f3f4f6";
+    String lightLeadMediaSectionCardBg() default "#f2fffd";
 
     @Property(label = "Lead Media Section Icon Badge Background (Dark)", description = "Lead media section icon badge background in dark theme")
     String darkLeadMediaSectionIconBadgeBg() default "#3a3a3a";

@@ -245,7 +245,7 @@ public class SiteThemeServlet extends SlingSafeMethodsServlet {
         writer.println("  --comparison-col-bg: " + getOrDefault(config, c -> c.darkComparisonColBg(), "#2a2a2a") + ";");
         writer.println();
         writer.println("  /* FAQ */");
-        writer.println("  --faq-bg: var(--site-body-bg);");
+        writer.println("  --faq-bg: " + getOrDefault(config, c -> c.darkFaqBg(), "linear-gradient(180deg, #0c0c0c 0%, var(--site-body-bg) 100%)") + ";");
         writer.println("  --faq-item-bg: " + getOrDefault(config, c -> c.darkFaqItemBg(), "#2a2a2a") + ";");
         writer.println("  --faq-item-hover-bg: " + getOrDefault(config, c -> c.darkFaqItemHoverBg(), "#333333") + ";");
         writer.println();
@@ -433,7 +433,7 @@ public class SiteThemeServlet extends SlingSafeMethodsServlet {
         writer.println();
         writer.println("  /* FAQ */");
         writer.println("  --faq-bg: " + getOrDefault(config, c -> c.lightFaqBg(), "linear-gradient(180deg, var(--site-body-bg) 0%, var(--main-theme-color) 50%, var(--site-body-bg) 100%)") + ";");
-        writer.println("  --faq-item-bg: " + getOrDefault(config, c -> c.lightFaqItemBg(), "#ffffff") + ";");
+        writer.println("  --faq-item-bg: " + getOrDefault(config, c -> c.lightFaqItemBg(), "#f2fffd") + ";");
         writer.println("  --faq-item-hover-bg: " + getOrDefault(config, c -> c.lightFaqItemHoverBg(), "#e5e7eb") + ";");
         writer.println();
         writer.println("  /* BlobImageSection */");
@@ -448,7 +448,7 @@ public class SiteThemeServlet extends SlingSafeMethodsServlet {
         writer.println();
         writer.println("  /* LeadMediaSection */");
         writer.println("  --lead-media-section-bg: " + getOrDefault(config, c -> c.lightLeadMediaSectionBg(), "linear-gradient(180deg, var(--site-body-bg) 0%, var(--main-theme-color) 50%, var(--site-body-bg) 100%)") + ";");
-        writer.println("  --lead-media-section-card-bg: " + getOrDefault(config, c -> c.lightLeadMediaSectionCardBg(), "#f3f4f6") + ";");
+        writer.println("  --lead-media-section-card-bg: " + getOrDefault(config, c -> c.lightLeadMediaSectionCardBg(), "#f2fffd") + ";");
         writer.println("  --lead-media-section-icon-badge-bg: " + getOrDefault(config, c -> c.lightLeadMediaSectionIconBadgeBg(), "#e5e7eb") + ";");
         writer.println("  --lead-media-section-icon-badge-color: " + getOrDefault(config, c -> c.lightLeadMediaSectionIconBadgeColor(), "#374151") + ";");
         writer.println("  --lead-media-section-cta-bg: " + getOrDefault(config, c -> c.lightLeadMediaSectionCtaBg(), "#000000") + ";");
