@@ -72,6 +72,18 @@ public class TitleImpl implements Title {
     @Nullable
     private String type;
 
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
+    private String position;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
+    private String paddingTop;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
+    private String mobilePosition;
+
     @Self
     private LinkManager linkManager;
     @SuppressWarnings("rawtypes")
@@ -131,5 +143,20 @@ public class TitleImpl implements Title {
     @Override
     public boolean isLinkDisabled() {
         return linkDisabled;
+    }
+
+    @Override
+    public String getPosition() {
+        return StringUtils.defaultIfBlank(position, "left");
+    }
+
+    @Override
+    public String getPaddingTop() {
+        return StringUtils.isNotBlank(paddingTop) ? "padding-top: " + paddingTop : null;
+    }
+
+    @Override
+    public String getMobilePosition() {
+        return StringUtils.defaultIfBlank(mobilePosition, "left");
     }
 }

@@ -106,6 +106,145 @@
                                                 fieldLabel="ID"
                                                 name="./id"
 												validation="html-unique-id-validator"/>
+                                            <position
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                fieldLabel="Text Alignment"
+                                                fieldDescription="Choose the horizontal alignment of the title text."
+                                                name="./position">
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <left
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="Left"
+                                                        value="left"
+                                                        selected="{Boolean}true"/>
+                                                    <center
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="Center"
+                                                        value="center"/>
+                                                    <right
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="Right"
+                                                        value="right"/>
+                                                </items>
+                                            </position>
+                                            <mobilePosition
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                fieldLabel="Alignment on Mobile"
+                                                fieldDescription="Choose the horizontal alignment on mobile viewports."
+                                                name="./mobilePosition">
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <left
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="Left"
+                                                        value="left"
+                                                        selected="{Boolean}true"/>
+                                                    <center
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="Center"
+                                                        value="center"/>
+                                                    <right
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="Right"
+                                                        value="right"/>
+                                                </items>
+                                            </mobilePosition>
+                                            <paddingTop
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                fieldLabel="Padding Top"
+                                                fieldDescription="Choose the top padding for the title container."
+                                                name="./paddingTop"
+                                                emptyText="None">
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <none
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="None"
+                                                        value=""
+                                                        selected="{Boolean}true"/>
+                                                    <px10
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="10px"
+                                                        value="10px"/>
+                                                    <px20
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="20px"
+                                                        value="20px"/>
+                                                    <px30
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="30px"
+                                                        value="30px"/>
+                                                    <px40
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="40px"
+                                                        value="40px"/>
+                                                    <px50
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="50px"
+                                                        value="50px"/>
+                                                    <px60
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="60px"
+                                                        value="60px"/>
+                                                    <px70
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="70px"
+                                                        value="70px"/>
+                                                    <px80
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="80px"
+                                                        value="80px"/>
+                                                    <px90
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="90px"
+                                                        value="90px"/>
+                                                    <px100
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="100px"
+                                                        value="100px"/>
+                                                    <px110
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="110px"
+                                                        value="110px"/>
+                                                    <px120
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="120px"
+                                                        value="120px"/>
+                                                    <px130
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="130px"
+                                                        value="130px"/>
+                                                    <px140
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="140px"
+                                                        value="140px"/>
+                                                    <px150
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="150px"
+                                                        value="150px"/>
+                                                    <px160
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="160px"
+                                                        value="160px"/>
+                                                    <px170
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="170px"
+                                                        value="170px"/>
+                                                    <px180
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="180px"
+                                                        value="180px"/>
+                                                    <px190
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="190px"
+                                                        value="190px"/>
+                                                    <px200
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="200px"
+                                                        value="200px"/>
+                                                </items>
+                                            </paddingTop>
                                         </items>
                                     </column>
                                 </items>

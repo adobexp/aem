@@ -103,6 +103,9 @@ public class SiteThemeServlet extends SlingSafeMethodsServlet {
         writer.println("  --standard-secondary-site-text-color: " + getOrDefault(config, c -> c.darkStandardSecondarySiteTextColor(), "#a2a2a2") + ";");
         writer.println("  --standard-site-font-size: " + getOrDefault(config, c -> c.standardSiteFontSize(), "16px") + ";");
         writer.println("  --standard-site-font-weight: " + getOrDefault(config, c -> c.standardSiteFontWeight(), "400") + ";");
+        writer.println("  --blockquote-border-color: " + getOrDefault(config, c -> c.darkBlockquoteBorderColor(), "var(--primary-text-color)") + ";");
+        writer.println("  --blockquote-bg: " + getOrDefault(config, c -> c.darkBlockquoteBg(), "#2f2f2f") + ";");
+        writer.println("  --blockquote-quote-color: " + getOrDefault(config, c -> c.darkBlockquoteQuoteColor(), "var(--primary-text-color)") + ";");
         writer.println();
         writer.println("  /* Global page */");
         writer.println("  --site-body-bg: " + getOrDefault(config, c -> c.darkSiteBodyBg(), "#1e1e1e") + ";");
@@ -293,6 +296,9 @@ public class SiteThemeServlet extends SlingSafeMethodsServlet {
         writer.println("  --standard-secondary-site-text-color: " + getOrDefault(config, c -> c.lightStandardSecondarySiteTextColor(), "#4b5563") + ";");
         writer.println("  --standard-site-font-size: " + getOrDefault(config, c -> c.standardSiteFontSize(), "16px") + ";");
         writer.println("  --standard-site-font-weight: " + getOrDefault(config, c -> c.standardSiteFontWeight(), "400") + ";");
+        writer.println("  --blockquote-border-color: " + getOrDefault(config, c -> c.lightBlockquoteBorderColor(), "var(--primary-text-color)") + ";");
+        writer.println("  --blockquote-bg: " + getOrDefault(config, c -> c.lightBlockquoteBg(), "#d0fafc") + ";");
+        writer.println("  --blockquote-quote-color: " + getOrDefault(config, c -> c.lightBlockquoteQuoteColor(), "var(--primary-text-color)") + ";");
         writer.println();
         writer.println("  /* Global page */");
         writer.println("  --site-body-bg: " + getOrDefault(config, c -> c.lightSiteBodyBg(), "#ffffff") + ";");

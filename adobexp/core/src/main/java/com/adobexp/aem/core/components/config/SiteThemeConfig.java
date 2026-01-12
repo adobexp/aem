@@ -79,6 +79,26 @@ public @interface SiteThemeConfig {
     @Property(label = "Standard Site Font Weight", description = "Standard font weight for the site")
     String standardSiteFontWeight() default "400";
 
+    // ==================== BLOCKQUOTE VARIABLES ====================
+
+    @Property(label = "Blockquote Border Color (Dark)", description = "Blockquote border color in dark theme")
+    String darkBlockquoteBorderColor() default "var(--primary-text-color)";
+
+    @Property(label = "Blockquote Border Color (Light)", description = "Blockquote border color in light theme")
+    String lightBlockquoteBorderColor() default "var(--primary-text-color)";
+
+    @Property(label = "Blockquote Background (Dark)", description = "Blockquote background color in dark theme")
+    String darkBlockquoteBg() default "#2f2f2f";
+
+    @Property(label = "Blockquote Background (Light)", description = "Blockquote background color in light theme")
+    String lightBlockquoteBg() default "#d0fafc";
+
+    @Property(label = "Blockquote Quote Color (Dark)", description = "Blockquote decorative quote color in dark theme")
+    String darkBlockquoteQuoteColor() default "var(--primary-text-color)";
+
+    @Property(label = "Blockquote Quote Color (Light)", description = "Blockquote decorative quote color in light theme")
+    String lightBlockquoteQuoteColor() default "var(--primary-text-color)";
+
     // ==================== GLOBAL PAGE VARIABLES ====================
 
     @Property(label = "Site Body Background (Dark)", description = "Body background color in dark theme")

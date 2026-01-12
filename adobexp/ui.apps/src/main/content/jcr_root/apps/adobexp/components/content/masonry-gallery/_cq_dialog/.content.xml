@@ -150,6 +150,78 @@
                                                     jcr:primaryType="nt:unstructured"
                                                     cmp-masonry-gallery-hook="defaultVideoStartTime"/>
                                             </defaultVideoStartTime>
+
+                                            <!-- Asset Count for DAM Folder -->
+                                            <assetCount
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
+                                                fieldLabel="Count of Assets to Display"
+                                                fieldDescription="Number of assets to display from the DAM folder. Leave empty, 0, or -1 to display all assets."
+                                                name="./assetCount"
+                                                min="{Long}-1"
+                                                step="{Long}1">
+                                                <granite:data
+                                                    jcr:primaryType="nt:unstructured"
+                                                    cmp-masonry-gallery-hook="assetCount"/>
+                                            </assetCount>
+
+                                            <!-- Sort Assets for DAM Folder -->
+                                            <sortBy
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                fieldLabel="Sort Assets By"
+                                                fieldDescription="Sort assets before displaying. Select 'None' to keep original order from DAM folder."
+                                                name="./sortBy">
+                                                <granite:data
+                                                    jcr:primaryType="nt:unstructured"
+                                                    cmp-masonry-gallery-hook="sortBy"/>
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <none
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="None (Original Order)"
+                                                        value=""
+                                                        selected="{Boolean}true"/>
+                                                    <lastModified
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="Last Modified Date"
+                                                        value="lastModified"/>
+                                                    <published
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="Published Date"
+                                                        value="published"/>
+                                                    <size
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="File Size"
+                                                        value="size"/>
+                                                    <name
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="Name"
+                                                        value="name"/>
+                                                </items>
+                                            </sortBy>
+
+                                            <!-- Sort Order for DAM Folder -->
+                                            <sortOrder
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                fieldLabel="Sort Order"
+                                                fieldDescription="Sort order direction (only applies when Sort Assets is not 'None')"
+                                                name="./sortOrder">
+                                                <granite:data
+                                                    jcr:primaryType="nt:unstructured"
+                                                    cmp-masonry-gallery-hook="sortOrder"/>
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <asc
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="Ascending (A-Z, Oldest First, Smallest First)"
+                                                        value="ASC"
+                                                        selected="{Boolean}true"/>
+                                                    <desc
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="Descending (Z-A, Newest First, Largest First)"
+                                                        value="DESC"/>
+                                                </items>
+                                            </sortOrder>
                                         </items>
                                     </column>
                                 </items>

@@ -98,4 +98,31 @@ public interface Title {
         return false;
     }
 
+    /**
+     * Returns the position/alignment of the title text.
+     *
+     * @return the position value (left, center, right), defaults to "left"
+     */
+    default String getPosition() {
+        return "left";
+    }
+
+    /**
+     * Returns the top padding style for the title container.
+     *
+     * @return the complete padding-top style (e.g., "padding-top: 10px"), or null if not set
+     */
+    default String getPaddingTop() {
+        return null;
+    }
+
+    /**
+     * Returns the mobile alignment position for the title text.
+     *
+     * @return the mobile position value (left, center, right), defaults to "left"
+     */
+    default String getMobilePosition() {
+        return "left";
+    }
+
 }

@@ -213,6 +213,9 @@
             showHeading(dialog, 'DAM Folder Selection');
             showField(dialog, './damFolderPath');
             showField(dialog, './defaultVideoStartTime');
+            showField(dialog, './assetCount');
+            showField(dialog, './sortBy');
+            showField(dialog, './sortOrder');
             
             // === HIDE MANUAL MEDIA FIELDS ===
             hideHeading(dialog, 'Manual Media Items');
@@ -226,6 +229,9 @@
             hideHeading(dialog, 'DAM Folder Selection');
             hideField(dialog, './damFolderPath');
             hideField(dialog, './defaultVideoStartTime');
+            hideField(dialog, './assetCount');
+            hideField(dialog, './sortBy');
+            hideField(dialog, './sortOrder');
         }
     }
 

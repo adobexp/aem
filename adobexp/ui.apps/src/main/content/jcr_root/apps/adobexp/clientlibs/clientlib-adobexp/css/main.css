@@ -640,6 +640,121 @@ h1 i b {
   font-weight: 700;
 }
 
+/* ==========================================================================
+   Text Component
+   ========================================================================== */
+.text {
+  width: 100%;
+  padding: 20px;
+  color: var(--standard-primary-site-text-color, #111827);
+  font-family: "Hubot Sans", "Framer Display", "Instrument Serif", "Segoe UI", Arial, sans-serif;
+  font-synthesis: weight style;
+}
+
+.text__paragraph {
+  margin: 0;
+  font-size: var(--standard-site-font-size, 16px);
+  font-weight: var(--standard-site-font-weight, 400);
+  line-height: 1.6;
+  color: var(--standard-primary-site-text-color, #111827);
+}
+
+.text__primary {
+  color: var(--standard-primary-site-text-color, #111827);
+}
+
+.text__secondary {
+  color: var(--standard-secondary-site-text-color, #4b5563);
+}
+
+.text__paragraph strong,
+.text__paragraph b {
+  font-weight: 700;
+  text-shadow: 0.5px 0 0 currentColor, -0.5px 0 0 currentColor;
+}
+
+.text__paragraph em,
+.text__paragraph i {
+  font-style: italic;
+}
+
+.text__paragraph strong em,
+.text__paragraph strong i,
+.text__paragraph b em,
+.text__paragraph b i,
+.text__paragraph em strong,
+.text__paragraph i strong,
+.text__paragraph em b,
+.text__paragraph i b {
+  font-style: italic;
+  font-weight: 700;
+  text-shadow: 0.5px 0 0 currentColor, -0.5px 0 0 currentColor;
+}
+
+/* Blockquote styles */
+.text blockquote,
+.text__paragraph blockquote {
+  margin: 1.5em 0;
+  padding: 1em 1.5em;
+  border-left: 4px solid var(--blockquote-border-color, #6366f1);
+  background: var(--blockquote-bg, rgba(99, 102, 241, 0.08));
+  border-radius: 0 8px 8px 0;
+  font-style: italic;
+  color: var(--standard-secondary-site-text-color, #4b5563);
+  position: relative;
+}
+
+.text blockquote::before,
+.text__paragraph blockquote::before {
+  content: "\201C";
+  font-size: 3em;
+  line-height: 1;
+  position: absolute;
+  top: -0.1em;
+  left: 0.1em;
+  color: var(--blockquote-quote-color, rgba(99, 102, 241, 0.3));
+  font-family: Georgia, serif;
+}
+
+.text blockquote p,
+.text__paragraph blockquote p {
+  margin: 0;
+  padding-left: 1.5em;
+}
+
+.text blockquote cite,
+.text__paragraph blockquote cite {
+  display: block;
+  margin-top: 0.75em;
+  padding-left: 1.5em;
+  font-size: 0.875em;
+  font-style: normal;
+  font-weight: 600;
+  color: var(--standard-primary-site-text-color, #111827);
+}
+
+.text blockquote cite::before,
+.text__paragraph blockquote cite::before {
+  content: "— ";
+}
+
+@media (max-width: 768px) {
+  .text {
+    padding: 10px;
+  }
+
+  .text blockquote,
+  .text__paragraph blockquote {
+    padding: 0.75em 1em;
+    margin: 1em 0;
+  }
+
+  .text blockquote::before,
+  .text__paragraph blockquote::before {
+    font-size: 2em;
+  }
+}
+
 /* Text component font-size utilities (apply class on `.text`) */
 .text.text-size-16 .text__paragraph { font-size: 16px !important; }
 .text.text-size-17 .text__paragraph { font-size: 17px !important; }
@@ -676,3 +791,107 @@ h1 i b {
 .text.text-size-48 .text__paragraph { font-size: 48px !important; }
 .text.text-size-49 .text__paragraph { font-size: 49px !important; }
 .text.text-size-50 .text__paragraph { font-size: 50px !important; }
+
+/* ==========================================================================
+   Title Component
+   ========================================================================== */
+.title {
+  width: 100%;
+  padding: 28px 20px;
+  background: var(--site-body-bg, #ffffff);
+  color: var(--standard-primary-site-text-color, #111827);
+}
+
+.title__inner {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.title__section {
+  padding: 18px 0;
+  border-top: 1px dashed var(--services-divider-color, rgba(0, 0, 0, 0.12));
+}
+
+.title__section:first-child {
+  border-top: none;
+}
+
+.title__label {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--standard-secondary-site-text-color, #6b7280);
+  margin: 0 0 8px;
+}
+
+.title__link {
+  color: inherit;
+  text-decoration: none;
+  position: relative;
+  display: inline-block;
+}
+
+.title__link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -6px;
+  height: 2px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.35s ease;
+  pointer-events: none;
+}
+
+.title__link:hover::after {
+  transform: scaleX(1);
+}
+
+.title__link:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
+  border-radius: 6px;
+}
+
+.title__hint {
+  margin-top: 10px;
+  font-size: 13px;
+  color: var(--standard-secondary-site-text-color, #6b7280);
+}
+
+/* Title position/alignment modifiers */
+.title--left,
+.cmp-title--left {
+  text-align: left;
+}
+
+.title--center,
+.cmp-title--center {
+  text-align: center;
+}
+
+.title--right,
+.cmp-title--right {
+  text-align: right;
+}
+
+/* Mobile alignment modifiers (applies only on mobile viewport) */
+@media (max-width: 768px) {
+  .title--mobile-left,
+  .cmp-title--mobile-left {
+    text-align: left;
+  }
+
+  .title--mobile-center,
+  .cmp-title--mobile-center {
+    text-align: center;
+  }
+
+  .title--mobile-right,
+  .cmp-title--mobile-right {
+    text-align: right;
+  }
+}

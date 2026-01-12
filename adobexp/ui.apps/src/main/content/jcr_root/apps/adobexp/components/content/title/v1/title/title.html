@@ -17,7 +17,8 @@
      data-sly-use.template="adobexp/components/commons/v1/templates.html"
      data-sly-test.text="${title.text}"
 
-     class="cmp-title">
+     class="cmp-title cmp-title--${title.position} cmp-title--mobile-${title.mobilePosition}"
+     style="${title.paddingTop @ context='styleString'}">
     <h1 class="cmp-title__text" data-sly-element="${title.type}"><a
             data-sly-unwrap="${!title.link.valid || title.linkDisabled}"
             class="cmp-title__link"
