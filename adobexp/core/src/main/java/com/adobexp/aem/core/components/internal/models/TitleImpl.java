@@ -78,7 +78,7 @@ public class TitleImpl implements Title {
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
-    private String paddingTop;
+    private String marginTop;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
@@ -151,8 +151,8 @@ public class TitleImpl implements Title {
     }
 
     @Override
-    public String getPaddingTop() {
-        return StringUtils.isNotBlank(paddingTop) ? "padding-top: " + paddingTop : null;
+    public String getMarginTop() {
+        return StringUtils.isNotBlank(marginTop) ? "margin-top: " + marginTop : null;
     }
 
     @Override

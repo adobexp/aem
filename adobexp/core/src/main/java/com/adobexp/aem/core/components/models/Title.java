@@ -108,11 +108,11 @@ public interface Title {
     }
 
     /**
-     * Returns the top padding style for the title container.
+     * Returns the top margin style for the title container.
      *
-     * @return the complete padding-top style (e.g., "padding-top: 10px"), or null if not set
+     * @return the complete margin-top style (e.g., "margin-top: 10px"), or null if not set
      */
-    default String getPaddingTop() {
+    default String getMarginTop() {
         return null;
     }
 

@@ -794,4 +794,18 @@ public @interface SiteThemeConfig {
 
     @Property(label = "Lead Media Section Media Border (Light)", description = "Lead media section media border in light theme")
     String lightLeadMediaSectionMediaBorder() default "rgba(180, 180, 180, 0.5)";
+
+    // ==================== GRID CONTROL VARIABLES ====================
+
+    @Property(label = "Grid Control Background (Dark)", description = "Grid control component background in dark theme")
+    String darkGridControlBg() default "linear-gradient(180deg, #0c0c0c 0%, var(--site-body-bg) 100%)";
+
+    @Property(label = "Grid Control Background (Light)", description = "Grid control component background in light theme")
+    String lightGridControlBg() default "linear-gradient(180deg, var(--site-body-bg) 0%, var(--main-theme-color) 50%, var(--site-body-bg) 100%)";
+
+    @Property(label = "Grid Control Column Background (Dark)", description = "Grid control column background in dark theme")
+    String darkGridControlColumnBg() default "linear-gradient(180deg, #0c0c0c 0%, var(--site-body-bg) 100%)";
+
+    @Property(label = "Grid Control Column Background (Light)", description = "Grid control column background in light theme")
+    String lightGridControlColumnBg() default "linear-gradient(180deg, var(--site-body-bg) 0%, var(--main-theme-color) 50%, var(--site-body-bg) 100%)";
 }

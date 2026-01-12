@@ -277,6 +277,10 @@ public class SiteThemeServlet extends SlingSafeMethodsServlet {
         writer.println("  --lead-media-section-cta-icon-color: " + getOrDefault(config, c -> c.darkLeadMediaSectionCtaIconColor(), "#ffffff") + ";");
         writer.println("  --lead-media-section-media-bg: " + getOrDefault(config, c -> c.darkLeadMediaSectionMediaBg(), "#1a1a1a") + ";");
         writer.println("  --lead-media-section-media-border: " + getOrDefault(config, c -> c.darkLeadMediaSectionMediaBorder(), "rgba(180, 180, 180, 0.4)") + ";");
+        writer.println();
+        writer.println("  /* GridControl */");
+        writer.println("  --grid-control-bg: " + getOrDefault(config, c -> c.darkGridControlBg(), "linear-gradient(180deg, #0c0c0c 0%, var(--site-body-bg) 100%)") + ";");
+        writer.println("  --grid-control-column-bg: " + getOrDefault(config, c -> c.darkGridControlColumnBg(), "linear-gradient(180deg, #0c0c0c 0%, var(--site-body-bg) 100%)") + ";");
         writer.println("}");
         writer.println();
         
@@ -470,6 +474,10 @@ public class SiteThemeServlet extends SlingSafeMethodsServlet {
         writer.println("  --lead-media-section-cta-icon-color: " + getOrDefault(config, c -> c.lightLeadMediaSectionCtaIconColor(), "#ffffff") + ";");
         writer.println("  --lead-media-section-media-bg: " + getOrDefault(config, c -> c.lightLeadMediaSectionMediaBg(), "#e5e7eb") + ";");
         writer.println("  --lead-media-section-media-border: " + getOrDefault(config, c -> c.lightLeadMediaSectionMediaBorder(), "rgba(180, 180, 180, 0.5)") + ";");
+        writer.println();
+        writer.println("  /* GridControl */");
+        writer.println("  --grid-control-bg: " + getOrDefault(config, c -> c.lightGridControlBg(), "linear-gradient(180deg, var(--site-body-bg) 0%, var(--main-theme-color) 50%, var(--site-body-bg) 100%)") + ";");
+        writer.println("  --grid-control-column-bg: " + getOrDefault(config, c -> c.lightGridControlColumnBg(), "linear-gradient(180deg, var(--site-body-bg) 0%, var(--main-theme-color) 50%, var(--site-body-bg) 100%)") + ";");
         writer.println("}");
     }
 
