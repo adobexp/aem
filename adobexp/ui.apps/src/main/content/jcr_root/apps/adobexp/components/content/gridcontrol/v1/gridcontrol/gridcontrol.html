@@ -1,6 +1,8 @@
-<div id="${properties.id}"
-	data-sly-use.columns="${'adobexp/components/content/gridcontrol/v1/gridcontrol/helper/columnhelper.js' @ layoutColumnsFieldName=properties.layoutColumns, resourcePath=resource.path}">
-	<div class="aem-Grid aem-Grid--12${properties.applyBackgroundColor ? ' aem-Grid--bg' : ''}" data-sly-list.column="${columns}">
-		<div class="${column.columnClass}" data-sly-resource="${@path=column.parSysName, resourceType='wcm/foundation/components/responsivegrid'}"></div>
-	</div>
+<div data-sly-use.gridControl="com.adobexp.aem.core.components.models.GridControl"
+     id="${gridControl.id}">
+    <div class="${gridControl.gridClass}" data-sly-list.column="${gridControl.columns}">
+        <div class="${column.columnClass}" 
+             style="${column.columnStyle @ context='styleString'}" 
+             data-sly-resource="${@path=column.parSysName, resourceType='wcm/foundation/components/responsivegrid'}"></div>
+    </div>
 </div>

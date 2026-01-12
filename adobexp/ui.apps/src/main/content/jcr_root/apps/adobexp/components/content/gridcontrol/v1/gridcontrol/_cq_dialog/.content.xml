@@ -2,7 +2,11 @@
 <jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
     jcr:primaryType="nt:unstructured"
     jcr:title="Grid Control"
-    sling:resourceType="cq/gui/components/authoring/dialog">
+    sling:resourceType="cq/gui/components/authoring/dialog"
+    extraClientlibs="[cq.authoring.dialog]"
+    helpPath=""
+    height="{Long}600"
+    width="{Long}800">
     <content
         jcr:primaryType="nt:unstructured"
         sling:resourceType="granite/ui/components/coral/foundation/container">
@@ -27,7 +31,7 @@
                                         jcr:primaryType="nt:unstructured"
                                         sling:resourceType="granite/ui/components/coral/foundation/container">
                                         <items jcr:primaryType="nt:unstructured">
-                                                <layoutColumns jcr:primaryType="nt:unstructured"
+                                            <layoutColumns jcr:primaryType="nt:unstructured"
 												sling:resourceType="granite/ui/components/coral/foundation/form/select"
 												fieldLabel="Layout Columns" name="./layoutColumns" defaultValue="12">
 												<items jcr:primaryType="nt:unstructured">
@@ -89,9 +93,49 @@
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
                                                 fieldDescription="When enabled, applies the theme gradient background color to the entire Grid Control component."
                                                 name="./applyBackgroundColor"
-                                                text="Apply Background Color"
+                                                text="Apply Background Color to Grid Container"
                                                 value="{Boolean}true"
                                                 uncheckedValue="{Boolean}false"/>
+                                            <columnStylesHeading
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/heading"
+                                                level="5"
+                                                text="Column Styles"
+                                                class="coral-Heading--5"
+                                                margin="{Boolean}true"/>
+                                            <columnStylesDescription
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/text"
+                                                text="Configure background styles for each column. Each item corresponds to a column (1st item = Column 1, 2nd item = Column 2, etc.). Extra items beyond the number of columns will be ignored."/>
+                                            <columnStyles
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                                composite="{Boolean}true"
+                                                fieldLabel="Column Styles"
+                                                fieldDescription="Add styling options for each column.">
+                                                <field
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/container"
+                                                    name="./columnStyles">
+                                                    <items jcr:primaryType="nt:unstructured">
+                                                        <applyColumnBackground
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                            fieldDescription="Enable to apply background color to this column."
+                                                            name="./applyColumnBackground"
+                                                            text="Apply Background Color"
+                                                            value="{Boolean}true"
+                                                            uncheckedValue="{Boolean}false"/>
+                                                        <columnBackgroundColor
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                            fieldLabel="Background Color / Gradient"
+                                                            fieldDescription="Enter a CSS color or gradient value. Leave empty to use the theme gradient background. Examples: #ff0000, rgba(255,0,0,0.5), linear-gradient(180deg, var(--site-body-bg) 0%, var(--main-theme-color) 50%, var(--site-body-bg) 100%);"
+                                                            name="./columnBackgroundColor"
+                                                            emptyText="e.g. #ff0000 or linear-gradient(...)"/>
+                                                    </items>
+                                                </field>
+                                            </columnStyles>
                                         </items>
                                     </column>
                                 </items>
