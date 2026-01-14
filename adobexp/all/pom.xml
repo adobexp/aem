@@ -131,6 +131,54 @@
                 </plugins>
             </build>
         </profile>
+        <!-- Profile to upload the all package to GitHub Release -->
+        <profile>
+            <id>github-release</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>de.jutzig</groupId>
+                        <artifactId>github-release-plugin</artifactId>
+                        <version>1.4.0</version>
+                        <executions>
+                            <execution>
+                                <id>upload-to-github-release</id>
+                                <phase>deploy</phase>
+                                <goals>
+                                    <goal>release</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <!-- GitHub repository owner/name -->
+                            <repositoryId>adobexp/aem</repositoryId>
+                            <!-- Server ID for GitHub authentication (must match settings.xml) -->
+                            <serverId>github-adobexp</serverId>
+                            <!-- Use the release tag created by maven-release-plugin -->
+                            <tag>v${project.version}</tag>
+                            <!-- Release name -->
+                            <releaseName>AdobeXP AEM Quickstart ${project.version}</releaseName>
+                            <!-- Release description -->
+                            <description>AdobeXP AEM Quickstart All Package - Version ${project.version}</description>
+                            <!-- The artifact file to upload -->
+                            <fileSets>
+                                <fileSet>
+                                    <directory>${project.build.directory}</directory>
+                                    <includes>
+                                        <include>${project.artifactId}-${project.version}.zip</include>
+                                    </includes>
+                                </fileSet>
+                            </fileSets>
+                            <!-- Set to true if you want to overwrite existing assets -->
+                            <overwriteArtifact>true</overwriteArtifact>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
     </profiles>
 
     <dependencies>
