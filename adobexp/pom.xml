@@ -1,28 +1,19 @@
-<?xml version="1.0" encoding="UTF-8"?><!--
- |  Copyright 2015 Adobe Systems Incorporated
- |
- |  Licensed under the Apache License, Version 2.0 (the "License");
- |  you may not use this file except in compliance with the License.
- |  You may obtain a copy of the License at
- |
- |      http://www.apache.org/licenses/LICENSE-2.0
- |
- |  Unless required by applicable law or agreed to in writing, software
- |  distributed under the License is distributed on an "AS IS" BASIS,
- |  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- |  See the License for the specific language governing permissions and
- |  limitations under the License.
--->
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>com.adobexp.aem</groupId>
-  <artifactId>adobexp</artifactId>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.adobexp</groupId>
+        <artifactId>central-maven-parent</artifactId>
+        <version>1.0.1</version>
+    </parent>
+    
+  <groupId>com.adobexp</groupId>
+  <artifactId>adobexp-aem-quickstart-parent</artifactId>
   <packaging>pom</packaging>
   <version>1.0.0-SNAPSHOT</version>
-  <name>Adobe XP Components</name>
-  <description>Adobe XP Components</description>
+  <name>AdobeXP - AEM Quickstart Parent</name>
+  <description>AdobeXP - AEM Quickstart Parent</description>
   <modules>
     <module>all</module>
     <module>core</module>
@@ -44,28 +35,39 @@
     <bnd.version>6.4.0</bnd.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <componentGroupName>Adobe XP Components</componentGroupName>
+    <componentGroupName>AdobeXP AEM</componentGroupName>
+    <uber-jar.version>6.5.22</uber-jar.version>
+        <keyname>33C0330C91FCC3C1</keyname>
+        <server>central</server>
   </properties>
+    <scm>
+        <url>https://github.com/adobexp/aem</url>
+        <connection>scm:git:git@github.com:adobexp/aem.git</connection>
+        <developerConnection>scm:git:git@github.com:adobexp/aem.git</developerConnection>
+        <tag>HEAD</tag>
+    </scm>
   <build>
     <plugins>
       <!-- Maven Release Plugin -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-release-plugin</artifactId>
-        <version>2.5.3</version>
-        <configuration>
-          <scmCommentPrefix>[maven-scm] :</scmCommentPrefix>
-          <preparationGoals>clean install</preparationGoals>
-          <goals>install</goals>
-          <releaseProfiles>release</releaseProfiles>
-        </configuration>
-      </plugin>
-      <!-- Maven Source Plugin -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-source-plugin</artifactId>
-        <version>3.0.1</version>
-        <inherited>true</inherited>
+        <version>${maven-release-plugin}</version>
+                <configuration>
+                    <autoVersionSubmodules>true</autoVersionSubmodules>
+                    <goals>deploy</goals>
+                    <checkModificationExcludes>
+                        <checkModificationExclude>${project.build.directory}</checkModificationExclude>
+                        <checkModificationExclude>**/target</checkModificationExclude>
+                    </checkModificationExcludes>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-scm-plugin</artifactId>
+                        <version>${maven-scm-plugin}</version>
+                    </dependency>
+                </dependencies>
       </plugin>
       <!-- Maven Enforcer Plugin -->
       <plugin>
@@ -96,7 +98,8 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
         <configuration>
-          <release>11</release>
+                    <source>11</source>
+                    <target>11</target>
         </configuration>
       </plugin>
     </plugins>
@@ -399,60 +402,9 @@
     </pluginManagement>
   </build>
   <profiles>
-    <!-- ====================================================== -->
-    <!-- A D O B E P U B L I C P R O F I L E -->
-    <!-- ====================================================== -->
-    <profile>
-      <id>adobe-public</id>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
-      <properties>
-        <releaseRepository-Id>adobe-public-releases</releaseRepository-Id>
-        <releaseRepository-Name>Adobe Public Releases</releaseRepository-Name>
-        <releaseRepository-URL>https://repo.adobe.com/nexus/content/groups/public</releaseRepository-URL>
-      </properties>
-      <repositories>
-        <repository>
-          <id>adobe-public-releases</id>
-          <name>Adobe Public Repository</name>
-          <url>https://repo.adobe.com/nexus/content/groups/public</url>
-          <releases>
-            <enabled>true</enabled>
-            <updatePolicy>never</updatePolicy>
-          </releases>
-          <snapshots>
-            <enabled>false</enabled>
-          </snapshots>
-        </repository>
-      </repositories>
-      <pluginRepositories>
-        <pluginRepository>
-          <id>adobe-public-releases</id>
-          <name>Adobe Public Repository</name>
-          <url>https://repo.adobe.com/nexus/content/groups/public</url>
-          <releases>
-            <enabled>true</enabled>
-            <updatePolicy>never</updatePolicy>
-          </releases>
-          <snapshots>
-            <enabled>false</enabled>
-          </snapshots>
-        </pluginRepository>
-      </pluginRepositories>
-    </profile>
     <!-- Development profile: install only the bundle -->
     <profile>
       <id>autoInstallBundle</id>
-      <!--
-                To enable this feature for a bundle, the sling-maven-plugin
-                (without configuration) needs to be included:
-
-                <plugin>
-                    <groupId>org.apache.sling</groupId>
-                    <artifactId>sling-maven-plugin</artifactId>
-                 </plugin>
-            -->
       <activation>
         <activeByDefault>false</activeByDefault>
       </activation>
@@ -544,8 +496,7 @@
                     <goal>install</goal>
                   </goals>
                   <configuration>
-                    <targetURL>
-                      http://${aem.publish.host}:${aem.publish.port}/crx/packmgr/service.jsp</targetURL>
+                    <targetURL>http://${aem.publish.host}:${aem.publish.port}/crx/packmgr/service.jsp</targetURL>
                   </configuration>
                 </execution>
               </executions>
@@ -650,7 +601,7 @@
       <dependency>
         <groupId>com.adobe.aem</groupId>
         <artifactId>uber-jar</artifactId>
-        <version>6.5.22</version>
+        <version>${uber-jar.version}</version>
         <scope>provided</scope>
       </dependency>
       <!-- Apache Sling Dependencies -->

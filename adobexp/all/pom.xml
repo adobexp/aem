@@ -22,8 +22,8 @@
     <!-- P A R E N T  P R O J E C T  D E S C R I P T I O N                      -->
     <!-- ====================================================================== -->
     <parent>
-        <groupId>com.adobexp.aem</groupId>
-        <artifactId>adobexp</artifactId>
+        <groupId>com.adobexp</groupId>
+        <artifactId>adobexp-aem-quickstart-parent</artifactId>
         <version>1.0.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
@@ -31,10 +31,10 @@
     <!-- ====================================================================== -->
     <!-- P R O J E C T  D E S C R I P T I O N                                   -->
     <!-- ====================================================================== -->
-    <artifactId>adobexp.all</artifactId>
+    <artifactId>adobexp-aem-quickstart.all</artifactId>
     <packaging>content-package</packaging>
-    <name>Adobe XP Components - All</name>
-    <description>All content package for Adobe XP Components</description>
+    <name>AdobeXP - AEM Quickstart All</name>
+    <description>All content package for AdobeXP - AEM Quickstart</description>
 
     <!-- ====================================================================== -->
     <!-- B U I L D   D E F I N I T I O N                                        -->
@@ -83,32 +83,32 @@
                 <artifactId>filevault-package-maven-plugin</artifactId>
                 <extensions>true</extensions>
                 <configuration>
-                    <group>com.adobexp.aem</group>
+                    <group>com.adobexp</group>
                     <packageType>container</packageType>
                     <!-- skip sub package validation for now as some vendor packages like CIF apps
                     will not pass -->
                     <skipSubPackageValidation>true</skipSubPackageValidation>
                     <embeddeds>
                         <embedded>
-                            <groupId>com.adobexp.aem</groupId>
-                            <artifactId>adobexp.ui.apps</artifactId>
+                            <groupId>com.adobexp</groupId>
+                            <artifactId>adobexp-aem-quickstart.ui.apps</artifactId>
                             <type>zip</type>
                             <target>/apps/adobexp-packages/application/install</target>
                         </embedded>
                         <embedded>
-                            <groupId>com.adobexp.aem</groupId>
-                            <artifactId>adobexp.core</artifactId>
+                            <groupId>com.adobexp</groupId>
+                            <artifactId>adobexp-aem-quickstart.core</artifactId>
                             <target>/apps/adobexp-packages/application/install</target>
                         </embedded>
                         <embedded>
-                            <groupId>com.adobexp.aem</groupId>
-                            <artifactId>adobexp.ui.content</artifactId>
+                            <groupId>com.adobexp</groupId>
+                            <artifactId>adobexp-aem-quickstart.ui.content</artifactId>
                             <type>zip</type>
                             <target>/apps/adobexp-packages/content/install</target>
                         </embedded>
                         <embedded>
-                            <groupId>com.adobexp.aem</groupId>
-                            <artifactId>adobexp.ui.config</artifactId>
+                            <groupId>com.adobexp</groupId>
+                            <artifactId>adobexp-aem-quickstart.ui.config</artifactId>
                             <type>zip</type>
                             <target>/apps/adobexp-packages/application/install</target>
                         </embedded>
@@ -214,20 +214,20 @@
     <!-- ====================================================================== -->
     <dependencies>
         <dependency>
-            <groupId>com.adobexp.aem</groupId>
-            <artifactId>adobexp.ui.apps</artifactId>
+            <groupId>com.adobexp</groupId>
+            <artifactId>adobexp-aem-quickstart.ui.apps</artifactId>
             <version>${project.version}</version>
             <type>zip</type>
         </dependency>
         <dependency>
-            <groupId>com.adobexp.aem</groupId>
-            <artifactId>adobexp.ui.content</artifactId>
+            <groupId>com.adobexp</groupId>
+            <artifactId>adobexp-aem-quickstart.ui.content</artifactId>
             <version>${project.version}</version>
             <type>zip</type>
         </dependency>
         <dependency>
-            <groupId>com.adobexp.aem</groupId>
-            <artifactId>adobexp.ui.config</artifactId>
+            <groupId>com.adobexp</groupId>
+            <artifactId>adobexp-aem-quickstart.ui.config</artifactId>
             <version>${project.version}</version>
             <type>zip</type>
         </dependency>
