@@ -1,5 +1,5 @@
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- ~ Copyright 2023 Adobe
+ ~ Copyright 2025 AdobeXP
  ~
  ~ Licensed under the Apache License, Version 2.0 (the "License");
  ~ you may not use this file except in compliance with the License.
@@ -89,11 +89,11 @@ public class LinkUtil {
 
     /**
      * Decodes and encoded or escaped URL taking care to not break Adobe Campaign expressions
-     * like: /content/path/to/page.html?recipient=<%= recipient.id %>
+     * like: {@code /content/path/to/page.html?recipient=<%= recipient.id %>}
      *
      * @param url The URL to decode
      * @return The decoded URL
-     * @throws UnsupportedEncodingException
+     * @throws UnsupportedEncodingException if encoding is not supported
      */
     public static String decode(final String url) throws UnsupportedEncodingException {
         // The link contain character sequences that are not well formatted and cannot be decoded, for example

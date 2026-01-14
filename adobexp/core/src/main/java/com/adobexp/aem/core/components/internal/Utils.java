@@ -1,5 +1,5 @@
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- ~ Copyright 2017 Adobe
+ ~ Copyright 2025 AdobeXP
  ~
  ~ Licensed under the Apache License, Version 2.0 (the "License");
  ~ you may not use this file except in compliance with the License.
@@ -458,11 +458,11 @@ public class Utils {
     }
 
     /**
-     * Converts a link object into an Optional<Link> object.
+     * Converts a link object into an {@code Optional<Link>} object.
      * This method is used to keep the logic based on the former internal link handler backwards compatible.
      *
      * @param link The {@link Link}
-     * @return the Optional<Link> object
+     * @return the {@code Optional<Link>} object
      */
     @SuppressWarnings("rawtypes")
     public static Optional<Link> getOptionalLink( Link link) {

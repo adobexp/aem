@@ -1,5 +1,5 @@
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- ~ Copyright 2017 Adobe
+ ~ Copyright 2025 AdobeXP
  ~
  ~ Licensed under the Apache License, Version 2.0 (the "License");
  ~ you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ import org.osgi.annotation.versioning.ConsumerType;
 import com.adobexp.aem.core.components.commons.link.Link;
 
 /**
- * Interface for a generic list item, used by the {@link List} and {@link Search} models.
+ * Interface for a generic list item, used by the List and Search models.
  *
  * @since com.adobe.cq.wcm.core.components.models 12.2.0
  */

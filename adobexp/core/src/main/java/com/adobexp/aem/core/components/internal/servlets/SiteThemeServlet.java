@@ -1,5 +1,5 @@
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- ~ Copyright 2024 Adobe
+ ~ Copyright 2025 AdobeXP
  ~
  ~ Licensed under the Apache License, Version 2.0 (the "License");
  ~ you may not use this file except in compliance with the License.
@@ -42,7 +42,7 @@ import com.adobexp.aem.core.components.config.SiteThemeConfig;
  * This servlet is bound to page resource types and responds to the "theme-variables.css" selector.
  * 
  * Usage in HTL:
- * <link rel="stylesheet" href="${currentPage.path}.theme-variables.css" type="text/css">
+ * {@code <link rel="stylesheet" href="${currentPage.path}.theme-variables.css" type="text/css">}
  */
 @Component(service = Servlet.class)
 @SlingServletResourceTypes(

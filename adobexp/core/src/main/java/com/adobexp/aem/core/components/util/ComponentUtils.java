@@ -1,5 +1,5 @@
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- ~ Copyright 2020 Adobe
+ ~ Copyright 2025 AdobeXP
  ~
  ~ Licensed under the Apache License, Version 2.0 (the "License");
  ~ you may not use this file except in compliance with the License.
@@ -250,8 +250,10 @@ public final class ComponentUtils {
 
     /**
      * Gets the models for the child resources that are components, filtered by the Sling Model Filter.
-     * This should only be used for JSON export, for other usages refer to {@link com.adobe.cq.wcm.core.components.models.Container#getChildren}.
+     * This should only be used for JSON export, for other usages refer to Container.getChildren().
      *
+     * @param slingModelFilter The Sling Model Filter.
+     * @param modelFactory The Model Factory.
      * @param request The current request.
      * @param modelClass The child model class.
      * @return Map of models wherein the key is the child name, and the value is it's model.
@@ -270,8 +272,11 @@ public final class ComponentUtils {
 
     /**
      * Gets the models for the child resources that are components, filtered by the Sling Model Filter.
-     * This should only be used for JSON export, for other usages refer to {@link com.adobe.cq.wcm.core.components.models.Container#getChildren}
+     * This should only be used for JSON export, for other usages refer to Container.getChildren().
      *
+     * @param slingModelFilter The Sling Model Filter.
+     * @param modelFactory The Model Factory.
+     * @param childComponents The list of child components.
      * @param request The current request.
      * @param modelClass The child model class.
      * @return Map of models wherein the key is the child name, and the value is it's model.

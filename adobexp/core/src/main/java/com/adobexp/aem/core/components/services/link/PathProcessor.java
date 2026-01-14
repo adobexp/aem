@@ -1,5 +1,5 @@
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- ~ Copyright 2021 Adobe
+ ~ Copyright 2025 AdobeXP
  ~
  ~ Licensed under the Apache License, Version 2.0 (the "License");
  ~ you may not use this file except in compliance with the License.
@@ -27,10 +27,8 @@ import com.adobexp.aem.core.components.commons.link.LinkManager;
 
 /**
  * A service that can process a given path. This service is used by the
- * {@link LinkManager} to build the final
- * {@link com.adobe.cq.wcm.core.components.commons.link.Link}. The path processor chain of the link manager can be extended by a custom
- * path processor which has to get a higher service ranking than the
- * {@link com.adobe.cq.wcm.core.components.internal.link.DefaultPathProcessor}.
+ * {@link LinkManager} to build the final Link. The path processor chain of the link manager can be extended by a custom
+ * path processor which has to get a higher service ranking than the DefaultPathProcessor.
  *
  * @since com.adobe.cq.wcm.core.components.services.link 1.0.0
  */
