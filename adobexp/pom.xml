@@ -40,8 +40,6 @@
     <uber-jar.version>6.5.22</uber-jar.version>
     <keyname>33C0330C91FCC3C1</keyname>
     <server>central</server>
-    <!-- Default: skip github-release for SNAPSHOT versions -->
-    <isSnapshot>true</isSnapshot>
   </properties>
   <scm>
     <url>https://github.com/adobexp/aem</url>
@@ -510,20 +508,6 @@
           </plugins>
         </pluginManagement>
       </build>
-    </profile>
-    <!-- Profile activated during release:perform to enable GitHub release upload -->
-    <profile>
-      <id>release-build</id>
-      <activation>
-        <property>
-          <name>performRelease</name>
-          <value>true</value>
-        </property>
-      </activation>
-      <properties>
-        <!-- Override isSnapshot to false during actual release builds -->
-        <isSnapshot>false</isSnapshot>
-      </properties>
     </profile>
   </profiles>
   <!-- ====================================================================== -->

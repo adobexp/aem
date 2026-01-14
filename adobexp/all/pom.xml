@@ -132,11 +132,14 @@
             </build>
         </profile>
         <!-- Profile to upload the all package to GitHub Release -->
-        <!-- This profile should ONLY be activated during release:perform (not release:prepare) -->
+        <!-- This profile should ONLY be activated during release:perform when performRelease=true -->
         <profile>
             <id>github-release</id>
             <activation>
-                <activeByDefault>false</activeByDefault>
+                <property>
+                    <name>performRelease</name>
+                    <value>true</value>
+                </property>
             </activation>
             <build>
                 <plugins>
@@ -162,8 +165,6 @@
                             </dependency>
                         </dependencies>
                         <configuration>
-                            <!-- Skip if version contains SNAPSHOT (only run during actual release) -->
-                            <skip>${isSnapshot}</skip>
                             <!-- GitHub repository owner/name -->
                             <repositoryId>adobexp/aem</repositoryId>
                             <!-- Server ID for GitHub authentication (must match settings.xml) -->
