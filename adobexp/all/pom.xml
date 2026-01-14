@@ -16,51 +16,11 @@
     <description>All content package for AdobeXP - AEM Quickstart</description>
 
     <build>
-        <!--
-            Eclipse m2e: silence "Plugin execution not covered by lifecycle configuration"
-            for the auto-clean execution bound to the initialize phase.
-            This does NOT affect Maven CLI/CI behavior.
-        -->
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.eclipse.m2e</groupId>
-                    <artifactId>lifecycle-mapping</artifactId>
-                    <version>1.0.0</version>
-                    <configuration>
-                        <lifecycleMappingMetadata>
-                            <pluginExecutions>
-                                <pluginExecution>
-                                    <pluginExecutionFilter>
-                                        <groupId>org.apache.maven.plugins</groupId>
-                                        <artifactId>maven-clean-plugin</artifactId>
-                                        <versionRange>[3.0.0,)</versionRange>
-                                        <goals>
-                                            <goal>clean</goal>
-                                        </goals>
-                                    </pluginExecutionFilter>
-                                    <action>
-                                        <ignore />
-                                    </action>
-                                </pluginExecution>
-                            </pluginExecutions>
-                        </lifecycleMappingMetadata>
-                    </configuration>
-                </plugin>
-            </plugins>
-        </pluginManagement>
         <plugins>
             <plugin>
                 <groupId>org.apache.jackrabbit</groupId>
                 <artifactId>filevault-package-maven-plugin</artifactId>
                 <extensions>true</extensions>
-                <executions>
-                    <!-- Skip validate-package - it fails when package doesn't exist (happens during forked lifecycle from source/javadoc plugins) -->
-                    <execution>
-                        <id>default-validate-package</id>
-                        <phase>none</phase>
-                    </execution>
-                </executions>
                 <configuration>
                     <group>com.adobexp</group>
                     <packageType>container</packageType>
@@ -111,18 +71,6 @@
                     <verbose>true</verbose>
                     <failOnError>true</failOnError>
                 </configuration>
-            </plugin>
-            <plugin>
-                <artifactId>maven-clean-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>auto-clean</id>
-                        <phase>initialize</phase>
-                        <goals>
-                            <goal>clean</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>
