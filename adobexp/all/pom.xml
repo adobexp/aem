@@ -152,6 +152,14 @@
                                 </goals>
                             </execution>
                         </executions>
+                        <!-- Add missing dependency for Maven 3.9+ compatibility -->
+                        <dependencies>
+                            <dependency>
+                                <groupId>org.codehaus.plexus</groupId>
+                                <artifactId>plexus-utils</artifactId>
+                                <version>3.5.1</version>
+                            </dependency>
+                        </dependencies>
                         <configuration>
                             <!-- GitHub repository owner/name -->
                             <repositoryId>adobexp/aem</repositoryId>
