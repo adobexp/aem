@@ -57,6 +57,9 @@
         <configuration>
           <autoVersionSubmodules>true</autoVersionSubmodules>
           <goals>deploy</goals>
+          <!-- Pass performRelease=true to activate release-specific profiles (e.g., github-release) -->
+          <releaseProfiles>github-release</releaseProfiles>
+          <arguments>-DperformRelease=true</arguments>
           <checkModificationExcludes>
             <checkModificationExclude>${project.build.directory}</checkModificationExclude>
             <checkModificationExclude>**/target</checkModificationExclude>

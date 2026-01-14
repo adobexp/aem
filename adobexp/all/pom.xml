@@ -132,10 +132,14 @@
             </build>
         </profile>
         <!-- Profile to upload the all package to GitHub Release -->
+        <!-- This profile is automatically activated when version does NOT contain SNAPSHOT -->
         <profile>
             <id>github-release</id>
             <activation>
-                <activeByDefault>false</activeByDefault>
+                <property>
+                    <name>performRelease</name>
+                    <value>true</value>
+                </property>
             </activation>
             <build>
                 <plugins>
@@ -165,8 +169,8 @@
                             <repositoryId>adobexp/aem</repositoryId>
                             <!-- Server ID for GitHub authentication (must match settings.xml) -->
                             <serverId>github-adobexp</serverId>
-                            <!-- Use the release tag created by maven-release-plugin -->
-                            <tag>v${project.version}</tag>
+                            <!-- Use the release tag created by maven-release-plugin (matches tagNameFormat) -->
+                            <tag>${project.artifactId}-${project.version}</tag>
                             <!-- Release name -->
                             <releaseName>AdobeXP AEM Quickstart ${project.version}</releaseName>
                             <!-- Release description -->
