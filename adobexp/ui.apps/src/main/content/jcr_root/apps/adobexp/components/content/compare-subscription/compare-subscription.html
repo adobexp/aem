@@ -1,0 +1,152 @@
+<!--/*
+    Compare Subscription Component - AEM Sightly Template
+    
+    Renders a comparison table for up to four subscription plans with:
+    - Title and description
+    - Feature rows
+    - Plan columns with pricing and badges
+    - Mobile scroll helpers
+*/-->
+
+<sly data-sly-use.templates="adobexp/components/commons/v1/templates.html"/>
+<sly data-sly-use.compareSubscription="com.adobexp.aem.core.components.models.CompareSubscriptionModel"/>
+<sly data-sly-use.clientlib="/libs/granite/sightly/templates/clientlib.html">
+    <sly data-sly-call="${clientlib.all @ categories='adobexp.components.comparesubscription.v1', async=true}"/>
+</sly>
+
+<!-- COMPARE SUBSCRIPTION COMPONENT HTML MARKUP STARTS HERE -->
+<section
+    class="compare-subscription ${compareSubscription.withBackground ? 'compare-subscription--with-bg' : ''}"
+    data-component="compare-subscription"
+    aria-label="${compareSubscription.title || 'Compare Plans'}"
+    data-sly-test="${compareSubscription.title || compareSubscription.hasPlans}">
+    
+    <div class="compare-subscription__inner">
+        <!-- Header -->
+        <div class="compare-subscription__header" data-sly-test="${compareSubscription.title || compareSubscription.description}">
+            <h2 class="compare-subscription__title" data-sly-test="${compareSubscription.title}">${compareSubscription.title}</h2>
+            <p class="compare-subscription__subtitle" data-sly-test="${compareSubscription.description}">${compareSubscription.description @ context='html'}</p>
+        </div>
+        
+        <!-- Table Wrapper -->
+        <div class="compare-subscription__table-wrapper" data-sly-test="${compareSubscription.hasPlans}">
+            <!-- Header Row -->
+            <div class="compare-subscription__table">
+                <div class="compare-subscription__features-col">
+                    <div class="compare-subscription__features-header">
+                        <span class="compare-subscription__features-label">Features</span>
+                    </div>
+                </div>
+                
+                <div class="compare-subscription__plans-container">
+                    <sly data-sly-list.plan="${compareSubscription.plans}">
+                        <sly data-sly-test="${plan.hasContent}">
+                            <div class="compare-subscription__plan-col"
+                                data-plan="${plan.key}"
+                                data-sly-attribute.data-highlighted="${plan.highlighted ? 'true' : ''}">
+                                <div class="compare-subscription__header-cell">
+                                    <sly data-sly-test="${plan.mostPopular}">
+                                        <span class="compare-subscription__plan-badge popular">Most Popular</span>
+                                    </sly>
+                                    <sly data-sly-test="${plan.bestValue}">
+                                        <span class="compare-subscription__plan-badge best-value">Best Value</span>
+                                    </sly>
+                                    <h3 class="compare-subscription__plan-name" data-sly-test="${plan.name}">${plan.name}</h3>
+                                    <div class="compare-subscription__plan-price" data-sly-test="${plan.monthlyPrice}">
+                                        <span class="compare-subscription__price-value">${compareSubscription.currencySymbol}${plan.monthlyPrice}</span>
+                                        <span class="compare-subscription__price-period">/mo</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </sly>
+                    </sly>
+                </div>
+            </div>
+            
+            <!-- Body Rows -->
+            <div class="compare-subscription__body-wrapper">
+                <div class="compare-subscription__features-body">
+                    <sly data-sly-list.feature="${compareSubscription.featureTitles}">
+                        <div class="compare-subscription__feature-row">
+                            <div class="compare-subscription__feature-cell">${feature}</div>
+                        </div>
+                    </sly>
+                </div>
+                
+                <div class="compare-subscription__plans-body">
+                    <sly data-sly-list.plan="${compareSubscription.plans}">
+                        <sly data-sly-test="${plan.hasContent}">
+                            <div class="compare-subscription__plan-body-col"
+                                data-plan="${plan.key}"
+                                data-sly-attribute.data-highlighted="${plan.highlighted ? 'true' : ''}">
+                                <sly data-sly-list.value="${plan.featureValues}">
+                                    <div class="compare-subscription__value-row"
+                                        data-sly-attribute.data-value="${value.included ? 'true' : 'false'}">
+                                        <sly data-sly-test="${value.included}">
+                                            <svg class="compare-subscription__check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                                <polyline points="20 6 9 17 4 12"></polyline>
+                                            </svg>
+                                        </sly>
+                                        <sly data-sly-test="${!value.included}">
+                                            <svg class="compare-subscription__cross-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <path d="M18 6L6 18M6 6l12 12"></path>
+                                            </svg>
+                                        </sly>
+                                    </div>
+                                </sly>
+                            </div>
+                        </sly>
+                    </sly>
+                </div>
+            </div>
+            
+            <!-- CTA Row -->
+            <div class="compare-subscription__cta-row">
+                <div class="compare-subscription__cta-feature-cell"></div>
+                <div class="compare-subscription__cta-plans-container">
+                    <sly data-sly-list.plan="${compareSubscription.plans}">
+                        <sly data-sly-test="${plan.hasContent}">
+                            <div class="compare-subscription__cta-cell"
+                                data-plan="${plan.key}"
+                                data-sly-attribute.data-highlighted="${plan.highlighted ? 'true' : ''}">
+                                <a class="cta-pill cta-pill--compact${plan.highlighted ? ' cta-pill--primary' : ''}" href="#" role="button">
+                                    <span class="cta-pill__text">Select Plan</span>
+                                    <span class="cta-pill__icon" aria-hidden="true">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                                            <path d="M9 18l6-6-6-6"></path>
+                                        </svg>
+                                    </span>
+                                </a>
+                            </div>
+                        </sly>
+                    </sly>
+                </div>
+            </div>
+            
+            <!-- Mobile Scroll Indicator -->
+            <div class="compare-subscription__scroll-indicator">
+                <svg class="compare-subscription__scroll-indicator-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 12h14m-6 6 6-6m-6-6 6 6"></path>
+                </svg>
+                <span>Swipe to compare plans</span>
+            </div>
+        </div>
+        
+        <!-- Mobile Navigation Arrows -->
+        <div class="compare-subscription__nav" data-sly-test="${compareSubscription.hasPlans}">
+            <button class="btn-theme-dark btn-icon-only compare-subscription__nav-btn compare-subscription__nav-btn--prev" type="button" aria-label="Previous plan" disabled>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M15 18l-6-6 6-6"></path>
+                </svg>
+            </button>
+            <button class="btn-theme-dark btn-icon-only compare-subscription__nav-btn compare-subscription__nav-btn--next" type="button" aria-label="Next plan">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 18l6-6-6-6"></path>
+                </svg>
+            </button>
+        </div>
+    </div>
+</section>
+<!-- COMPARE SUBSCRIPTION COMPONENT HTML MARKUP ENDS HERE -->
+
+<sly data-sly-call="${templates.placeholder @ isEmpty = (!compareSubscription.title && !compareSubscription.hasPlans), classAppend='compare-subscription'}"></sly>

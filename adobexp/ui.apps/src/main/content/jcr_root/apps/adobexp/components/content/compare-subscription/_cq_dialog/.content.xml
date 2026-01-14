@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="nt:unstructured"
+    jcr:title="Compare Subscription"
+    sling:resourceType="cq/gui/components/authoring/dialog">
+    <content
+        granite:class="cmp-compare-subscription__editor"
+        jcr:primaryType="nt:unstructured"
+        sling:resourceType="granite/ui/components/coral/foundation/container">
+        <items jcr:primaryType="nt:unstructured">
+            <tabs
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="granite/ui/components/coral/foundation/tabs"
+                maximized="{Boolean}true">
+                <items jcr:primaryType="nt:unstructured">
+                    <!-- Tab 1: Plan 1 -->
+                    <plan1
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Plan 1"
+                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                        margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <plan1Name
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Plan Name"
+                                                name="./plan1Name"/>
+                                            <plan1MonthlyPrice
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Monthly Price"
+                                                name="./plan1MonthlyPrice"/>
+                                            <plan1MostPopular
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                text="Show Most Popular badge"
+                                                name="./plan1MostPopular"
+                                                checked="{Boolean}false"
+                                                uncheckedValue="false"
+                                                value="true"/>
+                                            <plan1BestValue
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                text="Show Best Value badge"
+                                                name="./plan1BestValue"
+                                                checked="{Boolean}false"
+                                                uncheckedValue="false"
+                                                value="true"/>
+                                            <plan1Highlighted
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                text="Highlight this plan"
+                                                name="./plan1Highlighted"
+                                                checked="{Boolean}false"
+                                                uncheckedValue="false"
+                                                value="true"/>
+                                            <plan1Features
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                                fieldLabel="Plan Features"
+                                                composite="{Boolean}true">
+                                                <field
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/container"
+                                                    name="./plan1Features">
+                                                    <items jcr:primaryType="nt:unstructured">
+                                                        <title
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                            fieldLabel="Feature Title"
+                                                            name="title"/>
+                                                        <included
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                            text="Included"
+                                                            name="included"
+                                                            checked="{Boolean}false"
+                                                            uncheckedValue="false"
+                                                            value="true"/>
+                                                    </items>
+                                                </field>
+                                            </plan1Features>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </plan1>
+
+                    <!-- Tab 2: Plan 2 -->
+                    <plan2
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Plan 2"
+                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                        margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <plan2Name
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Plan Name"
+                                                name="./plan2Name"/>
+                                            <plan2MonthlyPrice
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Monthly Price"
+                                                name="./plan2MonthlyPrice"/>
+                                            <plan2MostPopular
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                text="Show Most Popular badge"
+                                                name="./plan2MostPopular"
+                                                checked="{Boolean}false"
+                                                uncheckedValue="false"
+                                                value="true"/>
+                                            <plan2BestValue
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                text="Show Best Value badge"
+                                                name="./plan2BestValue"
+                                                checked="{Boolean}false"
+                                                uncheckedValue="false"
+                                                value="true"/>
+                                            <plan2Highlighted
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                text="Highlight this plan"
+                                                name="./plan2Highlighted"
+                                                checked="{Boolean}false"
+                                                uncheckedValue="false"
+                                                value="true"/>
+                                            <plan2Features
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                                fieldLabel="Plan Features"
+                                                composite="{Boolean}true">
+                                                <field
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/container"
+                                                    name="./plan2Features">
+                                                    <items jcr:primaryType="nt:unstructured">
+                                                        <title
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                            fieldLabel="Feature Title"
+                                                            name="title"/>
+                                                        <included
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                            text="Included"
+                                                            name="included"
+                                                            checked="{Boolean}false"
+                                                            uncheckedValue="false"
+                                                            value="true"/>
+                                                    </items>
+                                                </field>
+                                            </plan2Features>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </plan2>
+
+                    <!-- Tab 3: Plan 3 -->
+                    <plan3
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Plan 3"
+                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                        margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <plan3Name
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Plan Name"
+                                                name="./plan3Name"/>
+                                            <plan3MonthlyPrice
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Monthly Price"
+                                                name="./plan3MonthlyPrice"/>
+                                            <plan3MostPopular
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                text="Show Most Popular badge"
+                                                name="./plan3MostPopular"
+                                                checked="{Boolean}false"
+                                                uncheckedValue="false"
+                                                value="true"/>
+                                            <plan3BestValue
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                text="Show Best Value badge"
+                                                name="./plan3BestValue"
+                                                checked="{Boolean}false"
+                                                uncheckedValue="false"
+                                                value="true"/>
+                                            <plan3Highlighted
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                text="Highlight this plan"
+                                                name="./plan3Highlighted"
+                                                checked="{Boolean}false"
+                                                uncheckedValue="false"
+                                                value="true"/>
+                                            <plan3Features
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                                fieldLabel="Plan Features"
+                                                composite="{Boolean}true">
+                                                <field
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/container"
+                                                    name="./plan3Features">
+                                                    <items jcr:primaryType="nt:unstructured">
+                                                        <title
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                            fieldLabel="Feature Title"
+                                                            name="title"/>
+                                                        <included
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                            text="Included"
+                                                            name="included"
+                                                            checked="{Boolean}false"
+                                                            uncheckedValue="false"
+                                                            value="true"/>
+                                                    </items>
+                                                </field>
+                                            </plan3Features>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </plan3>
+
+                    <!-- Tab 4: Plan 4 -->
+                    <plan4
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Plan 4"
+                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                        margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <plan4Name
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Plan Name"
+                                                name="./plan4Name"/>
+                                            <plan4MonthlyPrice
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Monthly Price"
+                                                name="./plan4MonthlyPrice"/>
+                                            <plan4MostPopular
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                text="Show Most Popular badge"
+                                                name="./plan4MostPopular"
+                                                checked="{Boolean}false"
+                                                uncheckedValue="false"
+                                                value="true"/>
+                                            <plan4BestValue
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                text="Show Best Value badge"
+                                                name="./plan4BestValue"
+                                                checked="{Boolean}false"
+                                                uncheckedValue="false"
+                                                value="true"/>
+                                            <plan4Highlighted
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                text="Highlight this plan"
+                                                name="./plan4Highlighted"
+                                                checked="{Boolean}false"
+                                                uncheckedValue="false"
+                                                value="true"/>
+                                            <plan4Features
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                                fieldLabel="Plan Features"
+                                                composite="{Boolean}true">
+                                                <field
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/container"
+                                                    name="./plan4Features">
+                                                    <items jcr:primaryType="nt:unstructured">
+                                                        <title
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                            fieldLabel="Feature Title"
+                                                            name="title"/>
+                                                        <included
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                            text="Included"
+                                                            name="included"
+                                                            checked="{Boolean}false"
+                                                            uncheckedValue="false"
+                                                            value="true"/>
+                                                    </items>
+                                                </field>
+                                            </plan4Features>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </plan4>
+
+                    <!-- Tab 5: Common Settings -->
+                    <common
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Common Settings"
+                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                        margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <title
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Component Title"
+                                                name="./title"
+                                                value="Compare Plans"/>
+                                            <description
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Component Description"
+                                                name="./description"/>
+                                            <currencySymbol
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Currency Symbol"
+                                                name="./currencySymbol"
+                                                value="$"/>
+                                            <withBackground
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                text="Apply Background Color"
+                                                name="./withBackground"
+                                                checked="{Boolean}true"
+                                                uncheckedValue="false"
+                                                value="true"/>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </common>
+                </items>
+            </tabs>
+        </items>
+    </content>
+</jcr:root>
