@@ -1,0 +1,141 @@
+<!--/*
+    Subscription Plans Component - AEM Sightly Template
+    
+    This component renders a subscription plans section with:
+    - Title and description
+    - Monthly/yearly pricing toggle
+    - Four plan cards with pricing, badges, credits, and features
+*/-->
+
+<sly data-sly-use.templates="adobexp/components/commons/v1/templates.html"/>
+<sly data-sly-use.subscriptionPlans="com.adobexp.aem.core.components.models.SubscriptionPlansModel"/>
+
+<!-- SUBSCRIPTION PLANS COMPONENT HTML MARKUP STARTS HERE -->
+<section
+    class="subscription-plans ${subscriptionPlans.withBackground ? 'subscription-plans--with-bg' : ''}"
+    data-component="subscription-plans"
+    data-default-billing="${subscriptionPlans.defaultBilling}"
+    aria-label="${subscriptionPlans.title || 'Subscription Plans'}"
+    data-sly-test="${subscriptionPlans.title || subscriptionPlans.hasPlans}">
+    
+    <div class="subscription-plans__inner">
+        <!-- Header -->
+        <div class="subscription-plans__header" data-sly-test="${subscriptionPlans.title || subscriptionPlans.description}">
+            <h2 class="subscription-plans__title" data-sly-test="${subscriptionPlans.title}">${subscriptionPlans.title}</h2>
+            <p class="subscription-plans__subtitle" data-sly-test="${subscriptionPlans.description}">${subscriptionPlans.description @ context='html'}</p>
+            
+            <!-- Billing Toggle -->
+            <div class="subscription-plans__toggle" data-sly-test="${subscriptionPlans.hasPlans}">
+                <div class="subscription-plans__toggle-container">
+                    <button class="subscription-plans__toggle-btn${subscriptionPlans.defaultBilling == 'monthly' ? ' active' : ''}" data-billing="monthly">Monthly</button>
+                    <button class="subscription-plans__toggle-btn${subscriptionPlans.defaultBilling == 'yearly' ? ' active' : ''}" data-billing="yearly">Yearly</button>
+                </div>
+                <sly data-sly-test="${subscriptionPlans.yearlyDiscountText}">
+                    <span class="subscription-plans__toggle-badge subscription-plans__toggle-badge--desktop${subscriptionPlans.defaultBilling == 'yearly' ? ' visible' : ''}">${subscriptionPlans.yearlyDiscountText}</span>
+                </sly>
+            </div>
+
+            <!-- Mobile Navigation Arrows -->
+            <div class="subscription-plans__nav" data-sly-test="${subscriptionPlans.hasPlans}">
+                <button class="btn-theme-auto btn-icon-only subscription-plans__nav-btn" data-nav="prev" aria-label="Previous plan">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5">
+                        <path d="M19 12H5m6-6-6 6m6 6-6-6"></path>
+                    </svg>
+                </button>
+                <sly data-sly-test="${subscriptionPlans.yearlyDiscountText}">
+                    <span class="subscription-plans__toggle-badge subscription-plans__toggle-badge--mobile${subscriptionPlans.defaultBilling == 'yearly' ? ' visible' : ''}">${subscriptionPlans.yearlyDiscountText}</span>
+                </sly>
+                <button class="btn-theme-auto btn-icon-only subscription-plans__nav-btn" data-nav="next" aria-label="Next plan">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5">
+                        <path d="M5 12h14m-6 6 6-6m-6-6 6 6"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Plans Grid -->
+        <div class="subscription-plans__grid" role="list" data-sly-test="${subscriptionPlans.hasPlans}">
+            <sly data-sly-list.plan="${subscriptionPlans.plans}">
+                <sly data-sly-test="${plan.hasContent}">
+                    <article class="subscription-plans__card" role="listitem"
+                        data-sly-attribute.data-shadow="${plan.topChoice ? 'true' : ''}"
+                        data-sly-attribute.data-discount-until="${plan.discountUntil}">
+                        
+                        <sly data-sly-test="${plan.topChoice}">
+                            <span class="subscription-plans__badge top-choice">Top Choice</span>
+                        </sly>
+                        <sly data-sly-test="${plan.specialOffer}">
+                            <span class="subscription-plans__badge special-offer">Special Offer</span>
+                        </sly>
+                        
+                        <h3 class="subscription-plans__name" data-sly-test="${plan.name}">${plan.name}</h3>
+                        
+                        <div class="subscription-plans__pricing" data-billing="${subscriptionPlans.defaultBilling}">
+                            <!-- Monthly Pricing -->
+                            <div class="subscription-plans__monthly-price subscription-plans__price-row" data-sly-test="${plan.monthlyPrice}">
+                                <span class="subscription-plans__current-price">${subscriptionPlans.currencySymbol}${plan.monthlyPrice}</span>
+                                <span class="subscription-plans__period">/mo</span>
+                            </div>
+                            <p class="subscription-plans__billing-note" data-billing="monthly" data-sly-test="${subscriptionPlans.monthlyBillingNote}">
+                                ${subscriptionPlans.monthlyBillingNote}
+                            </p>
+                            
+                            <!-- Yearly Pricing -->
+                            <div class="subscription-plans__yearly-price subscription-plans__price-row" data-sly-test="${plan.yearlyPrice || plan.yearlyOriginalPrice}">
+                                <span class="subscription-plans__original-price" data-sly-test="${plan.yearlyOriginalPrice}">
+                                    ${subscriptionPlans.currencySymbol}${plan.yearlyOriginalPrice}
+                                </span>
+                                <span class="subscription-plans__current-price" data-sly-test="${plan.yearlyPrice}">
+                                    ${subscriptionPlans.currencySymbol}${plan.yearlyPrice}
+                                </span>
+                                <span class="subscription-plans__period">/mo</span>
+                            </div>
+                            <p class="subscription-plans__billing-note" data-billing="yearly" data-sly-test="${subscriptionPlans.yearlyBillingNote}">
+                                ${subscriptionPlans.yearlyBillingNote}
+                            </p>
+                        </div>
+                        
+                        <div class="subscription-plans__cta" data-sly-test="${plan.ctaText || plan.ctaLink}">
+                            <sly data-sly-use.ctaUrl="${'adobexp/components/commons/v1/helper/transformurls.js' @ internalUrl=plan.ctaLink}">
+                                <a class="cta-pill${plan.topChoice ? ' cta-pill--primary' : ''}"
+                                    href="${plan.ctaLink ? ctaUrl : '#'}"
+                                    role="button"
+                                    data-sly-attribute.target="${plan.ctaNewTab ? '_blank' : ''}"
+                                    data-sly-attribute.rel="${plan.ctaNewTab ? 'noopener noreferrer' : ''}">
+                                    <span class="cta-pill__text">${plan.ctaText || 'Select Plan'}</span>
+                                    <span class="cta-pill__icon" aria-hidden="true">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                                            <path d="M9 18l6-6-6-6"></path>
+                                        </svg>
+                                    </span>
+                                </a>
+                            </sly>
+                        </div>
+                        
+                        <!-- AI Credits -->
+                        <div class="subscription-plans__credits" data-sly-test="${plan.creditsText}">
+                            <svg class="subscription-plans__credits-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                            </svg>
+                            <span class="subscription-plans__credits-text">${plan.creditsText}</span>
+                        </div>
+                        
+                        <!-- Features -->
+                        <ul class="subscription-plans__features" data-sly-test="${plan.hasFeatures}">
+                            <sly data-sly-list.feature="${plan.features}">
+                                <li class="subscription-plans__feature">
+                                    <svg class="subscription-plans__feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                    </svg>
+                                    <span>${feature}</span>
+                                </li>
+                            </sly>
+                        </ul>
+                    </article>
+                </sly>
+            </sly>
+        </div>
+    </div>
+</section>
+<!-- SUBSCRIPTION PLANS COMPONENT HTML MARKUP ENDS HERE -->
+<sly data-sly-call="${templates.placeholder @ isEmpty = (!subscriptionPlans.title && !subscriptionPlans.hasPlans), classAppend='subscription-plans'}"></sly>

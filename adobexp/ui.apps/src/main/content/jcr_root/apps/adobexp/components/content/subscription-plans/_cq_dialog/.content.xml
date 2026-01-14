@@ -1,0 +1,579 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="nt:unstructured"
+    jcr:title="Subscription Plans"
+    sling:resourceType="cq/gui/components/authoring/dialog">
+    <content
+        granite:class="cmp-subscription-plans__editor"
+        jcr:primaryType="nt:unstructured"
+        sling:resourceType="granite/ui/components/coral/foundation/container">
+        <items jcr:primaryType="nt:unstructured">
+            <tabs
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="granite/ui/components/coral/foundation/tabs"
+                maximized="{Boolean}true">
+                <items jcr:primaryType="nt:unstructured">
+                    <!-- Tab 1: Plan 1 -->
+                    <plan1
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Plan 1"
+                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                        margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <plan1Name
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Plan Name"
+                                                name="./plan1Name"/>
+                                            <plan1MonthlyPrice
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Monthly Price"
+                                                name="./plan1MonthlyPrice"/>
+                                            <plan1YearlyOriginalPrice
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Yearly Original Price"
+                                                name="./plan1YearlyOriginalPrice"/>
+                                            <plan1YearlyPrice
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Yearly Price"
+                                                name="./plan1YearlyPrice"/>
+                                            <plan1DiscountUntil
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/datepicker"
+                                                fieldLabel="Discount Until"
+                                                fieldDescription="Format: YYYY-MM-DD"
+                                                name="./plan1DiscountUntil"
+                                                displayedFormat="YYYY-MM-DD"
+                                                valueFormat="YYYY-MM-DD"/>
+                                            <plan1CtaText
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="CTA Text"
+                                                name="./plan1CtaText"/>
+                                            <plan1CtaLink
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                                                fieldLabel="CTA Link"
+                                                name="./plan1CtaLink"
+                                                rootPath="/content"/>
+                                            <plan1CtaNewTab
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                text="Open CTA in new tab"
+                                                name="./plan1CtaNewTab"
+                                                checked="{Boolean}false"
+                                                uncheckedValue="false"
+                                                value="true"/>
+                                            <plan1TopChoice
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                text="Show Top Choice badge"
+                                                name="./plan1TopChoice"
+                                                checked="{Boolean}false"
+                                                uncheckedValue="false"
+                                                value="true"/>
+                                            <plan1SpecialOffer
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                text="Show Special Offer badge"
+                                                name="./plan1SpecialOffer"
+                                                checked="{Boolean}false"
+                                                uncheckedValue="false"
+                                                value="true"/>
+                                            <plan1CreditsValue
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Credits Value"
+                                                name="./plan1CreditsValue"/>
+                                            <plan1CreditsUnit
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Credits Unit"
+                                                name="./plan1CreditsUnit"/>
+                                            <plan1CreditsLabel
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Credits Label"
+                                                name="./plan1CreditsLabel"/>
+                                            <plan1Features
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                                fieldLabel="Plan Features"
+                                                composite="{Boolean}true">
+                                                <field
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/container"
+                                                    name="./plan1Features">
+                                                    <items jcr:primaryType="nt:unstructured">
+                                                        <feature
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                            fieldLabel="Feature Title"
+                                                            name="feature"/>
+                                                    </items>
+                                                </field>
+                                            </plan1Features>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </plan1>
+
+                    <!-- Tab 2: Plan 2 -->
+                    <plan2
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Plan 2"
+                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                        margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <plan2Name
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Plan Name"
+                                                name="./plan2Name"/>
+                                            <plan2MonthlyPrice
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Monthly Price"
+                                                name="./plan2MonthlyPrice"/>
+                                            <plan2YearlyOriginalPrice
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Yearly Original Price"
+                                                name="./plan2YearlyOriginalPrice"/>
+                                            <plan2YearlyPrice
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Yearly Price"
+                                                name="./plan2YearlyPrice"/>
+                                            <plan2DiscountUntil
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/datepicker"
+                                                fieldLabel="Discount Until"
+                                                fieldDescription="Format: YYYY-MM-DD"
+                                                name="./plan2DiscountUntil"
+                                                displayedFormat="YYYY-MM-DD"
+                                                valueFormat="YYYY-MM-DD"/>
+                                            <plan2CtaText
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="CTA Text"
+                                                name="./plan2CtaText"/>
+                                            <plan2CtaLink
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                                                fieldLabel="CTA Link"
+                                                name="./plan2CtaLink"
+                                                rootPath="/content"/>
+                                            <plan2CtaNewTab
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                text="Open CTA in new tab"
+                                                name="./plan2CtaNewTab"
+                                                checked="{Boolean}false"
+                                                uncheckedValue="false"
+                                                value="true"/>
+                                            <plan2TopChoice
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                text="Show Top Choice badge"
+                                                name="./plan2TopChoice"
+                                                checked="{Boolean}false"
+                                                uncheckedValue="false"
+                                                value="true"/>
+                                            <plan2SpecialOffer
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                text="Show Special Offer badge"
+                                                name="./plan2SpecialOffer"
+                                                checked="{Boolean}false"
+                                                uncheckedValue="false"
+                                                value="true"/>
+                                            <plan2CreditsValue
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Credits Value"
+                                                name="./plan2CreditsValue"/>
+                                            <plan2CreditsUnit
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Credits Unit"
+                                                name="./plan2CreditsUnit"/>
+                                            <plan2CreditsLabel
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Credits Label"
+                                                name="./plan2CreditsLabel"/>
+                                            <plan2Features
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                                fieldLabel="Plan Features"
+                                                composite="{Boolean}true">
+                                                <field
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/container"
+                                                    name="./plan2Features">
+                                                    <items jcr:primaryType="nt:unstructured">
+                                                        <feature
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                            fieldLabel="Feature Title"
+                                                            name="feature"/>
+                                                    </items>
+                                                </field>
+                                            </plan2Features>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </plan2>
+
+                    <!-- Tab 3: Plan 3 -->
+                    <plan3
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Plan 3"
+                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                        margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <plan3Name
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Plan Name"
+                                                name="./plan3Name"/>
+                                            <plan3MonthlyPrice
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Monthly Price"
+                                                name="./plan3MonthlyPrice"/>
+                                            <plan3YearlyOriginalPrice
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Yearly Original Price"
+                                                name="./plan3YearlyOriginalPrice"/>
+                                            <plan3YearlyPrice
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Yearly Price"
+                                                name="./plan3YearlyPrice"/>
+                                            <plan3DiscountUntil
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/datepicker"
+                                                fieldLabel="Discount Until"
+                                                fieldDescription="Format: YYYY-MM-DD"
+                                                name="./plan3DiscountUntil"
+                                                displayedFormat="YYYY-MM-DD"
+                                                valueFormat="YYYY-MM-DD"/>
+                                            <plan3CtaText
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="CTA Text"
+                                                name="./plan3CtaText"/>
+                                            <plan3CtaLink
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                                                fieldLabel="CTA Link"
+                                                name="./plan3CtaLink"
+                                                rootPath="/content"/>
+                                            <plan3CtaNewTab
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                text="Open CTA in new tab"
+                                                name="./plan3CtaNewTab"
+                                                checked="{Boolean}false"
+                                                uncheckedValue="false"
+                                                value="true"/>
+                                            <plan3TopChoice
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                text="Show Top Choice badge"
+                                                name="./plan3TopChoice"
+                                                checked="{Boolean}false"
+                                                uncheckedValue="false"
+                                                value="true"/>
+                                            <plan3SpecialOffer
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                text="Show Special Offer badge"
+                                                name="./plan3SpecialOffer"
+                                                checked="{Boolean}false"
+                                                uncheckedValue="false"
+                                                value="true"/>
+                                            <plan3CreditsValue
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Credits Value"
+                                                name="./plan3CreditsValue"/>
+                                            <plan3CreditsUnit
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Credits Unit"
+                                                name="./plan3CreditsUnit"/>
+                                            <plan3CreditsLabel
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Credits Label"
+                                                name="./plan3CreditsLabel"/>
+                                            <plan3Features
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                                fieldLabel="Plan Features"
+                                                composite="{Boolean}true">
+                                                <field
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/container"
+                                                    name="./plan3Features">
+                                                    <items jcr:primaryType="nt:unstructured">
+                                                        <feature
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                            fieldLabel="Feature Title"
+                                                            name="feature"/>
+                                                    </items>
+                                                </field>
+                                            </plan3Features>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </plan3>
+
+                    <!-- Tab 4: Plan 4 -->
+                    <plan4
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Plan 4"
+                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                        margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <plan4Name
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Plan Name"
+                                                name="./plan4Name"/>
+                                            <plan4MonthlyPrice
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Monthly Price"
+                                                name="./plan4MonthlyPrice"/>
+                                            <plan4YearlyOriginalPrice
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Yearly Original Price"
+                                                name="./plan4YearlyOriginalPrice"/>
+                                            <plan4YearlyPrice
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Yearly Price"
+                                                name="./plan4YearlyPrice"/>
+                                            <plan4DiscountUntil
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/datepicker"
+                                                fieldLabel="Discount Until"
+                                                fieldDescription="Format: YYYY-MM-DD"
+                                                name="./plan4DiscountUntil"
+                                                displayedFormat="YYYY-MM-DD"
+                                                valueFormat="YYYY-MM-DD"/>
+                                            <plan4CtaText
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="CTA Text"
+                                                name="./plan4CtaText"/>
+                                            <plan4CtaLink
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                                                fieldLabel="CTA Link"
+                                                name="./plan4CtaLink"
+                                                rootPath="/content"/>
+                                            <plan4CtaNewTab
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                text="Open CTA in new tab"
+                                                name="./plan4CtaNewTab"
+                                                checked="{Boolean}false"
+                                                uncheckedValue="false"
+                                                value="true"/>
+                                            <plan4TopChoice
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                text="Show Top Choice badge"
+                                                name="./plan4TopChoice"
+                                                checked="{Boolean}false"
+                                                uncheckedValue="false"
+                                                value="true"/>
+                                            <plan4SpecialOffer
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                text="Show Special Offer badge"
+                                                name="./plan4SpecialOffer"
+                                                checked="{Boolean}false"
+                                                uncheckedValue="false"
+                                                value="true"/>
+                                            <plan4CreditsValue
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Credits Value"
+                                                name="./plan4CreditsValue"/>
+                                            <plan4CreditsUnit
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Credits Unit"
+                                                name="./plan4CreditsUnit"/>
+                                            <plan4CreditsLabel
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Credits Label"
+                                                name="./plan4CreditsLabel"/>
+                                            <plan4Features
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                                fieldLabel="Plan Features"
+                                                composite="{Boolean}true">
+                                                <field
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/container"
+                                                    name="./plan4Features">
+                                                    <items jcr:primaryType="nt:unstructured">
+                                                        <feature
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                            fieldLabel="Feature Title"
+                                                            name="feature"/>
+                                                    </items>
+                                                </field>
+                                            </plan4Features>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </plan4>
+
+                    <!-- Tab 5: Common Settings -->
+                    <common
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Common Settings"
+                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                        margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <title
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Component Title"
+                                                name="./title"
+                                                value="Pick your plan"/>
+                                            <description
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+                                                fieldLabel="Component Description"
+                                                name="./description"
+                                                rows="{Long}3"/>
+                                            <defaultBilling
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                fieldLabel="Default Billing"
+                                                name="./defaultBilling">
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <monthly
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="Monthly"
+                                                        value="monthly"/>
+                                                    <yearly
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="Yearly"
+                                                        value="yearly"
+                                                        selected="{Boolean}true"/>
+                                                </items>
+                                            </defaultBilling>
+                                            <yearlyDiscountText
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Yearly Discount Text"
+                                                name="./yearlyDiscountText"
+                                                value="SAVE 33%"/>
+                                            <currencySymbol
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Currency Symbol"
+                                                name="./currencySymbol"
+                                                value="$"/>
+                                            <monthlyBillingNote
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Monthly Billing Note"
+                                                name="./monthlyBillingNote"
+                                                value="Billed monthly"/>
+                                            <yearlyBillingNote
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Yearly Billing Note"
+                                                name="./yearlyBillingNote"
+                                                value="Billed yearly"/>
+                                            <withBackground
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                text="Apply Background Color"
+                                                name="./withBackground"
+                                                checked="{Boolean}true"
+                                                uncheckedValue="false"
+                                                value="true"/>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </common>
+                </items>
+            </tabs>
+        </items>
+    </content>
+</jcr:root>
