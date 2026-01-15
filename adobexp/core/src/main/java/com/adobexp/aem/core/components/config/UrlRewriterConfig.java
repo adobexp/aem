@@ -42,7 +42,7 @@ public class UrlRewriterConfig {
 
 	@ObjectClassDefinition(name = SERVICE_NAME, description = SERVICE_DESC)
 	public static @interface Config {
-		@AttributeDefinition(name = "List of URLs to be rewritten. Format : {\"internalUrl\":\"/content/dam/\",\"externalUrl\":\"/static/assets\"}")
+		@AttributeDefinition(name = "AdobeXP - AEM Quickstart List of URLs to be rewritten. Format : {\"internalUrl\":\"/content/dam/\",\"externalUrl\":\"/static/assets\"}")
 		String[] urls_to_be_re_written();
 		
 		@AttributeDefinition(name = "List of URLs to be skipped. like /content/dam etc.")

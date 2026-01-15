@@ -43,7 +43,7 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 public class AdaptiveImageServletMappingConfigurationFactory {
 
     @ObjectClassDefinition(
-            name ="AEM Core WCM Components Adaptive Image Servlet Mapping Configuration",
+            name ="AdobeXP - AEM Quickstart Components Adaptive Image Servlet Mapping Configuration",
             description="Configuration for the adaptive image servlet mapping."
     )
     @interface Config {

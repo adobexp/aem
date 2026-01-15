@@ -13,16 +13,26 @@
  ~ See the License for the specific language governing permissions and
  ~ limitations under the License.
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-package com.adobexp.aem.core.components.internal.services.pdfviewer;
+package com.adobexp.aem.core.components.config.components;
 
 import org.apache.sling.caconfig.annotation.Configuration;
 import org.apache.sling.caconfig.annotation.Property;
 
-@Configuration(label = "AdobeXP - AEM Quickstart Document Cloud Viewer - Configuration", description = "AdobeXP - AEM Quickstart Document Cloud Viewer Configuration")
-public @interface PdfViewerCaConfig {
-  @Property(label = "Client ID", description = "AdobeXP - AEM Quickstart Document Cloud Viewer API Client ID (Required)")
-  String clientId() default "";
+/**
+ * Context-Aware Configuration for Footer component theme variables.
+ */
+@Configuration(
+        label = "AdobeXP - Footer Theme Configuration",
+        description = "Context-Aware Configuration for Footer component CSS variables"
+)
+public @interface FooterThemeConfig {
 
-  @Property(label = "Report Suite ID", description = "AdobeXP - AEM Quickstart Adobe Analytics Report Suite ID (Optional)")
-  String reportSuiteId() default "";
+    @Property(label = "Footer Background (Dark)", description = "Footer background color in dark theme")
+    String darkFooterBg() default "#363535";
+
+    @Property(label = "Footer Background (Light)", description = "Footer background color in light theme")
+    String lightFooterBg() default "#f5f5f5";
+
+    @Property(label = "Footer Curtain Height Offset", description = "Footer curtain height offset")
+    String footerCurtainHeightOffset() default "-25px";
 }

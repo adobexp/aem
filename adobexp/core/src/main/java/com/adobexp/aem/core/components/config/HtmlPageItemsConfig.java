@@ -69,7 +69,7 @@ import org.apache.sling.caconfig.annotation.Property;
  *          ...
  *  </pre>
  */
-@Configuration(label = "Page Items", description = "Context-Aware Configuration for items that will be included in the page")
+@Configuration(label = "AdobeXP - AEM Quickstart Page Items", description = "AdobeXP - AEM Quickstart Context-Aware Configuration for items that will be included in the page")
 public @interface HtmlPageItemsConfig {
 
     /**

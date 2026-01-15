@@ -46,12 +46,12 @@ import static com.adobexp.aem.core.components.util.ComponentUtils.NN_SLING_CONFI
 )
 public class CaConfigReferenceProvider implements ReferenceProvider {
     @ObjectClassDefinition(
-            name = "Core Components Context-Aware Configuration Reference Provider"
+            name = "AdobeXP - AEM Quickstart Core Components Context-Aware Configuration Reference Provider"
     )
     @interface Config {
         @AttributeDefinition(
                 name = "Enabled",
-                description = "Enable this reference provider"
+                description = "AdobeXP - AEM Quickstart Enable this reference provider"
         )
         boolean enabled() default true;
     }

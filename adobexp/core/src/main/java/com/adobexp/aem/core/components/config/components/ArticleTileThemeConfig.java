@@ -13,16 +13,23 @@
  ~ See the License for the specific language governing permissions and
  ~ limitations under the License.
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-package com.adobexp.aem.core.components.internal.services.pdfviewer;
+package com.adobexp.aem.core.components.config.components;
 
 import org.apache.sling.caconfig.annotation.Configuration;
 import org.apache.sling.caconfig.annotation.Property;
 
-@Configuration(label = "AdobeXP - AEM Quickstart Document Cloud Viewer - Configuration", description = "AdobeXP - AEM Quickstart Document Cloud Viewer Configuration")
-public @interface PdfViewerCaConfig {
-  @Property(label = "Client ID", description = "AdobeXP - AEM Quickstart Document Cloud Viewer API Client ID (Required)")
-  String clientId() default "";
+/**
+ * Context-Aware Configuration for Article Tile theme variables.
+ */
+@Configuration(
+        label = "AdobeXP - Article Tile Theme Configuration",
+        description = "Context-Aware Configuration for Article Tile CSS variables"
+)
+public @interface ArticleTileThemeConfig {
 
-  @Property(label = "Report Suite ID", description = "AdobeXP - AEM Quickstart Adobe Analytics Report Suite ID (Optional)")
-  String reportSuiteId() default "";
+    @Property(label = "Article Tile Overlay Background (Dark)", description = "Article tile overlay background in dark theme")
+    String darkArticleTileOverlayBg() default "rgba(0, 0, 0, 0.8)";
+
+    @Property(label = "Article Tile Overlay Background (Light)", description = "Article tile overlay background in light theme")
+    String lightArticleTileOverlayBg() default "#42f4fd75";
 }
