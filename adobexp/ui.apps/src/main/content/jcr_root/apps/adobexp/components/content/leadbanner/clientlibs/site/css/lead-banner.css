@@ -98,7 +98,7 @@
 
 .lead-banner__headline-secondary {
   color: var(--lead-banner-text-secondary, #a78bfa);
-  font-size: 0.85em;
+  font-size: 0.60em;
   opacity: 1;
   white-space: pre-wrap;
 }
@@ -168,7 +168,7 @@
     line-height: 1.12;
   }
   .lead-banner__headline-secondary {
-    font-size: 0.72em;
+    font-size: 0.50em;
   }
   .lead-banner__media-stack {
     margin-left: 10px;
