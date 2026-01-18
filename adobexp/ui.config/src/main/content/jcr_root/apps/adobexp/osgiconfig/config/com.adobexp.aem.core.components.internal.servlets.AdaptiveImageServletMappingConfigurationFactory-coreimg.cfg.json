@@ -1,6 +1,7 @@
 {
   "resource.types": [
-    "adobexp/components/image",
+    "adobexp/components/content/image",
+    "adobexp/components/content/image/v1/image",
     "cq/Page"
   ],
   "selectors": [

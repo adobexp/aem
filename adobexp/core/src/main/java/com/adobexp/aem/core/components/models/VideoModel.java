@@ -64,5 +64,11 @@ public interface VideoModel {
      * @return true if mute toggle should be shown
      */
     boolean isShowMuteToggle();
+
+    /**
+     * Checks if the fullscreen toggle button should be shown.
+     * @return true if fullscreen toggle should be shown
+     */
+    boolean isShowFullscreenToggle();
 }
 

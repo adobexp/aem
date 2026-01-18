@@ -1,6 +1,8 @@
 <div data-sly-use.gridControl="com.adobexp.aem.core.components.models.GridControl"
-     id="${gridControl.id}">
-    <div class="${gridControl.gridClass}" data-sly-list.column="${gridControl.columns}">
+     id="${gridControl.id}"
+     style="${gridControl.gridStyle @ context='styleString'}">
+    <div class="${gridControl.gridClass}" 
+         data-sly-list.column="${gridControl.columns}">
         <div class="${column.columnClass}" 
              style="${column.columnStyle @ context='styleString'}" 
              data-sly-resource="${@path=column.parSysName, resourceType='wcm/foundation/components/responsivegrid'}"></div>

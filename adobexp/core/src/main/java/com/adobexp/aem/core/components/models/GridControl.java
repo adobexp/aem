@@ -48,6 +48,35 @@ public interface GridControl {
     }
 
     /**
+     * Returns the horizontal (left and right) margin in pixels.
+     *
+     * @return the horizontal margin value, or null if not set
+     */
+    @Nullable
+    default Integer getHorizontalMargin() {
+        return null;
+    }
+
+    /**
+     * Returns the vertical (top and bottom) margin in pixels.
+     *
+     * @return the vertical margin value, or null if not set
+     */
+    @Nullable
+    default Integer getVerticalMargin() {
+        return null;
+    }
+
+    /**
+     * Returns the inline style for the grid container based on margin settings.
+     *
+     * @return the grid container inline style, or empty string if no styles
+     */
+    default String getGridStyle() {
+        return "";
+    }
+
+    /**
      * Returns the CSS class for the grid container.
      *
      * @return the grid container CSS class

@@ -26,6 +26,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ValueMap;
+import org.apache.sling.models.annotations.Default;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
 import org.apache.sling.models.annotations.injectorspecific.SlingObject;
@@ -88,6 +89,11 @@ public class ComparisonModelImpl implements ComparisonModel {
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     private String column3Description;
+
+    // Style options
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Default(values = "true")
+    private String withBackground;
 
     private List<ComparisonColumn> columns;
 
@@ -186,6 +192,11 @@ public class ComparisonModelImpl implements ComparisonModel {
             }
         }
         return false;
+    }
+
+    @Override
+    public boolean isWithBackground() {
+        return "true".equals(withBackground);
     }
 
     // Inner classes for comparison structures

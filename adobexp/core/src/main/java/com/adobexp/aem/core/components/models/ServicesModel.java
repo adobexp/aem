@@ -43,6 +43,12 @@ public interface ServicesModel {
     boolean hasServiceItems();
 
     /**
+     * Checks if background color should be applied.
+     * @return true if background color is enabled
+     */
+    boolean isWithBackground();
+
+    /**
      * Represents a service item with icon, headline, and description.
      */
     interface ServiceItem {

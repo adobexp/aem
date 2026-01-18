@@ -20,3 +20,59 @@
     width: 100%;
     height: auto;
 }
+
+/* Image Alignment Styles */
+.cmp-image--align-center {
+    text-align: center;
+
+    .cmp-image__image {
+        display: inline-block;
+        width: auto;
+        max-width: 100%;
+    }
+}
+
+.cmp-image--align-left {
+    text-align: left;
+
+    .cmp-image__image {
+        display: inline-block;
+        width: auto;
+        max-width: 100%;
+    }
+}
+
+.cmp-image--align-right {
+    text-align: right;
+
+    .cmp-image__image {
+        display: inline-block;
+        width: auto;
+        max-width: 100%;
+    }
+}
+
+/* Hover Zoom Effect */
+.cmp-image--hover-zoom {
+    overflow: hidden;
+
+    .cmp-image__image {
+        transition: transform 0.3s ease-in-out;
+    }
+
+    &:hover .cmp-image__image {
+        transform: scale(1.05);
+    }
+}
+
+/* Curved Edges */
+.cmp-image--curved {
+    .cmp-image__image {
+        border-radius: 12px;
+    }
+
+    /* Ensure overflow hidden for hover effect with curved edges */
+    &.cmp-image--hover-zoom {
+        border-radius: 12px;
+    }
+}

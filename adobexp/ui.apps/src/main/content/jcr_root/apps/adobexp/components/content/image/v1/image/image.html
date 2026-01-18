@@ -26,7 +26,7 @@
      id="${image.id}"
      data-cmp-data-layer="${image.data.json}"
      data-cmp-hook-image="imageV3"
-     class="cmp-image${!wcmmode.disabled ? ' cq-dd-image' : ''}"
+     class="cmp-image cmp-image--align-${image.imageAlignment}${image.hoverEffectEnabled ? ' cmp-image--hover-zoom' : ''}${image.curvedEdgesEnabled ? ' cmp-image--curved' : ''}${!wcmmode.disabled ? ' cq-dd-image' : ''}"
      itemscope itemtype="http://schema.org/ImageObject">
     <a data-sly-unwrap="${!image.imageLink.valid}"
        class="cmp-image__link"

@@ -88,6 +88,10 @@ public class MasonryGalleryModelImpl implements MasonryGalleryModel {
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     private String defaultVideoStartTime;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Default(values = "false")
+    private String defaultVideoAutoplay;
     
     // DAM Folder Options
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
@@ -196,7 +200,8 @@ public class MasonryGalleryModelImpl implements MasonryGalleryModel {
                     childResource.getPath(),
                     assetTitle,
                     assetAlt,
-                    null
+                    null,
+                    false
                 ));
                 count++;
             } else if (mimeType.startsWith("video/")) {
@@ -205,7 +210,8 @@ public class MasonryGalleryModelImpl implements MasonryGalleryModel {
                     childResource.getPath(),
                     assetTitle,
                     assetAlt,
-                    defaultVideoStartTime
+                    defaultVideoStartTime,
+                    isDefaultVideoAutoplay()
                 ));
                 count++;
             }
@@ -320,6 +326,7 @@ public class MasonryGalleryModelImpl implements MasonryGalleryModel {
             String mediaTitle = properties.get("mediaTitle", String.class);
             String mediaAlt = properties.get("mediaAlt", String.class);
             String videoStartTime = properties.get("videoStartTime", String.class);
+            String videoAutoplay = properties.get("videoAutoplay", String.class);
 
             if (StringUtils.isNotBlank(mediaPath)) {
                 galleryItems.add(new GalleryItemImpl(
@@ -327,7 +334,8 @@ public class MasonryGalleryModelImpl implements MasonryGalleryModel {
                     mediaPath,
                     mediaTitle,
                     mediaAlt,
-                    videoStartTime
+                    videoStartTime,
+                    "true".equals(videoAutoplay)
                 ));
             }
         }
@@ -350,6 +358,11 @@ public class MasonryGalleryModelImpl implements MasonryGalleryModel {
     @Override
     public String getDefaultVideoStartTime() {
         return defaultVideoStartTime;
+    }
+
+    @Override
+    public boolean isDefaultVideoAutoplay() {
+        return "true".equals(defaultVideoAutoplay);
     }
 
     @Override
@@ -510,14 +523,16 @@ public class MasonryGalleryModelImpl implements MasonryGalleryModel {
         private final String mediaTitle;
         private final String mediaAlt;
         private final String videoStartTime;
+        private final boolean videoAutoplay;
 
         public GalleryItemImpl(String mediaType, String mediaPath, String mediaTitle, 
-                              String mediaAlt, String videoStartTime) {
+                              String mediaAlt, String videoStartTime, boolean videoAutoplay) {
             this.mediaType = mediaType;
             this.mediaPath = mediaPath;
             this.mediaTitle = mediaTitle;
             this.mediaAlt = mediaAlt;
             this.videoStartTime = videoStartTime;
+            this.videoAutoplay = videoAutoplay;
         }
 
         @Override
@@ -543,6 +558,11 @@ public class MasonryGalleryModelImpl implements MasonryGalleryModel {
         @Override
         public String getVideoStartTime() {
             return videoStartTime;
+        }
+
+        @Override
+        public boolean isVideoAutoplay() {
+            return videoAutoplay;
         }
 
         @Override

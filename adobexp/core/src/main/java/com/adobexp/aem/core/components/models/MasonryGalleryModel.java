@@ -44,6 +44,12 @@ public interface MasonryGalleryModel {
     String getDefaultVideoStartTime();
 
     /**
+     * Checks if default video autoplay is enabled for DAM folder videos.
+     * @return true if default video autoplay is enabled
+     */
+    boolean isDefaultVideoAutoplay();
+
+    /**
      * Gets the list of gallery items (either from manual entry or DAM folder).
      * @return list of gallery items
      */
@@ -138,6 +144,13 @@ public interface MasonryGalleryModel {
          * @return video start time
          */
         String getVideoStartTime();
+
+        /**
+         * Checks if video autoplay is enabled (for videos only).
+         * When enabled, videos will automatically play when visible in the viewport.
+         * @return true if video autoplay is enabled
+         */
+        boolean isVideoAutoplay();
 
         /**
          * Checks if this item is a video.

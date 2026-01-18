@@ -57,6 +57,9 @@ public class ServicesModelImpl implements ServicesModel {
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     private String servicesTitle;
 
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    private boolean withBackground;
+
     private List<ServiceItem> serviceItems;
 
     @PostConstruct
@@ -134,6 +137,11 @@ public class ServicesModelImpl implements ServicesModel {
     @Override
     public boolean hasServiceItems() {
         return serviceItems != null && !serviceItems.isEmpty();
+    }
+
+    @Override
+    public boolean isWithBackground() {
+        return withBackground;
     }
 
     /**

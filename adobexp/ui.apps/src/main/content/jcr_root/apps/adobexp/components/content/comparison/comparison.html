@@ -11,7 +11,7 @@
 <sly data-sly-use.comparison="com.adobexp.aem.core.components.models.ComparisonModel"/>
 
 <!-- COMPARISON COMPONENT HTML MARKUP STARTS HERE -->
-<section class="comparison comparison--with-bg" data-component="comparison" aria-label="Comparison" data-sly-test="${comparison.hasContent}">
+<section class="comparison ${comparison.withBackground ? 'comparison--with-bg' : ''}" data-component="comparison" aria-label="Comparison" data-sly-test="${comparison.hasContent}">
     <div class="comparison__inner">
         <!-- Section Title -->
         <h2 class="comparison__title" data-sly-test="${comparison.title}">${comparison.title}</h2>

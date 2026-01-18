@@ -174,6 +174,9 @@ public class ImageImpl implements Image {
     protected String alt;
     protected String title;
     protected String externalImageResourcePath;
+    protected String imageAlignment;
+    protected boolean enableHoverEffect;
+    protected boolean enableCurvedEdges;
 
     protected String src;
     protected String[] smartImages = new String[]{};
@@ -268,6 +271,9 @@ public class ImageImpl implements Image {
         if (StringUtils.isNotEmpty(externalImageResourcePath)) {
             hasExternalImageResource = true;
         }
+        imageAlignment = properties.get(PN_IMAGE_ALIGNMENT, "center");
+        enableHoverEffect = properties.get(PN_ENABLE_HOVER_EFFECT, false);
+        enableCurvedEdges = properties.get(PN_ENABLE_CURVED_EDGES, false);
 
         mimeType = MIME_TYPE_IMAGE_JPEG;
         displayPopupTitle = properties.get(PN_DISPLAY_POPUP_TITLE, currentStyle.get(PN_DISPLAY_POPUP_TITLE, false));
@@ -711,6 +717,21 @@ public class ImageImpl implements Image {
 
     public String getSmartCropRendition() {
         return smartCropRendition;
+    }
+
+    @Override
+    public String getImageAlignment() {
+        return imageAlignment;
+    }
+
+    @Override
+    public boolean isHoverEffectEnabled() {
+        return enableHoverEffect;
+    }
+
+    @Override
+    public boolean isCurvedEdgesEnabled() {
+        return enableCurvedEdges;
     }
 
     @Override

@@ -43,6 +43,12 @@ public interface ComparisonModel {
     boolean hasContent();
 
     /**
+     * Checks if background color should be applied.
+     * @return true if background should be shown
+     */
+    boolean isWithBackground();
+
+    /**
      * Represents a comparison column.
      */
     interface ComparisonColumn {

@@ -61,6 +61,10 @@ public class VideoModelImpl implements VideoModel {
     @Default(values = "true")
     private String showMuteToggle;
 
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Default(values = "true")
+    private String showFullscreenToggle;
+
     @Override
     public String getVideoPath() {
         return videoPath;
@@ -94,6 +98,11 @@ public class VideoModelImpl implements VideoModel {
     @Override
     public boolean isShowMuteToggle() {
         return !"false".equals(showMuteToggle);
+    }
+
+    @Override
+    public boolean isShowFullscreenToggle() {
+        return !"false".equals(showFullscreenToggle);
     }
 }
 

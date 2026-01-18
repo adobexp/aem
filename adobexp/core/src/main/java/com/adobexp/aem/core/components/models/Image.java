@@ -167,6 +167,21 @@ public interface Image {
     String PN_FLIP_VERTICAL = "imageFlipVertical";
 
     /**
+     * Name of the resource property that stores the image alignment (left, center, right).
+     */
+    String PN_IMAGE_ALIGNMENT = "imageAlignment";
+
+    /**
+     * Name of the resource property that indicates if hover zoom effect is enabled.
+     */
+    String PN_ENABLE_HOVER_EFFECT = "enableHoverEffect";
+
+    /**
+     * Name of the resource property that indicates if curved edges (border-radius) are enabled.
+     */
+    String PN_ENABLE_CURVED_EDGES = "enableCurvedEdges";
+
+    /**
      * Name of the resource property that will indicate if the current image should has Image Modifiers settings.
      */
     String PN_IMAGE_MODIFIERS = "imageModifers";
@@ -424,6 +439,33 @@ public interface Image {
 
     default String getSmartCropRendition() {
         return null;
+    }
+
+    /**
+     * Returns the image alignment value (left, center, right).
+     *
+     * @return the alignment value, defaults to "center" if not set
+     */
+    default String getImageAlignment() {
+        return "center";
+    }
+
+    /**
+     * Returns whether hover zoom effect is enabled.
+     *
+     * @return true if hover effect is enabled, false otherwise
+     */
+    default boolean isHoverEffectEnabled() {
+        return false;
+    }
+
+    /**
+     * Returns whether curved edges (border-radius) are enabled.
+     *
+     * @return true if curved edges are enabled, false otherwise
+     */
+    default boolean isCurvedEdgesEnabled() {
+        return false;
     }
 
 }

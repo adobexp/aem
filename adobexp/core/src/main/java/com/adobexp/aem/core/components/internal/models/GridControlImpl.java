@@ -60,6 +60,14 @@ public class GridControlImpl implements GridControl {
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     private boolean applyBackgroundColor;
 
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
+    private Integer horizontalMargin;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
+    private Integer verticalMargin;
+
     private List<GridControlColumn> columns;
 
     @PostConstruct
@@ -170,6 +178,33 @@ public class GridControlImpl implements GridControl {
     @Override
     public boolean isApplyBackgroundColor() {
         return applyBackgroundColor;
+    }
+
+    @Override
+    public Integer getHorizontalMargin() {
+        return horizontalMargin;
+    }
+
+    @Override
+    public Integer getVerticalMargin() {
+        return verticalMargin;
+    }
+
+    @Override
+    public String getGridStyle() {
+        StringBuilder style = new StringBuilder();
+        
+        if (horizontalMargin != null && horizontalMargin > 0) {
+            style.append("margin-left: ").append(horizontalMargin).append("px; ");
+            style.append("margin-right: ").append(horizontalMargin).append("px; ");
+        }
+        
+        if (verticalMargin != null && verticalMargin > 0) {
+            style.append("margin-top: ").append(verticalMargin).append("px; ");
+            style.append("margin-bottom: ").append(verticalMargin).append("px; ");
+        }
+        
+        return style.toString().trim();
     }
 
     @Override

@@ -53,7 +53,9 @@
                 
                 <!-- Video Item -->
                 <sly data-sly-test="${item.video}">
-                    <div class="masonry-gallery__item" data-video-start="${item.videoStartTime || masonryGallery.defaultVideoStartTime || '0'}">
+                    <div class="masonry-gallery__item" 
+                         data-video-start="${item.videoStartTime || masonryGallery.defaultVideoStartTime || '0'}"
+                         data-sly-attribute.data-video-autoplay="${item.videoAutoplay ? true : ''}">
                         <div class="masonry-gallery__video-wrapper">
                             <sly data-sly-use.videoUrl="${'adobexp/components/commons/v1/helper/transformurls.js' @ internalUrl=item.mediaPath}">
                                 <video class="masonry-gallery__video" muted loop playsinline preload="metadata">

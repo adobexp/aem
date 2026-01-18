@@ -119,6 +119,15 @@
                                                             name="./videoStartTime"
                                                             min="{Double}0"
                                                             step="{Double}0.1"/>
+                                                        <!-- Video Autoplay (only for videos) -->
+                                                        <videoAutoplay
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                            fieldDescription="Automatically play video when it becomes visible in the viewport (for videos only)"
+                                                            name="./videoAutoplay"
+                                                            text="Enable Video Autoplay on Viewport Visibility"
+                                                            uncheckedValue="false"
+                                                            value="true"/>
                                                     </items>
                                                 </field>
                                             </mediaItems>
@@ -150,6 +159,20 @@
                                                     jcr:primaryType="nt:unstructured"
                                                     cmp-masonry-gallery-hook="defaultVideoStartTime"/>
                                             </defaultVideoStartTime>
+
+                                            <!-- Default Video Autoplay for DAM Folder -->
+                                            <defaultVideoAutoplay
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                fieldDescription="Automatically play all videos from the DAM folder when they become visible in the viewport"
+                                                name="./defaultVideoAutoplay"
+                                                text="Enable Video Autoplay on Viewport Visibility"
+                                                uncheckedValue="false"
+                                                value="true">
+                                                <granite:data
+                                                    jcr:primaryType="nt:unstructured"
+                                                    cmp-masonry-gallery-hook="defaultVideoAutoplay"/>
+                                            </defaultVideoAutoplay>
 
                                             <!-- Asset Count for DAM Folder -->
                                             <assetCount

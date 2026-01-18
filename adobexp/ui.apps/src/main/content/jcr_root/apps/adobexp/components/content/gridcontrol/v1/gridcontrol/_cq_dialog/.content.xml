@@ -96,6 +96,29 @@
                                                 text="Apply Background Color to Grid Container"
                                                 value="{Boolean}true"
                                                 uncheckedValue="{Boolean}false"/>
+                                            <marginHeading
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/heading"
+                                                level="5"
+                                                text="Margin Settings"
+                                                class="coral-Heading--5"
+                                                margin="{Boolean}true"/>
+                                            <horizontalMargin
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
+                                                fieldLabel="Left &amp; Right Margin"
+                                                fieldDescription="Enter the left and right margin in pixels (e.g., 20). Leave empty for no margin."
+                                                name="./horizontalMargin"
+                                                min="{Long}0"
+                                                emptyText="e.g., 20"/>
+                                            <verticalMargin
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
+                                                fieldLabel="Top &amp; Bottom Margin"
+                                                fieldDescription="Enter the top and bottom margin in pixels (e.g., 40). Leave empty for no margin."
+                                                name="./verticalMargin"
+                                                min="{Long}0"
+                                                emptyText="e.g., 40"/>
                                             <columnStylesHeading
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/heading"

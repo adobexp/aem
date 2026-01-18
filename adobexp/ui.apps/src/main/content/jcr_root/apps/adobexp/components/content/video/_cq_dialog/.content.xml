@@ -58,6 +58,16 @@
                                                 checked="{Boolean}true"
                                                 uncheckedValue="false"
                                                 value="true"/>
+                                            <!-- Show Fullscreen Toggle -->
+                                            <showFullscreenToggle
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                fieldDescription="Check to show the fullscreen button on the video"
+                                                name="./showFullscreenToggle"
+                                                text="Show Fullscreen Button"
+                                                checked="{Boolean}true"
+                                                uncheckedValue="false"
+                                                value="true"/>
                                         </items>
                                     </column>
                                 </items>

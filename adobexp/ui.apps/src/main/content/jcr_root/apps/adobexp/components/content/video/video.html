@@ -5,6 +5,7 @@
     - Optional teaser overlay with title and description
     - Play/Pause toggle button
     - Mute/Unmute toggle button
+    - Fullscreen toggle button with custom control bar
     - Configurable link on the teaser overlay
 */-->
 
@@ -27,7 +28,8 @@
     data-video-href="${linkFilter.value}"
     data-video-target="${video.openInNewTab ? '_blank' : '_self'}"
     data-show-play-toggle="${video.showPlayToggle ? 'true' : 'false'}"
-    data-show-mute-toggle="${video.showMuteToggle ? 'true' : 'false'}">
+    data-show-mute-toggle="${video.showMuteToggle ? 'true' : 'false'}"
+    data-show-fullscreen-toggle="${video.showFullscreenToggle ? 'true' : 'false'}">
     
     <!-- Play/Pause toggle button -->
     <button class="video__play-toggle btn-theme-auto btn-icon-only" type="button" data-video-play-toggle aria-label="Pause video">
@@ -37,6 +39,11 @@
     <!-- Mute/Unmute toggle button -->
     <button class="video__mute-toggle btn-theme-auto btn-icon-only" type="button" data-video-mute-toggle aria-label="Unmute video">
         <!-- Icon injected by JS (speaker muted/unmuted) -->
+    </button>
+    
+    <!-- Fullscreen toggle button -->
+    <button class="video__fullscreen-toggle btn-theme-auto btn-icon-only" type="button" data-video-fullscreen-toggle aria-label="Enter fullscreen">
+        <!-- Icon injected by JS (fullscreen enter/exit) -->
     </button>
     
     <!-- Video player -->

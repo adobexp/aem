@@ -1,6 +1,6 @@
 /**
  * Video Component JavaScript
- * Handles video playback controls, teaser overlay animation, and visibility-based autoplay
+ * Handles video playback controls, teaser overlay animation, fullscreen mode, and visibility-based autoplay
  */
 (function() {
     'use strict';
@@ -27,6 +27,8 @@
         var showMuteToggle = !['false', '0', 'no', 'off'].includes(muteAttr);
         var playAttr = (root.getAttribute('data-show-play-toggle') || '').trim().toLowerCase();
         var showPlayToggle = !['false', '0', 'no', 'off'].includes(playAttr);
+        var fullscreenAttr = (root.getAttribute('data-show-fullscreen-toggle') || '').trim().toLowerCase();
+        var showFullscreenToggle = !['false', '0', 'no', 'off'].includes(fullscreenAttr);
 
         // SVG Icons
         var speakerOnSvg = '<svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none">' +
@@ -48,6 +50,14 @@
         var pauseSvg = '<svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none">' +
             '<path d="M7 6h3v12H7V6Z" fill="currentColor"/>' +
             '<path d="M14 6h3v12h-3V6Z" fill="currentColor"/>' +
+            '</svg>';
+
+        var fullscreenEnterSvg = '<svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none">' +
+            '<path d="M3 3h6v2H5v4H3V3zm12 0h6v6h-2V5h-4V3zM3 15h2v4h4v2H3v-6zm16 0h2v6h-6v-2h4v-4z" fill="currentColor"/>' +
+            '</svg>';
+
+        var fullscreenExitSvg = '<svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none">' +
+            '<path d="M9 3v6H3v-2h4V3h2zm6 0h2v4h4v2h-6V3zM3 15h6v6H7v-4H3v-2zm12 0h6v2h-4v4h-2v-6z" fill="currentColor"/>' +
             '</svg>';
 
         /**
@@ -161,6 +171,347 @@
         if (!showPlayToggle && existingPlayToggleBtn) existingPlayToggleBtn.remove();
         var playToggleBtn = showPlayToggle ? existingPlayToggleBtn : null;
 
+        // Handle fullscreen toggle button
+        var existingFullscreenToggleBtn = root.querySelector('[data-video-fullscreen-toggle]');
+        if (!showFullscreenToggle && existingFullscreenToggleBtn) existingFullscreenToggleBtn.remove();
+        var fullscreenToggleBtn = showFullscreenToggle ? existingFullscreenToggleBtn : null;
+
+        // Fullscreen control bar elements
+        var controlBar = null;
+        var controlBarPlayBtn = null;
+        var controlBarMuteBtn = null;
+        var controlBarExitFullscreenBtn = null;
+        var progressContainer = null;
+        var progressBar = null;
+        var progressSlider = null;
+        var currentTimeDisplay = null;
+        var durationDisplay = null;
+        var hideControlBarTimeout = null;
+
+        /**
+         * Format seconds to MM:SS string
+         */
+        var formatTime = function(seconds) {
+            var mins = Math.floor(seconds / 60);
+            var secs = Math.floor(seconds % 60);
+            return mins + ':' + (secs < 10 ? '0' : '') + secs;
+        };
+
+        /**
+         * Create the fullscreen control bar
+         */
+        var createFullscreenControlBar = function() {
+            if (controlBar) return;
+
+            controlBar = document.createElement('div');
+            controlBar.className = 'video__fullscreen-control-bar';
+
+            // Play/Pause button
+            controlBarPlayBtn = document.createElement('button');
+            controlBarPlayBtn.className = 'video__control-btn video__control-play';
+            controlBarPlayBtn.type = 'button';
+            controlBarPlayBtn.setAttribute('aria-label', 'Pause video');
+            controlBarPlayBtn.innerHTML = pauseSvg;
+
+            // Mute/Unmute button
+            controlBarMuteBtn = document.createElement('button');
+            controlBarMuteBtn.className = 'video__control-btn video__control-mute';
+            controlBarMuteBtn.type = 'button';
+            controlBarMuteBtn.setAttribute('aria-label', 'Unmute video');
+            controlBarMuteBtn.innerHTML = speakerOffSvg;
+
+            // Progress container
+            progressContainer = document.createElement('div');
+            progressContainer.className = 'video__progress-container';
+
+            currentTimeDisplay = document.createElement('span');
+            currentTimeDisplay.className = 'video__time video__time--current';
+            currentTimeDisplay.textContent = '0:00';
+
+            var progressWrapper = document.createElement('div');
+            progressWrapper.className = 'video__progress-wrapper';
+
+            progressBar = document.createElement('div');
+            progressBar.className = 'video__progress-bar';
+
+            progressSlider = document.createElement('input');
+            progressSlider.type = 'range';
+            progressSlider.className = 'video__progress-slider';
+            progressSlider.min = '0';
+            progressSlider.max = '100';
+            progressSlider.value = '0';
+            progressSlider.setAttribute('aria-label', 'Video progress');
+
+            progressWrapper.appendChild(progressBar);
+            progressWrapper.appendChild(progressSlider);
+
+            durationDisplay = document.createElement('span');
+            durationDisplay.className = 'video__time video__time--duration';
+            durationDisplay.textContent = '0:00';
+
+            progressContainer.appendChild(currentTimeDisplay);
+            progressContainer.appendChild(progressWrapper);
+            progressContainer.appendChild(durationDisplay);
+
+            // Exit fullscreen button
+            controlBarExitFullscreenBtn = document.createElement('button');
+            controlBarExitFullscreenBtn.className = 'video__control-btn video__control-exit-fullscreen';
+            controlBarExitFullscreenBtn.type = 'button';
+            controlBarExitFullscreenBtn.setAttribute('aria-label', 'Exit fullscreen');
+            controlBarExitFullscreenBtn.innerHTML = fullscreenExitSvg;
+
+            controlBar.appendChild(controlBarPlayBtn);
+            controlBar.appendChild(controlBarMuteBtn);
+            controlBar.appendChild(progressContainer);
+            controlBar.appendChild(controlBarExitFullscreenBtn);
+
+            root.appendChild(controlBar);
+
+            // Control bar event listeners
+            controlBarPlayBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                if (video.paused) {
+                    userPaused = false;
+                    visibilityPaused = false;
+                    playSafe();
+                } else {
+                    userPaused = true;
+                    video.pause();
+                }
+                syncAllPlayUi();
+            });
+
+            controlBarMuteBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                var nextMuted = !video.muted;
+                video.muted = nextMuted;
+                if (!nextMuted && video.volume === 0) video.volume = 1;
+                syncAllMuteUi();
+            });
+
+            controlBarExitFullscreenBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                exitFullscreen();
+            });
+
+            progressSlider.addEventListener('input', function(e) {
+                var seekTime = (parseFloat(e.target.value) / 100) * video.duration;
+                video.currentTime = seekTime;
+                updateProgressBar();
+            });
+
+            progressSlider.addEventListener('change', function() {
+                // Resume playing after seeking if wasn't paused by user
+                if (!userPaused && video.paused) {
+                    playSafe();
+                }
+            });
+        };
+
+        /**
+         * Update the progress bar display
+         */
+        var updateProgressBar = function() {
+            if (!progressBar || !progressSlider || !currentTimeDisplay || !durationDisplay) return;
+
+            var currentTime = video.currentTime;
+            var duration = video.duration || 0;
+            var percentage = duration > 0 ? (currentTime / duration) * 100 : 0;
+
+            progressBar.style.width = percentage + '%';
+            progressSlider.value = percentage.toString();
+            currentTimeDisplay.textContent = formatTime(currentTime);
+            durationDisplay.textContent = formatTime(duration);
+        };
+
+        /**
+         * Show the control bar with auto-hide timeout
+         */
+        var showControlBar = function() {
+            if (!controlBar) return;
+            controlBar.classList.add('video__fullscreen-control-bar--visible');
+
+            if (hideControlBarTimeout) {
+                clearTimeout(hideControlBarTimeout);
+            }
+
+            hideControlBarTimeout = window.setTimeout(function() {
+                if (controlBar && !video.paused) {
+                    controlBar.classList.remove('video__fullscreen-control-bar--visible');
+                }
+            }, 3000);
+        };
+
+        /**
+         * Sync control bar play button UI
+         */
+        var syncControlBarPlayUi = function() {
+            if (!controlBarPlayBtn) return;
+            var isPaused = video.paused;
+            controlBarPlayBtn.setAttribute('aria-label', isPaused ? 'Play video' : 'Pause video');
+            controlBarPlayBtn.innerHTML = isPaused ? playSvg : pauseSvg;
+        };
+
+        /**
+         * Sync control bar mute button UI
+         */
+        var syncControlBarMuteUi = function() {
+            if (!controlBarMuteBtn) return;
+            var isMuted = video.muted || video.volume === 0;
+            controlBarMuteBtn.setAttribute('aria-label', isMuted ? 'Unmute video' : 'Mute video');
+            controlBarMuteBtn.innerHTML = isMuted ? speakerOffSvg : speakerOnSvg;
+        };
+
+        /**
+         * Sync all play UI elements
+         */
+        var syncAllPlayUi = function() {
+            syncPlayUi();
+            syncControlBarPlayUi();
+        };
+
+        /**
+         * Sync all mute UI elements
+         */
+        var syncAllMuteUi = function() {
+            syncMuteUi();
+            syncControlBarMuteUi();
+        };
+
+        // Fullscreen state
+        var isInFullscreen = false;
+
+        /**
+         * Check if currently in fullscreen mode
+         */
+        var checkIsFullscreen = function() {
+            return !!(
+                document.fullscreenElement ||
+                document.webkitFullscreenElement ||
+                document.mozFullScreenElement ||
+                document.msFullscreenElement
+            );
+        };
+
+        /**
+         * Enter fullscreen mode
+         */
+        var enterFullscreen = function() {
+            try {
+                createFullscreenControlBar();
+
+                if (root.requestFullscreen) {
+                    root.requestFullscreen();
+                } else if (root.webkitRequestFullscreen) {
+                    root.webkitRequestFullscreen();
+                } else if (root.mozRequestFullScreen) {
+                    root.mozRequestFullScreen();
+                } else if (root.msRequestFullscreen) {
+                    root.msRequestFullscreen();
+                }
+            } catch (err) {
+                // Fullscreen request failed
+            }
+        };
+
+        /**
+         * Exit fullscreen mode
+         */
+        var exitFullscreen = function() {
+            try {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.webkitExitFullscreen) {
+                    document.webkitExitFullscreen();
+                } else if (document.mozCancelFullScreen) {
+                    document.mozCancelFullScreen();
+                } else if (document.msExitFullscreen) {
+                    document.msExitFullscreen();
+                }
+            } catch (err) {
+                // Exit fullscreen failed
+            }
+        };
+
+        /**
+         * Handle fullscreen change events
+         */
+        var handleFullscreenChange = function() {
+            isInFullscreen = checkIsFullscreen();
+            root.classList.toggle('video--fullscreen', isInFullscreen);
+
+            if (fullscreenToggleBtn) {
+                fullscreenToggleBtn.setAttribute('aria-label', isInFullscreen ? 'Exit fullscreen' : 'Enter fullscreen');
+                fullscreenToggleBtn.innerHTML = isInFullscreen ? fullscreenExitSvg : fullscreenEnterSvg;
+            }
+
+            if (isInFullscreen) {
+                showControlBar();
+                syncControlBarPlayUi();
+                syncControlBarMuteUi();
+                updateProgressBar();
+            } else {
+                if (controlBar) {
+                    controlBar.classList.remove('video__fullscreen-control-bar--visible');
+                }
+                if (hideControlBarTimeout) {
+                    clearTimeout(hideControlBarTimeout);
+                    hideControlBarTimeout = null;
+                }
+            }
+        };
+
+        // Fullscreen event listeners
+        document.addEventListener('fullscreenchange', handleFullscreenChange);
+        document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+        document.addEventListener('mozfullscreenchange', handleFullscreenChange);
+        document.addEventListener('MSFullscreenChange', handleFullscreenChange);
+
+        // Show control bar on mouse movement in fullscreen
+        root.addEventListener('mousemove', function() {
+            if (isInFullscreen) {
+                showControlBar();
+            }
+        });
+
+        root.addEventListener('touchstart', function() {
+            if (isInFullscreen) {
+                showControlBar();
+            }
+        });
+
+        // Update progress bar on time update
+        video.addEventListener('timeupdate', function() {
+            if (isInFullscreen) {
+                updateProgressBar();
+            }
+        });
+
+        video.addEventListener('loadedmetadata', function() {
+            if (durationDisplay) {
+                durationDisplay.textContent = formatTime(video.duration);
+            }
+        });
+
+        // Fullscreen toggle button click handler
+        if (fullscreenToggleBtn) {
+            fullscreenToggleBtn.innerHTML = fullscreenEnterSvg;
+            fullscreenToggleBtn.setAttribute('aria-label', 'Enter fullscreen');
+
+            fullscreenToggleBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                if (isInFullscreen) {
+                    exitFullscreen();
+                } else {
+                    enterFullscreen();
+                }
+            });
+        }
+
         // Prevent context menu on video
         video.addEventListener('contextmenu', function(e) {
             e.preventDefault();
@@ -216,7 +567,7 @@
                 var nextMuted = !video.muted;
                 video.muted = nextMuted;
                 if (!nextMuted && video.volume === 0) video.volume = 1;
-                syncMuteUi();
+                syncAllMuteUi();
             });
         }
 
@@ -233,13 +584,16 @@
                     userPaused = true;
                     video.pause();
                 }
-                syncPlayUi();
+                syncAllPlayUi();
             });
         }
 
         // Video pause handler - auto-resume if not user initiated
         video.addEventListener('pause', function() {
-            syncPlayUi();
+            syncAllPlayUi();
+            if (isInFullscreen) {
+                showControlBar();
+            }
             if (userPaused || visibilityPaused) return;
             window.setTimeout(function() {
                 if (video.paused) playSafe();
@@ -250,7 +604,7 @@
         video.addEventListener('play', function() {
             userPaused = false;
             visibilityPaused = false;
-            syncPlayUi();
+            syncAllPlayUi();
         });
 
         // Intersection Observer for visibility-based playback
@@ -281,12 +635,17 @@
 
         // Initialize UI state
         if (muteToggleBtn) {
-            video.addEventListener('volumechange', syncMuteUi);
+            video.addEventListener('volumechange', syncAllMuteUi);
             syncMuteUi();
         }
 
         if (playToggleBtn) {
             syncPlayUi();
+        }
+
+        // Initial sync for fullscreen control bar if toggle is shown
+        if (fullscreenToggleBtn) {
+            video.addEventListener('volumechange', syncControlBarMuteUi);
         }
     };
 
