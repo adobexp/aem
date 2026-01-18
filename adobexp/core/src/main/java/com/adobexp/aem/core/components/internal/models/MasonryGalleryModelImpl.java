@@ -26,6 +26,8 @@ import javax.annotation.PostConstruct;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.api.resource.ValueMap;
@@ -50,6 +52,8 @@ import com.day.cq.dam.api.DamConstants;
     resourceType = MasonryGalleryModelImpl.RESOURCE_TYPE
 )
 public class MasonryGalleryModelImpl implements MasonryGalleryModel {
+
+    private static final Logger LOG = LoggerFactory.getLogger(MasonryGalleryModelImpl.class);
 
     protected static final String RESOURCE_TYPE = "adobexp/components/content/masonry-gallery";
 
@@ -281,9 +285,15 @@ public class MasonryGalleryModelImpl implements MasonryGalleryModel {
      */
     private String getAssetTitle(Asset asset) {
         // First, try to get dc:title from metadata
-        String dcTitle = asset.getMetadataValue(DamConstants.DC_TITLE);
-        if (StringUtils.isNotBlank(dcTitle)) {
-            return dcTitle;
+        // Wrapped in try-catch to handle assets with malformed/unknown XMP namespace prefixes
+        try {
+            String dcTitle = asset.getMetadataValue(DamConstants.DC_TITLE);
+            if (StringUtils.isNotBlank(dcTitle)) {
+                return dcTitle;
+            }
+        } catch (Exception e) {
+            LOG.warn("Failed to extract dc:title metadata from asset '{}': {}", 
+                asset.getPath(), e.getMessage());
         }
         
         // Fallback to asset name (filename without extension would be cleaner,
@@ -426,26 +436,38 @@ public class MasonryGalleryModelImpl implements MasonryGalleryModel {
             }
             
             // Get published date - try cq:lastReplicated first, then dc:date
+            // Wrapped in try-catch to handle assets with malformed/unknown XMP namespace prefixes
             Calendar published = null;
-            Object replicatedObj = asset.getMetadata("cq:lastReplicated");
-            if (replicatedObj instanceof Calendar) {
-                published = (Calendar) replicatedObj;
-            }
-            if (published == null) {
-                Object dcDateObj = asset.getMetadata(DamConstants.DC_DATE);
-                if (dcDateObj instanceof Calendar) {
-                    published = (Calendar) dcDateObj;
+            try {
+                Object replicatedObj = asset.getMetadata("cq:lastReplicated");
+                if (replicatedObj instanceof Calendar) {
+                    published = (Calendar) replicatedObj;
                 }
+                if (published == null) {
+                    Object dcDateObj = asset.getMetadata(DamConstants.DC_DATE);
+                    if (dcDateObj instanceof Calendar) {
+                        published = (Calendar) dcDateObj;
+                    }
+                }
+            } catch (Exception e) {
+                LOG.warn("Failed to extract published date metadata from asset '{}': {}", 
+                    asset.getPath(), e.getMessage());
             }
             this.publishedDate = published;
             
             // Get file size from dam:size metadata or calculate from rendition
+            // Wrapped in try-catch to handle assets with malformed/unknown XMP namespace prefixes
             Long assetSize = null;
-            Object sizeObj = asset.getMetadata(DamConstants.DAM_SIZE);
-            if (sizeObj instanceof Long) {
-                assetSize = (Long) sizeObj;
-            } else if (sizeObj instanceof Number) {
-                assetSize = ((Number) sizeObj).longValue();
+            try {
+                Object sizeObj = asset.getMetadata(DamConstants.DAM_SIZE);
+                if (sizeObj instanceof Long) {
+                    assetSize = (Long) sizeObj;
+                } else if (sizeObj instanceof Number) {
+                    assetSize = ((Number) sizeObj).longValue();
+                }
+            } catch (Exception e) {
+                LOG.warn("Failed to extract size metadata from asset '{}': {}", 
+                    asset.getPath(), e.getMessage());
             }
             this.size = assetSize;
         }
