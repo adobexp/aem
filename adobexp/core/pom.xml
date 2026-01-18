@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.adobexp</groupId>
         <artifactId>adobexp-aem-quickstart-parent</artifactId>
-        <version>1.1.1-SNAPSHOT</version>
+        <version>1.1.1</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>adobexp-aem-quickstart.core</artifactId>
