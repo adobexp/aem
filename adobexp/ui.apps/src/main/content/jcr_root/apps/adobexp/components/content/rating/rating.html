@@ -1,0 +1,77 @@
+<!--/*
+    Rating Component - AEM Sightly Template
+    
+    This component renders a customer rating section with:
+    - Title
+    - Avatar stack
+    - Star rating display
+    - CTA button
+    - Background color option
+
+*/-->
+
+<sly data-sly-use.templates="adobexp/components/commons/v1/templates.html"/>
+<sly data-sly-use.rating="com.adobexp.aem.core.components.models.RatingModel"/>
+
+<!-- RATING COMPONENT HTML MARKUP STARTS HERE -->
+<section data-component="rating" class="rating ${rating.applyBgColor ? 'rating--with-bg' : ''}" 
+    data-sly-test="${rating.title || rating.avatarImages || rating.starRating}">
+    <div class="rating__inner">
+        <!-- Title -->
+        <sly data-sly-test="${rating.title}">
+            <h2 class="rating__title">${rating.title}</h2>
+        </sly>
+        
+        <!-- Social proof row -->
+        <div class="rating__proof">
+            <!-- Avatar stack -->
+            <sly data-sly-test="${rating.avatarImages}">
+                <div class="rating__avatars" aria-label="Customer avatars">
+                    <sly data-sly-list.avatar="${rating.avatarImages}">
+                        <div class="rating__avatar">
+                            <img src="${avatar.imagePath @ context='uri'}" 
+                                alt="${avatar.altText}" 
+                                class="rating__avatar-img"/>
+                        </div>
+                    </sly>
+                </div>
+            </sly>
+            
+            <!-- Stars and review info -->
+            <sly data-sly-test="${rating.starRating}">
+                <div class="rating__stars-section" data-star-rating="${rating.starRating}" data-star-total="${rating.starTotal}">
+                    <div class="rating__stars-row">
+                        <div class="rating__stars" role="img" aria-label="${rating.starRating} out of ${rating.starTotal} stars">
+                            <!-- Stars will be rendered dynamically by JavaScript -->
+                        </div>
+                        <span class="rating__score">${rating.starRating}</span>
+                    </div>
+                    <sly data-sly-test="${rating.subTitle}">
+                        <span class="rating__reviews">${rating.subTitle}</span>
+                    </sly>
+                </div>
+            </sly>
+        </div>
+        
+        <!-- CTA Button -->
+        <sly data-sly-test="${rating.ctaText && rating.ctaLink}">
+            <div class="rating__cta">
+                <a class="cta-pill" 
+                    href="${rating.ctaLink @ context='uri'}" 
+                    aria-label="${rating.ctaText}"
+                    target="${rating.ctaLinkExternal ? '_blank' : '_self'}"
+                    rel="${rating.ctaLinkExternal ? 'noopener noreferrer' : ''}">
+                    <span class="cta-pill__text">${rating.ctaText}</span>
+                    <span class="cta-pill__icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                            <path d="M9 18l6-6-6-6"></path>
+                        </svg>
+                    </span>
+                </a>
+            </div>
+        </sly>
+    </div>
+</section>
+<!-- RATING COMPONENT HTML MARKUP ENDS HERE -->
+
+<sly data-sly-call="${templates.placeholder @ isEmpty = (!rating.title && !rating.avatarImages && !rating.starRating), classAppend='rating'}"></sly>

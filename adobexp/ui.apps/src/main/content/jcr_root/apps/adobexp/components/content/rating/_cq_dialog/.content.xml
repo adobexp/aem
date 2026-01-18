@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="nt:unstructured"
+    jcr:title="Rating"
+    sling:resourceType="cq/gui/components/authoring/dialog">
+    <content
+        granite:class="cmp-rating__editor"
+        jcr:primaryType="nt:unstructured"
+        sling:resourceType="granite/ui/components/coral/foundation/container">
+        <items jcr:primaryType="nt:unstructured">
+            <tabs
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="granite/ui/components/coral/foundation/tabs"
+                maximized="{Boolean}true">
+                <items jcr:primaryType="nt:unstructured">
+                    <!-- Tab 1: Content Configuration -->
+                    <content
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Content"
+                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                        margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <!-- Title Text Field -->
+                                            <title
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Title"
+                                                name="./title"/>
+                                            
+                                            <!-- Subtitle Text Field -->
+                                            <subtitle
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Subtitle"
+                                                name="./subTitle"/>
+                                            
+                                            <!-- Images Multifield -->
+                                            <imagesContainer
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/foundation/container">
+                                                <layout
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/foundation/layouts/container"/>
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <images
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                                        composite="{Boolean}true"
+                                                        fieldLabel="Images"
+                                                        fieldDescription="Add images from DAM">
+                                                        <field
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/container"
+                                                            name="./images">
+                                                            <items jcr:primaryType="nt:unstructured">
+                                                                <!-- Collapsible wrapper for images -->
+                                                                <wrapper
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    jcr:title="Image"
+                                                                    sling:resourceType="granite/ui/components/foundation/container">
+                                                                    <layout
+                                                                        jcr:primaryType="nt:unstructured"
+                                                                        sling:resourceType="granite/ui/components/foundation/layouts/collapsible"/>
+                                                                    <items jcr:primaryType="nt:unstructured">
+                                                                        <!-- Image Path Browser -->
+                                                                        <image
+                                                                            jcr:primaryType="nt:unstructured"
+                                                                            sling:resourceType="granite/ui/components/coral/foundation/form/pathbrowser"
+                                                                            fieldLabel="Image"
+                                                                            name="./imagePath"
+                                                                            rootPath="/content/dam"/>
+                                                                        <!-- Alt Text Field -->
+                                                                        <altText
+                                                                            jcr:primaryType="nt:unstructured"
+                                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                            fieldLabel="Alt Text"
+                                                                            name="./altText"/>
+                                                                    </items>
+                                                                </wrapper>
+                                                            </items>
+                                                        </field>
+                                                    </images>
+                                                </items>
+                                            </imagesContainer>
+                                            
+                                            <!-- CTA Text Field -->
+                                            <ctaText
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="CTA Text"
+                                                name="./ctaText"/>
+                                            
+                                             <!-- CTA Link Path Browser -->
+                                            <ctaLink
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/pathbrowser"
+                                                fieldLabel="CTA Link"
+                                                name="./ctaLink"
+                                                rootPath="/content"/>
+                                            
+                                            <!-- CTA Link External Checkbox -->
+                                            <ctaExternal
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                fieldDescription="Open the CTA link in a new browser tab"
+                                                name="./ctaLinkExternal"
+                                                text="Open in new tab"
+                                                uncheckedValue="false"
+                                                value="true"/>
+                                            
+                                             <!-- Star Rating Number Field -->
+                                            <starRating
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
+                                                fieldLabel="Star Rating (out of 5)"
+                                                name="./starRating"
+                                                minValue="0"
+                                                maxValue="5"
+                                                step="{Double}0.1"/>
+                                            
+                                            <!-- Star Total Number Field -->
+                                            <starTotal
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
+                                                fieldLabel="Total Stars (default 5)"
+                                                name="./starTotal"
+                                                minValue="1"
+                                                maxValue="10"
+                                                stepValue="1"
+                                                value="5"/>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </content>
+                    
+                    <!-- Tab 2: Style Options -->
+                    <styleOptions
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Style Options"
+                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                        margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <!-- Apply Background Color Checkbox -->
+                                            <applyBgColor
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                fieldDescription="Apply Background Color"
+                                                name="./applyBgColor"
+                                                uncheckedValue="false"
+                                                value="true"
+                                                text="Apply Background Color"/>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </styleOptions>
+                </items>
+            </tabs>
+        </items>
+    </content>
+</jcr:root>
