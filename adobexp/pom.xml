@@ -183,11 +183,19 @@
                   Bundle-Category: ${componentGroupName}
 
                   # loosen javax.annotation import versioning (common AEM / uber-jar mismatch)
-                  # Mark internal AEM DAM APIs as optional for AEM Cloud Service compatibility
+                  # Mark internal AEM DAM/NextGenDM APIs as optional for AEM Cloud Service compatibility
+                  # Remove all version constraints for AEM packages (SDK version mismatch)
                   Import-Package: javax.annotation;version=0.0.0,\
                     com.day.cq.dam.api.handler;resolution:=optional,\
                     com.day.cq.dam.api.handler.store;resolution:=optional,\
                     com.day.cq.dam.scene7.api.constants;resolution:=optional,\
+                    com.adobe.cq.ui.wcm.commons.config;resolution:=optional,\
+                    com.adobe*;version=0.0.0,\
+                    com.day*;version=0.0.0,\
+                    com.fasterxml*;version=0.0.0,\
+                    org.apache*;version=0.0.0,\
+                    org.json*;version=0.0.0,\
+                    javax*;version=0.0.0,\
                     *
 
                   # export all com.adobexp.* packages (project API) for HTL "data-sly-use"
