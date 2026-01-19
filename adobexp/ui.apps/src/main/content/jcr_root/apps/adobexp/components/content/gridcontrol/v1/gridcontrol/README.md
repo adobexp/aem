@@ -1,33 +1,13 @@
-adobexp | Grid Control (v1)
-====
-Container component written in HTL.
+# Unknown Component
 
-## Features
+AEM Component for Unknown Component
 
-* Configurable layout type.
-* Configurable HTML ID attribute.
-* Allowed components can be configured through policy configuration.
+## Configuration
 
-### Edit Dialog Properties
-The following properties are written to JCR for this Container component and are expected to be available as `Resource` properties:
+This component can be configured through the following tabs:
 
-#### Container Properties
-1. `./layoutColumns` - defines the layout type, with division of columns options in percentage like 50% by 50% etc.
-2. `./id` - defines the component HTML ID attribute.
+## Usage
 
-## BEM Description
-```
-BLOCK cmp-container
-```
+This component can be added to AEM pages through the component console. 
+Configure the fields according to the tab structure above to customize the component's appearance and behavior.
 
-### Enabling Container Editing Functionality
-The following property is required in the proxy component to enable full editing functionality for the Container:
-
-1. `./cq:isContainer` - set to `{Boolean}true`, marks the Container as a container component
-
-## Information
-* **Vendor**: adobexp
-* **Version**: v1
-* **Compatibility**: AEM 6.5.11
-* **Status**: production-ready
-* **Author**: [Sharad Kumar](sharad@sharadtech.com)

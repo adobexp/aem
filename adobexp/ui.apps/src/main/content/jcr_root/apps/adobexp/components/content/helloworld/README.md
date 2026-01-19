@@ -1,10 +1,13 @@
-# Unknown Component
+# Hello World
 
-AEM Component for Unknown Component
+AEM Component for displaying a simple text message.
 
 ## Configuration
 
-This component can be configured through the following tabs:
+This component can be configured through the following field:
+
+### Properties
+- **Text**: Text to display in the component
 
 ## Usage
 
