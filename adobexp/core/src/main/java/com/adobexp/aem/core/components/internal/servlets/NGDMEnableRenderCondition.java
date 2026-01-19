@@ -15,22 +15,18 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobexp.aem.core.components.internal.servlets;
 
-import com.adobe.cq.ui.wcm.commons.config.NextGenDynamicMediaConfig;
+import com.adobexp.aem.core.components.internal.models.NextGenDMConfigHelper;
 import com.adobe.granite.ui.components.rendercondition.RenderCondition;
 import com.adobe.granite.ui.components.rendercondition.SimpleRenderCondition;
 import java.io.IOException;
 import javax.servlet.Servlet;
 import javax.servlet.ServletException;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.SlingHttpServletResponse;
 import org.apache.sling.api.servlets.ServletResolverConstants;
 import org.apache.sling.api.servlets.SlingSafeMethodsServlet;
 import org.jetbrains.annotations.NotNull;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 @Component(
     service = { Servlet.class },
@@ -41,16 +37,13 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 )
 public class NGDMEnableRenderCondition extends SlingSafeMethodsServlet {
 
-    @Reference(cardinality= ReferenceCardinality.OPTIONAL, policyOption = ReferencePolicyOption.GREEDY)
-    private NextGenDynamicMediaConfig nextGenDynamicMediaConfig;
-
     @Override
     protected void doGet(@NotNull SlingHttpServletRequest request, @NotNull SlingHttpServletResponse response)
         throws ServletException, IOException {
 
         boolean isNGDMEnabled = false;
-        if (nextGenDynamicMediaConfig != null && nextGenDynamicMediaConfig.enabled() &&
-            StringUtils.isNotBlank(nextGenDynamicMediaConfig.getRepositoryId())) {
+        NextGenDMConfigHelper config = NextGenDMConfigHelper.getConfig();
+        if (config != null && config.isEnabled()) {
             isNGDMEnabled = true;
         }
 

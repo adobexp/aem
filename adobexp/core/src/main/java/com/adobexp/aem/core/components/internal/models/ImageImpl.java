@@ -87,7 +87,6 @@ import com.day.cq.wcm.api.designer.Style;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
-import com.adobe.cq.ui.wcm.commons.config.NextGenDynamicMediaConfig;
 import java.util.Map;
 import java.util.Scanner;
 import java.awt.Dimension;
@@ -213,11 +212,10 @@ public class ImageImpl implements Image {
 
     @OSGiService
     @Optional
-    private NextGenDynamicMediaConfig nextGenDynamicMediaConfig;
-
-    @OSGiService
-    @Optional
     private HttpClientBuilderFactory clientBuilderFactory;
+    
+    // NGDM config is loaded dynamically to avoid class loading issues with internal Adobe APIs
+    private NextGenDMConfigHelper nextGenDynamicMediaConfig;
 
     private boolean imageLinkHidden = false;
 
@@ -972,8 +970,11 @@ public class ImageImpl implements Image {
     }
 
     private boolean isNgdmSupportAvailable() {
-        return nextGenDynamicMediaConfig != null && nextGenDynamicMediaConfig.enabled() &&
-            StringUtils.isNotBlank(nextGenDynamicMediaConfig.getRepositoryId());
+        // Dynamically load NGDM config to avoid class loading issues
+        if (nextGenDynamicMediaConfig == null) {
+            nextGenDynamicMediaConfig = NextGenDMConfigHelper.getConfig();
+        }
+        return nextGenDynamicMediaConfig != null && nextGenDynamicMediaConfig.isEnabled();
     }
 
     private void initNextGenerationDynamicMedia() {

@@ -23,8 +23,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.adobe.cq.ui.wcm.commons.config.NextGenDynamicMediaConfig;
-
 import static com.adobexp.aem.core.components.internal.models.ImageImpl.DEFAULT_NGDM_ASSET_WIDTH;
 
 public class NextGenDMImageURIBuilder {
@@ -34,7 +32,7 @@ public class NextGenDMImageURIBuilder {
     private static final String PATH_PLACEHOLDER_FORMAT = "{format}";
     private static final String DEFAULT_NGDM_ASSET_EXTENSION = "jpg";
 
-    private NextGenDynamicMediaConfig config;
+    private NextGenDMConfigHelper config;
     private String fileReference;
     private String smartCropName;
     private int width = DEFAULT_NGDM_ASSET_WIDTH;
@@ -44,7 +42,7 @@ public class NextGenDMImageURIBuilder {
 
     private String modifiers;
 
-    public NextGenDMImageURIBuilder(NextGenDynamicMediaConfig config, String fileReference) {
+    public NextGenDMImageURIBuilder(NextGenDMConfigHelper config, String fileReference) {
         this.config = config;
         this.fileReference = fileReference;
     }
@@ -110,10 +108,18 @@ public class NextGenDMImageURIBuilder {
             String assetName = scanner.hasNext() ? scanner.next() : assetId;
             String assetExtension = scanner.hasNext() ? scanner.next() : DEFAULT_NGDM_ASSET_EXTENSION;
             String imageDeliveryBasePath = this.config.getImageDeliveryBasePath();
+            if (StringUtils.isBlank(imageDeliveryBasePath)) {
+                LOGGER.info("NGDM imageDeliveryBasePath is not configured");
+                return null;
+            }
             String imageDeliveryPath = imageDeliveryBasePath.replace(PATH_PLACEHOLDER_ASSET_ID, assetId);
             imageDeliveryPath = imageDeliveryPath.replace(PATH_PLACEHOLDER_SEO_NAME, assetName);
             imageDeliveryPath = imageDeliveryPath.replace(PATH_PLACEHOLDER_FORMAT, assetExtension);
             String repositoryId = this.config.getRepositoryId();
+            if (StringUtils.isBlank(repositoryId)) {
+                LOGGER.info("NGDM repositoryId is not configured");
+                return null;
+            }
             StringBuilder uriBuilder = new StringBuilder("https://" + repositoryId + imageDeliveryPath);
             Map<String, String> params = new LinkedHashMap<>();
             if(this.width > 0) {
