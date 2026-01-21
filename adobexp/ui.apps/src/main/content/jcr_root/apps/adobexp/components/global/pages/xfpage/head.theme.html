@@ -16,7 +16,15 @@
 <!--/* 
     Template for including site theme CSS variables via SiteThemeServlet.
     The servlet generates CSS from Context-Aware Configuration at runtime.
+    
+    Cache-busting: The ThemeVersionModel generates a hash from all CA config values.
+    When any configuration changes, the hash changes, generating a new URL that
+    bypasses CDN cache automatically. Works on both AEMaaCS and On-Premise AEM.
+    
+    URL format: /content/site/page.theme-variables.<version-hash>.css
+    Example:    /content/site/home.theme-variables.a1b2c3d4.css
 */-->
-<template data-sly-template.themeStyles>
-    <link rel="stylesheet" href="${currentPage.path @ selectors='theme-variables', extension='css'}" type="text/css">
+<template data-sly-template.themeStyles
+          data-sly-use.themeVersion="com.adobexp.aem.core.components.internal.models.ThemeVersionModel">
+    <link rel="stylesheet" href="${currentPage.path}.theme-variables.${themeVersion.version}.css" type="text/css">
 </template>

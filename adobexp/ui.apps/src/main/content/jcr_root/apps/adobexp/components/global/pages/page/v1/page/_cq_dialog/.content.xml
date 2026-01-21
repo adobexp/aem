@@ -212,6 +212,39 @@
                         jcr:primaryType="nt:unstructured"
                         sling:resourceType="granite/ui/components/coral/foundation/include"
                         path="/mnt/overlay/wcm/foundation/components/basicpage/v1/basicpage/tabs/pwa"/>
+                    <advanced
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Advanced"
+                        sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns">
+                        <items jcr:primaryType="nt:unstructured">
+                            <column
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/container">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <personalization
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Personalization"
+                                        sling:resourceType="granite/ui/components/coral/foundation/form/fieldset">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <enableContextHub
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                checked="{Boolean}false"
+                                                fieldDescription="Enable ContextHub for personalization and targeting features. Note: ContextHub must be configured in Tools > General > ContextHub for your site."
+                                                name="./enableContextHub"
+                                                text="Enable ContextHub (Personalization)"
+                                                uncheckedValue="{Boolean}false"
+                                                value="{Boolean}true">
+                                                <granite:data
+                                                    jcr:primaryType="nt:unstructured"
+                                                    cq-msm-lockable="./enableContextHub"/>
+                                            </enableContextHub>
+                                        </items>
+                                    </personalization>
+                                </items>
+                            </column>
+                        </items>
+                    </advanced>
                 </items>
             </tabs>
         </items>

@@ -62,9 +62,22 @@ import com.adobexp.aem.core.components.config.components.SubscriptionPlansThemeC
 /**
  * Servlet that generates CSS containing theme variables from Context-Aware Configuration.
  * 
- * This servlet is bound to page resource types and responds to the "theme-variables.css" selector.
+ * This servlet is bound to page resource types and responds to the "theme-variables" selector.
+ * It supports cache-busting via an optional version selector appended after "theme-variables".
  * 
- * Usage in HTL:
+ * Compatible with both AEMaaCS and On-Premise AEM environments.
+ * 
+ * Usage in HTL (with cache-busting version):
+ * {@code 
+ *   <sly data-sly-use.themeVersion="com.adobexp.aem.core.components.internal.models.ThemeVersionModel"/>
+ *   <link rel="stylesheet" href="${currentPage.path}.theme-variables.${themeVersion.version}.css" type="text/css">
+ * }
+ * 
+ * This generates URLs like: /content/mysite/page.theme-variables.a1b2c3d4.css
+ * When the CA configuration changes, the version hash changes, generating a new URL
+ * that bypasses CDN cache automatically.
+ * 
+ * Legacy usage (without version - not recommended as CDN will cache indefinitely):
  * {@code <link rel="stylesheet" href="${currentPage.path}.theme-variables.css" type="text/css">}
  */
 @Component(service = Servlet.class)
@@ -94,14 +107,50 @@ public class SiteThemeServlet extends SlingSafeMethodsServlet {
         response.setContentType(CONTENT_TYPE_CSS);
         response.setCharacterEncoding("UTF-8");
         
-        // Enable caching for 1 hour
-        response.setHeader("Cache-Control", "public, max-age=3600");
+        // Extract version from selectors for ETag (e.g., "theme-variables.a1b2c3d4" -> "a1b2c3d4")
+        String[] selectors = request.getRequestPathInfo().getSelectors();
+        String version = extractVersionFromSelectors(selectors);
+        
+        // Set cache headers optimized for versioned URLs
+        // When version is present, use immutable caching (1 year) since URL changes on config update
+        // When version is absent (legacy usage), use shorter cache with must-revalidate
+        if (version != null && !version.isEmpty()) {
+            // Versioned URL: aggressive caching is safe because URL changes when config changes
+            // 1 year max-age with immutable hint for CDN and browser caching
+            response.setHeader("Cache-Control", "public, max-age=31536000, immutable");
+            response.setHeader("ETag", "\"" + version + "\"");
+            LOG.debug("Serving theme CSS with version: {}", version);
+        } else {
+            // Legacy URL without version: shorter cache, require revalidation
+            response.setHeader("Cache-Control", "public, max-age=300, must-revalidate");
+            LOG.debug("Serving theme CSS without version (legacy mode)");
+        }
         
         Resource resource = request.getResource();
         ThemeConfigs configs = resolveConfigs(resource);
 
         PrintWriter writer = response.getWriter();
         generateThemeCss(writer, configs);
+    }
+
+    /**
+     * Extracts the version hash from request selectors.
+     * Expects selectors like ["theme-variables", "a1b2c3d4"] and returns "a1b2c3d4".
+     * 
+     * @param selectors array of request selectors
+     * @return version string if present, null otherwise
+     */
+    private String extractVersionFromSelectors(String[] selectors) {
+        if (selectors == null || selectors.length < 2) {
+            return null;
+        }
+        // The version selector comes after "theme-variables"
+        for (int i = 0; i < selectors.length - 1; i++) {
+            if ("theme-variables".equals(selectors[i])) {
+                return selectors[i + 1];
+            }
+        }
+        return null;
     }
 
     private ThemeConfigs resolveConfigs(Resource resource) {
@@ -199,7 +248,7 @@ public class SiteThemeServlet extends SlingSafeMethodsServlet {
         writer.println("  --lead-banner-height-mobile: " + getOrDefault(configs.leadBannerConfig, c -> c.leadBannerHeightMobile(), "460px") + ";");
         writer.println("  --lead-banner-gradient-start: " + getOrDefault(configs.leadBannerConfig, c -> c.darkLeadBannerGradientStart(), "#212020") + ";");
         writer.println("  --lead-banner-gradient-stop-25: " + getOrDefault(configs.leadBannerConfig, c -> c.darkLeadBannerGradientStop25(), "#aa7802") + ";");
-        writer.println("  --lead-banner-gradient-stop-50: var(--main-theme-color);");
+        writer.println("  --lead-banner-gradient-stop-50: " + getOrDefault(configs.leadBannerConfig, c -> c.darkLeadBannerGradientStop50(), "#e3a002") + ";");
         writer.println("  --lead-banner-gradient-stop-75: " + getOrDefault(configs.leadBannerConfig, c -> c.darkLeadBannerGradientStop75(), "#aa7802") + ";");
         writer.println("  --lead-banner-gradient-end: " + getOrDefault(configs.leadBannerConfig, c -> c.darkLeadBannerGradientEnd(), "#212020") + ";");
         writer.println("  --lead-banner-text-primary: " + getOrDefault(configs.leadBannerConfig, c -> c.darkLeadBannerTextPrimary(), "#ffffff") + ";");
@@ -396,7 +445,7 @@ public class SiteThemeServlet extends SlingSafeMethodsServlet {
         writer.println("  --lead-banner-height-mobile: " + getOrDefault(configs.leadBannerConfig, c -> c.leadBannerHeightMobile(), "460px") + ";");
         writer.println("  --lead-banner-gradient-start: " + getOrDefault(configs.leadBannerConfig, c -> c.lightLeadBannerGradientStart(), "#ffffff") + ";");
         writer.println("  --lead-banner-gradient-stop-25: " + getOrDefault(configs.leadBannerConfig, c -> c.lightLeadBannerGradientStop25(), "#aafbff") + ";");
-        writer.println("  --lead-banner-gradient-stop-50: var(--main-theme-color);");
+        writer.println("  --lead-banner-gradient-stop-50: " + getOrDefault(configs.leadBannerConfig, c -> c.lightLeadBannerGradientStop50(), "#42c2fd") + ";");
         writer.println("  --lead-banner-gradient-stop-75: " + getOrDefault(configs.leadBannerConfig, c -> c.lightLeadBannerGradientStop75(), "#aafbff") + ";");
         writer.println("  --lead-banner-gradient-end: " + getOrDefault(configs.leadBannerConfig, c -> c.lightLeadBannerGradientEnd(), "#ffffff") + ";");
         writer.println("  --lead-banner-text-primary: " + getOrDefault(configs.leadBannerConfig, c -> c.lightLeadBannerTextPrimary(), "#323232") + ";");

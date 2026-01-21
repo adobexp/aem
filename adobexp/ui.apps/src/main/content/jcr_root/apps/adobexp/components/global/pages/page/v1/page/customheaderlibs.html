@@ -18,4 +18,13 @@
     <sly data-sly-call="${clientlib.css @ categories='adobexp.site'}"/>
 </sly>
 
-<sly data-sly-resource="${'contexthub' @ resourceType='granite/contexthub/components/contexthub'}"/>
+<!--/*
+    ContextHub (AEM Personalization) - Conditional
+    
+    Controlled via page property "enableContextHub" in the Advanced tab of Page Properties.
+    Disabled by default. When enabled, ContextHub must also be configured in:
+    Tools > General > ContextHub for your site.
+*/-->
+<sly data-sly-test="${currentPage.properties.enableContextHub}">
+    <sly data-sly-resource="${'contexthub' @ resourceType='granite/contexthub/components/contexthub'}"/>
+</sly>
