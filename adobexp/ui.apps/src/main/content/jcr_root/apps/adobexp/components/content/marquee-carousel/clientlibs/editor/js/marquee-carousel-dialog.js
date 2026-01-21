@@ -10,6 +10,9 @@
 
     // CSS class for hiding elements
     var HIDDEN_CLASS = 'cmp-marquee-carousel--hidden';
+    
+    // CSS class for the manual images container (defined in dialog XML via granite:class)
+    var MANUAL_IMAGES_CONTAINER_CLASS = 'cmp-marquee-carousel__manual-images-container';
 
     // Add CSS rule for hiding elements
     var style = document.createElement('style');
@@ -53,54 +56,19 @@
     }
 
     /**
-     * Find the multifield container element
-     * This finds the coral-multifield element and its wrapping container
+     * Find the manual images multifield container by its CSS class
      * @param {jQuery} dialog - The dialog jQuery object
-     * @param {string} multifieldFieldName - The name attribute on the field inside multifield (e.g., "./carouselImages")
-     * @returns {jQuery} The multifield's parent container element
+     * @returns {jQuery} The manual images container element
      */
-    function getMultifieldContainer(dialog, multifieldFieldName) {
-        // Find the field inside multifield by its name
-        var field = dialog.find('coral-multifield [name="' + multifieldFieldName + '"]');
+    function getManualImagesContainer(dialog) {
+        var container = dialog.find('.' + MANUAL_IMAGES_CONTAINER_CLASS);
         
-        if (!field.length) {
-            console.warn('[MarqueeCarousel] Multifield field not found:', multifieldFieldName);
+        if (!container.length) {
+            console.warn('[MarqueeCarousel] Manual images container not found with class:', MANUAL_IMAGES_CONTAINER_CLASS);
             return $();
         }
-
-        // Get the coral-multifield element
-        var multifield = field.closest('coral-multifield');
-        if (!multifield.length) {
-            console.warn('[MarqueeCarousel] coral-multifield not found for:', multifieldFieldName);
-            return $();
-        }
-
-        // Get the parent container that wraps the multifield (includes label)
-        // First try coral-Form-fieldwrapper
-        var wrapper = multifield.closest('.coral-Form-fieldwrapper');
-        if (wrapper.length) {
-            return wrapper;
-        }
-
-        // Try coral3-Form-fieldwrapper
-        wrapper = multifield.closest('.coral3-Form-fieldwrapper');
-        if (wrapper.length) {
-            return wrapper;
-        }
-
-        // Get the foundation container that wraps the multifield
-        // This is typically the container created by granite/ui/components/foundation/container
-        var foundationContainer = multifield.parent();
-        if (foundationContainer.length) {
-            // Go up one more level to include the container wrapper
-            var containerWrapper = foundationContainer.parent();
-            if (containerWrapper.length) {
-                return containerWrapper;
-            }
-            return foundationContainer;
-        }
-
-        return multifield;
+        
+        return container;
     }
 
     /**
@@ -126,24 +94,24 @@
     }
 
     /**
-     * Show the multifield by removing the hidden class from its container
+     * Show the manual images multifield container
      */
-    function showMultifield(dialog, multifieldFieldName) {
-        var container = getMultifieldContainer(dialog, multifieldFieldName);
+    function showManualImagesContainer(dialog) {
+        var container = getManualImagesContainer(dialog);
         if (container.length) {
             container.removeClass(HIDDEN_CLASS);
-            console.log('[MarqueeCarousel] Showing multifield:', multifieldFieldName);
+            console.log('[MarqueeCarousel] Showing manual images container');
         }
     }
 
     /**
-     * Hide the multifield by adding the hidden class to its container
+     * Hide the manual images multifield container
      */
-    function hideMultifield(dialog, multifieldFieldName) {
-        var container = getMultifieldContainer(dialog, multifieldFieldName);
+    function hideManualImagesContainer(dialog) {
+        var container = getManualImagesContainer(dialog);
         if (container.length) {
             container.addClass(HIDDEN_CLASS);
-            console.log('[MarqueeCarousel] Hiding multifield:', multifieldFieldName);
+            console.log('[MarqueeCarousel] Hiding manual images container');
         }
     }
 
@@ -175,11 +143,11 @@
             // === SHOW DAM FOLDER FIELD ===
             showField(dialog, './damFolderPath');
             
-            // === HIDE MANUAL IMAGES MULTIFIELD ===
-            hideMultifield(dialog, './carouselImages');
+            // === HIDE MANUAL IMAGES MULTIFIELD CONTAINER ===
+            hideManualImagesContainer(dialog);
         } else {
-            // === SHOW MANUAL IMAGES MULTIFIELD (default) ===
-            showMultifield(dialog, './carouselImages');
+            // === SHOW MANUAL IMAGES MULTIFIELD CONTAINER (default) ===
+            showManualImagesContainer(dialog);
             
             // === HIDE DAM FOLDER FIELD ===
             hideField(dialog, './damFolderPath');

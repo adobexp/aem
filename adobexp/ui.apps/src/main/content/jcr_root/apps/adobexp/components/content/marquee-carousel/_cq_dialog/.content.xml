@@ -111,6 +111,7 @@
                                             
                                             <!-- Manual Images Multifield (shown when imageSource = manual) -->
                                             <carouselImagesContainer
+                                                granite:class="cmp-marquee-carousel__manual-images-container"
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/foundation/container">
                                                 <layout

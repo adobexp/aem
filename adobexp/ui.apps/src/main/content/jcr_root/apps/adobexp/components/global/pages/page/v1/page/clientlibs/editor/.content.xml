@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Editor ClientLib for Page Component
+    
+    The 'cq.authoring.editor.hook' category is automatically loaded by the AEM Page Editor,
+    ensuring these styles are applied in author mode for all pages using this component.
+-->
 <jcr:root xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0"
     jcr:primaryType="cq:ClientLibraryFolder"
-    categories="[adobexp.components.page.v1.editor]"/>
+    categories="[cq.authoring.editor.hook,adobexp.components.page.v1.editor]"/>
