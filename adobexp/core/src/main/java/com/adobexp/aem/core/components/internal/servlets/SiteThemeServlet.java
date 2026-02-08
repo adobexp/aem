@@ -45,6 +45,7 @@ import com.adobexp.aem.core.components.config.components.CountUpThemeConfig;
 import com.adobexp.aem.core.components.config.components.CtaPillThemeConfig;
 import com.adobexp.aem.core.components.config.components.FaqThemeConfig;
 import com.adobexp.aem.core.components.config.components.FooterThemeConfig;
+import com.adobexp.aem.core.components.config.components.FormBuilderThemeConfig;
 import com.adobexp.aem.core.components.config.components.GridControlThemeConfig;
 import com.adobexp.aem.core.components.config.components.HeaderOverlayThemeConfig;
 import com.adobexp.aem.core.components.config.components.HeaderThemeConfig;
@@ -182,7 +183,8 @@ public class SiteThemeServlet extends SlingSafeMethodsServlet {
                 configBuilder.as(FaqThemeConfig.class),
                 configBuilder.as(BlobImageSectionThemeConfig.class),
                 configBuilder.as(LeadMediaSectionThemeConfig.class),
-                configBuilder.as(GridControlThemeConfig.class)
+                configBuilder.as(GridControlThemeConfig.class),
+                configBuilder.as(FormBuilderThemeConfig.class)
         );
     }
 
@@ -381,6 +383,15 @@ public class SiteThemeServlet extends SlingSafeMethodsServlet {
         writer.println("  /* GridControl */");
         writer.println("  --grid-control-bg: " + getOrDefault(configs.gridControlConfig, c -> c.darkGridControlBg(), "linear-gradient(180deg, #0c0c0c 0%, var(--site-body-bg) 100%)") + ";");
         writer.println("  --grid-control-column-bg: " + getOrDefault(configs.gridControlConfig, c -> c.darkGridControlColumnBg(), "linear-gradient(180deg, #0c0c0c 0%, var(--site-body-bg) 100%)") + ";");
+        writer.println();
+        writer.println("  /* FormBuilder */");
+        writer.println("  --form-builder-bg: " + getOrDefault(configs.formBuilderConfig, c -> c.darkFormBuilderBg(), "linear-gradient(180deg, #0c0c0c 0%, var(--site-body-bg) 100%)") + ";");
+        writer.println("  --form-field-bg: " + getOrDefault(configs.formBuilderConfig, c -> c.darkFormFieldBg(), "rgba(255, 255, 255, 0.05)") + ";");
+        writer.println("  --form-field-border: " + getOrDefault(configs.formBuilderConfig, c -> c.darkFormFieldBorder(), "rgba(255, 255, 255, 0.15)") + ";");
+        writer.println("  --form-field-hover-border: " + getOrDefault(configs.formBuilderConfig, c -> c.darkFormFieldHoverBorder(), "rgba(255, 255, 255, 0.3)") + ";");
+        writer.println("  --form-field-focus-bg: " + getOrDefault(configs.formBuilderConfig, c -> c.darkFormFieldFocusBg(), "rgba(255, 255, 255, 0.08)") + ";");
+        writer.println("  --form-dropdown-bg: " + getOrDefault(configs.formBuilderConfig, c -> c.darkFormDropdownBg(), "#2a2a2a") + ";");
+        writer.println("  --form-builder-card-bg: " + getOrDefault(configs.formBuilderConfig, c -> c.darkFormBuilderCardBg(), "#2a2a2a") + ";");
         writer.println("}");
         writer.println();
         
@@ -578,6 +589,15 @@ public class SiteThemeServlet extends SlingSafeMethodsServlet {
         writer.println("  /* GridControl */");
         writer.println("  --grid-control-bg: " + getOrDefault(configs.gridControlConfig, c -> c.lightGridControlBg(), "linear-gradient(180deg, var(--site-body-bg) 0%, var(--main-theme-color) 50%, var(--site-body-bg) 100%)") + ";");
         writer.println("  --grid-control-column-bg: " + getOrDefault(configs.gridControlConfig, c -> c.lightGridControlColumnBg(), "linear-gradient(180deg, var(--site-body-bg) 0%, var(--main-theme-color) 50%, var(--site-body-bg) 100%)") + ";");
+        writer.println();
+        writer.println("  /* FormBuilder */");
+        writer.println("  --form-builder-bg: " + getOrDefault(configs.formBuilderConfig, c -> c.lightFormBuilderBg(), "linear-gradient(180deg, var(--site-body-bg) 0%, var(--main-theme-color) 50%, var(--site-body-bg) 100%)") + ";");
+        writer.println("  --form-field-bg: " + getOrDefault(configs.formBuilderConfig, c -> c.lightFormFieldBg(), "rgba(0, 0, 0, 0.03)") + ";");
+        writer.println("  --form-field-border: " + getOrDefault(configs.formBuilderConfig, c -> c.lightFormFieldBorder(), "rgba(0, 0, 0, 0.15)") + ";");
+        writer.println("  --form-field-hover-border: " + getOrDefault(configs.formBuilderConfig, c -> c.lightFormFieldHoverBorder(), "rgba(0, 0, 0, 0.3)") + ";");
+        writer.println("  --form-field-focus-bg: " + getOrDefault(configs.formBuilderConfig, c -> c.lightFormFieldFocusBg(), "rgba(0, 0, 0, 0.05)") + ";");
+        writer.println("  --form-dropdown-bg: " + getOrDefault(configs.formBuilderConfig, c -> c.lightFormDropdownBg(), "#ffffff") + ";");
+        writer.println("  --form-builder-card-bg: " + getOrDefault(configs.formBuilderConfig, c -> c.lightFormBuilderCardBg(), "#f2fffd") + ";");
         writer.println("}");
     }
 
@@ -618,6 +638,7 @@ public class SiteThemeServlet extends SlingSafeMethodsServlet {
         private final BlobImageSectionThemeConfig blobImageSectionConfig;
         private final LeadMediaSectionThemeConfig leadMediaSectionConfig;
         private final GridControlThemeConfig gridControlConfig;
+        private final FormBuilderThemeConfig formBuilderConfig;
 
         private ThemeConfigs(
                 SiteThemeGlobalConfig globalConfig,
@@ -642,7 +663,8 @@ public class SiteThemeServlet extends SlingSafeMethodsServlet {
                 FaqThemeConfig faqConfig,
                 BlobImageSectionThemeConfig blobImageSectionConfig,
                 LeadMediaSectionThemeConfig leadMediaSectionConfig,
-                GridControlThemeConfig gridControlConfig
+                GridControlThemeConfig gridControlConfig,
+                FormBuilderThemeConfig formBuilderConfig
         ) {
             this.globalConfig = globalConfig;
             this.headerConfig = headerConfig;
@@ -667,10 +689,12 @@ public class SiteThemeServlet extends SlingSafeMethodsServlet {
             this.blobImageSectionConfig = blobImageSectionConfig;
             this.leadMediaSectionConfig = leadMediaSectionConfig;
             this.gridControlConfig = gridControlConfig;
+            this.formBuilderConfig = formBuilderConfig;
         }
 
         private static ThemeConfigs empty() {
             return new ThemeConfigs(
+                    null,
                     null,
                     null,
                     null,

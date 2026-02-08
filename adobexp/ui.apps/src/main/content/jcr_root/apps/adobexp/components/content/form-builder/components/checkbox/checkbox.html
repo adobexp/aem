@@ -1,0 +1,27 @@
+<!--/*
+    Form Builder - Checkbox Component
+    Renders a checkbox with rich text label support (for links like Terms & Privacy Policy)
+*/-->
+
+<div class="form-builder__field${properties.fieldWidth == 'half' ? ' form-builder__field--half' : (properties.fieldWidth == 'third' ? ' form-builder__field--third' : (properties.fieldWidth == 'two-thirds' ? ' form-builder__field--two-thirds' : ''))}" 
+     data-sly-test="${properties.checkboxText || wcmmode.edit}"
+     data-required="${properties.required == 'true' ? 'true' : ''}"
+     data-required-message="${properties.requiredMessage}">
+    <label class="form-builder__checkbox">
+        <input 
+            type="checkbox" 
+            name="${properties.fieldName}" 
+            class="form-builder__checkbox-input"
+            data-required="${properties.required == 'true' ? 'true' : ''}"
+            checked="${properties.defaultChecked == 'true' ? 'checked' : ''}">
+        <span class="form-builder__checkbox-box">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+        </span>
+        <span class="form-builder__checkbox-text">
+            ${properties.checkboxText @ context='html'}
+            <span class="form-builder__required" data-sly-test="${properties.required == 'true'}">*</span>
+        </span>
+    </label>
+</div>

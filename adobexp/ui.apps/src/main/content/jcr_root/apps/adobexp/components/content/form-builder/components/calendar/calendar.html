@@ -1,0 +1,36 @@
+<!--/*
+    Form Builder - Calendar Field Component
+    Renders a date picker with calendar popup
+*/-->
+
+<div class="form-builder__field${properties.fieldWidth == 'half' ? ' form-builder__field--half' : (properties.fieldWidth == 'third' ? ' form-builder__field--third' : (properties.fieldWidth == 'two-thirds' ? ' form-builder__field--two-thirds' : ''))}" 
+     data-sly-test="${properties.fieldLabel || wcmmode.edit}"
+     data-required="${properties.required == 'true' ? 'true' : ''}"
+     data-required-message="${properties.requiredMessage}"
+     data-error-message="${properties.errorMessage}">
+    <label class="form-builder__label" for="${properties.fieldId || properties.fieldName}">
+        ${properties.fieldLabel || 'Date'}
+        <span class="form-builder__required" data-sly-test="${properties.required == 'true'}">*</span>
+    </label>
+    <div class="form-builder__date">
+        <input 
+            type="text" 
+            id="${properties.fieldId || properties.fieldName}" 
+            name="${properties.fieldName || 'date'}" 
+            class="form-builder__date-input" 
+            placeholder="${properties.placeholder || 'Select a date'}"
+            readonly="readonly"
+            data-required="${properties.required == 'true' ? 'true' : ''}"
+            data-error-message="${properties.errorMessage}">
+        <span class="form-builder__date-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+        </span>
+        <div class="form-builder__calendar"></div>
+    </div>
+    <span class="form-builder__helper" data-sly-test="${properties.helperText}">${properties.helperText}</span>
+</div>

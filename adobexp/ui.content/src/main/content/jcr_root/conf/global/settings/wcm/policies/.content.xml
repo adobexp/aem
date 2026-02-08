@@ -17,7 +17,8 @@
                     jcr:title="AdobeXP | Main Content Zone Policy"
                     sling:resourceType="wcm/core/components/policy/policy"
                     components="group:Adobe XP Components - Content"
-                    layoutDisabled="false">
+                    layoutDisabled="false"
+                    layout="responsiveGrid">
                     <jcr:content jcr:primaryType="nt:unstructured"/>
                 </policy_adobexp_page_content>
             </container>
@@ -177,7 +178,33 @@
                         </cq:styleGroups>
                     </policy_adobexp_cmp_text>
                 </text>
+                <form-builder jcr:primaryType="nt:unstructured">
+                    <form-builder-container jcr:primaryType="nt:unstructured">
+                        <only-allow-form-builder-fields-components
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="AdobeXP | FormBuidler Container Policy"
+                            sling:resourceType="wcm/core/components/policy/policy"
+                            components="group:Adobe XP Components - Form Builder">
+                            <jcr:content jcr:primaryType="nt:unstructured"/>
+                        </only-allow-form-builder-fields-components>
+                    </form-builder-container>
+                </form-builder>
             </content>
         </components>
     </adobexp>
+    <wcm jcr:primaryType="nt:unstructured">
+        <foundation jcr:primaryType="nt:unstructured">
+            <components jcr:primaryType="nt:unstructured">
+                <responsivegrid jcr:primaryType="nt:unstructured">
+                    <gridcontrol-container-policy
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="AdobeXP | Grid Container Policy"
+                        sling:resourceType="wcm/core/components/policy/policy"
+                        components="group:Adobe XP Components - Content">
+                        <jcr:content jcr:primaryType="nt:unstructured"/>
+                    </gridcontrol-container-policy>
+                </responsivegrid>
+            </components>
+        </foundation>
+    </wcm>
 </jcr:root>

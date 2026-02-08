@@ -1,0 +1,46 @@
+<!--/*
+    Form Builder - Dropdown Field Component
+    Renders a multi-select dropdown with search functionality
+*/-->
+
+<sly data-sly-use.dropdown="com.adobexp.aem.core.components.models.FormBuilderDropdown"/>
+
+<div class="form-builder__field${properties.fieldWidth == 'half' ? ' form-builder__field--half' : (properties.fieldWidth == 'third' ? ' form-builder__field--third' : (properties.fieldWidth == 'two-thirds' ? ' form-builder__field--two-thirds' : ''))}" 
+     data-sly-test="${properties.fieldLabel || wcmmode.edit}"
+     data-required="${properties.required == 'true' ? 'true' : ''}"
+     data-required-message="${properties.requiredMessage}">
+    <label class="form-builder__label" for="${properties.fieldName}">
+        ${properties.fieldLabel}
+        <span class="form-builder__required" data-sly-test="${properties.required == 'true'}">*</span>
+    </label>
+    <div class="form-builder__dropdown" data-placeholder="${properties.placeholder || 'Select options...'}">
+        <button type="button" class="form-builder__dropdown-trigger">
+            <span class="form-builder__dropdown-text">${properties.placeholder || 'Select options...'}</span>
+            <span class="form-builder__dropdown-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M6 9l6 6 6-6"></path>
+                </svg>
+            </span>
+        </button>
+        <input type="hidden" name="${properties.fieldName}" class="form-builder__dropdown-value" data-required="${properties.required == 'true' ? 'true' : ''}">
+        <div class="form-builder__dropdown-menu">
+            <div class="form-builder__dropdown-search-wrapper" data-sly-test="${properties.enableSearch == 'true'}">
+                <input type="text" class="form-builder__dropdown-search" placeholder="Search options...">
+            </div>
+            <div class="form-builder__dropdown-options">
+                <sly data-sly-list.option="${dropdown.options}">
+                    <div class="form-builder__dropdown-option${option.selected ? ' form-builder__dropdown-option--selected' : ''}" 
+                         data-value="${option.value}"
+                         data-selected="${option.selected ? 'true' : ''}">
+                        <span class="form-builder__dropdown-checkbox">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </span>
+                        <span>${option.label}</span>
+                    </div>
+                </sly>
+            </div>
+        </div>
+    </div>
+</div>

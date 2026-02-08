@@ -1,0 +1,44 @@
+<!--/*
+    Form Builder - Time Field Component
+    Renders a time picker with hour and minute selection
+*/-->
+
+<div class="form-builder__field${properties.fieldWidth == 'half' ? ' form-builder__field--half' : (properties.fieldWidth == 'third' ? ' form-builder__field--third' : (properties.fieldWidth == 'two-thirds' ? ' form-builder__field--two-thirds' : ''))}" 
+     data-sly-test="${properties.fieldLabel || wcmmode.edit}"
+     data-required="${properties.required == 'true' ? 'true' : ''}"
+     data-required-message="${properties.requiredMessage}"
+     data-error-message="${properties.errorMessage}">
+    <label class="form-builder__label" for="${properties.fieldId || properties.fieldName}">
+        ${properties.fieldLabel || 'Time'}
+        <span class="form-builder__required" data-sly-test="${properties.required == 'true'}">*</span>
+    </label>
+    <div class="form-builder__time">
+        <input 
+            type="text" 
+            id="${properties.fieldId || properties.fieldName}" 
+            name="${properties.fieldName || 'time'}" 
+            class="form-builder__time-input" 
+            placeholder="${properties.placeholder || 'Select a time'}"
+            readonly="readonly"
+            data-required="${properties.required == 'true' ? 'true' : ''}"
+            data-error-message="${properties.errorMessage}">
+        <span class="form-builder__time-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+        </span>
+        <div class="form-builder__time-picker">
+            <div class="form-builder__time-column">
+                <span class="form-builder__time-column-label">Hour</span>
+                <div class="form-builder__time-hours"></div>
+            </div>
+            <span class="form-builder__time-separator">:</span>
+            <div class="form-builder__time-column">
+                <span class="form-builder__time-column-label">Min</span>
+                <div class="form-builder__time-minutes"></div>
+            </div>
+        </div>
+    </div>
+    <span class="form-builder__helper" data-sly-test="${properties.helperText}">${properties.helperText}</span>
+</div>

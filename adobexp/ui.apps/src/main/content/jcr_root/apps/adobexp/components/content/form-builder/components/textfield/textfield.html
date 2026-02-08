@@ -1,0 +1,25 @@
+<!--/*
+    Form Builder - Text Field Component
+    Renders a text input field with label, validation, and helper text
+*/-->
+
+<div class="form-builder__field${properties.fieldWidth == 'half' ? ' form-builder__field--half' : (properties.fieldWidth == 'third' ? ' form-builder__field--third' : (properties.fieldWidth == 'two-thirds' ? ' form-builder__field--two-thirds' : ''))}" 
+     data-sly-test="${properties.fieldLabel || wcmmode.edit}"
+     data-required="${properties.required == 'true' ? 'true' : ''}"
+     data-required-message="${properties.requiredMessage}"
+     data-error-message="${properties.errorMessage}">
+    <label class="form-builder__label" for="${properties.fieldId || properties.fieldName}">
+        ${properties.fieldLabel}
+        <span class="form-builder__required" data-sly-test="${properties.required == 'true'}">*</span>
+    </label>
+    <input 
+        type="text" 
+        id="${properties.fieldId || properties.fieldName}" 
+        name="${properties.fieldName}" 
+        class="form-builder__input" 
+        placeholder="${properties.placeholder}"
+        data-required="${properties.required == 'true' ? 'true' : ''}"
+        data-pattern="${properties.pattern}"
+        data-error-message="${properties.errorMessage}">
+    <span class="form-builder__helper" data-sly-test="${properties.helperText}">${properties.helperText}</span>
+</div>

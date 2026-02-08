@@ -1,0 +1,52 @@
+<!--/*
+    Form Builder Component - AEM Sightly Template
+    
+    This component renders a form builder section with:
+    - Section title (H2)
+    - Description text
+    - Configurable form action, method, and messages
+    - Dropzone container for child form field components
+    - Submit and optional reset buttons
+*/-->
+
+<sly data-sly-use.templates="adobexp/components/commons/v1/templates.html"/>
+<sly data-sly-use.formModel="com.adobexp.aem.core.components.models.FormBuilderModel"/>
+
+<!-- FORM BUILDER COMPONENT HTML MARKUP STARTS HERE -->
+<section class="form-builder${properties.withBackground == 'true' ? ' form-builder--with-bg' : ''}" 
+         data-component="form-builder-section"
+         data-sly-test="${properties.formAction || wcmmode.edit}">
+    <div class="form-builder__inner${properties.withCardBackground == 'true' ? ' form-builder__inner--card-bg' : ''}">
+        <!-- Title -->
+        <h2 class="form-builder__title" data-sly-test="${properties.formTitle}">${properties.formTitle}</h2>
+        
+        <!-- Description -->
+        <p class="form-builder__description" data-sly-test="${properties.formDescription}">${properties.formDescription}</p>
+
+        <form 
+            class="form-builder__form" 
+            data-component="form-builder"
+            data-action="${properties.formAction}"
+            data-method="${properties.formMethod || 'POST'}"
+            data-content-type="${properties.contentType || 'application/json'}"
+            data-headers="${formModel.requestHeadersJson || ''}"
+            data-success-message="${properties.successMessage || 'Thank you! Your form has been submitted successfully.'}"
+            data-error-message="${properties.errorMessage || 'Oops! Something went wrong. Please try again later.'}"
+            id="${properties.formId}"
+            novalidate="novalidate">
+            
+            <!-- Dropzone for Form Fields -->
+            <div class="form-builder__fields"
+                 data-sly-resource="${@path='fields', resourceType='adobexp/components/content/form-builder/form-builder-container'}">
+            </div>
+            
+            <!-- Buttons -->
+            <div class="form-builder__actions">
+                <button type="submit" class="form-builder__submit">${properties.submitButtonText || 'Submit Form'}</button>
+                <button type="reset" class="form-builder__reset" data-reset data-sly-test="${properties.showResetButton == 'true'}">${properties.resetButtonText || 'Reset'}</button>
+            </div>
+        </form>
+    </div>
+</section>
+<!-- FORM BUILDER COMPONENT HTML MARKUP ENDS HERE -->
+<sly data-sly-call="${templates.placeholder @ isEmpty = !properties.formAction && !wcmmode.edit, classAppend='form-builder'}"></sly>

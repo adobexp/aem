@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="nt:unstructured"
+    jcr:title="Form Builder"
+    sling:resourceType="cq/gui/components/authoring/dialog"
+    extraClientlibs="[cq.authoring.dialog]"
+    height="{Long}700"
+    width="{Long}900">
+    <content
+        granite:class="cmp-form-builder__editor"
+        jcr:primaryType="nt:unstructured"
+        sling:resourceType="granite/ui/components/coral/foundation/container">
+        <items jcr:primaryType="nt:unstructured">
+            <tabs
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="granite/ui/components/coral/foundation/tabs"
+                maximized="{Boolean}true">
+                <items jcr:primaryType="nt:unstructured">
+                    <!-- Tab 1: Content Configuration -->
+                    <content
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Content"
+                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                        margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <!-- Section Title Text Field -->
+                                            <formTitle
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Form Section Title"
+                                                fieldDescription="Enter the title displayed above the form (e.g., 'Contact Us')"
+                                                name="./formTitle"/>
+                                            <!-- Section Description -->
+                                            <formDescription
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+                                                fieldLabel="Form Description"
+                                                fieldDescription="Enter a brief description below the title"
+                                                name="./formDescription"/>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </content>
+                    
+                    <!-- Tab 2: Form Configuration -->
+                    <formConfig
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Form Configuration"
+                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                        margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <!-- Form Action URL -->
+                                            <formAction
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Form Action URL"
+                                                fieldDescription="Enter the URL where the form data will be submitted (e.g., https://api.example.com/submit)"
+                                                name="./formAction"
+                                                required="{Boolean}true"/>
+                                            <!-- Form Method -->
+                                            <formMethod
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                fieldLabel="Request Method"
+                                                fieldDescription="Select the HTTP method for form submission"
+                                                name="./formMethod">
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <post
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="POST"
+                                                        value="POST"
+                                                        selected="{Boolean}true"/>
+                                                    <get
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="GET"
+                                                        value="GET"/>
+                                                    <put
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="PUT"
+                                                        value="PUT"/>
+                                                </items>
+                                            </formMethod>
+                                            <!-- Content Type -->
+                                            <contentType
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                fieldLabel="Content Type"
+                                                fieldDescription="Select the content type for form submission"
+                                                name="./contentType">
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <json
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="JSON (application/json)"
+                                                        value="application/json"
+                                                        selected="{Boolean}true"/>
+                                                    <formData
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="Form Data (multipart/form-data)"
+                                                        value="multipart/form-data"/>
+                                                    <urlEncoded
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="URL Encoded (application/x-www-form-urlencoded)"
+                                                        value="application/x-www-form-urlencoded"/>
+                                                </items>
+                                            </contentType>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </formConfig>
+                    
+                    <!-- Tab 3: Messages -->
+                    <messages
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Messages"
+                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                        margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <!-- Success Message -->
+                                            <successMessage
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+                                                fieldLabel="Success Message"
+                                                fieldDescription="Message displayed when the form is submitted successfully"
+                                                name="./successMessage"
+                                                value="Thank you! Your form has been submitted successfully."/>
+                                            <!-- Error Message -->
+                                            <errorMessage
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+                                                fieldLabel="Error Message"
+                                                fieldDescription="Message displayed when form submission fails"
+                                                name="./errorMessage"
+                                                value="Oops! Something went wrong. Please try again later."/>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </messages>
+                    
+                    <!-- Tab 4: Buttons -->
+                    <buttons
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Buttons"
+                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                        margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <!-- Submit Button Text -->
+                                            <submitButtonText
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Submit Button Text"
+                                                fieldDescription="Text displayed on the submit button"
+                                                name="./submitButtonText"
+                                                value="Submit Form"/>
+                                            <!-- Show Reset Button -->
+                                            <showResetButton
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                fieldDescription="Show a reset button to clear the form"
+                                                name="./showResetButton"
+                                                text="Show Reset Button"
+                                                checked="{Boolean}true"
+                                                uncheckedValue="false"
+                                                value="true"/>
+                                            <!-- Reset Button Text -->
+                                            <resetButtonText
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Reset Button Text"
+                                                fieldDescription="Text displayed on the reset button"
+                                                name="./resetButtonText"
+                                                value="Reset"/>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </buttons>
+                    
+                    <!-- Tab 5: Request Headers -->
+                    <requestHeaders
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Request Headers"
+                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                        margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <!-- Request Headers Multifield -->
+                                            <requestHeaderItems
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                                fieldLabel="Custom Request Headers"
+                                                fieldDescription="Add key-value pairs to be sent as HTTP headers with the form submission request"
+                                                composite="{Boolean}true">
+                                                <field
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/container"
+                                                    name="./requestHeaders">
+                                                    <items jcr:primaryType="nt:unstructured">
+                                                        <headerKey
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                            fieldLabel="Header Name"
+                                                            fieldDescription="HTTP header name (e.g., X-Api-Key, Authorization)"
+                                                            name="./headerKey"
+                                                            required="{Boolean}true"/>
+                                                        <headerValue
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                            fieldLabel="Header Value"
+                                                            fieldDescription="HTTP header value"
+                                                            name="./headerValue"
+                                                            required="{Boolean}true"/>
+                                                    </items>
+                                                </field>
+                                            </requestHeaderItems>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </requestHeaders>
+                    
+                    <!-- Tab 6: Style Options -->
+                    <styleOptions
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Style Options"
+                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                        margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <!-- With Background Checkbox -->
+                                            <withBackground
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                fieldDescription="Apply a background color to the form section"
+                                                name="./withBackground"
+                                                text="Apply Background Color"
+                                                checked="{Boolean}true"
+                                                uncheckedValue="false"
+                                                value="true"/>
+                                            <!-- With Card Background Checkbox -->
+                                            <withCardBackground
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                fieldDescription="Apply a card background with shadow to the form container"
+                                                name="./withCardBackground"
+                                                text="Apply Form Card Background"
+                                                uncheckedValue="false"
+                                                value="true"/>
+                                            <!-- Form ID -->
+                                            <formId
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Form ID"
+                                                fieldDescription="Unique HTML ID for the form element (optional)"
+                                                name="./formId"/>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </styleOptions>
+                </items>
+            </tabs>
+        </items>
+    </content>
+</jcr:root>

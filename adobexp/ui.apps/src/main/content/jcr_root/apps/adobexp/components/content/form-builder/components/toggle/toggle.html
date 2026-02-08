@@ -1,0 +1,20 @@
+<!--/*
+    Form Builder - Toggle Switch Component
+    Renders a toggle/switch control for boolean values
+*/-->
+
+<div class="form-builder__field${properties.fieldWidth == 'half' ? ' form-builder__field--half' : (properties.fieldWidth == 'third' ? ' form-builder__field--third' : (properties.fieldWidth == 'two-thirds' ? ' form-builder__field--two-thirds' : ''))}" 
+     data-sly-test="${properties.toggleText || wcmmode.edit}"
+     data-required="${properties.required == 'true' ? 'true' : ''}"
+     data-required-message="${properties.requiredMessage}">
+    <label class="form-builder__toggle">
+        <input 
+            type="checkbox" 
+            name="${properties.fieldName}" 
+            class="form-builder__toggle-input"
+            data-required="${properties.required == 'true' ? 'true' : ''}"
+            checked="${properties.defaultChecked == 'true' ? 'checked' : ''}">
+        <span class="form-builder__toggle-slider"></span>
+        <span class="form-builder__toggle-text">${properties.toggleText || 'Enable option'}</span>
+    </label>
+</div>
