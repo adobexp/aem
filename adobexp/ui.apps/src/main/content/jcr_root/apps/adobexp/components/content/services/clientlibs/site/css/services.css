@@ -97,13 +97,139 @@
 }
 
 /* ============================================
-   Service Item Description Styles
+   Service Item Description Styles (RTE Content)
+   font-synthesis: allows browser to synthesize bold/italic when
+   custom fonts lack a dedicated bold face.
    ============================================ */
 .services__item-desc {
     margin: 0;
     font-size: 14px;
     line-height: 1.35;
     color: var(--standard-secondary-site-text-color, #6b7280);
+    font-synthesis: weight style;
+}
+
+.services__item-desc p {
+    margin: 0 0 0.75em;
+}
+
+.services__item-desc p:last-child {
+    margin-bottom: 0;
+}
+
+.services__item-desc p:first-child,
+.services__item-desc > p:first-child {
+    margin-top: 0;
+}
+
+.services__item-desc strong,
+.services__item-desc b {
+    font-weight: 700;
+    color: inherit;
+    text-shadow: 0.5px 0 0 currentColor, -0.5px 0 0 currentColor;
+}
+
+.services__item-desc em,
+.services__item-desc i {
+    font-style: italic;
+}
+
+.services__item-desc a {
+    color: var(--services-link-color, #3b82f6);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+.services__item-desc a:hover {
+    text-decoration-thickness: 2px;
+}
+
+.services__item-desc ul,
+.services__item-desc ol {
+    margin: 0.75em 0;
+    padding-left: 1.5em;
+}
+
+.services__item-desc ul {
+    list-style-type: disc;
+}
+
+.services__item-desc ol {
+    list-style-type: decimal;
+}
+
+.services__item-desc li {
+    margin-bottom: 0.25em;
+}
+
+.services__item-desc blockquote {
+    margin: 1em 0;
+    padding: 0.75em 1.25em;
+    border-left: 4px solid var(--blockquote-border-color, #6366f1);
+    background: var(--blockquote-bg, rgba(99, 102, 241, 0.08));
+    border-radius: 0 8px 8px 0;
+    font-style: italic;
+    color: var(--standard-secondary-site-text-color, #6b7280);
+}
+
+.services__item-desc blockquote p {
+    margin: 0;
+}
+
+.services__item-desc h1 {
+    font-size: 1.5em;
+    margin: 1em 0 0.5em;
+    font-weight: 600;
+    color: inherit;
+}
+
+.services__item-desc h2 {
+    font-size: 1.35em;
+    margin: 1em 0 0.5em;
+    font-weight: 600;
+    color: inherit;
+}
+
+.services__item-desc h3 {
+    font-size: 1.2em;
+    margin: 0.9em 0 0.5em;
+    font-weight: 600;
+    color: inherit;
+}
+
+.services__item-desc h4,
+.services__item-desc h5,
+.services__item-desc h6 {
+    font-size: 1.1em;
+    margin: 0.8em 0 0.4em;
+    font-weight: 600;
+    color: inherit;
+}
+
+.services__item-desc pre {
+    margin: 0.75em 0;
+    padding: 1em;
+    background: var(--services-pre-bg, rgba(0, 0, 0, 0.05));
+    border-radius: 8px;
+    font-family: ui-monospace, monospace;
+    font-size: 0.9em;
+    overflow-x: auto;
+}
+
+.services__item-desc sub,
+.services__item-desc sup {
+    font-size: 0.75em;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+}
+
+.services__item-desc sup {
+    vertical-align: super;
+}
+
+.services__item-desc sub {
+    vertical-align: sub;
 }
 
 /* ============================================

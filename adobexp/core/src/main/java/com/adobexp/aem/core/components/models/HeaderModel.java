@@ -139,6 +139,48 @@ public interface HeaderModel {
     boolean hasSocialLinks();
 
     /**
+     * Gets the default theme mode for the page.
+     * Accepted values: "dark", "light", "auto".
+     * @return default theme string
+     */
+    String getDefaultTheme();
+
+    /**
+     * Gets the list of top navigation buttons displayed to the left of the theme toggle.
+     * @return list of top nav buttons
+     */
+    List<TopNavButton> getTopNavButtons();
+
+    /**
+     * Checks if top navigation buttons are configured.
+     * @return true if any top nav button is configured
+     */
+    boolean hasTopNavButtons();
+
+    /**
+     * Represents a top navigation button displayed in the header.
+     */
+    interface TopNavButton {
+        /**
+         * Gets the button link (page path).
+         * @return button link
+         */
+        String getButtonLink();
+
+        /**
+         * Gets the button label text.
+         * @return button label
+         */
+        String getButtonLabel();
+
+        /**
+         * Checks if the button should open in a new tab.
+         * @return true if should open in new tab
+         */
+        boolean isButtonNewTab();
+    }
+
+    /**
      * Represents a Level 1 menu item.
      */
     interface MenuItem {

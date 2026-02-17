@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="nt:unstructured"
+    jcr:title="Video Article Grid"
+    sling:resourceType="cq/gui/components/authoring/dialog">
+    <content
+        granite:class="cmp-video-article-grid__editor"
+        jcr:primaryType="nt:unstructured"
+        sling:resourceType="granite/ui/components/coral/foundation/container">
+        <items jcr:primaryType="nt:unstructured">
+            <tabs
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="granite/ui/components/coral/foundation/tabs"
+                maximized="{Boolean}true">
+                <items jcr:primaryType="nt:unstructured">
+                    <!-- ============================================================ -->
+                    <!-- Tab 1: Content Configuration                                 -->
+                    <!-- ============================================================ -->
+                    <content
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Content"
+                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                        margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <!-- Component Title -->
+                                            <componentTitle
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Component Title"
+                                                fieldDescription="Enter the component title text (displayed as H2)"
+                                                name="./componentTitle"/>
+                                            <!-- Component Sub Title -->
+                                            <componentSubTitle
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Component Sub Title"
+                                                fieldDescription="Enter the component subtitle text (displayed below the title)"
+                                                name="./componentSubTitle"/>
+                                            <!-- Articles Source Path -->
+                                            <articlesPath
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                                                fieldLabel="Articles Source Path"
+                                                fieldDescription="Select a content path. Children of this node will be used to generate the article items. Each child should have properties: jcr:title, jcr:description, badge, url, publishedDate, createdDate, thumbnail."
+                                                name="./articlesPath"
+                                                rootPath="/content"
+                                                value="/content"/>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </content>
+                    <!-- ============================================================ -->
+                    <!-- Tab 2: Grid Configuration (data-config)                      -->
+                    <!-- ============================================================ -->
+                    <configuration
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Configuration"
+                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                        margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <!-- Cards in Single Row -->
+                                            <cardsInSingleRow
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
+                                                fieldLabel="Cards per Row"
+                                                fieldDescription="Number of article cards displayed in a single row (default: 3)"
+                                                name="./cardsInSingleRow"
+                                                min="{Long}1"
+                                                max="{Long}6"
+                                                value="{Long}3"/>
+                                            <!-- Play On Hover -->
+                                            <playOnHover
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                fieldDescription="When checked, video thumbnails will auto-play on mouse hover."
+                                                name="./playOnHover"
+                                                text="Play Video on Hover"
+                                                checked="{Boolean}true"
+                                                deleteHint="{Boolean}true"
+                                                uncheckedValue="false"
+                                                value="{Boolean}true"/>
+                                            <!-- Max Articles in a Single Page -->
+                                            <maxArticleInASinglePage
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
+                                                fieldLabel="Articles per Page"
+                                                fieldDescription="Maximum number of article cards per page for pagination (default: 9)"
+                                                name="./maxArticleInASinglePage"
+                                                min="{Long}1"
+                                                max="{Long}50"
+                                                value="{Long}9"/>
+                                            <!-- Default Sort By -->
+                                            <defaultSortBy
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                fieldLabel="Default Sort By"
+                                                fieldDescription="Select the default field to sort articles by"
+                                                name="./defaultSortBy">
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <publishedDate
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="Published Date"
+                                                        value="publishedDate"
+                                                        selected="{Boolean}true"/>
+                                                    <createdDate
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="Created Date"
+                                                        value="createdDate"/>
+                                                    <title
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="Title"
+                                                        value="title"/>
+                                                </items>
+                                            </defaultSortBy>
+                                            <!-- Default Sort Order -->
+                                            <defaultOrder
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                fieldLabel="Default Sort Order"
+                                                fieldDescription="Select the default sort order"
+                                                name="./defaultOrder">
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <dsc
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="Descending"
+                                                        value="dsc"
+                                                        selected="{Boolean}true"/>
+                                                    <asc
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="Ascending"
+                                                        value="asc"/>
+                                                </items>
+                                            </defaultOrder>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </configuration>
+                    <!-- ============================================================ -->
+                    <!-- Tab 3: Labels (data-labels)                                  -->
+                    <!-- ============================================================ -->
+                    <labels
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Labels"
+                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                        margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <searchPlaceholder
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Search Placeholder"
+                                                fieldDescription="Placeholder text for the search input field"
+                                                name="./searchPlaceholder"
+                                                value="Search tutorials\u2026"/>
+                                            <prevPage
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Previous Page Button Label"
+                                                fieldDescription="Label for the previous page button"
+                                                name="./prevPage"
+                                                value="Previous Page"/>
+                                            <nextPage
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Next Page Button Label"
+                                                fieldDescription="Label for the next page button"
+                                                name="./nextPage"
+                                                value="Next Page"/>
+                                            <pageIndicator
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Page Indicator Text"
+                                                fieldDescription="Text for page indicator. Use {currentPage} and {totalPages} as placeholders."
+                                                name="./pageIndicator"
+                                                value="Page {currentPage} of {totalPages}"/>
+                                            <sortByLabel
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Sort By Label"
+                                                fieldDescription="Accessible label for the sort-by dropdown"
+                                                name="./sortByLabel"
+                                                value="Sort By"/>
+                                            <sortByPublishedDate
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Sort By Published Date Label"
+                                                fieldDescription="Label for the Published Date sort option"
+                                                name="./sortByPublishedDate"
+                                                value="Published Date"/>
+                                            <sortByCreatedDate
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Sort By Created Date Label"
+                                                fieldDescription="Label for the Created Date sort option"
+                                                name="./sortByCreatedDate"
+                                                value="Created Date"/>
+                                            <sortByTitle
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Sort By Title Label"
+                                                fieldDescription="Label for the Title sort option"
+                                                name="./sortByTitle"
+                                                value="Title"/>
+                                            <sortOrderLabel
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Sort Order Label"
+                                                fieldDescription="Accessible label for the sort order dropdown"
+                                                name="./sortOrderLabel"
+                                                value="Order"/>
+                                            <sortOrderAsc
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Ascending Order Label"
+                                                fieldDescription="Label for ascending sort order option"
+                                                name="./sortOrderAsc"
+                                                value="ASC"/>
+                                            <sortOrderDsc
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Descending Order Label"
+                                                fieldDescription="Label for descending sort order option"
+                                                name="./sortOrderDsc"
+                                                value="DSC"/>
+                                            <noResults
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="No Results Message"
+                                                fieldDescription="Message shown when search returns no matching articles"
+                                                name="./noResults"
+                                                value="No tutorials match your search."/>
+                                            <noItems
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="No Items Message"
+                                                fieldDescription="Message shown when no articles are available"
+                                                name="./noItems"
+                                                value="No tutorials available."/>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </labels>
+                    <!-- ============================================================ -->
+                    <!-- Tab 4: Style Options                                         -->
+                    <!-- ============================================================ -->
+                    <styleOptions
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Style Options"
+                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                        margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <withBackground
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                fieldDescription="When checked, a background color will be applied to the video article grid section."
+                                                name="./withBackground"
+                                                text="Apply background color"
+                                                deleteHint="{Boolean}true"
+                                                uncheckedValue="false"
+                                                value="{Boolean}true"/>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </styleOptions>
+                </items>
+            </tabs>
+        </items>
+    </content>
+</jcr:root>

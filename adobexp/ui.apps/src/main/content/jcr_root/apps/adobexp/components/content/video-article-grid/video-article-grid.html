@@ -1,0 +1,29 @@
+<!--/*
+    Video Article Grid Component - AEM Sightly Template
+
+    This component renders a searchable, sortable, paginated grid of article cards.
+    Articles are sourced from children of a configured content path.
+    Configuration and labels are passed as JSON data attributes for client-side rendering.
+*/-->
+
+<sly data-sly-use.templates="adobexp/components/commons/v1/templates.html"/>
+<sly data-sly-use.model="com.adobexp.aem.core.components.models.VideoArticleGridModel"/>
+
+<!-- VIDEO ARTICLE GRID COMPONENT HTML MARKUP STARTS HERE -->
+<section class="video-article-grid${model.withBackground ? ' video-article-grid--with-bg' : ''}"
+         data-component="video-article-grid"
+         aria-label="${model.componentTitle || 'Video Article Grid'}"
+         data-sly-test="${model.componentTitle || model.hasArticles}">
+    <div class="video-article-grid__inner">
+        <h2 class="video-article-grid__title" data-sly-test="${model.componentTitle}">${model.componentTitle}</h2>
+        <p class="video-article-grid__subtitle" data-sly-test="${model.componentSubTitle}">${model.componentSubTitle}</p>
+
+        <div class="video-article-grid__grid"
+             data-items="${model.dataItemsJson}"
+             data-config="${model.dataConfigJson}"
+             data-labels="${model.dataLabelsJson}">
+        </div>
+    </div>
+</section>
+<!-- VIDEO ARTICLE GRID COMPONENT HTML MARKUP ENDS HERE -->
+<sly data-sly-call="${templates.placeholder @ isEmpty = !model.componentTitle && !model.hasArticles, classAppend='video-article-grid'}"></sly>

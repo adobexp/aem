@@ -52,6 +52,7 @@ public class HeaderModelImpl implements HeaderModel {
     private static final String SUB_MENU_ITEMS_NODE = "subMenuItems";
     private static final String LEVEL3_MENU_ITEMS_NODE = "level3MenuItems";
     private static final String ARTICLE_TEASERS_NODE = "articleTeasers";
+    private static final String TOP_NAV_BUTTONS_NODE = "topNavButtons";
     
     private static final String TYPE_LEAF = "leaf";
     private static final String TYPE_CONTAINER = "container";
@@ -105,9 +106,14 @@ public class HeaderModelImpl implements HeaderModel {
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     private String youtubeLink;
 
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Default(values = "dark")
+    private String defaultTheme;
+
     private List<MenuItem> menuItems;
     private List<MenuOption> menuOptions;
     private List<ArticleTeaser> articleTeasers;
+    private List<TopNavButton> topNavButtons;
 
     @PostConstruct
     protected void init() {
@@ -116,10 +122,12 @@ public class HeaderModelImpl implements HeaderModel {
             menuItems = parseMenuItems(resource);
             menuOptions = parseMenuOptions(resource);
             articleTeasers = parseArticleTeasers(resource);
+            topNavButtons = parseTopNavButtons(resource);
         } else {
             menuItems = Collections.emptyList();
             menuOptions = Collections.emptyList();
             articleTeasers = Collections.emptyList();
+            topNavButtons = Collections.emptyList();
         }
     }
 
@@ -348,6 +356,45 @@ public class HeaderModelImpl implements HeaderModel {
         return new ArticleTeaserImpl(articleTitle, articleDescription, articleLink, articleImage, articleImageAlt);
     }
 
+    /**
+     * Parse top navigation buttons from the topNavButtons child node.
+     */
+    private List<TopNavButton> parseTopNavButtons(Resource componentResource) {
+        List<TopNavButton> buttons = new ArrayList<>();
+        Resource topNavResource = componentResource.getChild(TOP_NAV_BUTTONS_NODE);
+
+        if (topNavResource != null) {
+            for (Resource btnResource : topNavResource.getChildren()) {
+                if (btnResource.getName().startsWith("jcr:")) {
+                    continue;
+                }
+                TopNavButtonImpl btn = parseTopNavButton(btnResource);
+                if (btn != null) {
+                    buttons.add(btn);
+                }
+            }
+        }
+
+        return buttons;
+    }
+
+    /**
+     * Parse a single top navigation button resource.
+     */
+    private TopNavButtonImpl parseTopNavButton(Resource btnResource) {
+        ValueMap props = btnResource.getValueMap();
+
+        String buttonLink = props.get("buttonLink", String.class);
+        String buttonLabel = props.get("buttonLabel", String.class);
+        String buttonNewTab = props.get("buttonNewTab", String.class);
+
+        if (StringUtils.isBlank(buttonLabel)) {
+            return null;
+        }
+
+        return new TopNavButtonImpl(buttonLink, buttonLabel, "true".equals(buttonNewTab));
+    }
+
     // Getter implementations
     @Override
     public String getLogoDarkImage() {
@@ -447,6 +494,21 @@ public class HeaderModelImpl implements HeaderModel {
     @Override
     public boolean hasArticleTeasers() {
         return articleTeasers != null && !articleTeasers.isEmpty();
+    }
+
+    @Override
+    public String getDefaultTheme() {
+        return defaultTheme;
+    }
+
+    @Override
+    public List<TopNavButton> getTopNavButtons() {
+        return topNavButtons;
+    }
+
+    @Override
+    public boolean hasTopNavButtons() {
+        return topNavButtons != null && !topNavButtons.isEmpty();
     }
 
     // Inner classes for menu structures
@@ -670,6 +732,36 @@ public class HeaderModelImpl implements HeaderModel {
         @Override
         public String getArticleImageAlt() {
             return articleImageAlt;
+        }
+    }
+
+    /**
+     * Implementation of TopNavButton interface.
+     */
+    public static class TopNavButtonImpl implements TopNavButton {
+        private final String buttonLink;
+        private final String buttonLabel;
+        private final boolean buttonNewTab;
+
+        public TopNavButtonImpl(String buttonLink, String buttonLabel, boolean buttonNewTab) {
+            this.buttonLink = buttonLink;
+            this.buttonLabel = buttonLabel;
+            this.buttonNewTab = buttonNewTab;
+        }
+
+        @Override
+        public String getButtonLink() {
+            return buttonLink;
+        }
+
+        @Override
+        public String getButtonLabel() {
+            return buttonLabel;
+        }
+
+        @Override
+        public boolean isButtonNewTab() {
+            return buttonNewTab;
         }
     }
 }

@@ -32,7 +32,7 @@
                         </sly>
                         <div>
                             <h3 class="services__item-title" data-sly-test="${item.serviceHeadline}">${item.serviceHeadline}</h3>
-                            <p class="services__item-desc" data-sly-test="${item.serviceDescription}">${item.serviceDescription}</p>
+                            <div class="services__item-desc" data-sly-test="${item.serviceDescription}">${item.serviceDescription @ context='html'}</div>
                         </div>
                     </article>
                 </sly>

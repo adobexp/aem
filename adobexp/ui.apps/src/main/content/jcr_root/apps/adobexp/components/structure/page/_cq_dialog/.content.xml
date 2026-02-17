@@ -15,6 +15,38 @@
                 sling:resourceType="granite/ui/components/coral/foundation/tabs"
                 maximized="{Boolean}true">
                 <items jcr:primaryType="nt:unstructured">
+                    <!-- ============================================================ -->
+                    <!-- Tab: Video - Video asset configuration for article pages    -->
+                    <!-- ============================================================ -->
+                    <video
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Video"
+                        sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                        cq:showOnCreate="{Boolean}false">
+                        <items jcr:primaryType="nt:unstructured">
+                            <column
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/container">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <videoSection
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Video Asset"
+                                        sling:resourceType="granite/ui/components/coral/foundation/form/fieldset">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <videoAssetPath
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                                                fieldLabel="Video Asset Path"
+                                                fieldDescription="Select a video asset from DAM. This video will be used by the Video Article Grid component for playback in its video player."
+                                                name="./videoAssetPath"
+                                                rootPath="/content/dam"
+                                                filter="hierarchyNotFile"/>
+                                        </items>
+                                    </videoSection>
+                                </items>
+                            </column>
+                        </items>
+                    </video>
                     <advanced
                         jcr:primaryType="nt:unstructured"
                         jcr:title="Advanced"

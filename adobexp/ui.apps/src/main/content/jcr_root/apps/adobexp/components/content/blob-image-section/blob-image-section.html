@@ -41,8 +41,8 @@
                     <!-- Main Title -->
                     <h2 class="blob-image-section__title" data-sly-test="${blobImageSection.mainTitle}">${blobImageSection.mainTitle}</h2>
                     
-                    <!-- Description -->
-                    <p class="blob-image-section__description" data-sly-test="${blobImageSection.description}">${blobImageSection.description @ context='html'}</p>
+                    <!-- Description (RTE - renders HTML markup) -->
+                    <div class="blob-image-section__description" data-sly-test="${blobImageSection.description}">${blobImageSection.description @ context='html'}</div>
                 </div>
                 
                 <!-- Images/Media Section -->

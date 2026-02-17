@@ -1,14 +1,17 @@
 /* ==========================================================================
    Blob Image Section Component Styles
-   Supports dark/light themes, multiple shape patterns, and overlay elements
-   
-   Note: Theme variables (--blob-image-section-*, --cta-pill-*, etc.) are 
-   defined in the global theme CSS files (theme-variables-dark.css / 
+   Supports dark/light themes, multiple shape patterns, overlay elements,
+   and RTE (Rich Text Editor) content in the description field.
+
+   Note: Theme variables (--blob-image-section-*, --cta-pill-*, etc.) are
+   defined in the global theme CSS files (theme-variables-dark.css /
    theme-variables-light.css) and applied via page template. This component
    only consumes these variables.
+
+   Source: st-static-site/src/static-components/BlobImageSection/blob-image-section.scss
+   Build: npm run build:blobimagesection:css (in st-static-site)
    ========================================================================== */
 
-/* Base Component Styles */
 .blob-image-section {
   width: 100%;
   padding: 40px 20px;
@@ -73,15 +76,113 @@
   color: var(--standard-primary-site-text-color, #111827);
 }
 
+/* Description with RTE-generated HTML markup support */
+/* font-synthesis: allows browser to synthesize bold/italic when custom fonts
+   (e.g. Hubot Sans declared at weight 400 only) lack a dedicated bold face. */
 .blob-image-section__description {
   font-size: 15px;
   line-height: 1.6;
   color: var(--standard-secondary-site-text-color, #6b7280);
   margin: 0;
   max-width: 520px;
+  font-synthesis: weight style;
+}
+.blob-image-section__description p {
+  margin: 0 0 0.75em;
+}
+.blob-image-section__description p:last-child {
+  margin-bottom: 0;
+}
+.blob-image-section__description p:first-child, .blob-image-section__description > p:first-child {
+  margin-top: 0;
+}
+.blob-image-section__description strong, .blob-image-section__description b {
+  font-weight: 700;
+  color: inherit;
+  text-shadow: 0.5px 0 0 currentColor, -0.5px 0 0 currentColor;
+}
+.blob-image-section__description em, .blob-image-section__description i {
+  font-style: italic;
+}
+.blob-image-section__description a {
+  color: var(--blob-image-section-link-color, #3b82f6);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.blob-image-section__description a:hover {
+  text-decoration-thickness: 2px;
+}
+.blob-image-section__description ul, .blob-image-section__description ol {
+  margin: 0.75em 0;
+  padding-left: 1.5em;
+}
+.blob-image-section__description ul {
+  list-style-type: disc;
+}
+.blob-image-section__description ol {
+  list-style-type: decimal;
+}
+.blob-image-section__description li {
+  margin-bottom: 0.25em;
+}
+.blob-image-section__description blockquote {
+  margin: 1em 0;
+  padding: 0.75em 1.25em;
+  border-left: 4px solid var(--blockquote-border-color, #6366f1);
+  background: var(--blockquote-bg, rgba(99, 102, 241, 0.08));
+  border-radius: 0 8px 8px 0;
+  font-style: italic;
+  color: var(--standard-secondary-site-text-color, #6b7280);
+}
+.blob-image-section__description blockquote p {
+  margin: 0;
+}
+.blob-image-section__description h1 {
+  font-size: 1.5em;
+  margin: 1em 0 0.5em;
+  font-weight: 600;
+  color: inherit;
+}
+.blob-image-section__description h2 {
+  font-size: 1.35em;
+  margin: 1em 0 0.5em;
+  font-weight: 600;
+  color: inherit;
+}
+.blob-image-section__description h3 {
+  font-size: 1.2em;
+  margin: 0.9em 0 0.5em;
+  font-weight: 600;
+  color: inherit;
+}
+.blob-image-section__description h4, .blob-image-section__description h5, .blob-image-section__description h6 {
+  font-size: 1.1em;
+  margin: 0.8em 0 0.4em;
+  font-weight: 600;
+  color: inherit;
+}
+.blob-image-section__description pre {
+  margin: 0.75em 0;
+  padding: 1em;
+  background: var(--blob-image-section-pre-bg, rgba(0, 0, 0, 0.05));
+  border-radius: 8px;
+  font-family: ui-monospace, monospace;
+  font-size: 0.9em;
+  overflow-x: auto;
+}
+.blob-image-section__description sub, .blob-image-section__description sup {
+  font-size: 0.75em;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+.blob-image-section__description sup {
+  vertical-align: super;
+}
+.blob-image-section__description sub {
+  vertical-align: sub;
 }
 
-/* Images/Media Container */
 .blob-image-section__images {
   position: relative;
   display: flex;
@@ -168,10 +269,6 @@
   top: -10px;
   right: -10px;
 }
-.blob-image-section__overlay-image--top-left {
-  top: -10px;
-  left: -10px;
-}
 .blob-image-section__overlay-image--bottom-right {
   bottom: -10px;
   right: 10%;
@@ -179,6 +276,10 @@
 .blob-image-section__overlay-image--bottom-left {
   bottom: -10px;
   left: 10%;
+}
+.blob-image-section__overlay-image--top-left {
+  top: -10px;
+  left: -10px;
 }
 
 /* CTA Overlay Container */
@@ -447,7 +548,7 @@
 
 /* ==========================================================================
    CTA Pill Button Styles
-   A pill-shaped button with text + circular icon container with arrow
+   A pill-shaped button with text + circular icon container with arrow.
    Note: CTA pill variables (--cta-pill-*) are defined in theme CSS files
    ========================================================================== */
 .cta-pill {

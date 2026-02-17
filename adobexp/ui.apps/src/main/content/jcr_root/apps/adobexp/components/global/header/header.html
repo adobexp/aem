@@ -15,7 +15,8 @@
 <sly data-sly-use.header="com.adobexp.aem.core.components.models.HeaderModel"/>
 
 <!-- HEADER COMPONENT HTML MARKUP STARTS HERE -->
-<header data-component="header" class="header" data-sly-test="${header.logoDarkImage || header.logoLightImage || header.headerTitle}">
+<!-- data-default-theme: sets the initial theme mode on page load. Accepted values: "dark", "light", "auto" -->
+<header data-component="header" data-default-theme="${header.defaultTheme || 'dark'}" class="header" data-sly-test="${header.logoDarkImage || header.logoLightImage || header.headerTitle}">
     <!-- Hamburger menu toggle button -->
     <button class="header__menu-btn btn-icon-only" type="button" aria-label="Open menu">
         <svg class="header__menu-icon header__menu-icon-hamburger" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -56,13 +57,35 @@
         <p class="header__subtitle" data-sly-test="${header.headerSubtitle}">${header.headerSubtitle}</p>
     </div>
 
-    <!-- Theme Toggle Button -->
+    <!-- Header Action Buttons (placed to the left of the theme toggle) -->
+    <sly data-sly-test="${header.hasTopNavButtons}">
+        <div class="header__actions">
+            <sly data-sly-list.navBtn="${header.topNavButtons}">
+                <a data-sly-use.navBtnLinkFilter="${'adobexp/components/commons/v1/helper/checkProp.js' @ propName='link', propValue=navBtn.buttonLink}"
+                    href="${navBtnLinkFilter.value}"
+                    class="header__action-btn btn-theme-dark"
+                    role="button"
+                    target="${navBtn.buttonNewTab ? '_blank' : '_self'}"
+                    rel="${navBtn.buttonNewTab ? 'noopener noreferrer' : ''}">${navBtn.buttonLabel}</a>
+            </sly>
+        </div>
+    </sly>
+
+    <!-- Theme Toggle Button (cycles: Dark → Light → Auto → Dark) -->
     <button class="header__theme-toggle btn-icon-only" type="button" aria-label="Toggle theme">
-        <svg class="header__theme-icon header__theme-icon-sun" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Sun icon: shown when mode is LIGHT -->
+        <svg class="header__theme-icon header__theme-icon-sun" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: none;">
             <path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
+        <!-- Moon icon: shown when mode is DARK -->
         <svg class="header__theme-icon header__theme-icon-moon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: none;">
             <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <!-- Auto icon (half sun / half moon): shown when mode is AUTO -->
+        <svg class="header__theme-icon header__theme-icon-auto" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: none;">
+            <path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2" fill="none"/>
+            <path d="M12 8a4 4 0 0 1 0 8V8z" fill="currentColor"/>
         </svg>
     </button>
 </header>
