@@ -200,7 +200,7 @@
 
                   # export all com.adobexp.* packages (project API) for HTL "data-sly-use"
                   visibility
-                  Export-Package: com.adobexp.*;version="${project.version}"
+                  Export-Package: com.adobexp.aem.*;version="${project.version}"
 
                   # reproducible builds (https://github.com/bndtools/bnd/issues/3521)
                   -noextraheaders: true
