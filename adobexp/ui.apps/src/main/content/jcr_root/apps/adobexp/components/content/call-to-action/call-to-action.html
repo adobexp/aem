@@ -1,0 +1,53 @@
+<!--/*
+    Call To Action Component - AEM Sightly Template
+
+    Renders a CTA section with:
+    - Title and subtitle
+    - Primary (cta-pill) and secondary (btn-theme-auto) CTAs
+    - Optional background
+
+    Note: Theme (dark/light) is controlled via page template, not this component.
+*/-->
+
+<sly data-sly-use.templates="adobexp/components/commons/v1/templates.html"/>
+<sly data-sly-use.cta="com.adobexp.aem.core.components.models.CallToActionModel"/>
+
+<!-- CALL TO ACTION COMPONENT HTML MARKUP STARTS HERE -->
+<section class="call-to-action ${cta.withBackground ? 'call-to-action--with-bg' : ''}"
+         data-component="call-to-action"
+         aria-label="${cta.title || 'Call to action'}"
+         data-sly-test="${cta.hasContent}">
+    <div class="call-to-action__inner">
+        <h2 class="call-to-action__title" data-sly-test="${cta.title}">${cta.title}</h2>
+        <p class="call-to-action__subtitle" data-sly-test="${cta.subtitle}">${cta.subtitle}</p>
+        <div class="call-to-action__actions" data-sly-test="${cta.hasPrimaryCta || cta.hasSecondaryCta}">
+            <sly data-sly-test="${cta.hasPrimaryCta}">
+                <sly data-sly-use.primaryUrl="${'adobexp/components/commons/v1/helper/transformurls.js' @ internalUrl=cta.primaryCtaLink}">
+                    <a class="cta-pill"
+                       href="${primaryUrl || '#'}"
+                       aria-label="${cta.primaryCtaText}"
+                       target="${cta.primaryCtaExternal ? '_blank' : ''}"
+                       rel="${cta.primaryCtaExternal ? 'noopener noreferrer' : ''}">
+                        <span class="cta-pill__text">${cta.primaryCtaText}</span>
+                        <span class="cta-pill__icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                                <path d="M9 18l6-6-6-6"></path>
+                            </svg>
+                        </span>
+                    </a>
+                </sly>
+            </sly>
+            <sly data-sly-test="${cta.hasSecondaryCta}">
+                <sly data-sly-use.secondaryUrl="${'adobexp/components/commons/v1/helper/transformurls.js' @ internalUrl=cta.secondaryCtaLink}">
+                    <a class="btn-theme-auto"
+                       href="${secondaryUrl || '#'}"
+                       target="${cta.secondaryCtaExternal ? '_blank' : ''}"
+                       rel="${cta.secondaryCtaExternal ? 'noopener noreferrer' : ''}">${cta.secondaryCtaText}</a>
+                </sly>
+            </sly>
+        </div>
+    </div>
+</section>
+<!-- CALL TO ACTION COMPONENT HTML MARKUP ENDS HERE -->
+
+<sly data-sly-call="${templates.placeholder @ isEmpty = !cta.hasContent, classAppend='call-to-action'}"></sly>

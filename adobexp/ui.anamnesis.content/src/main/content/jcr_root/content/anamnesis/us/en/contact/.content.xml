@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:sling="http://sling.apache.org/jcr/sling/1.0"
+    jcr:primaryType="cq:Page">
+    <jcr:content
+        jcr:primaryType="cq:PageContent"
+        jcr:title="Contact Us"
+        jcr:description="Contact the Anamnesis Cloud team. Send us your questions, feedback, or enterprise inquiries."
+        cq:template="/conf/adobexp/settings/wcm/templates/anamnesis-content-page"
+        cq:conf="/conf/adobexp"
+        sling:resourceType="adobexp/components/structure/page"
+        cq:designPath="/apps/settings/wcm/designs/adobexp">
+        <main-content
+            jcr:primaryType="nt:unstructured"
+            sling:resourceType="adobexp/components/container"
+            layout="responsiveGrid">
+            <pageheader
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="adobexp/components/content/page-header"
+                title="Contact Us"
+                subtitle="Have a question or feedback? We would love to hear from you."/>
+            <form_builder
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="adobexp/components/content/form-builder"
+                formDescription="Fill out the form below and we will get back to you as soon as possible."
+                formAction="#contact"
+                formMethod="POST"
+                contentType="application/json"
+                withBackground="true"
+                successMessage="Message sent! Thank you for reaching out. We will get back to you shortly."
+                errorMessage="Contact API is not configured. Set the form action URL when the API endpoint is available."
+                submitButtonText="Send Message">
+                <fields
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="adobexp/components/content/form-builder/form-builder-container">
+                    <name
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="adobexp/components/content/form-builder/components/textfield"
+                        fieldLabel="Name"
+                        fieldName="name"
+                        fieldId="name"
+                        placeholder="Your name"
+                        fieldWidth="half"
+                        required="true"
+                        requiredMessage="Name is required"/>
+                    <email
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="adobexp/components/content/form-builder/components/email"
+                        fieldLabel="Email"
+                        fieldName="email"
+                        fieldId="email"
+                        placeholder="you@company.com"
+                        fieldWidth="half"
+                        required="true"
+                        requiredMessage="Email is required"
+                        errorMessage="Please enter a valid email address"/>
+                    <company
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="adobexp/components/content/form-builder/components/textfield"
+                        fieldLabel="Company"
+                        fieldName="company"
+                        fieldId="company"
+                        placeholder="Your company (optional)"
+                        fieldWidth="full"
+                        required="false"/>
+                    <subject
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="adobexp/components/content/form-builder/components/textfield"
+                        fieldLabel="Subject"
+                        fieldName="subject"
+                        fieldId="subject"
+                        placeholder="How can we help?"
+                        fieldWidth="full"
+                        required="true"
+                        requiredMessage="Subject is required"/>
+                    <message
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="adobexp/components/content/form-builder/components/textarea"
+                        fieldLabel="Message"
+                        fieldName="message"
+                        fieldId="message"
+                        placeholder="Your message..."
+                        rows="6"
+                        fieldWidth="full"
+                        required="true"
+                        requiredMessage="Message is required"
+                        errorMessage="Message must be at least 10 characters"/>
+                </fields>
+            </form_builder>
+            <cards_info
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="adobexp/components/content/cards"
+                title=""
+                subtitle=""
+                gridVariant="3"
+                variant="muted"
+                withBackground="false">
+                <cardItems jcr:primaryType="nt:unstructured">
+                    <item0
+                        jcr:primaryType="nt:unstructured"
+                        itemTitle="Website"
+                        description="&lt;p&gt;&lt;a href=&quot;https://www.anamnesis.cloud&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;anamnesis.cloud&lt;/a&gt;&lt;/p&gt;"/>
+                    <item1
+                        jcr:primaryType="nt:unstructured"
+                        itemTitle="GitHub"
+                        description="&lt;p&gt;&lt;a href=&quot;https://github.com/sharadtech/st-anamnesis-vscode-extension&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;st-anamnesis-vscode-extension&lt;/a&gt;&lt;/p&gt;"/>
+                    <item2
+                        jcr:primaryType="nt:unstructured"
+                        itemTitle="Publisher"
+                        description="&lt;p&gt;SharadTech - &lt;code&gt;sharadtech.anamnesis&lt;/code&gt;&lt;/p&gt;"/>
+                </cardItems>
+            </cards_info>
+        </main-content>
+    </jcr:content>
+</jcr:root>

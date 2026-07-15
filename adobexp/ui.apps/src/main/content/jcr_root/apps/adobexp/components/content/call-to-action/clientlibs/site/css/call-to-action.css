@@ -1,0 +1,54 @@
+.call-to-action {
+  width: 100%;
+  padding: 4rem 1.5rem;
+  box-sizing: border-box;
+}
+
+.call-to-action--with-bg {
+  background: linear-gradient(180deg, #0c0c0c 0%, var(--site-body-bg, #1e1e1e) 100%);
+}
+
+.call-to-action__inner {
+  max-width: 720px;
+  margin: 0 auto;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.call-to-action.is-visible .call-to-action__inner {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.call-to-action__title {
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  font-weight: 600;
+  color: var(--standard-primary-site-text-color, #fff);
+  margin: 0 0 0.5rem;
+}
+
+.call-to-action__subtitle {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--standard-secondary-site-text-color, #a2a2a2);
+  margin: 0 0 2rem;
+}
+
+.call-to-action__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .call-to-action__inner {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/*# sourceMappingURL=call-to-action.css.map */

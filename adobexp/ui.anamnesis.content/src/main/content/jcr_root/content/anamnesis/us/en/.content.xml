@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:sling="http://sling.apache.org/jcr/sling/1.0"
+    jcr:primaryType="cq:Page">
+    <jcr:content
+        jcr:primaryType="cq:PageContent"
+        jcr:title="Anamnesis Cloud"
+        jcr:description="Anamnesis Cloud - interactive knowledge graphs for AI-assisted coding."
+        cq:template="/conf/adobexp/settings/wcm/templates/anamnesis-content-page"
+        cq:conf="/conf/adobexp"
+        sling:resourceType="adobexp/components/structure/page"
+        cq:designPath="/apps/settings/wcm/designs/adobexp">
+        <main-content
+            jcr:primaryType="nt:unstructured"
+            sling:resourceType="adobexp/components/container"
+            layout="responsiveGrid">
+            <hero
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="adobexp/components/content/hero"
+                title="Interactive Knowledge Graphs for AI-Assisted Coding"
+                subtitle="Build, upload, and visualize code architecture from VS Code. Let AI agents query your graph before searching files - across TypeScript, Java, AEM, Maven, Apache, NGINX, and more."
+                logoDark="/content/dam/anamnesis/logos/logo-dark.svg"
+                logoDarkAlt="Anamnesis Cloud"
+                logoLight="/content/dam/anamnesis/logos/logo-light.svg"
+                logoLightAlt="Anamnesis Cloud"
+                primaryCtaText="Get Started"
+                primaryCtaLink="/content/anamnesis/us/en/install"
+                primaryCtaExternal="false"
+                secondaryCtaText="Explore Features"
+                secondaryCtaLink="/content/anamnesis/us/en/features"
+                secondaryCtaExternal="false"/>
+            <cards_why
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="adobexp/components/content/cards"
+                title="Why Anamnesis?"
+                subtitle="AI coding agents grep blindly through files. Anamnesis gives them a knowledge graph - files, classes, functions, imports, and calls - so they understand architecture before they search."
+                gridVariant="3"
+                variant="with-bg"
+                withBackground="true">
+                <cardItems jcr:primaryType="nt:unstructured">
+                    <item0
+                        jcr:primaryType="nt:unstructured"
+                        itemTitle="One Unified Graph"
+                        description="&lt;p&gt;Multiple extractors run in parallel. One graph per project links code, config, build, and documentation layers.&lt;/p&gt;"/>
+                    <item1
+                        jcr:primaryType="nt:unstructured"
+                        itemTitle="Cloud-Powered"
+                        description="&lt;p&gt;Graphs are stored on Anamnesis Cloud. Browse projects, share with your team, and query from VS Code or Cursor.&lt;/p&gt;"/>
+                    <item2
+                        jcr:primaryType="nt:unstructured"
+                        itemTitle="AI-Ready"
+                        description="&lt;p&gt;Enable MCP + Cursor skill so agents use list_projects, query_graph, impact_of_change, and more before reading files.&lt;/p&gt;"/>
+                </cardItems>
+            </cards_why>
+            <cards_features
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="adobexp/components/content/cards"
+                title="Key Features"
+                subtitle="Everything you need to understand and navigate complex codebases."
+                gridVariant="3"
+                variant="muted"
+                withBackground="false">
+                <cardItems jcr:primaryType="nt:unstructured">
+                    <item0
+                        jcr:primaryType="nt:unstructured"
+                        icon="⬡"
+                        itemTitle="Create Knowledge Graphs"
+                        description="&lt;p&gt;Right-click any workspace folder and generate a unified knowledge graph. One graph per project, uploaded to Anamnesis Cloud.&lt;/p&gt;"/>
+                    <item1
+                        jcr:primaryType="nt:unstructured"
+                        icon="⊞"
+                        itemTitle="Projects Tree"
+                        description="&lt;p&gt;Browse all your graphs from the Anamnesis activity bar. Open owned and shared company projects instantly.&lt;/p&gt;"/>
+                    <item2
+                        jcr:primaryType="nt:unstructured"
+                        icon="◫"
+                        itemTitle="Dual Viewer"
+                        description="&lt;p&gt;Fast Table view for large graphs with text filtering, plus Cytoscape graph view with force-directed, circle, grid, concentric, and preset layouts.&lt;/p&gt;"/>
+                    <item3
+                        jcr:primaryType="nt:unstructured"
+                        icon="◎"
+                        itemTitle="Node Inspection"
+                        description="&lt;p&gt;Inspect label, kind, community, source file, line number, and neighbors. Click any node to jump to source code.&lt;/p&gt;"/>
+                    <item4
+                        jcr:primaryType="nt:unstructured"
+                        icon="✦"
+                        itemTitle="AI Tools (MCP + Skill)"
+                        description="&lt;p&gt;Enable AI Tools to register an MCP server and Cursor skill so agents query the graph before searching files.&lt;/p&gt;"/>
+                    <item5
+                        jcr:primaryType="nt:unstructured"
+                        icon="&amp;lt;/&amp;gt;"
+                        itemTitle="Multi-Language Extractors"
+                        description="&lt;p&gt;TypeScript, JavaScript, Java, Maven, HTL/AEM, AEM Content XML, HTML, Apache, NGINX, Bash, Jenkins, and Markdown architecture docs.&lt;/p&gt;"/>
+                    <item6
+                        jcr:primaryType="nt:unstructured"
+                        icon="↯"
+                        itemTitle="Impact Analysis"
+                        description="&lt;p&gt;Understand blast radius before editing. Trace dependencies, callers, callees, and shortest paths across your codebase.&lt;/p&gt;"/>
+                    <item7
+                        jcr:primaryType="nt:unstructured"
+                        icon="⚙"
+                        itemTitle="Settings Panel"
+                        description="&lt;p&gt;Configure server URL, credentials, default tag, and test connection. Works with Anamnesis Cloud or local development.&lt;/p&gt;"/>
+                </cardItems>
+            </cards_features>
+            <cta_view_features
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="adobexp/components/content/call-to-action"
+                title="View All Features"
+                subtitle="Explore the full feature set in detail."
+                withBackground="false"
+                primaryCtaText="View All Features"
+                primaryCtaLink="/content/anamnesis/us/en/features"
+                primaryCtaExternal="false"/>
+            <cta_ready
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="adobexp/components/content/call-to-action"
+                title="Ready to get started?"
+                subtitle="Install the extension, create your first knowledge graph, and enable AI tools in minutes."
+                withBackground="true"
+                primaryCtaText="Install Now"
+                primaryCtaLink="/content/anamnesis/us/en/install"
+                primaryCtaExternal="false"
+                secondaryCtaText="Contact Us"
+                secondaryCtaLink="/content/anamnesis/us/en/contact"
+                secondaryCtaExternal="false"/>
+        </main-content>
+    </jcr:content>
+</jcr:root>

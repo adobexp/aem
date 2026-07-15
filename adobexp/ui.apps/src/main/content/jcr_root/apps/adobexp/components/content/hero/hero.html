@@ -1,0 +1,67 @@
+<!--/*
+    Hero Component - AEM Sightly Template
+
+    Renders a hero section with:
+    - Optional dark/light theme logos
+    - Title and subtitle
+    - Primary (cta-pill) and secondary (btn-theme-auto) CTAs
+
+    Note: Theme (dark/light) is controlled via page template, not this component.
+*/-->
+
+<sly data-sly-use.templates="adobexp/components/commons/v1/templates.html"/>
+<sly data-sly-use.hero="com.adobexp.aem.core.components.models.HeroModel"/>
+
+<!-- HERO COMPONENT HTML MARKUP STARTS HERE -->
+<section class="hero" data-component="hero" aria-label="${hero.title || 'Hero'}" data-sly-test="${hero.hasContent}">
+    <div class="hero__bg" aria-hidden="true"></div>
+    <div class="hero__inner">
+        <div class="hero__logo-wrap" data-sly-test="${hero.hasLogo}">
+            <sly data-sly-use.logoDarkUrl="${'adobexp/components/commons/v1/helper/transformurls.js' @ internalUrl=hero.logoDark}">
+                <img class="hero__logo hero__logo--dark hero__logo--float"
+                     src="${logoDarkUrl}"
+                     alt="${hero.logoDarkAlt || hero.title || 'Logo'}"
+                     width="220"
+                     height="66"/>
+            </sly>
+            <sly data-sly-use.logoLightUrl="${'adobexp/components/commons/v1/helper/transformurls.js' @ internalUrl=hero.logoLight}">
+                <img class="hero__logo hero__logo--light hero__logo--float"
+                     src="${logoLightUrl}"
+                     alt="${hero.logoLightAlt || hero.title || 'Logo'}"
+                     width="220"
+                     height="66"/>
+            </sly>
+        </div>
+        <h1 class="hero__title" data-sly-test="${hero.title}">${hero.title}</h1>
+        <p class="hero__subtitle" data-sly-test="${hero.subtitle}">${hero.subtitle}</p>
+        <div class="hero__actions" data-sly-test="${hero.hasPrimaryCta || hero.hasSecondaryCta}">
+            <sly data-sly-test="${hero.hasPrimaryCta}">
+                <sly data-sly-use.primaryUrl="${'adobexp/components/commons/v1/helper/transformurls.js' @ internalUrl=hero.primaryCtaLink}">
+                    <a class="cta-pill"
+                       href="${primaryUrl || '#'}"
+                       aria-label="${hero.primaryCtaText}"
+                       target="${hero.primaryCtaExternal ? '_blank' : ''}"
+                       rel="${hero.primaryCtaExternal ? 'noopener noreferrer' : ''}">
+                        <span class="cta-pill__text">${hero.primaryCtaText}</span>
+                        <span class="cta-pill__icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                                <path d="M9 18l6-6-6-6"></path>
+                            </svg>
+                        </span>
+                    </a>
+                </sly>
+            </sly>
+            <sly data-sly-test="${hero.hasSecondaryCta}">
+                <sly data-sly-use.secondaryUrl="${'adobexp/components/commons/v1/helper/transformurls.js' @ internalUrl=hero.secondaryCtaLink}">
+                    <a class="btn-theme-auto"
+                       href="${secondaryUrl || '#'}"
+                       target="${hero.secondaryCtaExternal ? '_blank' : ''}"
+                       rel="${hero.secondaryCtaExternal ? 'noopener noreferrer' : ''}">${hero.secondaryCtaText}</a>
+                </sly>
+            </sly>
+        </div>
+    </div>
+</section>
+<!-- HERO COMPONENT HTML MARKUP ENDS HERE -->
+
+<sly data-sly-call="${templates.placeholder @ isEmpty = !hero.hasContent, classAppend='hero'}"></sly>

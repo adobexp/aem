@@ -1,0 +1,49 @@
+<!--/*
+    Data Table Component - AEM Sightly Template
+
+    Renders a responsive data table with:
+    - Optional title and subtitle
+    - Configurable header cells
+    - Rows with pipe-delimited cell values (HTML allowed in cells)
+
+    Note: Theme (dark/light) is controlled via page template, not this component.
+*/-->
+
+<sly data-sly-use.templates="adobexp/components/commons/v1/templates.html"/>
+<sly data-sly-use.dataTable="com.adobexp.aem.core.components.models.DataTableModel"/>
+
+<!-- DATA TABLE COMPONENT HTML MARKUP STARTS HERE -->
+<section class="data-table ${dataTable.withBackground ? 'data-table--with-bg' : ''}"
+         data-component="data-table"
+         aria-label="${dataTable.title || 'Data table'}"
+         data-sly-test="${dataTable.hasContent}">
+    <div class="data-table__inner">
+        <div class="data-table__header" data-sly-test="${dataTable.title || dataTable.subtitle}">
+            <h2 class="data-table__title" data-sly-test="${dataTable.title}">${dataTable.title}</h2>
+            <p class="data-table__subtitle" data-sly-test="${dataTable.subtitle}">${dataTable.subtitle}</p>
+        </div>
+        <div class="data-table__scroll" data-sly-test="${dataTable.headers.size > 0 || dataTable.rows.size > 0}">
+            <table class="data-table__table">
+                <thead data-sly-test="${dataTable.headers.size > 0}">
+                    <tr>
+                        <sly data-sly-list.header="${dataTable.headers}">
+                            <th>${header}</th>
+                        </sly>
+                    </tr>
+                </thead>
+                <tbody data-sly-test="${dataTable.rows.size > 0}">
+                    <sly data-sly-list.row="${dataTable.rows}">
+                        <tr>
+                            <sly data-sly-list.cell="${row.cells}">
+                                <td>${cell @ context='html'}</td>
+                            </sly>
+                        </tr>
+                    </sly>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+<!-- DATA TABLE COMPONENT HTML MARKUP ENDS HERE -->
+
+<sly data-sly-call="${templates.placeholder @ isEmpty = !dataTable.hasContent, classAppend='data-table'}"></sly>

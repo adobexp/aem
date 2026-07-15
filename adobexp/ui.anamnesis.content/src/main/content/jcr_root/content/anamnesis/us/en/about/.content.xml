@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:sling="http://sling.apache.org/jcr/sling/1.0"
+    jcr:primaryType="cq:Page">
+    <jcr:content
+        jcr:primaryType="cq:PageContent"
+        jcr:title="About Us"
+        jcr:description="Learn about Anamnesis Cloud - interactive knowledge graphs that help AI agents and developers understand code architecture."
+        cq:template="/conf/adobexp/settings/wcm/templates/anamnesis-content-page"
+        cq:conf="/conf/adobexp"
+        sling:resourceType="adobexp/components/structure/page"
+        cq:designPath="/apps/settings/wcm/designs/adobexp">
+        <main-content
+            jcr:primaryType="nt:unstructured"
+            sling:resourceType="adobexp/components/container"
+            layout="responsiveGrid">
+            <pageheader
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="adobexp/components/content/page-header"
+                title="About Anamnesis"
+                subtitle="Building the bridge between codebases and AI-assisted development."/>
+            <prose
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="adobexp/components/content/prose">
+                <blocks jcr:primaryType="nt:unstructured">
+                    <item0
+                        jcr:primaryType="nt:unstructured"
+                        content="&lt;h2&gt;What is Anamnesis?&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;Anamnesis Cloud&lt;/strong&gt; is a VS Code extension that builds, uploads, and visualizes interactive knowledge graphs for software projects. Each graph captures files, classes, functions, methods, and the relationships between them - &lt;code&gt;contains&lt;/code&gt;, &lt;code&gt;imports&lt;/code&gt;, and &lt;code&gt;calls&lt;/code&gt; edges that text search alone cannot surface.&lt;/p&gt;&lt;p&gt;Published by &lt;strong&gt;SharadTech&lt;/strong&gt;, Anamnesis is designed for teams who use AI coding assistants and need those agents to understand architecture, dependencies, and impact before making changes.&lt;/p&gt;"/>
+                    <item1
+                        jcr:primaryType="nt:unstructured"
+                        content="&lt;h2&gt;The Problem We Solve&lt;/h2&gt;&lt;p&gt;Modern AI agents default to grep and file search. On large, multi-language codebases - Spring Boot monorepos, AEM projects, infrastructure configs - blind search is slow, expensive, and error-prone.&lt;/p&gt;&lt;p&gt;Anamnesis gives agents (and developers) a scoped subgraph: query by keyword, trace shortest paths, assess impact of change, and find architectural hubs - all from a graph built directly from your source code.&lt;/p&gt;"/>
+                    <item2
+                        jcr:primaryType="nt:unstructured"
+                        content="&lt;h2&gt;One Unified Graph Per Project&lt;/h2&gt;&lt;p&gt;When you run &lt;strong&gt;Anamnesis: Create Knowledge Graph&lt;/strong&gt;, multiple extractors run in parallel. TypeScript classes, Maven modules, HTL components, Apache vhosts, Jenkins pipelines, and Markdown architecture docs all land in a single connected graph.&lt;/p&gt;&lt;p&gt;This unified view is what makes Anamnesis powerful for cross-layer analysis - for example, connecting an AEM &lt;code&gt;header.html&lt;/code&gt; to its Sling Model, dialog fields, and Maven module in one query.&lt;/p&gt;"/>
+                    <item3
+                        jcr:primaryType="nt:unstructured"
+                        content="&lt;h2&gt;Our Mission&lt;/h2&gt;&lt;p&gt;We believe AI-assisted coding works best when agents have structured knowledge of the codebase - not just raw file contents. Anamnesis Cloud makes that knowledge accessible, visual, and queryable from the IDE you already use.&lt;/p&gt;"/>
+                </blocks>
+            </prose>
+        </main-content>
+    </jcr:content>
+</jcr:root>

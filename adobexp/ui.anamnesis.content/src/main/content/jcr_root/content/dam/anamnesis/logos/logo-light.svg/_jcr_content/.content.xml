@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:dam="http://www.day.com/dam/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:dc="http://purl.org/dc/elements/1.1/"
+    jcr:primaryType="dam:AssetContent"
+    jcr:title="logo-light.svg"
+    dam:assetState="processed">
+    <metadata
+        jcr:primaryType="nt:unstructured"
+        dc:format="image/svg+xml"
+        dam:MIMEtype="image/svg+xml"/>
+    <related jcr:primaryType="nt:unstructured"/>
+</jcr:root>

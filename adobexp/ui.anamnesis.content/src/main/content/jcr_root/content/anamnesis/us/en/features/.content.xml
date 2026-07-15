@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:sling="http://sling.apache.org/jcr/sling/1.0"
+    jcr:primaryType="cq:Page">
+    <jcr:content
+        jcr:primaryType="cq:PageContent"
+        jcr:title="Features"
+        jcr:description="Explore Anamnesis Cloud features - knowledge graph creation, dual viewer, AI tools, multi-language extractors, and impact analysis."
+        cq:template="/conf/adobexp/settings/wcm/templates/anamnesis-content-page"
+        cq:conf="/conf/adobexp"
+        sling:resourceType="adobexp/components/structure/page"
+        cq:designPath="/apps/settings/wcm/designs/adobexp">
+        <main-content
+            jcr:primaryType="nt:unstructured"
+            sling:resourceType="adobexp/components/container"
+            layout="responsiveGrid">
+            <pageheader
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="adobexp/components/content/page-header"
+                title="Features"
+                subtitle="Powerful tools for architecture exploration, dependency analysis, and AI-assisted coding."/>
+            <cards_core
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="adobexp/components/content/cards"
+                title="Core Capabilities"
+                subtitle="From graph creation to AI integration - everything built into your VS Code workflow."
+                gridVariant="3"
+                variant="with-bg"
+                withBackground="true">
+                <cardItems jcr:primaryType="nt:unstructured">
+                    <item0
+                        jcr:primaryType="nt:unstructured"
+                        icon="⬡"
+                        itemTitle="Create Knowledge Graphs"
+                        description="&lt;p&gt;Right-click any workspace folder and generate a unified knowledge graph. One graph per project, uploaded to Anamnesis Cloud.&lt;/p&gt;"/>
+                    <item1
+                        jcr:primaryType="nt:unstructured"
+                        icon="⊞"
+                        itemTitle="Projects Tree"
+                        description="&lt;p&gt;Browse all your graphs from the Anamnesis activity bar. Open owned and shared company projects instantly.&lt;/p&gt;"/>
+                    <item2
+                        jcr:primaryType="nt:unstructured"
+                        icon="◫"
+                        itemTitle="Dual Viewer"
+                        description="&lt;p&gt;Fast Table view for large graphs with text filtering, plus Cytoscape graph view with force-directed, circle, grid, concentric, and preset layouts.&lt;/p&gt;"/>
+                    <item3
+                        jcr:primaryType="nt:unstructured"
+                        icon="◎"
+                        itemTitle="Node Inspection"
+                        description="&lt;p&gt;Inspect label, kind, community, source file, line number, and neighbors. Click any node to jump to source code.&lt;/p&gt;"/>
+                    <item4
+                        jcr:primaryType="nt:unstructured"
+                        icon="✦"
+                        itemTitle="AI Tools (MCP + Skill)"
+                        description="&lt;p&gt;Enable AI Tools to register an MCP server and Cursor skill so agents query the graph before searching files.&lt;/p&gt;"/>
+                    <item5
+                        jcr:primaryType="nt:unstructured"
+                        icon="&amp;lt;/&amp;gt;"
+                        itemTitle="Multi-Language Extractors"
+                        description="&lt;p&gt;TypeScript, JavaScript, Java, Maven, HTL/AEM, AEM Content XML, HTML, Apache, NGINX, Bash, Jenkins, and Markdown architecture docs.&lt;/p&gt;"/>
+                    <item6
+                        jcr:primaryType="nt:unstructured"
+                        icon="↯"
+                        itemTitle="Impact Analysis"
+                        description="&lt;p&gt;Understand blast radius before editing. Trace dependencies, callers, callees, and shortest paths across your codebase.&lt;/p&gt;"/>
+                    <item7
+                        jcr:primaryType="nt:unstructured"
+                        icon="⚙"
+                        itemTitle="Settings Panel"
+                        description="&lt;p&gt;Configure server URL, credentials, default tag, and test connection. Works with Anamnesis Cloud or local development.&lt;/p&gt;"/>
+                </cardItems>
+            </cards_core>
+            <cards_viewer
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="adobexp/components/content/cards"
+                title="Dual Viewer"
+                subtitle="Choose the right view for your graph size and exploration style."
+                gridVariant="2"
+                variant="muted"
+                withBackground="false">
+                <cardItems jcr:primaryType="nt:unstructured">
+                    <item0
+                        jcr:primaryType="nt:unstructured"
+                        itemTitle="Table View (Default)"
+                        description="&lt;p&gt;Fast rendering and text filtering for large graphs. Sort and search nodes by label, kind, community, source file, and line number. Ideal for precise lookups.&lt;/p&gt;"/>
+                    <item1
+                        jcr:primaryType="nt:unstructured"
+                        itemTitle="Graph View (Cytoscape.js)"
+                        description="&lt;p&gt;Force-directed, circle, grid, concentric, and preset layouts. Community-colored nodes, interactive pan/zoom, and click-to-source navigation.&lt;/p&gt;"/>
+                </cardItems>
+            </cards_viewer>
+            <cards_types
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="adobexp/components/content/cards"
+                title="Supported Project Types"
+                subtitle="One unified graph across application code, AEM, infrastructure, and documentation."
+                gridVariant="2"
+                variant="with-bg"
+                withBackground="true">
+                <cardItems jcr:primaryType="nt:unstructured">
+                    <item0
+                        jcr:primaryType="nt:unstructured"
+                        itemTitle="Application &amp; Backend"
+                        description="&lt;ul class=&quot;cards__item-list&quot;&gt;&lt;li&gt;Node / TypeScript / JavaScript&lt;/li&gt;&lt;li&gt;Java (Spring, OSGi, microservices)&lt;/li&gt;&lt;li&gt;Maven multi-module monorepos&lt;/li&gt;&lt;li&gt;Plain HTML static sites&lt;/li&gt;&lt;/ul&gt;"/>
+                    <item1
+                        jcr:primaryType="nt:unstructured"
+                        itemTitle="Adobe Experience Manager"
+                        description="&lt;ul class=&quot;cards__item-list&quot;&gt;&lt;li&gt;HTL / Sightly components&lt;/li&gt;&lt;li&gt;AEM Content XML (.content.xml)&lt;/li&gt;&lt;li&gt;Sling Models (Java)&lt;/li&gt;&lt;li&gt;Maven ui.apps modules&lt;/li&gt;&lt;/ul&gt;"/>
+                    <item2
+                        jcr:primaryType="nt:unstructured"
+                        itemTitle="Infrastructure &amp; DevOps"
+                        description="&lt;ul class=&quot;cards__item-list&quot;&gt;&lt;li&gt;Apache Web Server (.conf, .any)&lt;/li&gt;&lt;li&gt;NGINX (.conf, .upstream.conf)&lt;/li&gt;&lt;li&gt;Bash deployment scripts&lt;/li&gt;&lt;li&gt;Jenkins pipelines&lt;/li&gt;&lt;/ul&gt;"/>
+                    <item3
+                        jcr:primaryType="nt:unstructured"
+                        itemTitle="Architecture Documentation"
+                        description="&lt;ul class=&quot;cards__item-list&quot;&gt;&lt;li&gt;Markdown architecture docs (.md)&lt;/li&gt;&lt;li&gt;Projects, modules, API routes&lt;/li&gt;&lt;li&gt;Mermaid flow diagrams&lt;/li&gt;&lt;li&gt;Cross-project dependency edges&lt;/li&gt;&lt;/ul&gt;"/>
+                </cardItems>
+            </cards_types>
+            <cta_ai
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="adobexp/components/content/call-to-action"
+                title="Enable AI Tools"
+                subtitle="Run Anamnesis: Enable AI Tools (MCP + Skill) to register an MCP server and Cursor skill. Agents query the graph before searching files."
+                withBackground="true"
+                primaryCtaText="Get Started"
+                primaryCtaLink="/content/anamnesis/us/en/install"
+                primaryCtaExternal="false"/>
+        </main-content>
+    </jcr:content>
+</jcr:root>

@@ -1,0 +1,121 @@
+.hero {
+  position: relative;
+  width: 100%;
+  padding: 5rem 1.5rem 6rem;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.hero__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: linear-gradient(135deg, var(--lead-banner-gradient-start, #212020) 0%, var(--lead-banner-gradient-stop-25, #aa7802) 50%, var(--lead-banner-gradient-end, #212020) 100%);
+  opacity: 0.35;
+}
+
+.hero__inner {
+  position: relative;
+  z-index: 1;
+  max-width: 760px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.hero__logo-wrap {
+  margin-bottom: 2rem;
+}
+
+.hero__logo {
+  width: min(220px, 60vw);
+  height: auto;
+  margin: 0 auto;
+  display: block;
+}
+
+.hero__logo--light {
+  display: none;
+}
+
+.theme-light .hero__logo--light,
+.theme-dark .hero__logo--dark {
+  display: block;
+}
+
+.theme-light .hero__logo--dark,
+.theme-dark .hero__logo--light {
+  display: none;
+}
+
+.hero__logo--float {
+  animation: heroFloat 4s ease-in-out infinite;
+}
+
+@keyframes heroFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+.hero__title {
+  font-size: clamp(2rem, 5vw, 3.25rem);
+  font-weight: 600;
+  line-height: 1.15;
+  color: var(--standard-primary-site-text-color, #fff);
+  margin: 0 0 1rem;
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.hero__subtitle {
+  font-size: 1.125rem;
+  line-height: 1.7;
+  color: var(--standard-secondary-site-text-color, #a2a2a2);
+  margin: 0 0 2rem;
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease 0.12s, transform 0.6s ease 0.12s;
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease 0.24s, transform 0.6s ease 0.24s;
+}
+
+.hero__logo-wrap {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.hero.is-visible .hero__logo-wrap,
+.hero.is-visible .hero__title,
+.hero.is-visible .hero__subtitle,
+.hero.is-visible .hero__actions {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__logo--float {
+    animation: none;
+  }
+  .hero__logo-wrap,
+  .hero__title,
+  .hero__subtitle,
+  .hero__actions {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/*# sourceMappingURL=hero.css.map */

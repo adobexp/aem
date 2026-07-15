@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:sling="http://sling.apache.org/jcr/sling/1.0"
+    jcr:primaryType="cq:Page">
+    <jcr:content
+        jcr:primaryType="cq:PageContent"
+        jcr:title="Install"
+        jcr:description="Install Anamnesis Cloud for VS Code or Cursor. Configure credentials, create your first knowledge graph, and enable AI tools."
+        cq:template="/conf/adobexp/settings/wcm/templates/anamnesis-content-page"
+        cq:conf="/conf/adobexp"
+        sling:resourceType="adobexp/components/structure/page"
+        cq:designPath="/apps/settings/wcm/designs/adobexp">
+        <main-content
+            jcr:primaryType="nt:unstructured"
+            sling:resourceType="adobexp/components/container"
+            layout="responsiveGrid">
+            <pageheader
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="adobexp/components/content/page-header"
+                title="Install Anamnesis"
+                subtitle="Get up and running in minutes with VS Code or Cursor."/>
+            <prose
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="adobexp/components/content/prose">
+                <blocks jcr:primaryType="nt:unstructured">
+                    <item0
+                        jcr:primaryType="nt:unstructured"
+                        content="&lt;h2&gt;1. Install the Extension&lt;/h2&gt;&lt;p&gt;Install &lt;strong&gt;Anamnesis Cloud&lt;/strong&gt; from the VS Code Marketplace:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Publisher: &lt;code&gt;sharadtech&lt;/code&gt;&lt;/li&gt;&lt;li&gt;Extension ID: &lt;code&gt;sharadtech.anamnesis&lt;/code&gt;&lt;/li&gt;&lt;li&gt;Compatible with VS Code 1.90+ and Cursor&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;Or install from the command line:&lt;/p&gt;&lt;pre&gt;&lt;code&gt;code --install-extension sharadtech.anamnesis&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;For Cursor on macOS, use the bundled install script from the extension repository.&lt;/p&gt;"/>
+                    <item1
+                        jcr:primaryType="nt:unstructured"
+                        content="&lt;h2&gt;2. Configure Credentials&lt;/h2&gt;&lt;p&gt;Open the &lt;strong&gt;Anamnesis&lt;/strong&gt; activity bar and click the settings gear, or run &lt;strong&gt;Anamnesis: Open Settings&lt;/strong&gt;.&lt;/p&gt;&lt;p&gt;Create an account at &lt;a href=&quot;https://www.anamnesis.cloud&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;anamnesis.cloud&lt;/a&gt;, then copy your Client Id and Secret Key from Settings - View Credentials.&lt;/p&gt;"/>
+                    <item2
+                        jcr:primaryType="nt:unstructured"
+                        content="&lt;h2&gt;3. Create Your First Graph&lt;/h2&gt;&lt;ol&gt;&lt;li&gt;Open a workspace in VS Code or Cursor.&lt;/li&gt;&lt;li&gt;Right-click a project folder in the Explorer.&lt;/li&gt;&lt;li&gt;Select &lt;strong&gt;Anamnesis: Create Knowledge Graph&lt;/strong&gt;.&lt;/li&gt;&lt;li&gt;Wait for extraction and upload to Anamnesis Cloud.&lt;/li&gt;&lt;li&gt;Open the project from the &lt;strong&gt;Projects&lt;/strong&gt; tree in the activity bar.&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;For Java/Maven/AEM repos, add build output to exclude globs:&lt;/p&gt;&lt;pre&gt;&lt;code&gt;&quot;anamnesis.excludeGlobs&quot;: [&quot;target/&quot;, &quot;dist/&quot;, &quot;node_modules/&quot;]&lt;/code&gt;&lt;/pre&gt;"/>
+                    <item3
+                        jcr:primaryType="nt:unstructured"
+                        content="&lt;h2&gt;4. Enable AI Tools (Optional)&lt;/h2&gt;&lt;p&gt;In the Projects view, run &lt;strong&gt;Anamnesis: Enable AI Tools (MCP + Skill)&lt;/strong&gt;. This registers:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;An MCP server (&lt;code&gt;anamnesis&lt;/code&gt;) for agent tool calls&lt;/li&gt;&lt;li&gt;A Cursor skill that instructs agents to query the graph before searching files&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;To remove, run &lt;strong&gt;Anamnesis: Remove AI Tools (MCP + Skill)&lt;/strong&gt;.&lt;/p&gt;"/>
+                    <item4
+                        jcr:primaryType="nt:unstructured"
+                        content="&lt;h2&gt;5. Explore the Graph&lt;/h2&gt;&lt;ul&gt;&lt;li&gt;&lt;strong&gt;Table view&lt;/strong&gt; - fast filtering for large graphs&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Graph view&lt;/strong&gt; - Cytoscape layouts with community colors&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Click to source&lt;/strong&gt; - open the original file at the correct line&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Node inspection&lt;/strong&gt; - label, kind, community, neighbors&lt;/li&gt;&lt;/ul&gt;"/>
+                </blocks>
+            </prose>
+            <datatable
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="adobexp/components/content/data-table"
+                title="Configuration Settings"
+                subtitle="Configure these settings in VS Code or Cursor."
+                withBackground="true">
+                <headers jcr:primaryType="nt:unstructured">
+                    <item0
+                        jcr:primaryType="nt:unstructured"
+                        headerText="Setting"/>
+                    <item1
+                        jcr:primaryType="nt:unstructured"
+                        headerText="Default"/>
+                    <item2
+                        jcr:primaryType="nt:unstructured"
+                        headerText="Description"/>
+                </headers>
+                <rows jcr:primaryType="nt:unstructured">
+                    <item0
+                        jcr:primaryType="nt:unstructured"
+                        cells="&lt;code&gt;anamnesis.serverUrl&lt;/code&gt; | &lt;code&gt;https://apigateway.anamnesis.cloud&lt;/code&gt; | API base URL (no trailing slash)"/>
+                    <item1
+                        jcr:primaryType="nt:unstructured"
+                        cells="&lt;code&gt;anamnesis.clientId&lt;/code&gt; | &lt;code&gt;&quot;&quot;&lt;/code&gt; | Client Id from Anamnesis Settings - View Credentials"/>
+                    <item2
+                        jcr:primaryType="nt:unstructured"
+                        cells="&lt;code&gt;anamnesis.secretKey&lt;/code&gt; | &lt;code&gt;&quot;&quot;&lt;/code&gt; | Secret Key from Anamnesis Settings - View Credentials"/>
+                    <item3
+                        jcr:primaryType="nt:unstructured"
+                        cells="&lt;code&gt;anamnesis.defaultTag&lt;/code&gt; | &lt;code&gt;default&lt;/code&gt; | Default graph tag when none is selected"/>
+                    <item4
+                        jcr:primaryType="nt:unstructured"
+                        cells="&lt;code&gt;anamnesis.excludeGlobs&lt;/code&gt; | &lt;code&gt;[]&lt;/code&gt; | Extra path prefixes to skip during graph generation"/>
+                </rows>
+            </datatable>
+            <cta_help
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="adobexp/components/content/call-to-action"
+                title="Need help?"
+                subtitle="Check the Learn page for detailed guides or reach out to us."
+                withBackground="true"
+                primaryCtaText="Learn More"
+                primaryCtaLink="/content/anamnesis/us/en/learn"
+                primaryCtaExternal="false"
+                secondaryCtaText="Contact Us"
+                secondaryCtaLink="/content/anamnesis/us/en/contact"
+                secondaryCtaExternal="false"/>
+        </main-content>
+    </jcr:content>
+</jcr:root>

@@ -1,0 +1,24 @@
+<!--/*
+    Prose Component - AEM Sightly Template
+
+    Renders long-form rich text content as stacked prose blocks.
+    Each block is authored via RTE and rendered with HTML context.
+
+    Note: Theme (dark/light) is controlled via page template, not this component.
+*/-->
+
+<sly data-sly-use.templates="adobexp/components/commons/v1/templates.html"/>
+<sly data-sly-use.prose="com.adobexp.aem.core.components.models.ProseModel"/>
+
+<!-- PROSE COMPONENT HTML MARKUP STARTS HERE -->
+<article class="prose"
+         data-component="prose"
+         aria-label="Prose content"
+         data-sly-test="${prose.hasContent}">
+    <sly data-sly-list.block="${prose.blocks}">
+        <div class="prose__block">${block.content @ context='html'}</div>
+    </sly>
+</article>
+<!-- PROSE COMPONENT HTML MARKUP ENDS HERE -->
+
+<sly data-sly-call="${templates.placeholder @ isEmpty = !prose.hasContent, classAppend='prose'}"></sly>

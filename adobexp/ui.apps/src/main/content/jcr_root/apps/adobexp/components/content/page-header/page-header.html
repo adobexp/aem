@@ -1,0 +1,25 @@
+<!--/*
+    Page Header Component - AEM Sightly Template
+
+    Renders an interior page header with title and subtitle.
+    CSS-only entrance animation; no site JS required beyond the clientlib stub.
+
+    Note: Theme (dark/light) is controlled via page template, not this component.
+*/-->
+
+<sly data-sly-use.templates="adobexp/components/commons/v1/templates.html"/>
+<sly data-sly-use.pageHeader="com.adobexp.aem.core.components.models.PageHeaderModel"/>
+
+<!-- PAGE HEADER COMPONENT HTML MARKUP STARTS HERE -->
+<section class="page-header"
+         data-component="page-header"
+         aria-label="${pageHeader.title || 'Page header'}"
+         data-sly-test="${pageHeader.hasContent}">
+    <div class="page-header__inner">
+        <h1 class="page-header__title" data-sly-test="${pageHeader.title}">${pageHeader.title}</h1>
+        <p class="page-header__subtitle" data-sly-test="${pageHeader.subtitle}">${pageHeader.subtitle}</p>
+    </div>
+</section>
+<!-- PAGE HEADER COMPONENT HTML MARKUP ENDS HERE -->
+
+<sly data-sly-call="${templates.placeholder @ isEmpty = !pageHeader.hasContent, classAppend='page-header'}"></sly>
