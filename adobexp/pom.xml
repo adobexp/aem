@@ -43,6 +43,8 @@
     <!-- Override old plugin versions from central-maven-parent for better Git support -->
     <maven-release-plugin>3.0.1</maven-release-plugin>
     <maven-scm-plugin>2.0.1</maven-scm-plugin>
+    <!-- 0.7.0 fails deserializing the Sonatype Central response (unknown "warnings" field); 0.11.0 adds support for it -->
+    <central-publishing-maven-plugin>0.11.0</central-publishing-maven-plugin>
   </properties>
   <scm>
     <url>https://github.com/adobexp/aem</url>
