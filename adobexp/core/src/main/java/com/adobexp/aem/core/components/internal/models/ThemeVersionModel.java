@@ -41,7 +41,9 @@ import com.adobexp.aem.core.components.config.components.CountUpThemeConfig;
 import com.adobexp.aem.core.components.config.components.CtaPillThemeConfig;
 import com.adobexp.aem.core.components.config.components.FaqThemeConfig;
 import com.adobexp.aem.core.components.config.components.FooterThemeConfig;
+import com.adobexp.aem.core.components.config.components.HeroThemeConfig;
 import com.adobexp.aem.core.components.config.components.GridControlThemeConfig;
+import com.adobexp.aem.core.components.config.components.VideoArticleGridThemeConfig;
 import com.adobexp.aem.core.components.config.components.HeaderOverlayThemeConfig;
 import com.adobexp.aem.core.components.config.components.HeaderThemeConfig;
 import com.adobexp.aem.core.components.config.components.LeadBannerThemeConfig;
@@ -117,9 +119,11 @@ public class ThemeVersionModel {
             appendMasonryGalleryConfig(configFingerprint, configBuilder.as(MasonryGalleryThemeConfig.class));
             appendComparisonConfig(configFingerprint, configBuilder.as(ComparisonThemeConfig.class));
             appendFaqConfig(configFingerprint, configBuilder.as(FaqThemeConfig.class));
+            appendHeroConfig(configFingerprint, configBuilder.as(HeroThemeConfig.class));
             appendBlobImageSectionConfig(configFingerprint, configBuilder.as(BlobImageSectionThemeConfig.class));
             appendLeadMediaSectionConfig(configFingerprint, configBuilder.as(LeadMediaSectionThemeConfig.class));
             appendGridControlConfig(configFingerprint, configBuilder.as(GridControlThemeConfig.class));
+            appendVideoArticleGridConfig(configFingerprint, configBuilder.as(VideoArticleGridThemeConfig.class));
 
             // Generate a short hash from the fingerprint
             this.version = generateShortHash(configFingerprint.toString());
@@ -458,6 +462,12 @@ public class ThemeVersionModel {
         appendConfigValue(sb, config, FaqThemeConfig::lightFaqItemHoverBg);
     }
 
+    private void appendHeroConfig(StringBuilder sb, HeroThemeConfig config) {
+        if (config == null) return;
+        appendConfigValue(sb, config, HeroThemeConfig::darkHeroBg);
+        appendConfigValue(sb, config, HeroThemeConfig::lightHeroBg);
+    }
+
     private void appendBlobImageSectionConfig(StringBuilder sb, BlobImageSectionThemeConfig config) {
         if (config == null) return;
         appendConfigValue(sb, config, BlobImageSectionThemeConfig::darkBlobImageSectionBg);
@@ -509,5 +519,19 @@ public class ThemeVersionModel {
         appendConfigValue(sb, config, GridControlThemeConfig::darkGridControlColumnBg);
         appendConfigValue(sb, config, GridControlThemeConfig::lightGridControlBg);
         appendConfigValue(sb, config, GridControlThemeConfig::lightGridControlColumnBg);
+    }
+
+    private void appendVideoArticleGridConfig(StringBuilder sb, VideoArticleGridThemeConfig config) {
+        if (config == null) return;
+        appendConfigValue(sb, config, VideoArticleGridThemeConfig::darkVideoArticleGridBg);
+        appendConfigValue(sb, config, VideoArticleGridThemeConfig::darkVideoArticleGridCardBg);
+        appendConfigValue(sb, config, VideoArticleGridThemeConfig::darkVideoArticleGridCardBorder);
+        appendConfigValue(sb, config, VideoArticleGridThemeConfig::darkVideoArticleGridSearchBg);
+        appendConfigValue(sb, config, VideoArticleGridThemeConfig::darkVideoArticleGridDropdownBg);
+        appendConfigValue(sb, config, VideoArticleGridThemeConfig::lightVideoArticleGridBg);
+        appendConfigValue(sb, config, VideoArticleGridThemeConfig::lightVideoArticleGridCardBg);
+        appendConfigValue(sb, config, VideoArticleGridThemeConfig::lightVideoArticleGridCardBorder);
+        appendConfigValue(sb, config, VideoArticleGridThemeConfig::lightVideoArticleGridSearchBg);
+        appendConfigValue(sb, config, VideoArticleGridThemeConfig::lightVideoArticleGridDropdownBg);
     }
 }

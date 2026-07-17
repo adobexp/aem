@@ -4,14 +4,10 @@
   padding: 5rem 1.5rem 6rem;
   overflow: hidden;
   box-sizing: border-box;
+  color: var(--standard-primary-site-text-color, #111827);
 }
-
-.hero__bg {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  background: linear-gradient(135deg, var(--lead-banner-gradient-start, #212020) 0%, var(--lead-banner-gradient-stop-25, #aa7802) 50%, var(--lead-banner-gradient-end, #212020) 100%);
-  opacity: 0.35;
+.hero--with-bg {
+  background: var(--hero-bg, var(--site-body-bg));
 }
 
 .hero__inner {

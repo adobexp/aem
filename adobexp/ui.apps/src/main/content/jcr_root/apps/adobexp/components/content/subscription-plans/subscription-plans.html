@@ -96,20 +96,19 @@
                         </div>
                         
                         <div class="subscription-plans__cta" data-sly-test="${plan.ctaText || plan.ctaLink}">
-                            <sly data-sly-use.ctaUrl="${'adobexp/components/commons/v1/helper/transformurls.js' @ internalUrl=plan.ctaLink}">
-                                <a class="cta-pill${plan.topChoice ? ' cta-pill--primary' : ''}"
-                                    href="${plan.ctaLink ? ctaUrl : '#'}"
-                                    role="button"
-                                    data-sly-attribute.target="${plan.ctaNewTab ? '_blank' : ''}"
-                                    data-sly-attribute.rel="${plan.ctaNewTab ? 'noopener noreferrer' : ''}">
-                                    <span class="cta-pill__text">${plan.ctaText || 'Select Plan'}</span>
-                                    <span class="cta-pill__icon" aria-hidden="true">
-                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
-                                            <path d="M9 18l6-6-6-6"></path>
-                                        </svg>
-                                    </span>
-                                </a>
-                            </sly>
+                            <a data-sly-use.ctaUrl="${'adobexp/components/commons/v1/helper/checkProp.js' @ propName='link', propValue=plan.ctaLink}"
+                                class="cta-pill${plan.topChoice ? ' cta-pill--primary' : ''}"
+                                href="${plan.ctaLink ? ctaUrl.value : '#'}"
+                                role="button"
+                                data-sly-attribute.target="${plan.ctaNewTab ? '_blank' : ''}"
+                                data-sly-attribute.rel="${plan.ctaNewTab ? 'noopener noreferrer' : ''}">
+                                <span class="cta-pill__text">${plan.ctaText || 'Select Plan'}</span>
+                                <span class="cta-pill__icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                                        <path d="M9 18l6-6-6-6"></path>
+                                    </svg>
+                                </span>
+                            </a>
                         </div>
                         
                         <!-- AI Credits -->

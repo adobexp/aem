@@ -22,28 +22,26 @@
         <p class="call-to-action__subtitle" data-sly-test="${cta.subtitle}">${cta.subtitle}</p>
         <div class="call-to-action__actions" data-sly-test="${cta.hasPrimaryCta || cta.hasSecondaryCta}">
             <sly data-sly-test="${cta.hasPrimaryCta}">
-                <sly data-sly-use.primaryUrl="${'adobexp/components/commons/v1/helper/transformurls.js' @ internalUrl=cta.primaryCtaLink}">
-                    <a class="cta-pill"
-                       href="${primaryUrl || '#'}"
-                       aria-label="${cta.primaryCtaText}"
-                       target="${cta.primaryCtaExternal ? '_blank' : ''}"
-                       rel="${cta.primaryCtaExternal ? 'noopener noreferrer' : ''}">
-                        <span class="cta-pill__text">${cta.primaryCtaText}</span>
-                        <span class="cta-pill__icon" aria-hidden="true">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
-                                <path d="M9 18l6-6-6-6"></path>
-                            </svg>
-                        </span>
-                    </a>
-                </sly>
+                <a data-sly-use.primaryUrl="${'adobexp/components/commons/v1/helper/checkProp.js' @ propName='link', propValue=cta.primaryCtaLink}"
+                   class="cta-pill"
+                   href="${primaryUrl.value || '#'}"
+                   aria-label="${cta.primaryCtaText}"
+                   target="${cta.primaryCtaExternal ? '_blank' : ''}"
+                   rel="${cta.primaryCtaExternal ? 'noopener noreferrer' : ''}">
+                    <span class="cta-pill__text">${cta.primaryCtaText}</span>
+                    <span class="cta-pill__icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                            <path d="M9 18l6-6-6-6"></path>
+                        </svg>
+                    </span>
+                </a>
             </sly>
             <sly data-sly-test="${cta.hasSecondaryCta}">
-                <sly data-sly-use.secondaryUrl="${'adobexp/components/commons/v1/helper/transformurls.js' @ internalUrl=cta.secondaryCtaLink}">
-                    <a class="btn-theme-auto"
-                       href="${secondaryUrl || '#'}"
-                       target="${cta.secondaryCtaExternal ? '_blank' : ''}"
-                       rel="${cta.secondaryCtaExternal ? 'noopener noreferrer' : ''}">${cta.secondaryCtaText}</a>
-                </sly>
+                <a data-sly-use.secondaryUrl="${'adobexp/components/commons/v1/helper/checkProp.js' @ propName='link', propValue=cta.secondaryCtaLink}"
+                   class="btn-theme-auto"
+                   href="${secondaryUrl.value || '#'}"
+                   target="${cta.secondaryCtaExternal ? '_blank' : ''}"
+                   rel="${cta.secondaryCtaExternal ? 'noopener noreferrer' : ''}">${cta.secondaryCtaText}</a>
             </sly>
         </div>
     </div>

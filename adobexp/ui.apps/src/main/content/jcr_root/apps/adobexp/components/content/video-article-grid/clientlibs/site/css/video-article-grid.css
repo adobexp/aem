@@ -1,11 +1,3 @@
-/**
- * Video Article Grid Component CSS
- * Styles for a searchable, sortable, paginated grid of article cards
- */
-
-/* ============================================
-   Base Styles
-   ============================================ */
 .video-article-grid {
   width: 100%;
   padding: 60px 20px;
@@ -49,9 +41,9 @@
   width: 100%;
 }
 
-/* ============================================
-   Toolbar (search bar + sort dropdowns)
-   ============================================ */
+/* ------------------------------------------------------------------ */
+/*  Toolbar  (search bar + sort dropdowns)                             */
+/* ------------------------------------------------------------------ */
 .video-article-grid__toolbar {
   display: flex;
   align-items: center;
@@ -136,9 +128,9 @@
   color: var(--standard-primary-site-text-color, #111827);
 }
 
-/* ============================================
-   Card Grid
-   ============================================ */
+/* ------------------------------------------------------------------ */
+/*  Card grid                                                          */
+/* ------------------------------------------------------------------ */
 .video-article-grid__cards {
   display: grid;
   grid-template-columns: repeat(var(--vag-cols, 3), 1fr);
@@ -275,9 +267,9 @@
   color: var(--standard-secondary-site-text-color, #6b7280);
 }
 
-/* ============================================
-   Pagination
-   ============================================ */
+/* ------------------------------------------------------------------ */
+/*  Pagination                                                         */
+/* ------------------------------------------------------------------ */
 .video-article-grid__pagination {
   display: flex;
   align-items: center;
@@ -324,9 +316,9 @@
   user-select: none;
 }
 
-/* ============================================
-   Responsive
-   ============================================ */
+/* ------------------------------------------------------------------ */
+/*  Responsive                                                         */
+/* ------------------------------------------------------------------ */
 @media (max-width: 900px) {
   .video-article-grid__cards {
     grid-template-columns: repeat(2, 1fr);
@@ -370,3 +362,130 @@
     font-size: 13px;
   }
 }
+/* ------------------------------------------------------------------ */
+/*  Theme fallbacks (when component CSS vars are not yet emitted)      */
+/* ------------------------------------------------------------------ */
+.theme-light .video-article-grid--with-bg {
+  background: var(--video-article-grid-bg, radial-gradient(circle, var(--main-theme-color) 0%, var(--site-body-bg) 70%));
+}
+.theme-light .video-article-grid__search-input {
+  background: var(--video-article-grid-search-bg, rgba(0, 0, 0, 0.03));
+  border-color: var(--video-article-grid-search-border, rgba(0, 0, 0, 0.12));
+}
+.theme-light .video-article-grid__search-input:focus {
+  border-color: var(--video-article-grid-search-focus-border, rgba(0, 0, 0, 0.3));
+  box-shadow: 0 0 0 3px var(--video-article-grid-search-focus-ring, rgba(0, 0, 0, 0.06));
+}
+.theme-light .video-article-grid__sort-select {
+  background-color: var(--video-article-grid-dropdown-bg, rgba(0, 0, 0, 0.03));
+  border-color: var(--video-article-grid-dropdown-border, rgba(0, 0, 0, 0.12));
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+}
+.theme-light .video-article-grid__sort-select:focus {
+  border-color: var(--video-article-grid-dropdown-focus-border, rgba(0, 0, 0, 0.3));
+  box-shadow: 0 0 0 3px var(--video-article-grid-dropdown-focus-ring, rgba(0, 0, 0, 0.06));
+}
+.theme-light .video-article-grid__sort-select option {
+  background: var(--video-article-grid-dropdown-option-bg, #ffffff);
+}
+.theme-light .video-article-grid__card {
+  background: var(--video-article-grid-card-bg, #ffffff);
+  border-color: var(--video-article-grid-card-border, #e5e7eb);
+}
+.theme-light .video-article-grid__card:hover {
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
+}
+.theme-light .video-article-grid__thumbnail {
+  background: var(--video-article-grid-thumb-bg, #e8f4f8);
+}
+.theme-light .video-article-grid__thumbnail::before {
+  background: var(--video-article-grid-thumb-overlay, rgba(0, 0, 0, 0.04));
+}
+.theme-light .video-article-grid__play-btn {
+  background: var(--video-article-grid-play-btn-bg, rgba(0, 0, 0, 0.06));
+  border-color: var(--video-article-grid-play-btn-border, rgba(0, 0, 0, 0.12));
+}
+.theme-light .video-article-grid__play-btn svg {
+  color: var(--video-article-grid-play-btn-color, rgba(0, 0, 0, 0.45));
+}
+.video-article-grid__thumbnail:hover .theme-light .video-article-grid__play-btn {
+  background: var(--video-article-grid-play-btn-hover-bg, rgba(0, 0, 0, 0.12));
+}
+.video-article-grid__thumbnail:hover .theme-light .video-article-grid__play-btn svg {
+  color: var(--video-article-grid-play-btn-hover-color, #000000);
+}
+.theme-light .video-article-grid__badge {
+  background: var(--video-article-grid-badge-bg, #f3f4f6);
+  color: var(--video-article-grid-badge-text, #6b7280);
+  border-color: var(--video-article-grid-badge-border, #e5e7eb);
+}
+.theme-light .video-article-grid__page-btn {
+  color: var(--video-article-grid-page-btn-text, #000000);
+  border-color: var(--video-article-grid-page-btn-border, #000000);
+}
+.theme-light .video-article-grid__page-btn:hover:not(:disabled) {
+  background: var(--video-article-grid-page-btn-hover-bg, #000000);
+  color: var(--video-article-grid-page-btn-hover-text, #ffffff);
+}
+
+.theme-dark .video-article-grid--with-bg {
+  background: var(--video-article-grid-bg, linear-gradient(180deg, #0c0c0c 0%, var(--site-body-bg) 100%));
+}
+.theme-dark .video-article-grid__search-input {
+  background: var(--video-article-grid-search-bg, rgba(255, 255, 255, 0.05));
+  border-color: var(--video-article-grid-search-border, rgba(255, 255, 255, 0.1));
+}
+.theme-dark .video-article-grid__search-input:focus {
+  border-color: var(--video-article-grid-search-focus-border, rgba(255, 255, 255, 0.28));
+  box-shadow: 0 0 0 3px var(--video-article-grid-search-focus-ring, rgba(255, 255, 255, 0.06));
+}
+.theme-dark .video-article-grid__sort-select {
+  background-color: var(--video-article-grid-dropdown-bg, rgba(255, 255, 255, 0.06));
+  border-color: var(--video-article-grid-dropdown-border, rgba(255, 255, 255, 0.1));
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+}
+.theme-dark .video-article-grid__sort-select:focus {
+  border-color: var(--video-article-grid-dropdown-focus-border, rgba(255, 255, 255, 0.28));
+  box-shadow: 0 0 0 3px var(--video-article-grid-dropdown-focus-ring, rgba(255, 255, 255, 0.06));
+}
+.theme-dark .video-article-grid__sort-select option {
+  background: var(--video-article-grid-dropdown-option-bg, #1e1e1e);
+}
+.theme-dark .video-article-grid__card {
+  background: var(--video-article-grid-card-bg, #1a1a2e);
+  border-color: var(--video-article-grid-card-border, rgba(255, 255, 255, 0.08));
+}
+.theme-dark .video-article-grid__thumbnail {
+  background: var(--video-article-grid-thumb-bg, #0d0d1a);
+}
+.theme-dark .video-article-grid__thumbnail::before {
+  background: var(--video-article-grid-thumb-overlay, rgba(0, 0, 0, 0.15));
+}
+.theme-dark .video-article-grid__play-btn {
+  background: var(--video-article-grid-play-btn-bg, rgba(255, 255, 255, 0.1));
+  border-color: var(--video-article-grid-play-btn-border, rgba(255, 255, 255, 0.18));
+}
+.theme-dark .video-article-grid__play-btn svg {
+  color: var(--video-article-grid-play-btn-color, rgba(255, 255, 255, 0.6));
+}
+.video-article-grid__thumbnail:hover .theme-dark .video-article-grid__play-btn {
+  background: var(--video-article-grid-play-btn-hover-bg, rgba(255, 255, 255, 0.2));
+}
+.video-article-grid__thumbnail:hover .theme-dark .video-article-grid__play-btn svg {
+  color: var(--video-article-grid-play-btn-hover-color, #ffffff);
+}
+.theme-dark .video-article-grid__badge {
+  background: var(--video-article-grid-badge-bg, rgba(255, 255, 255, 0.06));
+  color: var(--video-article-grid-badge-text, #9ca3af);
+  border-color: var(--video-article-grid-badge-border, rgba(255, 255, 255, 0.08));
+}
+.theme-dark .video-article-grid__page-btn {
+  color: var(--video-article-grid-page-btn-text, #ffffff);
+  border-color: var(--video-article-grid-page-btn-border, #ffffff);
+}
+.theme-dark .video-article-grid__page-btn:hover:not(:disabled) {
+  background: var(--video-article-grid-page-btn-hover-bg, #ffffff);
+  color: var(--video-article-grid-page-btn-hover-text, #000000);
+}
+
+/*# sourceMappingURL=video-article-grid.css.map */

@@ -78,20 +78,19 @@
                 <!-- CTA Button -->
                 <sly data-sly-test="${properties.ctaText && properties.ctaLink}">
                     <div class="lead-media-section__cta">
-                        <sly data-sly-use.ctaUrl="${'adobexp/components/commons/v1/helper/transformurls.js' @ internalUrl=properties.ctaLink}">
-                            <a class="cta-pill" 
-                               href="${ctaUrl}" 
-                               aria-label="${properties.ctaText}"
-                               target="${properties.ctaExternal == 'true' ? '_blank' : ''}"
-                               rel="${properties.ctaExternal == 'true' ? 'noopener noreferrer' : ''}">
-                                <span class="cta-pill__text">${properties.ctaText}</span>
-                                <span class="cta-pill__icon" aria-hidden="true">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
-                                        <path d="M9 18l6-6-6-6"></path>
-                                    </svg>
-                                </span>
-                            </a>
-                        </sly>
+                        <a data-sly-use.ctaUrl="${'adobexp/components/commons/v1/helper/checkProp.js' @ propName='link', propValue=properties.ctaLink}"
+                           class="cta-pill"
+                           href="${ctaUrl.value}"
+                           aria-label="${properties.ctaText}"
+                           target="${properties.ctaExternal == 'true' ? '_blank' : ''}"
+                           rel="${properties.ctaExternal == 'true' ? 'noopener noreferrer' : ''}">
+                            <span class="cta-pill__text">${properties.ctaText}</span>
+                            <span class="cta-pill__icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                                    <path d="M9 18l6-6-6-6"></path>
+                                </svg>
+                            </span>
+                        </a>
                     </div>
                 </sly>
             </div>

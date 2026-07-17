@@ -83,6 +83,10 @@ public class HeroModelImpl implements HeroModel {
     @Default(values = "false")
     private String secondaryCtaExternal;
 
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Default(booleanValues = true)
+    private boolean withBackground;
+
     @Override
     public String getTitle() {
         return title;
@@ -156,6 +160,11 @@ public class HeroModelImpl implements HeroModel {
     @Override
     public boolean hasSecondaryCta() {
         return StringUtils.isNotBlank(secondaryCtaText);
+    }
+
+    @Override
+    public boolean isWithBackground() {
+        return withBackground;
     }
 
     @Override

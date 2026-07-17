@@ -51,5 +51,10 @@ public interface HeroModel {
 
     boolean hasSecondaryCta();
 
+    /**
+     * Whether to apply the CA-configured hero background color to the section.
+     */
+    boolean isWithBackground();
+
     boolean hasContent();
 }

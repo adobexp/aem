@@ -45,8 +45,10 @@ import com.adobexp.aem.core.components.config.components.CountUpThemeConfig;
 import com.adobexp.aem.core.components.config.components.CtaPillThemeConfig;
 import com.adobexp.aem.core.components.config.components.FaqThemeConfig;
 import com.adobexp.aem.core.components.config.components.FooterThemeConfig;
+import com.adobexp.aem.core.components.config.components.HeroThemeConfig;
 import com.adobexp.aem.core.components.config.components.FormBuilderThemeConfig;
 import com.adobexp.aem.core.components.config.components.GridControlThemeConfig;
+import com.adobexp.aem.core.components.config.components.VideoArticleGridThemeConfig;
 import com.adobexp.aem.core.components.config.components.HeaderOverlayThemeConfig;
 import com.adobexp.aem.core.components.config.components.HeaderThemeConfig;
 import com.adobexp.aem.core.components.config.components.LeadBannerThemeConfig;
@@ -86,7 +88,10 @@ import com.adobexp.aem.core.components.config.components.SubscriptionPlansThemeC
         resourceTypes = {
                 "adobexp/components/global/pages/page/v1/page",
                 "adobexp/components/global/pages/rootpage/v1/rootpage",
-                "cq/experience-fragments/components/xfpage"
+                "cq/experience-fragments/components/xfpage",
+                // Tenant Admin / DAM Platform pages that host AdobeXP components
+                "dam-platform/components/structure/page",
+                "dam-platform/components/structure/xfpage"
         },
         methods = HttpConstants.METHOD_GET,
         selectors = "theme-variables",
@@ -181,10 +186,12 @@ public class SiteThemeServlet extends SlingSafeMethodsServlet {
                 configBuilder.as(MasonryGalleryThemeConfig.class),
                 configBuilder.as(ComparisonThemeConfig.class),
                 configBuilder.as(FaqThemeConfig.class),
+                configBuilder.as(HeroThemeConfig.class),
                 configBuilder.as(BlobImageSectionThemeConfig.class),
                 configBuilder.as(LeadMediaSectionThemeConfig.class),
                 configBuilder.as(GridControlThemeConfig.class),
-                configBuilder.as(FormBuilderThemeConfig.class)
+                configBuilder.as(FormBuilderThemeConfig.class),
+                configBuilder.as(VideoArticleGridThemeConfig.class)
         );
     }
 
@@ -357,6 +364,9 @@ public class SiteThemeServlet extends SlingSafeMethodsServlet {
         writer.println("  --faq-item-bg: " + getOrDefault(configs.faqConfig, c -> c.darkFaqItemBg(), "#2a2a2a") + ";");
         writer.println("  --faq-item-hover-bg: " + getOrDefault(configs.faqConfig, c -> c.darkFaqItemHoverBg(), "#333333") + ";");
         writer.println();
+        writer.println("  /* Hero */");
+        writer.println("  --hero-bg: " + getOrDefault(configs.heroConfig, c -> c.darkHeroBg(), "linear-gradient(135deg, var(--lead-banner-gradient-start, #212020) 0%, var(--lead-banner-gradient-stop-25, #aa7802) 50%, var(--lead-banner-gradient-end, #212020) 100%)") + ";");
+        writer.println();
         writer.println("  /* BlobImageSection */");
         writer.println("  --blob-image-section-bg: " + getOrDefault(configs.blobImageSectionConfig, c -> c.darkBlobImageSectionBg(), "linear-gradient(180deg, #0c0c0c 0%, var(--site-body-bg) 100%)") + ";");
         writer.println("  --blob-image-section-card-bg: " + getOrDefault(configs.blobImageSectionConfig, c -> c.darkBlobImageSectionCardBg(), "#2a2a2a") + ";");
@@ -392,6 +402,8 @@ public class SiteThemeServlet extends SlingSafeMethodsServlet {
         writer.println("  --form-field-focus-bg: " + getOrDefault(configs.formBuilderConfig, c -> c.darkFormFieldFocusBg(), "rgba(255, 255, 255, 0.08)") + ";");
         writer.println("  --form-dropdown-bg: " + getOrDefault(configs.formBuilderConfig, c -> c.darkFormDropdownBg(), "#2a2a2a") + ";");
         writer.println("  --form-builder-card-bg: " + getOrDefault(configs.formBuilderConfig, c -> c.darkFormBuilderCardBg(), "#2a2a2a") + ";");
+        writer.println();
+        writeVideoArticleGridTheme(writer, configs.videoArticleGridConfig, true);
         writer.println("}");
         writer.println();
         
@@ -563,6 +575,9 @@ public class SiteThemeServlet extends SlingSafeMethodsServlet {
         writer.println("  --faq-item-bg: " + getOrDefault(configs.faqConfig, c -> c.lightFaqItemBg(), "#f2fffd") + ";");
         writer.println("  --faq-item-hover-bg: " + getOrDefault(configs.faqConfig, c -> c.lightFaqItemHoverBg(), "#e5e7eb") + ";");
         writer.println();
+        writer.println("  /* Hero */");
+        writer.println("  --hero-bg: " + getOrDefault(configs.heroConfig, c -> c.lightHeroBg(), "linear-gradient(135deg, var(--lead-banner-gradient-start, #ffffff) 0%, var(--lead-banner-gradient-stop-25, #aafbff) 50%, var(--lead-banner-gradient-end, #ffffff) 100%)") + ";");
+        writer.println();
         writer.println("  /* BlobImageSection */");
         writer.println("  --blob-image-section-bg: " + getOrDefault(configs.blobImageSectionConfig, c -> c.lightBlobImageSectionBg(), "linear-gradient(180deg, var(--site-body-bg) 0%, #aafbff 10%, var(--main-theme-color) 50%, #aafbff 90%, var(--site-body-bg) 100%)") + ";");
         writer.println("  --blob-image-section-card-bg: " + getOrDefault(configs.blobImageSectionConfig, c -> c.lightBlobImageSectionCardBg(), "#f2fffd") + ";");
@@ -598,7 +613,70 @@ public class SiteThemeServlet extends SlingSafeMethodsServlet {
         writer.println("  --form-field-focus-bg: " + getOrDefault(configs.formBuilderConfig, c -> c.lightFormFieldFocusBg(), "rgba(0, 0, 0, 0.05)") + ";");
         writer.println("  --form-dropdown-bg: " + getOrDefault(configs.formBuilderConfig, c -> c.lightFormDropdownBg(), "#ffffff") + ";");
         writer.println("  --form-builder-card-bg: " + getOrDefault(configs.formBuilderConfig, c -> c.lightFormBuilderCardBg(), "#f2fffd") + ";");
+        writer.println();
+        writeVideoArticleGridTheme(writer, configs.videoArticleGridConfig, false);
         writer.println("}");
+    }
+
+    private void writeVideoArticleGridTheme(PrintWriter writer, VideoArticleGridThemeConfig config, boolean dark) {
+        writer.println("  /* VideoArticleGrid */");
+        if (dark) {
+            writer.println("  --video-article-grid-bg: " + getOrDefault(config, c -> c.darkVideoArticleGridBg(), "linear-gradient(180deg, #0c0c0c 0%, var(--site-body-bg) 100%)") + ";");
+            writer.println("  --video-article-grid-card-bg: " + getOrDefault(config, c -> c.darkVideoArticleGridCardBg(), "#1a1a2e") + ";");
+            writer.println("  --video-article-grid-card-border: " + getOrDefault(config, c -> c.darkVideoArticleGridCardBorder(), "rgba(255, 255, 255, 0.08)") + ";");
+            writer.println("  --video-article-grid-thumb-bg: " + getOrDefault(config, c -> c.darkVideoArticleGridThumbBg(), "#0d0d1a") + ";");
+            writer.println("  --video-article-grid-thumb-overlay: " + getOrDefault(config, c -> c.darkVideoArticleGridThumbOverlay(), "rgba(0, 0, 0, 0.15)") + ";");
+            writer.println("  --video-article-grid-play-btn-bg: " + getOrDefault(config, c -> c.darkVideoArticleGridPlayBtnBg(), "rgba(255, 255, 255, 0.1)") + ";");
+            writer.println("  --video-article-grid-play-btn-border: " + getOrDefault(config, c -> c.darkVideoArticleGridPlayBtnBorder(), "rgba(255, 255, 255, 0.18)") + ";");
+            writer.println("  --video-article-grid-play-btn-color: " + getOrDefault(config, c -> c.darkVideoArticleGridPlayBtnColor(), "rgba(255, 255, 255, 0.6)") + ";");
+            writer.println("  --video-article-grid-play-btn-hover-bg: " + getOrDefault(config, c -> c.darkVideoArticleGridPlayBtnHoverBg(), "rgba(255, 255, 255, 0.2)") + ";");
+            writer.println("  --video-article-grid-play-btn-hover-color: " + getOrDefault(config, c -> c.darkVideoArticleGridPlayBtnHoverColor(), "#ffffff") + ";");
+            writer.println("  --video-article-grid-badge-bg: " + getOrDefault(config, c -> c.darkVideoArticleGridBadgeBg(), "rgba(255, 255, 255, 0.06)") + ";");
+            writer.println("  --video-article-grid-badge-text: " + getOrDefault(config, c -> c.darkVideoArticleGridBadgeText(), "#9ca3af") + ";");
+            writer.println("  --video-article-grid-badge-border: " + getOrDefault(config, c -> c.darkVideoArticleGridBadgeBorder(), "rgba(255, 255, 255, 0.08)") + ";");
+            writer.println("  --video-article-grid-search-bg: " + getOrDefault(config, c -> c.darkVideoArticleGridSearchBg(), "rgba(255, 255, 255, 0.05)") + ";");
+            writer.println("  --video-article-grid-search-border: " + getOrDefault(config, c -> c.darkVideoArticleGridSearchBorder(), "rgba(255, 255, 255, 0.1)") + ";");
+            writer.println("  --video-article-grid-search-focus-border: " + getOrDefault(config, c -> c.darkVideoArticleGridSearchFocusBorder(), "rgba(255, 255, 255, 0.28)") + ";");
+            writer.println("  --video-article-grid-search-focus-ring: " + getOrDefault(config, c -> c.darkVideoArticleGridSearchFocusRing(), "rgba(255, 255, 255, 0.06)") + ";");
+            writer.println("  --video-article-grid-page-btn-bg: " + getOrDefault(config, c -> c.darkVideoArticleGridPageBtnBg(), "transparent") + ";");
+            writer.println("  --video-article-grid-page-btn-text: " + getOrDefault(config, c -> c.darkVideoArticleGridPageBtnText(), "#ffffff") + ";");
+            writer.println("  --video-article-grid-page-btn-border: " + getOrDefault(config, c -> c.darkVideoArticleGridPageBtnBorder(), "#ffffff") + ";");
+            writer.println("  --video-article-grid-page-btn-hover-bg: " + getOrDefault(config, c -> c.darkVideoArticleGridPageBtnHoverBg(), "#ffffff") + ";");
+            writer.println("  --video-article-grid-page-btn-hover-text: " + getOrDefault(config, c -> c.darkVideoArticleGridPageBtnHoverText(), "#000000") + ";");
+            writer.println("  --video-article-grid-dropdown-bg: " + getOrDefault(config, c -> c.darkVideoArticleGridDropdownBg(), "rgba(255, 255, 255, 0.06)") + ";");
+            writer.println("  --video-article-grid-dropdown-border: " + getOrDefault(config, c -> c.darkVideoArticleGridDropdownBorder(), "rgba(255, 255, 255, 0.1)") + ";");
+            writer.println("  --video-article-grid-dropdown-focus-border: " + getOrDefault(config, c -> c.darkVideoArticleGridDropdownFocusBorder(), "rgba(255, 255, 255, 0.28)") + ";");
+            writer.println("  --video-article-grid-dropdown-focus-ring: " + getOrDefault(config, c -> c.darkVideoArticleGridDropdownFocusRing(), "rgba(255, 255, 255, 0.06)") + ";");
+            writer.println("  --video-article-grid-dropdown-option-bg: " + getOrDefault(config, c -> c.darkVideoArticleGridDropdownOptionBg(), "#1e1e1e") + ";");
+        } else {
+            writer.println("  --video-article-grid-bg: " + getOrDefault(config, c -> c.lightVideoArticleGridBg(), "radial-gradient(circle, var(--main-theme-color) 0%, var(--site-body-bg) 70%)") + ";");
+            writer.println("  --video-article-grid-card-bg: " + getOrDefault(config, c -> c.lightVideoArticleGridCardBg(), "#ffffff") + ";");
+            writer.println("  --video-article-grid-card-border: " + getOrDefault(config, c -> c.lightVideoArticleGridCardBorder(), "#e5e7eb") + ";");
+            writer.println("  --video-article-grid-thumb-bg: " + getOrDefault(config, c -> c.lightVideoArticleGridThumbBg(), "#e8f4f8") + ";");
+            writer.println("  --video-article-grid-thumb-overlay: " + getOrDefault(config, c -> c.lightVideoArticleGridThumbOverlay(), "rgba(0, 0, 0, 0.04)") + ";");
+            writer.println("  --video-article-grid-play-btn-bg: " + getOrDefault(config, c -> c.lightVideoArticleGridPlayBtnBg(), "rgba(0, 0, 0, 0.06)") + ";");
+            writer.println("  --video-article-grid-play-btn-border: " + getOrDefault(config, c -> c.lightVideoArticleGridPlayBtnBorder(), "rgba(0, 0, 0, 0.12)") + ";");
+            writer.println("  --video-article-grid-play-btn-color: " + getOrDefault(config, c -> c.lightVideoArticleGridPlayBtnColor(), "rgba(0, 0, 0, 0.45)") + ";");
+            writer.println("  --video-article-grid-play-btn-hover-bg: " + getOrDefault(config, c -> c.lightVideoArticleGridPlayBtnHoverBg(), "rgba(0, 0, 0, 0.12)") + ";");
+            writer.println("  --video-article-grid-play-btn-hover-color: " + getOrDefault(config, c -> c.lightVideoArticleGridPlayBtnHoverColor(), "#000000") + ";");
+            writer.println("  --video-article-grid-badge-bg: " + getOrDefault(config, c -> c.lightVideoArticleGridBadgeBg(), "#f3f4f6") + ";");
+            writer.println("  --video-article-grid-badge-text: " + getOrDefault(config, c -> c.lightVideoArticleGridBadgeText(), "#6b7280") + ";");
+            writer.println("  --video-article-grid-badge-border: " + getOrDefault(config, c -> c.lightVideoArticleGridBadgeBorder(), "#e5e7eb") + ";");
+            writer.println("  --video-article-grid-search-bg: " + getOrDefault(config, c -> c.lightVideoArticleGridSearchBg(), "rgba(0, 0, 0, 0.03)") + ";");
+            writer.println("  --video-article-grid-search-border: " + getOrDefault(config, c -> c.lightVideoArticleGridSearchBorder(), "rgba(0, 0, 0, 0.12)") + ";");
+            writer.println("  --video-article-grid-search-focus-border: " + getOrDefault(config, c -> c.lightVideoArticleGridSearchFocusBorder(), "rgba(0, 0, 0, 0.3)") + ";");
+            writer.println("  --video-article-grid-search-focus-ring: " + getOrDefault(config, c -> c.lightVideoArticleGridSearchFocusRing(), "rgba(0, 0, 0, 0.06)") + ";");
+            writer.println("  --video-article-grid-page-btn-bg: " + getOrDefault(config, c -> c.lightVideoArticleGridPageBtnBg(), "transparent") + ";");
+            writer.println("  --video-article-grid-page-btn-text: " + getOrDefault(config, c -> c.lightVideoArticleGridPageBtnText(), "#000000") + ";");
+            writer.println("  --video-article-grid-page-btn-border: " + getOrDefault(config, c -> c.lightVideoArticleGridPageBtnBorder(), "#000000") + ";");
+            writer.println("  --video-article-grid-page-btn-hover-bg: " + getOrDefault(config, c -> c.lightVideoArticleGridPageBtnHoverBg(), "#000000") + ";");
+            writer.println("  --video-article-grid-page-btn-hover-text: " + getOrDefault(config, c -> c.lightVideoArticleGridPageBtnHoverText(), "#ffffff") + ";");
+            writer.println("  --video-article-grid-dropdown-bg: " + getOrDefault(config, c -> c.lightVideoArticleGridDropdownBg(), "rgba(0, 0, 0, 0.03)") + ";");
+            writer.println("  --video-article-grid-dropdown-border: " + getOrDefault(config, c -> c.lightVideoArticleGridDropdownBorder(), "rgba(0, 0, 0, 0.12)") + ";");
+            writer.println("  --video-article-grid-dropdown-focus-border: " + getOrDefault(config, c -> c.lightVideoArticleGridDropdownFocusBorder(), "rgba(0, 0, 0, 0.3)") + ";");
+            writer.println("  --video-article-grid-dropdown-focus-ring: " + getOrDefault(config, c -> c.lightVideoArticleGridDropdownFocusRing(), "rgba(0, 0, 0, 0.06)") + ";");
+            writer.println("  --video-article-grid-dropdown-option-bg: " + getOrDefault(config, c -> c.lightVideoArticleGridDropdownOptionBg(), "#ffffff") + ";");
+        }
     }
 
     private <T> String getOrDefault(T config, Function<T, String> getter, String defaultValue) {
@@ -635,10 +713,12 @@ public class SiteThemeServlet extends SlingSafeMethodsServlet {
         private final MasonryGalleryThemeConfig masonryGalleryConfig;
         private final ComparisonThemeConfig comparisonConfig;
         private final FaqThemeConfig faqConfig;
+        private final HeroThemeConfig heroConfig;
         private final BlobImageSectionThemeConfig blobImageSectionConfig;
         private final LeadMediaSectionThemeConfig leadMediaSectionConfig;
         private final GridControlThemeConfig gridControlConfig;
         private final FormBuilderThemeConfig formBuilderConfig;
+        private final VideoArticleGridThemeConfig videoArticleGridConfig;
 
         private ThemeConfigs(
                 SiteThemeGlobalConfig globalConfig,
@@ -661,10 +741,12 @@ public class SiteThemeServlet extends SlingSafeMethodsServlet {
                 MasonryGalleryThemeConfig masonryGalleryConfig,
                 ComparisonThemeConfig comparisonConfig,
                 FaqThemeConfig faqConfig,
+                HeroThemeConfig heroConfig,
                 BlobImageSectionThemeConfig blobImageSectionConfig,
                 LeadMediaSectionThemeConfig leadMediaSectionConfig,
                 GridControlThemeConfig gridControlConfig,
-                FormBuilderThemeConfig formBuilderConfig
+                FormBuilderThemeConfig formBuilderConfig,
+                VideoArticleGridThemeConfig videoArticleGridConfig
         ) {
             this.globalConfig = globalConfig;
             this.headerConfig = headerConfig;
@@ -686,14 +768,18 @@ public class SiteThemeServlet extends SlingSafeMethodsServlet {
             this.masonryGalleryConfig = masonryGalleryConfig;
             this.comparisonConfig = comparisonConfig;
             this.faqConfig = faqConfig;
+            this.heroConfig = heroConfig;
             this.blobImageSectionConfig = blobImageSectionConfig;
             this.leadMediaSectionConfig = leadMediaSectionConfig;
             this.gridControlConfig = gridControlConfig;
             this.formBuilderConfig = formBuilderConfig;
+            this.videoArticleGridConfig = videoArticleGridConfig;
         }
 
         private static ThemeConfigs empty() {
             return new ThemeConfigs(
+                    null,
+                    null,
                     null,
                     null,
                     null,

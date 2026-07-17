@@ -56,8 +56,9 @@
         <!-- CTA Button -->
         <sly data-sly-test="${rating.ctaText && rating.ctaLink}">
             <div class="rating__cta">
-                <a class="cta-pill" 
-                    href="${rating.ctaLink @ context='uri'}" 
+                <a data-sly-use.ctaUrl="${'adobexp/components/commons/v1/helper/checkProp.js' @ propName='link', propValue=rating.ctaLink}"
+                    class="cta-pill"
+                    href="${ctaUrl.value}"
                     aria-label="${rating.ctaText}"
                     target="${rating.ctaLinkExternal ? '_blank' : '_self'}"
                     rel="${rating.ctaLinkExternal ? 'noopener noreferrer' : ''}">

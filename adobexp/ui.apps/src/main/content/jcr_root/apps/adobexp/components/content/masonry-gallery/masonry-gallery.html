@@ -80,20 +80,19 @@
         <!-- CTA Section -->
         <sly data-sly-test="${masonryGallery.hasCtaLink}">
             <div class="masonry-gallery__cta">
-                <sly data-sly-use.ctaUrl="${'adobexp/components/commons/v1/helper/transformurls.js' @ internalUrl=masonryGallery.ctaLink}">
-                    <a class="cta-button" 
-                       href="${ctaUrl}" 
-                       aria-label="${masonryGallery.ctaText}"
-                       target="${masonryGallery.ctaExternal ? '_blank' : ''}"
-                       rel="${masonryGallery.ctaExternal ? 'noopener noreferrer' : ''}">
-                        <span>${masonryGallery.ctaText}</span>
-                        <span class="btn-theme-auto btn-icon-only cta-button__icon" aria-hidden="true">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" width="20" height="20" stroke-width="1.5" aria-hidden="true">
-                                <path d="M5 12h14m-6 6 6-6m-6-6 6 6"></path>
-                            </svg>
-                        </span>
-                    </a>
-                </sly>
+                <a data-sly-use.ctaUrl="${'adobexp/components/commons/v1/helper/checkProp.js' @ propName='link', propValue=masonryGallery.ctaLink}"
+                   class="cta-button"
+                   href="${ctaUrl.value}"
+                   aria-label="${masonryGallery.ctaText}"
+                   target="${masonryGallery.ctaExternal ? '_blank' : ''}"
+                   rel="${masonryGallery.ctaExternal ? 'noopener noreferrer' : ''}">
+                    <span>${masonryGallery.ctaText}</span>
+                    <span class="btn-theme-auto btn-icon-only cta-button__icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" width="20" height="20" stroke-width="1.5" aria-hidden="true">
+                            <path d="M5 12h14m-6 6 6-6m-6-6 6 6"></path>
+                        </svg>
+                    </span>
+                </a>
             </div>
         </sly>
         
