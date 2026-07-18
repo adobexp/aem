@@ -45,20 +45,15 @@
                                         jcr:primaryType="nt:unstructured"
                                         sling:resourceType="granite/ui/components/coral/foundation/form/select"
                                         fieldLabel="Layout"
-                                        name="./layout">
+                                        fieldDescription="Responsive Grid is the default and only supported layout."
+                                        name="./layout"
+                                        value="responsiveGrid">
                                         <items jcr:primaryType="nt:unstructured">
-                                            <default
-                                                jcr:primaryType="nt:unstructured"
-                                                text="(Default)"
-                                                value=""/>
-                                            <simple
-                                                jcr:primaryType="nt:unstructured"
-                                                text="Simple"
-                                                value="simple"/>
                                             <responsive
                                                 jcr:primaryType="nt:unstructured"
                                                 text="Responsive Grid"
-                                                value="responsiveGrid"/>
+                                                value="responsiveGrid"
+                                                selected="{Boolean}true"/>
                                         </items>
                                     </type>
                                     <!-- <disableLayout

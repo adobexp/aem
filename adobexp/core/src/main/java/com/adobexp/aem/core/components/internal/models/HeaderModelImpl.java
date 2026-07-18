@@ -48,6 +48,7 @@ public class HeaderModelImpl implements HeaderModel {
     protected static final String RESOURCE_TYPE = "adobexp/components/global/header";
     
     private static final String MENU_ITEMS_NODE = "menuItems";
+    private static final String SIDEBAR_MENU_ITEMS_NODE = "sidebarMenuItems";
     private static final String MENU_OPTIONS_NODE = "menuOptions";
     private static final String SUB_MENU_ITEMS_NODE = "subMenuItems";
     private static final String LEVEL3_MENU_ITEMS_NODE = "level3MenuItems";
@@ -85,6 +86,10 @@ public class HeaderModelImpl implements HeaderModel {
     private String headerSubtitle;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Default(values = "Anamnesis")
+    private String sidebarTitle;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Default(values = "Follow us")
     private String socialSectionTitle;
 
@@ -110,7 +115,16 @@ public class HeaderModelImpl implements HeaderModel {
     @Default(values = "dark")
     private String defaultTheme;
 
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Default(values = "overlay")
+    private String menuVariant;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Default(booleanValues = true)
+    private boolean sidebarAccordionExpanded;
+
     private List<MenuItem> menuItems;
+    private List<MenuItem> sidebarMenuItems;
     private List<MenuOption> menuOptions;
     private List<ArticleTeaser> articleTeasers;
     private List<TopNavButton> topNavButtons;
@@ -119,12 +133,14 @@ public class HeaderModelImpl implements HeaderModel {
     protected void init() {
         Resource resource = getResource();
         if (resource != null) {
-            menuItems = parseMenuItems(resource);
+            menuItems = parseMenuItems(resource, MENU_ITEMS_NODE);
+            sidebarMenuItems = parseMenuItems(resource, SIDEBAR_MENU_ITEMS_NODE);
             menuOptions = parseMenuOptions(resource);
             articleTeasers = parseArticleTeasers(resource);
             topNavButtons = parseTopNavButtons(resource);
         } else {
             menuItems = Collections.emptyList();
+            sidebarMenuItems = Collections.emptyList();
             menuOptions = Collections.emptyList();
             articleTeasers = Collections.emptyList();
             topNavButtons = Collections.emptyList();
@@ -142,11 +158,11 @@ public class HeaderModelImpl implements HeaderModel {
     }
 
     /**
-     * Parse menu items from the menuItems child node.
+     * Parse menu items from a named child node (overlay {@code menuItems} or sidebar {@code sidebarMenuItems}).
      */
-    private List<MenuItem> parseMenuItems(Resource componentResource) {
+    private List<MenuItem> parseMenuItems(Resource componentResource, String childNodeName) {
         List<MenuItem> items = new ArrayList<>();
-        Resource menuItemsResource = componentResource.getChild(MENU_ITEMS_NODE);
+        Resource menuItemsResource = componentResource.getChild(childNodeName);
         
         if (menuItemsResource != null) {
             for (Resource itemResource : menuItemsResource.getChildren()) {
@@ -432,8 +448,22 @@ public class HeaderModelImpl implements HeaderModel {
     }
 
     @Override
+    public String getSidebarTitle() {
+        return StringUtils.isNotBlank(sidebarTitle) ? sidebarTitle : "Anamnesis";
+    }
+
+    @Override
     public List<MenuItem> getMenuItems() {
         return menuItems;
+    }
+
+    @Override
+    public List<MenuItem> getSidebarMenuItems() {
+        // Prefer dedicated sidebar authoring; fall back to overlay menuItems for older content.
+        if (sidebarMenuItems != null && !sidebarMenuItems.isEmpty()) {
+            return sidebarMenuItems;
+        }
+        return menuItems != null ? menuItems : Collections.emptyList();
     }
 
     @Override
@@ -499,6 +529,19 @@ public class HeaderModelImpl implements HeaderModel {
     @Override
     public String getDefaultTheme() {
         return defaultTheme;
+    }
+
+    @Override
+    public String getMenuVariant() {
+        if (StringUtils.equalsIgnoreCase(menuVariant, "sidebar")) {
+            return "sidebar";
+        }
+        return "overlay";
+    }
+
+    @Override
+    public boolean isSidebarAccordionExpanded() {
+        return sidebarAccordionExpanded;
     }
 
     @Override

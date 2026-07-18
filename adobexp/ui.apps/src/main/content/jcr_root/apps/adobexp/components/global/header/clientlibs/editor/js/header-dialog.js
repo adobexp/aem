@@ -28,6 +28,10 @@
     var level2MenuLinkSelector = '[data-cmp-header-dialog-hook="level2MenuLink"]';
     var level2Level3MenuItemsSelector = '[data-cmp-header-dialog-hook="level2Level3MenuItems"]';
 
+    var menuVariantSelector = '[data-cmp-header-dialog-hook="menuVariant"], .cmp-header-menu-variant';
+    var OVERLAY_TAB_TITLES = ["Overlay Column 1", "Overlay Column 2", "Overlay Column 3"];
+    var SIDEBAR_TAB_TITLE = "SideBar Menu Options";
+
     /**
      * Shows or hides fields based on the menu type selection
      * @param {HTMLElement} selectElement - The dropdown select element
@@ -130,6 +134,86 @@
         }, 100);
     }
 
+    function getMenuVariant($dialogContent) {
+        var $select = $dialogContent.find(menuVariantSelector).first();
+        if (!$select.length) {
+            $select = $dialogContent.find('[name="./menuVariant"]').first();
+        }
+        var value = ($select.val() || "overlay").toString().toLowerCase();
+        return value === "sidebar" ? "sidebar" : "overlay";
+    }
+
+    function getTabLabel(tab) {
+        if (!tab) {
+            return "";
+        }
+        var labelEl = tab.querySelector("coral-tab-label") || tab;
+        return (labelEl.textContent || "").replace(/\s+/g, " ").trim();
+    }
+
+    /**
+     * Show Overlay Column tabs for overlay variation; SideBar Menu Options for sidebar.
+     */
+    function updateMenuVariationTabs($dialogContent) {
+        var variant = getMenuVariant($dialogContent);
+        var $form = $dialogContent.closest("form");
+        var $tabView = $form.find("coral-tabview").first();
+        if (!$tabView.length) {
+            $tabView = $dialogContent.find("coral-tabview").first();
+        }
+        if (!$tabView.length) {
+            return;
+        }
+
+        var tabList = $tabView.find("coral-tablist")[0];
+        var panelStack = $tabView.find("coral-panelstack")[0];
+        if (!tabList || !panelStack) {
+            return;
+        }
+
+        var tabs = tabList.items ? Array.prototype.slice.call(tabList.items.getAll()) : Array.prototype.slice.call(tabList.querySelectorAll("coral-tab"));
+        var panels = panelStack.items ? Array.prototype.slice.call(panelStack.items.getAll()) : Array.prototype.slice.call(panelStack.querySelectorAll("coral-panel"));
+        var selectedWasHidden = false;
+        var firstVisibleIndex = -1;
+
+        tabs.forEach(function(tab, index) {
+            var label = getTabLabel(tab);
+            var isOverlayTab = OVERLAY_TAB_TITLES.indexOf(label) !== -1;
+            var isSidebarTab = label === SIDEBAR_TAB_TITLE;
+            var visible = true;
+
+            if (isOverlayTab) {
+                visible = variant === "overlay";
+            } else if (isSidebarTab) {
+                visible = variant === "sidebar";
+            }
+
+            tab.hidden = !visible;
+            tab.setAttribute("aria-hidden", visible ? "false" : "true");
+            if (panels[index]) {
+                panels[index].hidden = !visible;
+            }
+
+            if (visible && firstVisibleIndex === -1) {
+                firstVisibleIndex = index;
+            }
+            if (!visible && tab.selected) {
+                selectedWasHidden = true;
+            }
+        });
+
+        if (selectedWasHidden && firstVisibleIndex >= 0 && tabs[firstVisibleIndex]) {
+            tabs[firstVisibleIndex].selected = true;
+        }
+    }
+
+    function handleMenuVariantChange(event) {
+        var $dialogContent = $(event.target).closest(dialogContentSelector);
+        if ($dialogContent.length) {
+            updateMenuVariationTabs($dialogContent);
+        }
+    }
+
     // Listen for dialog-loaded event
     $(document).on("dialog-loaded", function(e) {
         var $dialog = e.dialog;
@@ -138,12 +222,16 @@
         if ($dialogContent.length > 0) {
             // Initialize visibility for all existing menu items
             initializeAllMenuItems($dialogContent);
+            updateMenuVariationTabs($dialogContent);
             
             // Listen for change events on menu type dropdowns
             $dialogContent.on("change", level1MenuTypeSelector + ", " + level2MenuTypeSelector, handleMenuTypeChange);
             
             // Listen for multifield item additions
             $dialogContent.on("coral-collection:add", "coral-multifield", handleMultifieldAdd);
+
+            // Toggle overlay vs sidebar authoring tabs from Menu Variation
+            $dialogContent.on("change", menuVariantSelector + ', [name="./menuVariant"]', handleMenuVariantChange);
         }
     });
 

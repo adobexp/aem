@@ -1,6 +1,6 @@
 .page-header {
   width: 100%;
-  padding: 3rem 1.5rem 2rem;
+  padding: 2rem 1.25rem 1.5rem;
   text-align: center;
   box-sizing: border-box;
   background: linear-gradient(135deg, var(--lead-banner-gradient-start, #212020) 0%, var(--lead-banner-gradient-stop-25, #aa7802) 50%, var(--lead-banner-gradient-end, #212020) 100%);
@@ -8,7 +8,7 @@
 }
 
 .page-header__inner {
-  max-width: 720px;
+  max-width: 960px;
   margin: 0 auto;
 }
 

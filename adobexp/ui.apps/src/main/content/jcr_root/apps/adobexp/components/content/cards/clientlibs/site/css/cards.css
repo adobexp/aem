@@ -1,25 +1,25 @@
 .cards {
   width: 100%;
-  padding: 4rem 1.5rem;
+  padding: 2.5rem 1.25rem;
   box-sizing: border-box;
 }
 
 .cards--with-bg {
-  background: var(--site-body-bg, #1e1e1e);
+  background: var(--cards-bg, var(--site-body-bg, #1e1e1e));
 }
 
 .cards--muted {
-  background: linear-gradient(180deg, #0c0c0c 0%, var(--site-body-bg, #1e1e1e) 100%);
+  background: var(--cards-muted-bg, linear-gradient(180deg, #0c0c0c 0%, var(--site-body-bg, #1e1e1e) 100%));
 }
 
 .cards__inner {
-  max-width: 1200px;
+  max-width: 1280px;
   margin: 0 auto;
 }
 
 .cards__header {
   text-align: center;
-  margin-bottom: 3rem;
+  margin-bottom: 1.75rem;
 }
 
 .cards__title {
@@ -55,8 +55,8 @@
 }
 
 .cards__item {
-  background: var(--count-up-card-bg, #2a2a2a);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--cards-item-bg, var(--count-up-card-bg, #2a2a2a));
+  border: 1px solid var(--cards-item-border, rgba(255, 255, 255, 0.08));
   border-radius: 12px;
   padding: 1.5rem;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
@@ -85,7 +85,7 @@
   justify-content: center;
   width: 48px;
   height: 48px;
-  background: rgba(255, 255, 255, 0.06);
+  background: var(--cards-item-icon-bg, rgba(255, 255, 255, 0.06));
   border-radius: 10px;
   font-size: 1.25rem;
   margin-bottom: 1rem;
@@ -98,7 +98,7 @@
   font-size: 0.9rem;
   font-weight: 600;
   color: var(--primary-text-color, #ffc846);
-  background: rgba(255, 255, 255, 0.06);
+  background: var(--cards-item-icon-bg, rgba(255, 255, 255, 0.06));
   padding: 0.35rem 0.6rem;
   border-radius: 6px;
   margin-bottom: 0.75rem;

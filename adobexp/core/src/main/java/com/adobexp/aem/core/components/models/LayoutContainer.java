@@ -15,11 +15,14 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobexp.aem.core.components.models;
 
+import java.util.Collections;
+import java.util.List;
+
 import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ConsumerType;
 
 /**
- * Defines the {@code LayoutContainer} Sling Model used for the {@code /apps/core/wcm/components/container} component.
+ * Defines the {@code LayoutContainer} Sling Model used for the container component.
  *
  * @since com.adobexp.aem.core.components.models 1.0.0
  */
@@ -41,14 +44,14 @@ public interface LayoutContainer {
     String PN_LAYOUT = "layout";
 
     /**
-     * Enumeration of supported layout types for the container component
+     * Enumeration of supported layout types for the container component.
+     * Responsive Grid is the only supported layout; legacy {@code simple} values map to it.
      */
     enum LayoutType {
-        SIMPLE("simple"),
         RESPONSIVE_GRID("responsiveGrid")
         ;
 
-        private String layout;
+        private final String layout;
 
         LayoutType(String layout) {
             this.layout = layout;
@@ -58,25 +61,24 @@ public interface LayoutContainer {
             return layout;
         }
 
+        /**
+         * Resolves a stored layout value. Unknown or legacy {@code simple} values become {@link #RESPONSIVE_GRID}.
+         */
         public static LayoutType getLayoutType(String layout) {
-            for (LayoutType layoutType : values()) {
-                if (layoutType.layout.equals(layout)) {
-                    return layoutType;
-                }
-            }
-            return null;
+            return RESPONSIVE_GRID;
         }
     }
 
     /**
-     * Returns the {@link LayoutType} to be used by the container component
+     * Returns the {@link LayoutType} to be used by the container component.
+     * Defaults to {@link LayoutType#RESPONSIVE_GRID}.
      *
      * @return {@link LayoutType} for the container component
      * @since com.adobexp.aem.core.components.models 1.0.0
      */
     @NotNull
     default LayoutType getLayout() {
-        return LayoutType.SIMPLE;
+        return LayoutType.RESPONSIVE_GRID;
     }
 
     /**
@@ -107,5 +109,15 @@ public interface LayoutContainer {
      */
     default String getId() {
         return null;
+    }
+
+    /**
+     * Returns the child items of this container.
+     *
+     * @return list of container items; never {@code null}
+     */
+    @NotNull
+    default List<ContainerItem> getChildren() {
+        return Collections.emptyList();
     }
 }

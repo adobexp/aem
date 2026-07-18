@@ -1,15 +1,15 @@
 .call-to-action {
   width: 100%;
-  padding: 4rem 1.5rem;
+  padding: 2.5rem 1.25rem;
   box-sizing: border-box;
 }
 
 .call-to-action--with-bg {
-  background: linear-gradient(180deg, #0c0c0c 0%, var(--site-body-bg, #1e1e1e) 100%);
+  background: var(--call-to-action-bg, linear-gradient(180deg, #0c0c0c 0%, var(--site-body-bg, #1e1e1e) 100%));
 }
 
 .call-to-action__inner {
-  max-width: 720px;
+  max-width: 960px;
   margin: 0 auto;
   text-align: center;
   opacity: 0;

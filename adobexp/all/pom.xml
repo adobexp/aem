@@ -45,12 +45,6 @@
                         </embedded>
                         <embedded>
                             <groupId>com.adobexp</groupId>
-                            <artifactId>adobexp-aem-quickstart.ui.anamnesis.content</artifactId>
-                            <type>zip</type>
-                            <target>/apps/adobexp-packages/content/install</target>
-                        </embedded>
-                        <embedded>
-                            <groupId>com.adobexp</groupId>
                             <artifactId>adobexp-aem-quickstart.ui.config</artifactId>
                             <type>zip</type>
                             <target>/apps/adobexp-packages/application/install</target>
@@ -208,12 +202,6 @@
         <dependency>
             <groupId>com.adobexp</groupId>
             <artifactId>adobexp-aem-quickstart.ui.content</artifactId>
-            <version>${project.version}</version>
-            <type>zip</type>
-        </dependency>
-        <dependency>
-            <groupId>com.adobexp</groupId>
-            <artifactId>adobexp-aem-quickstart.ui.anamnesis.content</artifactId>
             <version>${project.version}</version>
             <type>zip</type>
         </dependency>

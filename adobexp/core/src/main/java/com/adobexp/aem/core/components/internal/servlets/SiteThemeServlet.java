@@ -39,6 +39,9 @@ import com.adobexp.aem.core.components.config.SiteThemeGlobalConfig;
 import com.adobexp.aem.core.components.config.components.ArticleTileThemeConfig;
 import com.adobexp.aem.core.components.config.components.BlobImageSectionThemeConfig;
 import com.adobexp.aem.core.components.config.components.ButtonThemeConfig;
+import com.adobexp.aem.core.components.config.components.CallToActionThemeConfig;
+import com.adobexp.aem.core.components.config.components.CardsThemeConfig;
+import com.adobexp.aem.core.components.config.components.DataTableThemeConfig;
 import com.adobexp.aem.core.components.config.components.CompareSubscriptionThemeConfig;
 import com.adobexp.aem.core.components.config.components.ComparisonThemeConfig;
 import com.adobexp.aem.core.components.config.components.CountUpThemeConfig;
@@ -191,7 +194,10 @@ public class SiteThemeServlet extends SlingSafeMethodsServlet {
                 configBuilder.as(LeadMediaSectionThemeConfig.class),
                 configBuilder.as(GridControlThemeConfig.class),
                 configBuilder.as(FormBuilderThemeConfig.class),
-                configBuilder.as(VideoArticleGridThemeConfig.class)
+                configBuilder.as(VideoArticleGridThemeConfig.class),
+                configBuilder.as(CardsThemeConfig.class),
+                configBuilder.as(CallToActionThemeConfig.class),
+                configBuilder.as(DataTableThemeConfig.class)
         );
     }
 
@@ -363,6 +369,22 @@ public class SiteThemeServlet extends SlingSafeMethodsServlet {
         writer.println("  --faq-bg: " + getOrDefault(configs.faqConfig, c -> c.darkFaqBg(), "linear-gradient(180deg, #0c0c0c 0%, var(--site-body-bg) 100%)") + ";");
         writer.println("  --faq-item-bg: " + getOrDefault(configs.faqConfig, c -> c.darkFaqItemBg(), "#2a2a2a") + ";");
         writer.println("  --faq-item-hover-bg: " + getOrDefault(configs.faqConfig, c -> c.darkFaqItemHoverBg(), "#333333") + ";");
+        writer.println();
+        writer.println("  /* Cards */");
+        writer.println("  --cards-bg: " + getOrDefault(configs.cardsConfig, c -> c.darkCardsBg(), "var(--site-body-bg, #1e1e1e)") + ";");
+        writer.println("  --cards-muted-bg: " + getOrDefault(configs.cardsConfig, c -> c.darkCardsMutedBg(), "linear-gradient(180deg, #0c0c0c 0%, var(--site-body-bg) 100%)") + ";");
+        writer.println("  --cards-item-bg: " + getOrDefault(configs.cardsConfig, c -> c.darkCardsItemBg(), "#2a2a2a") + ";");
+        writer.println("  --cards-item-border: " + getOrDefault(configs.cardsConfig, c -> c.darkCardsItemBorder(), "rgba(255, 255, 255, 0.08)") + ";");
+        writer.println("  --cards-item-icon-bg: " + getOrDefault(configs.cardsConfig, c -> c.darkCardsItemIconBg(), "rgba(255, 255, 255, 0.06)") + ";");
+        writer.println();
+        writer.println("  /* Call to Action */");
+        writer.println("  --call-to-action-bg: " + getOrDefault(configs.callToActionConfig, c -> c.darkCallToActionBg(), "linear-gradient(180deg, #0c0c0c 0%, var(--site-body-bg) 100%)") + ";");
+        writer.println();
+        writer.println("  /* Data Table */");
+        writer.println("  --data-table-bg: " + getOrDefault(configs.dataTableConfig, c -> c.darkDataTableBg(), "linear-gradient(180deg, #0c0c0c 0%, var(--site-body-bg) 100%)") + ";");
+        writer.println("  --data-table-header-bg: " + getOrDefault(configs.dataTableConfig, c -> c.darkDataTableHeaderBg(), "rgba(255, 255, 255, 0.06)") + ";");
+        writer.println("  --data-table-cell-border: " + getOrDefault(configs.dataTableConfig, c -> c.darkDataTableCellBorder(), "rgba(255, 255, 255, 0.1)") + ";");
+        writer.println("  --data-table-row-hover-bg: " + getOrDefault(configs.dataTableConfig, c -> c.darkDataTableRowHoverBg(), "rgba(255, 255, 255, 0.04)") + ";");
         writer.println();
         writer.println("  /* Hero */");
         writer.println("  --hero-bg: " + getOrDefault(configs.heroConfig, c -> c.darkHeroBg(), "linear-gradient(135deg, var(--lead-banner-gradient-start, #212020) 0%, var(--lead-banner-gradient-stop-25, #aa7802) 50%, var(--lead-banner-gradient-end, #212020) 100%)") + ";");
@@ -575,6 +597,22 @@ public class SiteThemeServlet extends SlingSafeMethodsServlet {
         writer.println("  --faq-item-bg: " + getOrDefault(configs.faqConfig, c -> c.lightFaqItemBg(), "#f2fffd") + ";");
         writer.println("  --faq-item-hover-bg: " + getOrDefault(configs.faqConfig, c -> c.lightFaqItemHoverBg(), "#e5e7eb") + ";");
         writer.println();
+        writer.println("  /* Cards */");
+        writer.println("  --cards-bg: " + getOrDefault(configs.cardsConfig, c -> c.lightCardsBg(), "var(--site-body-bg, #ffffff)") + ";");
+        writer.println("  --cards-muted-bg: " + getOrDefault(configs.cardsConfig, c -> c.lightCardsMutedBg(), "linear-gradient(180deg, var(--site-body-bg) 0%, var(--main-theme-color) 50%, var(--site-body-bg) 100%)") + ";");
+        writer.println("  --cards-item-bg: " + getOrDefault(configs.cardsConfig, c -> c.lightCardsItemBg(), "#ffffff") + ";");
+        writer.println("  --cards-item-border: " + getOrDefault(configs.cardsConfig, c -> c.lightCardsItemBorder(), "rgba(0, 0, 0, 0.08)") + ";");
+        writer.println("  --cards-item-icon-bg: " + getOrDefault(configs.cardsConfig, c -> c.lightCardsItemIconBg(), "rgba(0, 0, 0, 0.04)") + ";");
+        writer.println();
+        writer.println("  /* Call to Action */");
+        writer.println("  --call-to-action-bg: " + getOrDefault(configs.callToActionConfig, c -> c.lightCallToActionBg(), "linear-gradient(180deg, var(--site-body-bg) 0%, var(--main-theme-color) 50%, var(--site-body-bg) 100%)") + ";");
+        writer.println();
+        writer.println("  /* Data Table */");
+        writer.println("  --data-table-bg: " + getOrDefault(configs.dataTableConfig, c -> c.lightDataTableBg(), "linear-gradient(180deg, var(--site-body-bg) 0%, var(--main-theme-color) 50%, var(--site-body-bg) 100%)") + ";");
+        writer.println("  --data-table-header-bg: " + getOrDefault(configs.dataTableConfig, c -> c.lightDataTableHeaderBg(), "rgba(0, 0, 0, 0.04)") + ";");
+        writer.println("  --data-table-cell-border: " + getOrDefault(configs.dataTableConfig, c -> c.lightDataTableCellBorder(), "rgba(0, 0, 0, 0.1)") + ";");
+        writer.println("  --data-table-row-hover-bg: " + getOrDefault(configs.dataTableConfig, c -> c.lightDataTableRowHoverBg(), "rgba(0, 0, 0, 0.03)") + ";");
+        writer.println();
         writer.println("  /* Hero */");
         writer.println("  --hero-bg: " + getOrDefault(configs.heroConfig, c -> c.lightHeroBg(), "linear-gradient(135deg, var(--lead-banner-gradient-start, #ffffff) 0%, var(--lead-banner-gradient-stop-25, #aafbff) 50%, var(--lead-banner-gradient-end, #ffffff) 100%)") + ";");
         writer.println();
@@ -719,6 +757,9 @@ public class SiteThemeServlet extends SlingSafeMethodsServlet {
         private final GridControlThemeConfig gridControlConfig;
         private final FormBuilderThemeConfig formBuilderConfig;
         private final VideoArticleGridThemeConfig videoArticleGridConfig;
+        private final CardsThemeConfig cardsConfig;
+        private final CallToActionThemeConfig callToActionConfig;
+        private final DataTableThemeConfig dataTableConfig;
 
         private ThemeConfigs(
                 SiteThemeGlobalConfig globalConfig,
@@ -746,7 +787,10 @@ public class SiteThemeServlet extends SlingSafeMethodsServlet {
                 LeadMediaSectionThemeConfig leadMediaSectionConfig,
                 GridControlThemeConfig gridControlConfig,
                 FormBuilderThemeConfig formBuilderConfig,
-                VideoArticleGridThemeConfig videoArticleGridConfig
+                VideoArticleGridThemeConfig videoArticleGridConfig,
+                CardsThemeConfig cardsConfig,
+                CallToActionThemeConfig callToActionConfig,
+                DataTableThemeConfig dataTableConfig
         ) {
             this.globalConfig = globalConfig;
             this.headerConfig = headerConfig;
@@ -774,10 +818,16 @@ public class SiteThemeServlet extends SlingSafeMethodsServlet {
             this.gridControlConfig = gridControlConfig;
             this.formBuilderConfig = formBuilderConfig;
             this.videoArticleGridConfig = videoArticleGridConfig;
+            this.cardsConfig = cardsConfig;
+            this.callToActionConfig = callToActionConfig;
+            this.dataTableConfig = dataTableConfig;
         }
 
         private static ThemeConfigs empty() {
             return new ThemeConfigs(
+                    null,
+                    null,
+                    null,
                     null,
                     null,
                     null,

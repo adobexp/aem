@@ -35,6 +35,9 @@ import com.adobexp.aem.core.components.config.SiteThemeGlobalConfig;
 import com.adobexp.aem.core.components.config.components.ArticleTileThemeConfig;
 import com.adobexp.aem.core.components.config.components.BlobImageSectionThemeConfig;
 import com.adobexp.aem.core.components.config.components.ButtonThemeConfig;
+import com.adobexp.aem.core.components.config.components.CallToActionThemeConfig;
+import com.adobexp.aem.core.components.config.components.CardsThemeConfig;
+import com.adobexp.aem.core.components.config.components.DataTableThemeConfig;
 import com.adobexp.aem.core.components.config.components.CompareSubscriptionThemeConfig;
 import com.adobexp.aem.core.components.config.components.ComparisonThemeConfig;
 import com.adobexp.aem.core.components.config.components.CountUpThemeConfig;
@@ -119,6 +122,9 @@ public class ThemeVersionModel {
             appendMasonryGalleryConfig(configFingerprint, configBuilder.as(MasonryGalleryThemeConfig.class));
             appendComparisonConfig(configFingerprint, configBuilder.as(ComparisonThemeConfig.class));
             appendFaqConfig(configFingerprint, configBuilder.as(FaqThemeConfig.class));
+            appendCardsConfig(configFingerprint, configBuilder.as(CardsThemeConfig.class));
+            appendCallToActionConfig(configFingerprint, configBuilder.as(CallToActionThemeConfig.class));
+            appendDataTableConfig(configFingerprint, configBuilder.as(DataTableThemeConfig.class));
             appendHeroConfig(configFingerprint, configBuilder.as(HeroThemeConfig.class));
             appendBlobImageSectionConfig(configFingerprint, configBuilder.as(BlobImageSectionThemeConfig.class));
             appendLeadMediaSectionConfig(configFingerprint, configBuilder.as(LeadMediaSectionThemeConfig.class));
@@ -460,6 +466,38 @@ public class ThemeVersionModel {
         appendConfigValue(sb, config, FaqThemeConfig::lightFaqBg);
         appendConfigValue(sb, config, FaqThemeConfig::lightFaqItemBg);
         appendConfigValue(sb, config, FaqThemeConfig::lightFaqItemHoverBg);
+    }
+
+    private void appendCardsConfig(StringBuilder sb, CardsThemeConfig config) {
+        if (config == null) return;
+        appendConfigValue(sb, config, CardsThemeConfig::darkCardsBg);
+        appendConfigValue(sb, config, CardsThemeConfig::darkCardsMutedBg);
+        appendConfigValue(sb, config, CardsThemeConfig::darkCardsItemBg);
+        appendConfigValue(sb, config, CardsThemeConfig::darkCardsItemBorder);
+        appendConfigValue(sb, config, CardsThemeConfig::darkCardsItemIconBg);
+        appendConfigValue(sb, config, CardsThemeConfig::lightCardsBg);
+        appendConfigValue(sb, config, CardsThemeConfig::lightCardsMutedBg);
+        appendConfigValue(sb, config, CardsThemeConfig::lightCardsItemBg);
+        appendConfigValue(sb, config, CardsThemeConfig::lightCardsItemBorder);
+        appendConfigValue(sb, config, CardsThemeConfig::lightCardsItemIconBg);
+    }
+
+    private void appendCallToActionConfig(StringBuilder sb, CallToActionThemeConfig config) {
+        if (config == null) return;
+        appendConfigValue(sb, config, CallToActionThemeConfig::darkCallToActionBg);
+        appendConfigValue(sb, config, CallToActionThemeConfig::lightCallToActionBg);
+    }
+
+    private void appendDataTableConfig(StringBuilder sb, DataTableThemeConfig config) {
+        if (config == null) return;
+        appendConfigValue(sb, config, DataTableThemeConfig::darkDataTableBg);
+        appendConfigValue(sb, config, DataTableThemeConfig::darkDataTableHeaderBg);
+        appendConfigValue(sb, config, DataTableThemeConfig::darkDataTableCellBorder);
+        appendConfigValue(sb, config, DataTableThemeConfig::darkDataTableRowHoverBg);
+        appendConfigValue(sb, config, DataTableThemeConfig::lightDataTableBg);
+        appendConfigValue(sb, config, DataTableThemeConfig::lightDataTableHeaderBg);
+        appendConfigValue(sb, config, DataTableThemeConfig::lightDataTableCellBorder);
+        appendConfigValue(sb, config, DataTableThemeConfig::lightDataTableRowHoverBg);
     }
 
     private void appendHeroConfig(StringBuilder sb, HeroThemeConfig config) {

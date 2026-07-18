@@ -67,10 +67,24 @@ public interface HeaderModel {
     String getHeaderSubtitle();
 
     /**
-     * Gets the list of menu items (Level 1 navigation).
+     * Gets the title text shown under the logo in the sidebar brand area.
+     * Defaults to {@code Anamnesis} when not authored.
+     * @return sidebar brand title
+     */
+    String getSidebarTitle();
+
+    /**
+     * Gets the list of menu items (Level 1 navigation) for the overlay variation.
      * @return list of menu items
      */
     List<MenuItem> getMenuItems();
+
+    /**
+     * Gets the list of sidebar menu items (Level 1 navigation) for the sidebar variation.
+     * Leaf items render as independent links; container items render as accordions.
+     * @return list of sidebar menu items
+     */
+    List<MenuItem> getSidebarMenuItems();
 
     /**
      * Gets the list of menu options (Column 2 options).
@@ -144,6 +158,66 @@ public interface HeaderModel {
      * @return default theme string
      */
     String getDefaultTheme();
+
+    /**
+     * Gets the menu presentation variation.
+     * Accepted values: {@code overlay} (fullscreen overlay) or {@code sidebar} (resizable left sidebar).
+     * @return menu variation string
+     */
+    String getMenuVariant();
+
+    /**
+     * Whether sidebar Menu Container accordions start expanded.
+     * Authored via the SideBar Menu Options dialog checkbox; defaults to {@code true}.
+     * @return {@code true} when accordion groups should be open by default
+     */
+    boolean isSidebarAccordionExpanded();
+
+    /**
+     * @return {@code true} when the sidebar menu variation is selected
+     */
+    default boolean isSidebarMenu() {
+        return "sidebar".equalsIgnoreCase(getMenuVariant());
+    }
+
+    /**
+     * @return {@code true} when the overlay menu variation is selected (default)
+     */
+    default boolean isOverlayMenu() {
+        return !isSidebarMenu();
+    }
+
+    /**
+     * @return {@code true} when at least one Level-1 leaf menu item exists in the overlay menu
+     */
+    default boolean hasLeafMenuItems() {
+        List<MenuItem> items = getMenuItems();
+        if (items == null) {
+            return false;
+        }
+        for (MenuItem item : items) {
+            if (item != null && item.isLeaf()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * @return {@code true} when at least one Level-1 leaf item exists in the sidebar menu
+     */
+    default boolean hasLeafSidebarMenuItems() {
+        List<MenuItem> items = getSidebarMenuItems();
+        if (items == null) {
+            return false;
+        }
+        for (MenuItem item : items) {
+            if (item != null && item.isLeaf()) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     /**
      * Gets the list of top navigation buttons displayed to the left of the theme toggle.

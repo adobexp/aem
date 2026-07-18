@@ -15,39 +15,59 @@
 <sly data-sly-use.header="com.adobexp.aem.core.components.models.HeaderModel"/>
 
 <!-- HEADER COMPONENT HTML MARKUP STARTS HERE -->
+<!-- data-menu-variant: "overlay" (fullscreen) | "sidebar" (resizable drawer) — authored via Menu Variation -->
 <!-- data-default-theme: sets the initial theme mode on page load. Accepted values: "dark", "light", "auto" -->
-<header data-component="header" data-default-theme="${header.defaultTheme || 'dark'}" class="header" data-sly-test="${header.logoDarkImage || header.logoLightImage || header.headerTitle}">
-    <!-- Hamburger menu toggle button -->
-    <button class="header__menu-btn btn-icon-only" type="button" aria-label="Open menu">
-        <svg class="header__menu-icon header__menu-icon-hamburger" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        </svg>
-        <svg class="header__menu-icon header__menu-icon-close" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: none;">
-            <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+<header data-component="header"
+        data-menu-variant="${header.menuVariant || 'overlay'}"
+        data-default-theme="${header.defaultTheme || 'dark'}"
+        class="header"
+        data-sly-test="${header.logoDarkImage || header.logoLightImage || header.headerTitle}">
+    <!-- Menu toggle: overlay uses hamburger/close; sidebar uses panel-expand (header controls hide while open) -->
+    <button class="header__menu-btn btn-icon-only"
+            type="button"
+            aria-label="Open menu"
+            aria-controls="${header.sidebarMenu ? 'header-sidebar' : ''}"
+            aria-expanded="false">
+        <sly data-sly-test="${header.overlayMenu}">
+            <svg class="header__menu-icon header__menu-icon-hamburger" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <svg class="header__menu-icon header__menu-icon-close" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: none;" aria-hidden="true">
+                <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </sly>
+        <sly data-sly-test="${header.sidebarMenu}">
+            <svg class="header__menu-icon header__menu-icon-expand" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <rect x="0.5" y="0.5" width="15" height="15" rx="2.5" stroke="currentColor"/>
+                <path d="M9 11L12 8L9 5" stroke="currentColor"/>
+                <path d="M6 1L6 15.5" stroke="currentColor"/>
+            </svg>
+        </sly>
     </button>
 
-    <!-- Logo -->
-    <sly data-sly-test="${header.logoDarkImage || header.logoLightImage}">
+    <!-- Logo (+ Sidebar Title when using the resizable sidebar variation) -->
+    <sly data-sly-test="${header.logoDarkImage || header.logoLightImage || (header.sidebarMenu && header.sidebarTitle)}">
         <a data-sly-use.logoLinkFilter="${'adobexp/components/commons/v1/helper/checkProp.js' @ propName='link', propValue=header.logoLink}"
             href="${logoLinkFilter.value}"
-            class="header__logo" 
-            aria-label="Home">
+            class="header__logo"
+            aria-label="${header.sidebarMenu && header.sidebarTitle ? header.sidebarTitle : 'Home'}">
             <sly data-sly-test="${header.logoDarkImage}">
                 <sly data-sly-use.darkLogoUrl="${'adobexp/components/commons/v1/helper/transformurls.js' @ internalUrl=header.logoDarkImage}">
-                    <img src="${darkLogoUrl}" 
-                        alt="${header.logoDarkAlt || 'Logo'}" 
+                    <img src="${darkLogoUrl}"
+                        alt="${header.logoDarkAlt || 'Logo'}"
                         class="header__logo-img header__logo-img-dark"/>
                 </sly>
             </sly>
             <sly data-sly-test="${header.logoLightImage}">
                 <sly data-sly-use.lightLogoUrl="${'adobexp/components/commons/v1/helper/transformurls.js' @ internalUrl=header.logoLightImage}">
-                    <img src="${lightLogoUrl}" 
-                        alt="${header.logoLightAlt || 'Logo'}" 
-                        class="header__logo-img header__logo-img-light" 
+                    <img src="${lightLogoUrl}"
+                        alt="${header.logoLightAlt || 'Logo'}"
+                        class="header__logo-img header__logo-img-light"
                         style="display: none;"/>
                 </sly>
             </sly>
+            <span class="header__logo-title"
+                  data-sly-test="${header.sidebarMenu && header.sidebarTitle}">${header.sidebarTitle}</span>
         </a>
     </sly>
 
@@ -90,8 +110,12 @@
     </button>
 </header>
 
-<!-- Header Overlay -->
-<div class="header__overlay" role="dialog" aria-modal="true" aria-labelledby="header-overlay-title">
+<!-- Header Overlay (menu variation: overlay) -->
+<div class="header__overlay"
+     role="dialog"
+     aria-modal="true"
+     aria-labelledby="header-overlay-title"
+     data-sly-test="${header.overlayMenu}">
     <div class="header__overlay-content">
         <div class="header__overlay-columns">
             <!-- Column 1: Accordion Menu -->
@@ -253,5 +277,120 @@
         </div>
     </div>
 </div>
+
+<!-- Header Sidebar (menu variation: sidebar) -->
+<sly data-sly-test="${header.sidebarMenu}">
+    <div class="header__sidebar-backdrop" data-header-sidebar-backdrop hidden></div>
+
+    <aside id="header-sidebar"
+           class="header__sidebar"
+           role="dialog"
+           aria-modal="true"
+           aria-label="Site navigation"
+           aria-hidden="true"
+           hidden>
+        <div class="header__sidebar-panel">
+            <div class="header__sidebar-brand">
+                <button class="header__sidebar-collapse btn-icon-only" type="button" aria-label="Close menu">
+                    <svg class="header__sidebar-collapse-icon" width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <rect x="15.7281" y="15.5057" width="15" height="15" rx="2.5" transform="rotate(179.151 15.7281 15.5057)" stroke="currentColor"/>
+                        <path d="M7.07299 5.13285L4.11779 8.17699L7.16193 11.1322" stroke="currentColor"/>
+                        <path d="M10.2218 15.0874L10.0068 0.588946" stroke="currentColor"/>
+                    </svg>
+                </button>
+                <div class="header__sidebar-brand-main">
+                    <sly data-sly-test="${header.logoDarkImage || header.logoLightImage}">
+                        <a data-sly-use.sidebarLogoLinkFilter="${'adobexp/components/commons/v1/helper/checkProp.js' @ propName='link', propValue=header.logoLink}"
+                           href="${sidebarLogoLinkFilter.value}"
+                           class="header__sidebar-logo"
+                           aria-label="Home">
+                            <sly data-sly-test="${header.logoDarkImage}">
+                                <sly data-sly-use.sidebarDarkLogoUrl="${'adobexp/components/commons/v1/helper/transformurls.js' @ internalUrl=header.logoDarkImage}">
+                                    <img src="${sidebarDarkLogoUrl}"
+                                         alt="${header.logoDarkAlt || 'Logo'}"
+                                         class="header__sidebar-logo-img header__logo-img-dark"/>
+                                </sly>
+                            </sly>
+                            <sly data-sly-test="${header.logoLightImage}">
+                                <sly data-sly-use.sidebarLightLogoUrl="${'adobexp/components/commons/v1/helper/transformurls.js' @ internalUrl=header.logoLightImage}">
+                                    <img src="${sidebarLightLogoUrl}"
+                                         alt="${header.logoLightAlt || 'Logo'}"
+                                         class="header__sidebar-logo-img header__logo-img-light"
+                                         style="display: none;"/>
+                                </sly>
+                            </sly>
+                        </a>
+                    </sly>
+                    <p class="header__sidebar-title" data-sly-test="${header.sidebarTitle}">${header.sidebarTitle}</p>
+                </div>
+            </div>
+
+            <div class="header__sidebar-search">
+                <label class="header__sidebar-search-field">
+                    <svg class="header__sidebar-search-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <path d="M4 7h10M4 12h16M4 17h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                    <input class="header__sidebar-search-input" type="search" placeholder="Search" aria-label="Filter menu"/>
+                </label>
+            </div>
+
+            <nav class="header__sidebar-nav" aria-label="Main navigation">
+                <!-- Leaf Menu Option: independent sidebar links (not wrapped in an accordion) -->
+                <ul class="header__sidebar-list header__sidebar-list--standalone"
+                    data-sly-test="${header.hasLeafSidebarMenuItems}">
+                    <sly data-sly-list.menuItem="${header.sidebarMenuItems}">
+                        <li class="header__sidebar-item" data-sly-test="${menuItem.leaf}">
+                            <a data-sly-use.sidebarMenuLinkFilter="${'adobexp/components/commons/v1/helper/checkProp.js' @ propName='link', propValue=menuItem.menuLink}"
+                               href="${sidebarMenuLinkFilter.value}"
+                               class="header__sidebar-link">
+                                <span class="header__sidebar-link-text">${menuItem.menuTitle}</span>
+                            </a>
+                        </li>
+                    </sly>
+                </ul>
+
+                <!-- Menu Container: accordion titled with Menu Title; Sub Menu Items inside -->
+                <sly data-sly-list.menuItem="${header.sidebarMenuItems}">
+                    <div class="header__sidebar-group${header.sidebarAccordionExpanded ? ' header__sidebar-group--open' : ''}"
+                         data-sly-test="${menuItem.container}">
+                        <button class="header__sidebar-group-toggle" type="button"
+                                aria-expanded="${header.sidebarAccordionExpanded ? 'true' : 'false'}">
+                            <span>${menuItem.menuTitle}</span>
+                            <svg class="header__sidebar-group-chevron" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                        <ul class="header__sidebar-list">
+                            <sly data-sly-list.subMenuItem="${menuItem.subMenuItems}">
+                                <li class="header__sidebar-item" data-sly-test="${subMenuItem.leaf}">
+                                    <a data-sly-use.sidebarSubLinkFilter="${'adobexp/components/commons/v1/helper/checkProp.js' @ propName='link', propValue=subMenuItem.subMenuLink}"
+                                       href="${sidebarSubLinkFilter.value}"
+                                       class="header__sidebar-link">
+                                        <span class="header__sidebar-link-text">${subMenuItem.subMenuTitle}</span>
+                                    </a>
+                                </li>
+                                <sly data-sly-test="${subMenuItem.container}" data-sly-list.level3Item="${subMenuItem.level3MenuItems}">
+                                    <li class="header__sidebar-item">
+                                        <a data-sly-use.sidebarLevel3LinkFilter="${'adobexp/components/commons/v1/helper/checkProp.js' @ propName='link', propValue=level3Item.level3MenuLink}"
+                                           href="${sidebarLevel3LinkFilter.value}"
+                                           class="header__sidebar-link">
+                                            <span class="header__sidebar-link-text">${level3Item.level3MenuTitle}</span>
+                                        </a>
+                                    </li>
+                                </sly>
+                            </sly>
+                        </ul>
+                    </div>
+                </sly>
+            </nav>
+        </div>
+
+        <div class="header__sidebar-resizer"
+             role="separator"
+             aria-orientation="vertical"
+             aria-label="Resize navigation sidebar"
+             tabindex="0"></div>
+    </aside>
+</sly>
 <!-- HEADER COMPONENT HTML MARKUP ENDS HERE -->
 <sly data-sly-call="${templates.placeholder @ isEmpty = (!header.logoDarkImage || !header.logoLightImage), classAppend='header'}"></sly>
