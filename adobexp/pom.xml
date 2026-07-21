@@ -11,7 +11,7 @@
   <groupId>com.adobexp</groupId>
   <artifactId>adobexp-aem-quickstart-parent</artifactId>
   <packaging>pom</packaging>
-  <version>2.0.10</version>
+  <version>2.0.11-SNAPSHOT</version>
   <name>AdobeXP - AEM Quickstart Parent</name>
   <description>AdobeXP - AEM Quickstart Parent</description>
   <modules>
@@ -49,7 +49,7 @@
     <url>https://github.com/adobexp/aem</url>
     <connection>scm:git:git@github.com:adobexp/aem.git</connection>
     <developerConnection>scm:git:git@github.com:adobexp/aem.git</developerConnection>
-    <tag>adobexp-aem-quickstart-parent-2.0.10</tag>
+    <tag>adobexp-aem-quickstart-parent-1.1.2</tag>
   </scm>
   <build>
     <plugins>
