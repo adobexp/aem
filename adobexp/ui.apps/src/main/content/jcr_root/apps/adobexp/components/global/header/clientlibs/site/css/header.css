@@ -111,11 +111,18 @@
   flex: 1;
 }
 
-.header__actions {
+.header__actions-group {
   display: flex;
   align-items: center;
   gap: 8px;
   margin-left: auto;
+  flex-shrink: 0;
+}
+
+.header__actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   flex-shrink: 0;
 }
 .header__actions:empty {
@@ -128,12 +135,35 @@
 }
 
 .header__theme-toggle {
-  margin-left: auto;
   flex-shrink: 0;
 }
 
-.header__actions:not(:empty) ~ .header__theme-toggle {
-  margin-left: 0;
+.header__kebab-btn {
+  display: none;
+  flex-shrink: 0;
+  margin-left: auto;
+}
+.header__kebab-btn.btn-icon-only {
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  background: transparent !important;
+}
+.header__kebab-btn.btn-icon-only:hover, .header__kebab-btn.btn-icon-only:focus-visible {
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  transform: none !important;
+  background: transparent !important;
+}
+.header__kebab-btn.btn-icon-only::before {
+  display: none;
+}
+
+.header__kebab-icon {
+  width: 20px;
+  height: 20px;
+  display: block;
 }
 
 .header__theme-icon {
@@ -588,14 +618,15 @@ html {
   transition: padding-left 0.28s ease;
 }
 
-html.header-sidebar-split {
-  --header-sidebar-offset: var(--header-sidebar-width, 300px);
+@media (min-width: 1025px) {
+  html.header-sidebar-split {
+    --header-sidebar-offset: var(--header-sidebar-width, 300px);
+  }
+  html.header-sidebar-split .header[data-component=header][data-menu-variant=sidebar] .header__logo,
+  html.header-sidebar-split .header[data-component=header][data-menu-variant=sidebar] .header__menu-btn {
+    display: none !important;
+  }
 }
-html.header-sidebar-split .header[data-component=header][data-menu-variant=sidebar] .header__logo,
-html.header-sidebar-split .header[data-component=header][data-menu-variant=sidebar] .header__menu-btn {
-  display: none !important;
-}
-
 html.header-sidebar-resizing {
   transition: none;
 }
@@ -907,23 +938,70 @@ html.theme-light .header__sidebar {
   color: var(--primary-text-color, #0f172a);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .header__content {
     display: none;
   }
-  .header__logo {
+  .header[data-component=header] .header__logo {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
     margin: 0;
+    display: flex !important;
+    z-index: 2;
+  }
+  html.header-sidebar-split {
+    --header-sidebar-offset: 0px;
+  }
+  html.header-sidebar-split .header[data-component=header][data-menu-variant=sidebar] .header__logo,
+  html.header-sidebar-split .header[data-component=header][data-menu-variant=sidebar] .header__menu-btn {
+    display: flex !important;
+  }
+  .header__kebab-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 3;
+  }
+  .header__actions-group {
+    position: absolute;
+    top: calc(100% + 4px);
+    right: 12px;
+    margin-left: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    min-width: 180px;
+    padding: 14px;
+    border-radius: 12px;
+    background: var(--header-background-color, #0f172a);
+    border: 1px solid var(--header-sidebar-border, rgba(255, 255, 255, 0.12));
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-6px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    z-index: 1300;
+  }
+  .header__actions-group.header__actions-group--open {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
   }
   .header__actions {
-    margin-left: auto;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    gap: 10px;
+  }
+  .header__action-btn {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
   }
   .header__theme-toggle {
-    margin-left: auto;
-    position: relative;
-    z-index: 1;
+    align-self: center;
   }
   .header__overlay-columns {
     flex-direction: column;
@@ -943,8 +1021,19 @@ html.theme-light .header__sidebar {
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   }
   .header__sidebar {
-    --header-sidebar-width: min(86vw, 360px);
-    max-width: 92vw;
+    top: var(--header-height, 60px);
+    bottom: 0;
+    width: 100vw;
+    max-width: 100vw;
+    --header-sidebar-width: 100vw;
+    height: calc(100vh - var(--header-height, 60px));
+    height: calc(100dvh - var(--header-height, 60px));
+  }
+  .header__sidebar-resizer {
+    display: none !important;
+  }
+  .header__sidebar-brand {
+    display: none !important;
   }
 }
 

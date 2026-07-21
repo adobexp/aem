@@ -23,10 +23,14 @@
         const SIDEBAR_DEFAULT_WIDTH = 300;
         const SPLIT_CLASS = "header-sidebar-split";
         const RESIZING_CLASS = "header-sidebar-resizing";
+        const SMALL_DEVICE_MQ = "(max-width: 1024px)";
+        const ACTIONS_GROUP_OPEN_CLASS = "header__actions-group--open";
         const header = document.querySelector('header[data-component="header"]');
         if (!header) return;
         const menuVariantAttr = (header.getAttribute("data-menu-variant") || "").toLowerCase();
         const menuVariant = menuVariantAttr === MENU_VARIANT_SIDEBAR ? MENU_VARIANT_SIDEBAR : MENU_VARIANT_OVERLAY;
+        const sidebarDefaultOpen = (header.getAttribute("data-sidebar-default-open") || "").toLowerCase() === "true";
+        const isSmallDevice = () => window.matchMedia(SMALL_DEVICE_MQ).matches;
         const explicitThemeRoot = header.closest(".theme-light") || header.closest(".theme-dark");
         const themeRoot = explicitThemeRoot ?? document.documentElement;
         const usesExplicitThemeRoot = !!explicitThemeRoot;
@@ -89,6 +93,8 @@
         const sidebarSearchInput = document.querySelector(".header__sidebar-search-input");
         const menuBtn = document.querySelector(".header__menu-btn");
         const themeToggle = document.querySelector(".header__theme-toggle");
+        const kebabBtn = document.querySelector(".header__kebab-btn");
+        const actionsGroup = document.querySelector(".header__actions-group");
         const updateOverlayPosition = () => {
           if (!overlay) return;
           const rect = header.getBoundingClientRect();
@@ -196,6 +202,7 @@
           applyTheme(newMode);
           updateThemeToggleButton();
           updateMenuButton();
+          updateKebabButton();
           updateOverlaySocialButtons();
           updateActionButtons();
           updateLogo();
@@ -212,12 +219,14 @@
           const expandIcon = menuBtn.querySelector(".header__menu-icon-expand");
           const hamburgerIcon = menuBtn.querySelector(".header__menu-icon-hamburger");
           const closeIcon = menuBtn.querySelector(".header__menu-icon-close");
-          if (menuVariant === MENU_VARIANT_SIDEBAR && expandIcon) {
+          const useHamburgerClose = menuVariant !== MENU_VARIANT_SIDEBAR || isSmallDevice() || !expandIcon;
+          if (!useHamburgerClose && expandIcon) {
             expandIcon.style.display = "block";
             if (hamburgerIcon) hamburgerIcon.style.display = "none";
             if (closeIcon) closeIcon.style.display = "none";
             menuBtn.setAttribute("aria-label", isOpen ? "Close menu" : "Open menu");
           } else if (hamburgerIcon && closeIcon) {
+            if (expandIcon) expandIcon.style.display = "none";
             if (isOpen) {
               hamburgerIcon.style.display = "none";
               closeIcon.style.display = "block";
@@ -229,6 +238,31 @@
             }
           }
           menuBtn.setAttribute("aria-expanded", isOpen ? "true" : "false");
+        };
+        const isKebabOpen = () => !!actionsGroup?.classList.contains(ACTIONS_GROUP_OPEN_CLASS);
+        const closeKebab = () => {
+          if (!actionsGroup) return;
+          actionsGroup.classList.remove(ACTIONS_GROUP_OPEN_CLASS);
+          kebabBtn?.setAttribute("aria-expanded", "false");
+        };
+        const openKebab = () => {
+          if (!actionsGroup) return;
+          actionsGroup.classList.add(ACTIONS_GROUP_OPEN_CLASS);
+          kebabBtn?.setAttribute("aria-expanded", "true");
+        };
+        const toggleKebab = () => {
+          if (isKebabOpen()) {
+            closeKebab();
+          } else {
+            openKebab();
+          }
+        };
+        const updateKebabButton = () => {
+          if (!kebabBtn) return;
+          const effectiveTheme = getEffectiveTheme(currentMode);
+          const isDark = effectiveTheme === THEME_DARK;
+          kebabBtn.classList.remove("btn-theme-dark", "btn-theme-light");
+          kebabBtn.classList.add(isDark ? "btn-theme-dark" : "btn-theme-light");
         };
         const lockBodyScroll = () => {
           document.body.style.overflow = "hidden";
@@ -251,10 +285,18 @@
         };
         const readStoredSidebarOpen = () => {
           try {
-            return localStorage.getItem(SIDEBAR_OPEN_KEY) === "true";
+            const stored = localStorage.getItem(SIDEBAR_OPEN_KEY);
+            if (stored === null) return null;
+            return stored === "true";
           } catch {
-            return false;
+            return null;
           }
+        };
+        const resolveInitialSidebarOpen = () => {
+          if (isSmallDevice()) return false;
+          const stored = readStoredSidebarOpen();
+          if (stored !== null) return stored;
+          return sidebarDefaultOpen;
         };
         const applySidebarWidth = (width) => {
           if (!sidebar) return;
@@ -284,12 +326,19 @@
           sidebar.hidden = false;
           sidebar.setAttribute("aria-hidden", "false");
           sidebar.classList.add("header__sidebar--open");
-          document.documentElement.classList.add(SPLIT_CLASS);
+          if (isSmallDevice()) {
+            document.documentElement.classList.remove(SPLIT_CLASS);
+            lockBodyScroll();
+          } else {
+            document.documentElement.classList.add(SPLIT_CLASS);
+          }
           if (sidebarBackdrop) {
             sidebarBackdrop.hidden = true;
             sidebarBackdrop.classList.remove("header__sidebar-backdrop--open");
           }
-          persistSidebarOpen(true);
+          if (!isSmallDevice()) {
+            persistSidebarOpen(true);
+          }
           updateMenuButtonIcon();
         };
         const closeSidebar = () => {
@@ -297,6 +346,7 @@
           sidebar.classList.remove("header__sidebar--open");
           sidebar.setAttribute("aria-hidden", "true");
           document.documentElement.classList.remove(SPLIT_CLASS);
+          unlockBodyScroll();
           if (sidebarBackdrop) {
             sidebarBackdrop.hidden = true;
             sidebarBackdrop.classList.remove("header__sidebar-backdrop--open");
@@ -306,7 +356,9 @@
               sidebar.hidden = true;
             }
           }, 280);
-          persistSidebarOpen(false);
+          if (!isSmallDevice()) {
+            persistSidebarOpen(false);
+          }
           updateMenuButtonIcon();
         };
         const toggleSidebar = () => {
@@ -413,7 +465,7 @@
             sidebarBackdrop.setAttribute("aria-hidden", "true");
           }
           restoreSidebarWidth();
-          if (readStoredSidebarOpen()) {
+          if (resolveInitialSidebarOpen()) {
             openSidebar();
           } else {
             closeSidebar();
@@ -512,6 +564,7 @@
         };
         updateThemeToggleButton();
         updateMenuButton();
+        updateKebabButton();
         updateOverlaySocialButtons();
         updateActionButtons();
         updateLogo();
@@ -525,6 +578,27 @@
         }
         menuBtn?.addEventListener("click", toggleMenu);
         themeToggle?.addEventListener("click", toggleTheme);
+        kebabBtn?.addEventListener("click", (evt) => {
+          evt.stopPropagation();
+          toggleKebab();
+        });
+        actionsGroup?.querySelectorAll(".header__action-btn").forEach((link) => {
+          link.addEventListener("click", () => {
+            closeKebab();
+          });
+        });
+        document.addEventListener("click", (evt) => {
+          if (!isKebabOpen()) return;
+          const target = evt.target;
+          if (!target) return;
+          if (actionsGroup?.contains(target) || kebabBtn?.contains(target)) return;
+          closeKebab();
+        });
+        document.addEventListener("keydown", (evt) => {
+          if (evt.key === "Escape" && isKebabOpen()) {
+            closeKebab();
+          }
+        });
         overlay?.addEventListener("click", (evt) => {
           if (evt.target === overlay) {
             closeMenu();
@@ -534,10 +608,17 @@
         window.addEventListener("resize", () => {
           if (resizeTimeout) window.clearTimeout(resizeTimeout);
           resizeTimeout = window.setTimeout(() => {
+            updateMenuButtonIcon();
+            if (!isSmallDevice()) {
+              closeKebab();
+            }
             if (menuVariant === MENU_VARIANT_OVERLAY) {
               scheduleArticleTileCollapsedHeightUpdate();
               updateOverlayPosition();
             } else if (sidebar) {
+              if (isSmallDevice() && sidebar.classList.contains("header__sidebar--open")) {
+                document.documentElement.classList.remove(SPLIT_CLASS);
+              }
               const current = Number.parseInt(
                 getComputedStyle(sidebar).getPropertyValue("--header-sidebar-width"),
                 10

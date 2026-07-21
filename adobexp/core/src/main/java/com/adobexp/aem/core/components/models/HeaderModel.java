@@ -167,6 +167,14 @@ public interface HeaderModel {
     String getMenuVariant();
 
     /**
+     * Whether the sidebar should start open by default on Desktop viewports.
+     * Authored via the SideBar Menu Options dialog checkbox; defaults to {@code false}.
+     * Only used when the visitor has no saved open/closed preference in localStorage.
+     * @return {@code true} when the desktop sidebar should start open by default
+     */
+    boolean isSidebarDefaultOpen();
+
+    /**
      * Whether sidebar Menu Container accordions start expanded.
      * Authored via the SideBar Menu Options dialog checkbox; defaults to {@code true}.
      * @return {@code true} when accordion groups should be open by default

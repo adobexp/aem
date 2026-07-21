@@ -120,6 +120,10 @@ public class HeaderModelImpl implements HeaderModel {
     private String menuVariant;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Default(booleanValues = false)
+    private boolean sidebarDefaultOpen;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Default(booleanValues = true)
     private boolean sidebarAccordionExpanded;
 
@@ -537,6 +541,11 @@ public class HeaderModelImpl implements HeaderModel {
             return "sidebar";
         }
         return "overlay";
+    }
+
+    @Override
+    public boolean isSidebarDefaultOpen() {
+        return sidebarDefaultOpen;
     }
 
     @Override

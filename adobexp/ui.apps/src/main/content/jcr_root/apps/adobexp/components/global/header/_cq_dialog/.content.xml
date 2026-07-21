@@ -725,6 +725,15 @@
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/text"
                                                 text="Configure sidebar navigation. Leaf Menu Option renders as an independent sidebar link. Menu Container creates an accordion titled with Menu Title; Sub Menu Items appear inside that accordion."/>
+                                            <sidebarDefaultOpen
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                name="./sidebarDefaultOpen"
+                                                text="Keep sidebar open by default on Desktop"
+                                                fieldDescription="When checked, the sidebar starts open on Desktop viewports if the visitor has no saved preference. Once the visitor collapses or expands the sidebar, their choice is remembered. Has no effect on mobile or tablet portrait."
+                                                value="{Boolean}true"
+                                                uncheckedValue="{Boolean}false"
+                                                checked="{Boolean}false"/>
                                             <sidebarAccordionExpanded
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"

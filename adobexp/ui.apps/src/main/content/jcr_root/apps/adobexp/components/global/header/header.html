@@ -17,12 +17,14 @@
 <!-- HEADER COMPONENT HTML MARKUP STARTS HERE -->
 <!-- data-menu-variant: "overlay" (fullscreen) | "sidebar" (resizable drawer) — authored via Menu Variation -->
 <!-- data-default-theme: sets the initial theme mode on page load. Accepted values: "dark", "light", "auto" -->
+<!-- data-sidebar-default-open: when "true", desktop sidebar starts open if the user has no saved preference -->
 <header data-component="header"
         data-menu-variant="${header.menuVariant || 'overlay'}"
         data-default-theme="${header.defaultTheme || 'dark'}"
+        data-sidebar-default-open="${header.sidebarDefaultOpen ? 'true' : 'false'}"
         class="header"
         data-sly-test="${header.logoDarkImage || header.logoLightImage || header.headerTitle}">
-    <!-- Menu toggle: overlay uses hamburger/close; sidebar uses panel-expand (header controls hide while open) -->
+    <!-- Menu toggle: overlay uses hamburger/close; sidebar uses panel-expand on desktop (hamburger/close on small devices) -->
     <button class="header__menu-btn btn-icon-only"
             type="button"
             aria-label="Open menu"
@@ -41,6 +43,13 @@
                 <rect x="0.5" y="0.5" width="15" height="15" rx="2.5" stroke="currentColor"/>
                 <path d="M9 11L12 8L9 5" stroke="currentColor"/>
                 <path d="M6 1L6 15.5" stroke="currentColor"/>
+            </svg>
+            <!-- Hamburger/close used on mobile & tablet portrait (<=1024px) -->
+            <svg class="header__menu-icon header__menu-icon-hamburger" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: none;" aria-hidden="true">
+                <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <svg class="header__menu-icon header__menu-icon-close" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: none;" aria-hidden="true">
+                <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
         </sly>
     </button>
@@ -77,37 +86,53 @@
         <p class="header__subtitle" data-sly-test="${header.headerSubtitle}">${header.headerSubtitle}</p>
     </div>
 
-    <!-- Header Action Buttons (placed to the left of the theme toggle) -->
-    <sly data-sly-test="${header.hasTopNavButtons}">
-        <div class="header__actions">
-            <sly data-sly-list.navBtn="${header.topNavButtons}">
-                <a data-sly-use.navBtnLinkFilter="${'adobexp/components/commons/v1/helper/checkProp.js' @ propName='link', propValue=navBtn.buttonLink}"
-                    href="${navBtnLinkFilter.value}"
-                    class="header__action-btn btn-theme-dark"
-                    role="button"
-                    target="${navBtn.buttonNewTab ? '_blank' : '_self'}"
-                    rel="${navBtn.buttonNewTab ? 'noopener noreferrer' : ''}">${navBtn.buttonLabel}</a>
-            </sly>
-        </div>
-    </sly>
-
-    <!-- Theme Toggle Button (cycles: Dark → Light → Auto → Dark) -->
-    <button class="header__theme-toggle btn-icon-only" type="button" aria-label="Toggle theme">
-        <!-- Sun icon: shown when mode is LIGHT -->
-        <svg class="header__theme-icon header__theme-icon-sun" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: none;">
-            <path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        <!-- Moon icon: shown when mode is DARK -->
-        <svg class="header__theme-icon header__theme-icon-moon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: none;">
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        <!-- Auto icon (half sun / half moon): shown when mode is AUTO -->
-        <svg class="header__theme-icon header__theme-icon-auto" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: none;">
-            <path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-            <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2" fill="none"/>
-            <path d="M12 8a4 4 0 0 1 0 8V8z" fill="currentColor"/>
+    <!-- Kebab: shown on mobile / tablet portrait; opens the actions-group panel -->
+    <button class="header__kebab-btn btn-icon-only"
+            type="button"
+            aria-label="Open actions menu"
+            aria-expanded="false"
+            aria-controls="header-actions-group">
+        <svg class="header__kebab-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <circle cx="12" cy="5" r="1.75" fill="currentColor"/>
+            <circle cx="12" cy="12" r="1.75" fill="currentColor"/>
+            <circle cx="12" cy="19" r="1.75" fill="currentColor"/>
         </svg>
     </button>
+
+    <!-- Actions group: inline on desktop; kebab dropdown panel on small devices -->
+    <div id="header-actions-group" class="header__actions-group">
+        <!-- Header Action Buttons (placed to the left of the theme toggle) -->
+        <sly data-sly-test="${header.hasTopNavButtons}">
+            <div class="header__actions">
+                <sly data-sly-list.navBtn="${header.topNavButtons}">
+                    <a data-sly-use.navBtnLinkFilter="${'adobexp/components/commons/v1/helper/checkProp.js' @ propName='link', propValue=navBtn.buttonLink}"
+                        href="${navBtnLinkFilter.value}"
+                        class="header__action-btn btn-theme-dark"
+                        role="button"
+                        target="${navBtn.buttonNewTab ? '_blank' : '_self'}"
+                        rel="${navBtn.buttonNewTab ? 'noopener noreferrer' : ''}">${navBtn.buttonLabel}</a>
+                </sly>
+            </div>
+        </sly>
+
+        <!-- Theme Toggle Button (cycles: Dark → Light → Auto → Dark) -->
+        <button class="header__theme-toggle btn-icon-only" type="button" aria-label="Toggle theme">
+            <!-- Sun icon: shown when mode is LIGHT -->
+            <svg class="header__theme-icon header__theme-icon-sun" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                <path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <!-- Moon icon: shown when mode is DARK -->
+            <svg class="header__theme-icon header__theme-icon-moon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <!-- Auto icon (half sun / half moon): shown when mode is AUTO -->
+            <svg class="header__theme-icon header__theme-icon-auto" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                <path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2" fill="none"/>
+                <path d="M12 8a4 4 0 0 1 0 8V8z" fill="currentColor"/>
+            </svg>
+        </button>
+    </div>
 </header>
 
 <!-- Header Overlay (menu variation: overlay) -->
