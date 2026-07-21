@@ -25,6 +25,7 @@
     Example:    /content/site/home.theme-variables.a1b2c3d4.css
 */-->
 <template data-sly-template.themeStyles
-          data-sly-use.themeVersion="com.adobexp.aem.core.components.internal.models.ThemeVersionModel">
-    <link rel="stylesheet" href="${currentPage.path}.theme-variables.${themeVersion.version}.css" type="text/css">
+          data-sly-use.themeVersion="com.adobexp.aem.core.components.internal.models.ThemeVersionModel"
+          data-sly-use.themeBase="${'adobexp/components/commons/v1/helper/transformurls.js' @ internalUrl=currentPage.path}">
+    <link rel="stylesheet" href="${themeBase}.theme-variables.${themeVersion.version}.css" type="text/css">
 </template>

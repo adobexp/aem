@@ -77,16 +77,40 @@ public class UrlRewriterConfig {
 		log.info("activate(context, config) | FINAL VALUES | " + "\n\t urlRewriteMapping = {} " + "\n\t urlSkipMapping = {} ", urlRewriteMapping, urlSkipMapping);
 	}
 	
+	/**
+	 * Returns whether URL rewriting should run for the current request.
+	 * Rewriting applies when WCM authoring is off (publish / wcmmode=disabled)
+	 * and the request targets a content path (or already-short mapped path).
+	 */
+	public boolean shouldRewriteForRequest(String requestUri, boolean isWcmModeDisabled) {
+		if (!isWcmModeDisabled) {
+			return false;
+		}
+		if (requestUri == null || requestUri.isEmpty()) {
+			return true;
+		}
+		return requestUri.startsWith("/content/")
+				|| requestUri.startsWith("/en")
+				|| requestUri.startsWith("/static")
+				|| requestUri.startsWith("/images");
+	}
+
 	public String getPublishUrl(String internalPath, boolean isWcmModeDisabled) {
+		return getPublishUrl(internalPath, isWcmModeDisabled, null);
+	}
+
+	public String getPublishUrl(String internalPath, boolean isWcmModeDisabled, String requestUri) {
 		String returningURL = null;
-		log.debug("getPublishUrl(internalPath,isWcmModeDisabled) | internalPath = {} | isWcmModeDisabled = {}", internalPath, isWcmModeDisabled);
-		if (isWcmModeDisabled) {
+		boolean rewrite = shouldRewriteForRequest(requestUri, isWcmModeDisabled);
+		log.debug("getPublishUrl(internalPath,isWcmModeDisabled,requestUri) | internalPath = {} | isWcmModeDisabled = {} | requestUri = {} | rewrite = {}",
+				internalPath, isWcmModeDisabled, requestUri, rewrite);
+		if (rewrite) {
 			if (isUrlToBeSkipped(internalPath)) {
 				returningURL = internalPath;
 			} else {
 				Set<String> keySet = urlRewriteMapping.keySet();
 				for (String entry: keySet) {
-					if (internalPath.startsWith(entry)) {
+					if (internalPath != null && internalPath.startsWith(entry)) {
 						String strippedMatchedPrefix = internalPath.substring(entry.length());
 						returningURL = urlRewriteMapping.get(entry) + strippedMatchedPrefix;
 						break;
@@ -99,7 +123,7 @@ public class UrlRewriterConfig {
 		} else {
 			returningURL = internalPath;
 		}
-		log.debug("getPublishUrl(internalPath,isWcmModeDisabled) | Transformed = {} -> {}", internalPath, returningURL);
+		log.debug("getPublishUrl(...) | Transformed = {} -> {}", internalPath, returningURL);
 		return returningURL;
 	}
 	
@@ -112,6 +136,43 @@ public class UrlRewriterConfig {
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * Internal→external mappings from OSGi (immutable copy).
+	 */
+	public Map<String, String> getUrlRewriteMapping() {
+		return urlRewriteMapping == null
+				? java.util.Collections.emptyMap()
+				: java.util.Collections.unmodifiableMap(urlRewriteMapping);
+	}
+
+	/**
+	 * Reverse of {@link #getPublishUrl}: external short URL → AEM internal path.
+	 * Used by the inbound request filter so Publish can resolve /en, /static, /images.
+	 */
+	public String getInternalUrl(String externalPath) {
+		if (StringUtils.isEmpty(externalPath) || urlRewriteMapping == null || urlRewriteMapping.isEmpty()) {
+			return externalPath;
+		}
+		String bestExternal = null;
+		String bestInternal = null;
+		for (Map.Entry<String, String> entry : urlRewriteMapping.entrySet()) {
+			String externalPrefix = entry.getValue();
+			if (externalPath.equals(externalPrefix)
+					|| externalPath.startsWith(externalPrefix + "/")
+					|| externalPath.startsWith(externalPrefix + ".")
+					|| externalPath.startsWith(externalPrefix + "?")) {
+				if (bestExternal == null || externalPrefix.length() > bestExternal.length()) {
+					bestExternal = externalPrefix;
+					bestInternal = entry.getKey();
+				}
+			}
+		}
+		if (bestExternal == null) {
+			return externalPath;
+		}
+		return bestInternal + externalPath.substring(bestExternal.length());
 	}
 
 	@Deactivate

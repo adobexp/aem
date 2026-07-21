@@ -4,6 +4,8 @@ use(function() {
 	var urlRewriterService = sling.getService(Packages.com.adobexp.aem.core.components.config.UrlRewriterConfig);
 	var value = this.propValue;
 	var propType = "String";
+	var isWcmModeDisabled = !(wcmmode == "EDIT" || wcmmode == "PREVIEW");
+	var requestUri = request.getRequestURI();
 	if (this.propValue) {
 
 		if (this.propValue.constructor === String) {
@@ -41,7 +43,7 @@ use(function() {
 		}
 		return {
 			validKey: !this.propName.startsWith("jcr:"),
-			value: urlRewriterService.getPublishUrl(value, !(wcmmode == "EDIT" || wcmmode == "PREVIEW")),
+			value: urlRewriterService.getPublishUrl(value, isWcmModeDisabled, requestUri),
 			valueType: propType
 		};
 	} else {
