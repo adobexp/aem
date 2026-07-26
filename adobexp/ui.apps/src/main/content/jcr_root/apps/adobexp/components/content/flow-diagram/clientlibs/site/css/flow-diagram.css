@@ -1,0 +1,211 @@
+.flow-diagram {
+  width: 100%;
+  padding: 80px 20px;
+  color: var(--standard-primary-site-text-color, #ffffff);
+}
+.flow-diagram--with-bg {
+  background: var(--flow-diagram-bg, linear-gradient(180deg, #0c0c0c 0%, var(--site-body-bg, #1e1e1e) 100%));
+}
+.flow-diagram--muted {
+  background: var(--flow-diagram-muted-bg, var(--site-body-bg, #1e1e1e));
+}
+
+.flow-diagram__inner {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.flow-diagram__header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.flow-diagram__title {
+  font-size: clamp(30px, 4.5vw, 44px);
+  line-height: 1.1;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin: 0 0 16px;
+  color: var(--standard-primary-site-text-color, #ffffff);
+}
+
+.flow-diagram__subtitle {
+  font-size: clamp(14px, 2vw, 17px);
+  line-height: 1.6;
+  color: var(--standard-secondary-site-text-color, #a2a2a2);
+  margin: 0 auto;
+  max-width: 700px;
+}
+
+/* ------------------------------------------------------------------ canvas */
+.flow-diagram__canvas {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px 32px;
+  align-items: center;
+}
+
+.flow-diagram__links {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: visible;
+  z-index: 0;
+}
+
+.flow-diagram__link {
+  fill: none;
+  stroke: var(--flow-diagram-link-color, rgba(255, 255, 255, 0.16));
+  stroke-width: 1.5;
+}
+
+.flow-diagram__pulse {
+  fill: none;
+  stroke: var(--flow-diagram-pulse-color, var(--main-theme-color, #42f4fd));
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-dasharray: 7 150;
+  animation: flow-diagram-pulse 2.8s linear infinite;
+}
+
+/* ------------------------------------------------------------------ stages */
+.flow-diagram__stage {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.flow-diagram__stage-label {
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  text-align: center;
+  margin: 0;
+  color: var(--standard-secondary-site-text-color, #a2a2a2);
+}
+
+.flow-diagram__node {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 16px 18px;
+  border-radius: 13px;
+  text-align: center;
+  background: var(--flow-diagram-node-bg, #2a2a2a);
+  border: 1px solid var(--flow-diagram-node-border, rgba(255, 255, 255, 0.1));
+  box-shadow: var(--flow-diagram-node-shadow, 0 6px 22px rgba(0, 0, 0, 0.3));
+  opacity: 0;
+  transform: translateY(16px) scale(0.97);
+  transition: opacity 0.55s ease, transform 0.55s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+  transition-delay: calc(var(--i, 0) * 70ms);
+}
+.flow-diagram__node.is-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+.flow-diagram__node:hover {
+  border-color: var(--flow-diagram-node-hover-border, var(--main-theme-color, #42f4fd));
+  box-shadow: var(--flow-diagram-node-shadow-hover, 0 14px 36px rgba(0, 0, 0, 0.4));
+}
+
+.flow-diagram__node-icon {
+  display: block;
+  font-size: 20px;
+  line-height: 1;
+  margin-bottom: 2px;
+}
+
+.flow-diagram__node-title {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin: 0;
+  color: var(--standard-primary-site-text-color, #ffffff);
+}
+
+.flow-diagram__node-desc {
+  font-size: 11.5px;
+  line-height: 1.5;
+  margin: 0;
+  color: var(--standard-secondary-site-text-color, #a2a2a2);
+}
+
+.flow-diagram__node-tag {
+  align-self: center;
+  margin-top: 4px;
+  font-size: 9.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 3px 8px;
+  border-radius: 999px;
+  color: var(--flow-diagram-tag-text, #4ade80);
+  background: var(--flow-diagram-tag-bg, rgba(74, 222, 128, 0.13));
+}
+
+.flow-diagram__note {
+  margin: 34px auto 0;
+  max-width: 780px;
+  text-align: center;
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--standard-secondary-site-text-color, #a2a2a2);
+}
+
+/* ------------------------------------------------------------ light theme */
+.theme-light .flow-diagram,
+.flow-diagram.theme-light {
+  color: var(--standard-primary-site-text-color, #111827);
+}
+
+.theme-light .flow-diagram__node,
+.flow-diagram.theme-light .flow-diagram__node {
+  background: var(--flow-diagram-node-bg, #ffffff);
+  border-color: var(--flow-diagram-node-border, rgba(0, 0, 0, 0.09));
+  box-shadow: var(--flow-diagram-node-shadow, 0 4px 18px rgba(0, 0, 0, 0.07));
+}
+
+.theme-light .flow-diagram__link,
+.flow-diagram.theme-light .flow-diagram__link {
+  stroke: var(--flow-diagram-link-color, rgba(0, 0, 0, 0.16));
+}
+
+/* --------------------------------------------------------------- responsive */
+@media (min-width: 900px) {
+  .flow-diagram {
+    padding: 100px 24px;
+  }
+  .flow-diagram__canvas {
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(0, 1fr);
+    grid-template-columns: unset;
+    gap: 0 56px;
+    align-items: center;
+  }
+}
+@keyframes flow-diagram-pulse {
+  from {
+    stroke-dashoffset: 157;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .flow-diagram__node {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .flow-diagram__pulse {
+    animation: none;
+    opacity: 0;
+  }
+}

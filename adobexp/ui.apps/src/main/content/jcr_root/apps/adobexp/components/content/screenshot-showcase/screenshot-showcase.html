@@ -1,0 +1,66 @@
+<!--/*
+    Screenshot Showcase Component - AEM Sightly Template
+
+    Renders product screenshots inside a browser chrome frame with:
+    - Optional section title and subtitle
+    - Fake browser chrome (traffic light dots and an address pill)
+    - Dual dark/light theme screenshots, swapped by the page theme class
+    - Optional caption with badge, title and description
+    - Scroll parallax and pointer tilt driven by the component JavaScript
+
+    Note: Theme (dark/light) is controlled via page template, not this component.
+*/-->
+
+<sly data-sly-use.templates="adobexp/components/commons/v1/templates.html"/>
+<sly data-sly-use.screenshotShowcase="com.adobexp.aem.core.components.models.ScreenshotShowcaseModel"/>
+
+<!-- SCREENSHOT SHOWCASE COMPONENT HTML MARKUP STARTS HERE -->
+<section class="screenshot-showcase ${screenshotShowcase.variant}"
+         data-component="screenshot-showcase"
+         data-parallax="${screenshotShowcase.parallaxStrength}"
+         data-tilt="${screenshotShowcase.enableTilt ? '' : 'false'}"
+         aria-label="${screenshotShowcase.ariaLabel}"
+         data-sly-test="${screenshotShowcase.hasContent}">
+    <div class="screenshot-showcase__inner">
+        <div class="screenshot-showcase__header" data-sly-test="${screenshotShowcase.title || screenshotShowcase.subtitle}">
+            <h2 class="screenshot-showcase__title" data-sly-test="${screenshotShowcase.title}">${screenshotShowcase.title}</h2>
+            <p class="screenshot-showcase__subtitle" data-sly-test="${screenshotShowcase.subtitle}">${screenshotShowcase.subtitle}</p>
+        </div>
+        <div class="screenshot-showcase__grid ${screenshotShowcase.gridClass}" data-sly-test="${screenshotShowcase.hasFrames}">
+            <sly data-sly-list.item="${screenshotShowcase.frames}">
+                <figure class="screenshot-showcase__frame" data-depth="${item.depth}">
+                    <div class="screenshot-showcase__chrome" aria-hidden="true">
+                        <span class="screenshot-showcase__dots"><span></span><span></span><span></span></span>
+                        <span class="screenshot-showcase__url" data-sly-test="${item.urlLabel}">${item.urlLabel}</span>
+                    </div>
+                    <div class="screenshot-showcase__media">
+                        <sly data-sly-use.darkUrl="${'adobexp/components/commons/v1/helper/transformurls.js' @ internalUrl=item.imageDark}">
+                            <img class="screenshot-showcase__image screenshot-showcase__image--dark"
+                                 src="${darkUrl}"
+                                 alt="${item.altText}"
+                                 width="${item.imageWidth}"
+                                 height="${item.imageHeight}"
+                                 loading="lazy"/>
+                        </sly>
+                        <sly data-sly-use.lightUrl="${'adobexp/components/commons/v1/helper/transformurls.js' @ internalUrl=item.imageLight}">
+                            <img class="screenshot-showcase__image screenshot-showcase__image--light"
+                                 src="${lightUrl}"
+                                 alt="${item.altText}"
+                                 width="${item.imageWidth}"
+                                 height="${item.imageHeight}"
+                                 loading="lazy"/>
+                        </sly>
+                    </div>
+                    <figcaption class="screenshot-showcase__caption" data-sly-test="${item.hasCaption}">
+                        <span class="screenshot-showcase__badge" data-sly-test="${item.badge}">${item.badge}</span>
+                        <h3 class="screenshot-showcase__caption-title" data-sly-test="${item.frameTitle}">${item.frameTitle}</h3>
+                        <p class="screenshot-showcase__caption-text" data-sly-test="${item.description}">${item.description}</p>
+                    </figcaption>
+                </figure>
+            </sly>
+        </div>
+    </div>
+</section>
+<!-- SCREENSHOT SHOWCASE COMPONENT HTML MARKUP ENDS HERE -->
+
+<sly data-sly-call="${templates.placeholder @ isEmpty = !screenshotShowcase.hasContent, classAppend='screenshot-showcase'}"></sly>

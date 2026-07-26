@@ -1,0 +1,48 @@
+<!--/*
+    Analytics Chart Component - AEM Sightly Template
+
+    Renders a grid of report panels with:
+    - Optional section title and subtitle
+    - Configurable 1/2/3 column grid
+    - One panel per chart, described entirely by its data-chart-* attributes
+
+    The canvas is intentionally rendered empty: the client library reads the JSON
+    payloads from the panel and draws the SVG once the panel scrolls into view.
+
+    Note: Theme (dark/light) is controlled via page template, not this component.
+*/-->
+
+<sly data-sly-use.templates="adobexp/components/commons/v1/templates.html"/>
+<sly data-sly-use.analyticsChart="com.adobexp.aem.core.components.models.AnalyticsChartModel"/>
+
+<!-- ANALYTICS CHART COMPONENT HTML MARKUP STARTS HERE -->
+<section class="analytics-chart ${analyticsChart.variant}"
+         data-component="analytics-chart"
+         aria-label="${analyticsChart.ariaLabel || 'Analytics reports'}"
+         data-sly-test="${analyticsChart.hasContent}">
+    <div class="analytics-chart__inner">
+        <div class="analytics-chart__header" data-sly-test="${analyticsChart.title || analyticsChart.subtitle}">
+            <h2 class="analytics-chart__title" data-sly-test="${analyticsChart.title}">${analyticsChart.title}</h2>
+            <p class="analytics-chart__subtitle" data-sly-test="${analyticsChart.subtitle}">${analyticsChart.subtitle}</p>
+        </div>
+        <div class="analytics-chart__grid ${analyticsChart.gridClass}" data-sly-test="${analyticsChart.hasPanels}">
+            <sly data-sly-list.panel="${analyticsChart.chartPanels}">
+                <article class="analytics-chart__panel"
+                         data-chart-type="${panel.chartType}"
+                         data-chart-labels="${panel.labelsJson @ context='attribute'}"
+                         data-chart-series="${panel.seriesJson @ context='attribute'}"
+                         data-chart-config="${panel.configJson @ context='attribute'}">
+                    <header class="analytics-chart__panel-head" data-sly-test="${panel.panelTitle || panel.badge}">
+                        <h3 class="analytics-chart__panel-title" data-sly-test="${panel.panelTitle}">${panel.panelTitle}</h3>
+                        <span class="analytics-chart__panel-badge" data-sly-test="${panel.badge}">${panel.badge}</span>
+                    </header>
+                    <p class="analytics-chart__panel-desc" data-sly-test="${panel.description}">${panel.description @ context='html'}</p>
+                    <div class="analytics-chart__canvas" role="img" aria-label="${panel.canvasLabel}"></div>
+                </article>
+            </sly>
+        </div>
+    </div>
+</section>
+<!-- ANALYTICS CHART COMPONENT HTML MARKUP ENDS HERE -->
+
+<sly data-sly-call="${templates.placeholder @ isEmpty = !analyticsChart.hasContent, classAppend='analytics-chart'}"></sly>

@@ -1,0 +1,62 @@
+<!--/*
+    Code Snippet Component - AEM Sightly Template
+
+    Renders a tabbed code viewer with:
+    - Optional section title and subtitle
+    - One tab per snippet, with an optional filename caption in the tab bar
+    - A single copy-to-clipboard button for the active pane
+    - Client-side syntax highlighting and an optional line-number gutter
+
+    The code is written as plain escaped text inside <code> so the client-side
+    highlighter can read it from textContent. Do not reformat the <pre>/<code>
+    line below: any added whitespace would shift the line numbering.
+
+    Note: Theme (dark/light) is controlled via page template, not this component.
+*/-->
+
+<sly data-sly-use.templates="adobexp/components/commons/v1/templates.html"/>
+<sly data-sly-use.codeSnippet="com.adobexp.aem.core.components.models.CodeSnippetModel"/>
+
+<!-- CODE SNIPPET COMPONENT HTML MARKUP STARTS HERE -->
+<section class="code-snippet ${codeSnippet.variant}"
+         data-component="code-snippet"
+         data-line-numbers="${codeSnippet.lineNumbersAttribute}"
+         aria-label="${codeSnippet.ariaLabel}"
+         data-sly-test="${codeSnippet.hasContent}">
+    <div class="code-snippet__inner">
+        <div class="code-snippet__header" data-sly-test="${codeSnippet.title || codeSnippet.subtitle}">
+            <h2 class="code-snippet__title" data-sly-test="${codeSnippet.title}">${codeSnippet.title}</h2>
+            <p class="code-snippet__subtitle" data-sly-test="${codeSnippet.subtitle}">${codeSnippet.subtitle}</p>
+        </div>
+        <div class="code-snippet__shell" data-sly-test="${codeSnippet.hasSnippets}">
+            <div class="code-snippet__bar">
+                <div class="code-snippet__tabs" role="tablist" aria-label="Code language">
+                    <sly data-sly-list.item="${codeSnippet.snippets}">
+                        <button class="code-snippet__tab ${item.active ? 'is-active' : ''}"
+                                role="tab"
+                                type="button"
+                                data-target="${item.paneId}"
+                                aria-controls="${item.paneId}"
+                                aria-selected="${item.active ? 'true' : 'false'}">${item.tabLabel}</button>
+                    </sly>
+                </div>
+                <span class="code-snippet__filename" data-sly-test="${codeSnippet.hasFilenames}">${codeSnippet.activeFilename}</span>
+                <button class="code-snippet__copy" type="button" aria-label="Copy code">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h8"/></svg>
+                    <span class="code-snippet__copy-idle">Copy</span>
+                    <span class="code-snippet__copy-done">Copied</span>
+                </button>
+            </div>
+            <sly data-sly-list.item="${codeSnippet.snippets}">
+                <div class="code-snippet__pane ${item.active ? 'is-active' : ''}"
+                     id="${item.paneId}"
+                     role="tabpanel"
+                     data-filename="${item.filename}"
+                     hidden="${!item.active ? 'hidden' : ''}"><pre><code data-language="${item.language}">${item.code}</code></pre></div>
+            </sly>
+        </div>
+    </div>
+</section>
+<!-- CODE SNIPPET COMPONENT HTML MARKUP ENDS HERE -->
+
+<sly data-sly-call="${templates.placeholder @ isEmpty = !codeSnippet.hasContent, classAppend='code-snippet'}"></sly>

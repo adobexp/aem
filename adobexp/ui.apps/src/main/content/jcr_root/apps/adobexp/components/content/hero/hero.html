@@ -20,15 +20,15 @@
                 <img class="hero__logo hero__logo--dark hero__logo--float"
                      src="${logoDarkUrl}"
                      alt="${hero.logoDarkAlt || hero.title || 'Logo'}"
-                     width="220"
-                     height="66"/>
+                     width="${hero.logoDarkWidth}"
+                     height="${hero.logoDarkHeight}"/>
             </sly>
             <sly data-sly-use.logoLightUrl="${'adobexp/components/commons/v1/helper/transformurls.js' @ internalUrl=hero.logoLight}">
                 <img class="hero__logo hero__logo--light hero__logo--float"
                      src="${logoLightUrl}"
                      alt="${hero.logoLightAlt || hero.title || 'Logo'}"
-                     width="220"
-                     height="66"/>
+                     width="${hero.logoLightWidth}"
+                     height="${hero.logoLightHeight}"/>
             </sly>
         </div>
         <h1 class="hero__title" data-sly-test="${hero.title}">${hero.title}</h1>

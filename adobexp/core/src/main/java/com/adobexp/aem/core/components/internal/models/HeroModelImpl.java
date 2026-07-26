@@ -19,12 +19,17 @@ package com.adobexp.aem.core.components.internal.models;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
+import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.models.annotations.Default;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
+import org.apache.sling.models.annotations.injectorspecific.SlingObject;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 
+import java.util.Optional;
+
 import com.adobexp.aem.core.components.models.HeroModel;
+import com.adobexp.aem.core.components.util.ImageDimensionUtils;
 
 /**
  * Sling Model implementation for the Hero component.
@@ -42,6 +47,18 @@ public class HeroModelImpl implements HeroModel {
         "/apps/adobexp/components/content/hero/clientlibs/site/resources/logo-dark.svg";
     private static final String DEFAULT_LOGO_LIGHT =
         "/apps/adobexp/components/content/hero/clientlibs/site/resources/logo-light.svg";
+
+    /**
+     * Used when a logo's intrinsic size cannot be read, so the img still reserves a sane box.
+     */
+    private static final int FALLBACK_LOGO_WIDTH = 220;
+    private static final int FALLBACK_LOGO_HEIGHT = 66;
+
+    @SlingObject
+    private ResourceResolver resourceResolver;
+
+    private ImageDimensionUtils.Dimensions darkDimensions;
+    private ImageDimensionUtils.Dimensions lightDimensions;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     private String title;
@@ -115,6 +132,40 @@ public class HeroModelImpl implements HeroModel {
     @Override
     public String getLogoLightAlt() {
         return logoLightAlt;
+    }
+
+    @Override
+    public int getLogoDarkWidth() {
+        return darkDimensions().map(ImageDimensionUtils.Dimensions::getWidth).orElse(FALLBACK_LOGO_WIDTH);
+    }
+
+    @Override
+    public int getLogoDarkHeight() {
+        return darkDimensions().map(ImageDimensionUtils.Dimensions::getHeight).orElse(FALLBACK_LOGO_HEIGHT);
+    }
+
+    @Override
+    public int getLogoLightWidth() {
+        return lightDimensions().map(ImageDimensionUtils.Dimensions::getWidth).orElse(FALLBACK_LOGO_WIDTH);
+    }
+
+    @Override
+    public int getLogoLightHeight() {
+        return lightDimensions().map(ImageDimensionUtils.Dimensions::getHeight).orElse(FALLBACK_LOGO_HEIGHT);
+    }
+
+    private Optional<ImageDimensionUtils.Dimensions> darkDimensions() {
+        if (darkDimensions == null) {
+            darkDimensions = ImageDimensionUtils.getDimensions(resourceResolver, getLogoDark()).orElse(null);
+        }
+        return Optional.ofNullable(darkDimensions);
+    }
+
+    private Optional<ImageDimensionUtils.Dimensions> lightDimensions() {
+        if (lightDimensions == null) {
+            lightDimensions = ImageDimensionUtils.getDimensions(resourceResolver, getLogoLight()).orElse(null);
+        }
+        return Optional.ofNullable(lightDimensions);
     }
 
     @Override

@@ -16,9 +16,12 @@
 package com.adobexp.aem.core.components.internal.models;
 
 import javax.annotation.PostConstruct;
+import java.lang.reflect.Method;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.function.Function;
 
 import org.apache.sling.api.SlingHttpServletRequest;
@@ -32,9 +35,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.adobexp.aem.core.components.config.SiteThemeGlobalConfig;
+import com.adobexp.aem.core.components.config.components.AnalyticsChartThemeConfig;
 import com.adobexp.aem.core.components.config.components.ArticleTileThemeConfig;
 import com.adobexp.aem.core.components.config.components.BlobImageSectionThemeConfig;
 import com.adobexp.aem.core.components.config.components.ButtonThemeConfig;
+import com.adobexp.aem.core.components.config.components.CodeSnippetThemeConfig;
 import com.adobexp.aem.core.components.config.components.CallToActionThemeConfig;
 import com.adobexp.aem.core.components.config.components.CardsThemeConfig;
 import com.adobexp.aem.core.components.config.components.DataTableThemeConfig;
@@ -43,6 +48,7 @@ import com.adobexp.aem.core.components.config.components.ComparisonThemeConfig;
 import com.adobexp.aem.core.components.config.components.CountUpThemeConfig;
 import com.adobexp.aem.core.components.config.components.CtaPillThemeConfig;
 import com.adobexp.aem.core.components.config.components.FaqThemeConfig;
+import com.adobexp.aem.core.components.config.components.FlowDiagramThemeConfig;
 import com.adobexp.aem.core.components.config.components.FooterThemeConfig;
 import com.adobexp.aem.core.components.config.components.HeroThemeConfig;
 import com.adobexp.aem.core.components.config.components.GridControlThemeConfig;
@@ -54,10 +60,13 @@ import com.adobexp.aem.core.components.config.components.LeadMediaSectionThemeCo
 import com.adobexp.aem.core.components.config.components.LoopingCircleGalleryThemeConfig;
 import com.adobexp.aem.core.components.config.components.MarqueeCarouselThemeConfig;
 import com.adobexp.aem.core.components.config.components.MasonryGalleryThemeConfig;
+import com.adobexp.aem.core.components.config.components.MetricTilesThemeConfig;
 import com.adobexp.aem.core.components.config.components.QuoteThemeConfig;
 import com.adobexp.aem.core.components.config.components.RatingThemeConfig;
+import com.adobexp.aem.core.components.config.components.ScreenshotShowcaseThemeConfig;
 import com.adobexp.aem.core.components.config.components.ServicesThemeConfig;
 import com.adobexp.aem.core.components.config.components.SiteBannerThemeConfig;
+import com.adobexp.aem.core.components.config.components.StepsTimelineThemeConfig;
 import com.adobexp.aem.core.components.config.components.SubscriptionPlansThemeConfig;
 
 /**
@@ -130,6 +139,19 @@ public class ThemeVersionModel {
             appendLeadMediaSectionConfig(configFingerprint, configBuilder.as(LeadMediaSectionThemeConfig.class));
             appendGridControlConfig(configFingerprint, configBuilder.as(GridControlThemeConfig.class));
             appendVideoArticleGridConfig(configFingerprint, configBuilder.as(VideoArticleGridThemeConfig.class));
+
+            appendAllConfigValues(configFingerprint,
+                    configBuilder.as(AnalyticsChartThemeConfig.class), AnalyticsChartThemeConfig.class);
+            appendAllConfigValues(configFingerprint,
+                    configBuilder.as(MetricTilesThemeConfig.class), MetricTilesThemeConfig.class);
+            appendAllConfigValues(configFingerprint,
+                    configBuilder.as(CodeSnippetThemeConfig.class), CodeSnippetThemeConfig.class);
+            appendAllConfigValues(configFingerprint,
+                    configBuilder.as(StepsTimelineThemeConfig.class), StepsTimelineThemeConfig.class);
+            appendAllConfigValues(configFingerprint,
+                    configBuilder.as(FlowDiagramThemeConfig.class), FlowDiagramThemeConfig.class);
+            appendAllConfigValues(configFingerprint,
+                    configBuilder.as(ScreenshotShowcaseThemeConfig.class), ScreenshotShowcaseThemeConfig.class);
 
             // Generate a short hash from the fingerprint
             this.version = generateShortHash(configFingerprint.toString());
@@ -557,6 +579,46 @@ public class ThemeVersionModel {
         appendConfigValue(sb, config, GridControlThemeConfig::darkGridControlColumnBg);
         appendConfigValue(sb, config, GridControlThemeConfig::lightGridControlBg);
         appendConfigValue(sb, config, GridControlThemeConfig::lightGridControlColumnBg);
+    }
+
+    /**
+     * Fingerprints every String property declared on a theme config interface,
+     * discovered by reflection rather than listed by hand.
+     *
+     * <p>This hash and the CSS emitted by {@code SiteThemeServlet} have to agree:
+     * the versioned CSS URL is served with {@code max-age=31536000, immutable},
+     * so a property the hash does not cover means a theme change never reaches a
+     * returning visitor. Enumerating properties by hand drifts silently the
+     * moment one is added, and the failure is invisible in authoring because
+     * authors bypass the cache.
+     *
+     * <p>Methods are sorted by name so the fingerprint does not depend on
+     * reflection ordering, and only methods declared on the interface itself are
+     * read — {@code toString()} on the underlying proxy is not stable and would
+     * change the hash on every request.
+     */
+    private <T> void appendAllConfigValues(StringBuilder sb, T config, Class<T> type) {
+        if (config == null) {
+            return;
+        }
+        sb.append('|').append(type.getSimpleName());
+
+        Method[] methods = type.getMethods().clone();
+        Arrays.sort(methods, Comparator.comparing(Method::getName));
+
+        for (Method method : methods) {
+            if (method.getDeclaringClass() != type
+                    || method.getParameterCount() != 0
+                    || method.getReturnType() != String.class) {
+                continue;
+            }
+            try {
+                sb.append(nullSafe((String) method.invoke(config)));
+            } catch (Exception e) {
+                LOG.debug("Skipping {}.{} while fingerprinting theme config",
+                        type.getSimpleName(), method.getName(), e);
+            }
+        }
     }
 
     private void appendVideoArticleGridConfig(StringBuilder sb, VideoArticleGridThemeConfig config) {

@@ -1,0 +1,50 @@
+<!--/*
+    Flow Diagram Component - AEM Sightly Template
+
+    Renders an animated architecture diagram with:
+    - Optional section title and subtitle
+    - A canvas of pipeline stages, each holding one or more nodes
+    - An optional explanatory caption below the diagram
+
+    Stage order in the DOM is the pipeline order: the client-side script measures the
+    stages from the live DOM and draws the connectors between consecutive stages into a
+    .flow-diagram__links SVG overlay. That overlay is created by the script, so it must
+    never be emitted here.
+
+    Note: Theme (dark/light) is controlled via page template, not this component.
+*/-->
+
+<sly data-sly-use.templates="adobexp/components/commons/v1/templates.html"/>
+<sly data-sly-use.flowDiagram="com.adobexp.aem.core.components.models.FlowDiagramModel"/>
+
+<!-- FLOW DIAGRAM COMPONENT HTML MARKUP STARTS HERE -->
+<section class="flow-diagram ${flowDiagram.variant}"
+         data-component="flow-diagram"
+         aria-label="${flowDiagram.ariaLabel}"
+         data-sly-test="${flowDiagram.hasContent}">
+    <div class="flow-diagram__inner">
+        <div class="flow-diagram__header" data-sly-test="${flowDiagram.title || flowDiagram.subtitle}">
+            <h2 class="flow-diagram__title" data-sly-test="${flowDiagram.title}">${flowDiagram.title}</h2>
+            <p class="flow-diagram__subtitle" data-sly-test="${flowDiagram.subtitle}">${flowDiagram.subtitle}</p>
+        </div>
+        <div class="flow-diagram__canvas" data-sly-test="${flowDiagram.hasStages}">
+            <sly data-sly-list.stage="${flowDiagram.stages}">
+                <div class="flow-diagram__stage">
+                    <p class="flow-diagram__stage-label" data-sly-test="${stage.stageLabel}">${stage.stageLabel}</p>
+                    <sly data-sly-list.nodeItem="${stage.nodes}">
+                        <div class="flow-diagram__node">
+                            <span class="flow-diagram__node-icon" aria-hidden="true" data-sly-test="${nodeItem.icon}">${nodeItem.icon}</span>
+                            <h3 class="flow-diagram__node-title" data-sly-test="${nodeItem.nodeTitle}">${nodeItem.nodeTitle}</h3>
+                            <p class="flow-diagram__node-desc" data-sly-test="${nodeItem.subtitle}">${nodeItem.subtitle}</p>
+                            <span class="flow-diagram__node-tag" data-sly-test="${nodeItem.tag}">${nodeItem.tag}</span>
+                        </div>
+                    </sly>
+                </div>
+            </sly>
+        </div>
+        <p class="flow-diagram__note" data-sly-test="${flowDiagram.caption}">${flowDiagram.caption}</p>
+    </div>
+</section>
+<!-- FLOW DIAGRAM COMPONENT HTML MARKUP ENDS HERE -->
+
+<sly data-sly-call="${templates.placeholder @ isEmpty = !flowDiagram.hasContent, classAppend='flow-diagram'}"></sly>

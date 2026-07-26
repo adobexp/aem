@@ -33,6 +33,26 @@ public interface HeroModel {
 
     String getLogoLightAlt();
 
+    /**
+     * Intrinsic width of the dark logo, for the img width attribute.
+     */
+    int getLogoDarkWidth();
+
+    /**
+     * Intrinsic height of the dark logo, for the img height attribute.
+     */
+    int getLogoDarkHeight();
+
+    /**
+     * Intrinsic width of the light logo, for the img width attribute.
+     */
+    int getLogoLightWidth();
+
+    /**
+     * Intrinsic height of the light logo, for the img height attribute.
+     */
+    int getLogoLightHeight();
+
     boolean hasLogo();
 
     String getPrimaryCtaText();

@@ -1,0 +1,51 @@
+<!--/*
+    Metric Tiles Component - AEM Sightly Template
+
+    Renders a KPI tile grid with:
+    - Optional section title and subtitle
+    - Configurable 2/3/4 column grid
+    - Tiles with a gradient icon face, a counting value, a label and a caption
+
+    The per-tile accent colour is emitted as the --metric-tiles-face-accent custom
+    property on the tile face. The value is validated as a CSS colour in the Sling
+    Model, so the inline style cannot carry arbitrary declarations.
+
+    Note: Theme (dark/light) is controlled via page template, not this component.
+*/-->
+
+<sly data-sly-use.templates="adobexp/components/commons/v1/templates.html"/>
+<sly data-sly-use.metricTiles="com.adobexp.aem.core.components.models.MetricTilesModel"/>
+
+<!-- METRIC TILES COMPONENT HTML MARKUP STARTS HERE -->
+<section class="metric-tiles ${metricTiles.variant}"
+         data-component="metric-tiles"
+         aria-label="${metricTiles.ariaLabel}"
+         data-sly-test="${metricTiles.hasContent}">
+    <div class="metric-tiles__inner">
+        <div class="metric-tiles__header" data-sly-test="${metricTiles.title || metricTiles.subtitle}">
+            <h2 class="metric-tiles__title" data-sly-test="${metricTiles.title}">${metricTiles.title}</h2>
+            <p class="metric-tiles__subtitle" data-sly-test="${metricTiles.subtitle}">${metricTiles.subtitle}</p>
+        </div>
+        <div class="metric-tiles__grid ${metricTiles.gridClass}" data-sly-test="${metricTiles.hasTiles}">
+            <sly data-sly-list.item="${metricTiles.tiles}">
+                <article class="metric-tiles__tile">
+                    <div class="metric-tiles__face" style="${item.faceStyle @ context='attribute'}">
+                        <span class="metric-tiles__icon" aria-hidden="true" data-sly-test="${item.icon}">${item.icon}</span>
+                        <p class="metric-tiles__value"
+                           data-sly-test="${item.value}"
+                           data-metric-value="${item.value}"
+                           data-metric-decimals="${item.decimals}"
+                           data-metric-compact="${item.compact}"
+                           data-metric-prefix="${item.prefix}"
+                           data-metric-suffix="${item.suffix}">0</p>
+                        <p class="metric-tiles__label" data-sly-test="${item.label}">${item.label}</p>
+                    </div>
+                    <p class="metric-tiles__desc" data-sly-test="${item.caption}">${item.caption}</p>
+                </article>
+            </sly>
+        </div>
+    </div>
+</section>
+<!-- METRIC TILES COMPONENT HTML MARKUP ENDS HERE -->
+
+<sly data-sly-call="${templates.placeholder @ isEmpty = !metricTiles.hasContent, classAppend='metric-tiles'}"></sly>

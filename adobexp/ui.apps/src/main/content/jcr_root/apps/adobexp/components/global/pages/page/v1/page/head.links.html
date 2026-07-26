@@ -19,3 +19,14 @@
 <link data-sly-test="${page.alternateLanguageLinks}"
       data-sly-repeat="${page.alternateLanguageLinks.entrySet}"
       rel="alternate" hreflang="${item.key.toLanguageTag}" href="${item.value}">
+<sly data-sly-use.branding="com.adobexp.aem.core.components.internal.models.SiteBrandingModel">
+    <sly data-sly-test="${branding.hasFavicon}"
+         data-sly-use.faviconUrl="${'adobexp/components/commons/v1/helper/transformurls.js' @ internalUrl=branding.faviconPath}">
+        <link rel="icon" type="${branding.faviconType}" href="${faviconUrl}">
+    </sly>
+    <sly data-sly-test="${branding.hasAppleTouchIcon}"
+         data-sly-use.touchIconUrl="${'adobexp/components/commons/v1/helper/transformurls.js' @ internalUrl=branding.appleTouchIconPath}">
+        <link rel="apple-touch-icon" href="${touchIconUrl}">
+    </sly>
+    <meta data-sly-test="${branding.hasBrowserThemeColor}" name="theme-color" content="${branding.browserThemeColor}">
+</sly>

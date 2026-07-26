@@ -1,0 +1,222 @@
+.screenshot-showcase {
+  width: 100%;
+  padding: 80px 20px;
+  color: var(--standard-primary-site-text-color, #ffffff);
+  overflow: hidden;
+}
+.screenshot-showcase--with-bg {
+  background: var(--screenshot-showcase-bg, linear-gradient(180deg, #0c0c0c 0%, var(--site-body-bg, #1e1e1e) 100%));
+}
+.screenshot-showcase--muted {
+  background: var(--screenshot-showcase-muted-bg, var(--site-body-bg, #1e1e1e));
+}
+
+.screenshot-showcase__inner {
+  width: 100%;
+  max-width: 1160px;
+  margin: 0 auto;
+}
+
+.screenshot-showcase__header {
+  text-align: center;
+  margin-bottom: 44px;
+}
+
+.screenshot-showcase__title {
+  font-size: clamp(30px, 4.5vw, 44px);
+  line-height: 1.1;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin: 0 0 16px;
+  color: var(--standard-primary-site-text-color, #ffffff);
+}
+
+.screenshot-showcase__subtitle {
+  font-size: clamp(14px, 2vw, 17px);
+  line-height: 1.6;
+  color: var(--standard-secondary-site-text-color, #a2a2a2);
+  margin: 0 auto;
+  max-width: 700px;
+}
+
+.screenshot-showcase__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 28px;
+  perspective: 1400px;
+}
+
+/* ------------------------------------------------------------------ frames */
+.screenshot-showcase__frame {
+  --parallax-y: 0px;
+  --tilt-x: 0deg;
+  --tilt-y: 0deg;
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--screenshot-showcase-frame-bg, #16161d);
+  border: 1px solid var(--screenshot-showcase-frame-border, rgba(255, 255, 255, 0.12));
+  box-shadow: var(--screenshot-showcase-frame-shadow, 0 24px 70px rgba(0, 0, 0, 0.45));
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease;
+  transition-delay: calc(var(--i, 0) * 110ms);
+  transform-style: preserve-3d;
+}
+.screenshot-showcase__frame.is-visible {
+  opacity: 1;
+  transform: translate3d(0, var(--parallax-y), 0) rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
+}
+.screenshot-showcase__frame:hover {
+  box-shadow: var(--screenshot-showcase-frame-shadow-hover, 0 30px 90px rgba(0, 0, 0, 0.55));
+}
+
+.screenshot-showcase__chrome {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 13px;
+  background: var(--screenshot-showcase-chrome-bg, rgba(255, 255, 255, 0.06));
+  border-bottom: 1px solid var(--screenshot-showcase-frame-border, rgba(255, 255, 255, 0.1));
+}
+
+.screenshot-showcase__dots {
+  display: flex;
+  gap: 6px;
+  flex: none;
+}
+.screenshot-showcase__dots span {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--screenshot-showcase-dot-color, rgba(255, 255, 255, 0.22));
+}
+
+.screenshot-showcase__url {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: 11px;
+  font-family: "SFMono-Regular", ui-monospace, Menlo, Consolas, monospace;
+  padding: 4px 10px;
+  border-radius: 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  background: var(--screenshot-showcase-url-bg, rgba(0, 0, 0, 0.3));
+  color: var(--screenshot-showcase-url-text, rgba(255, 255, 255, 0.6));
+}
+
+.screenshot-showcase__media {
+  position: relative;
+  display: block;
+  background: var(--screenshot-showcase-media-bg, #0e0e14);
+  aspect-ratio: 16/9;
+}
+
+.screenshot-showcase__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+
+.screenshot-showcase__image--light {
+  display: none;
+}
+
+.theme-light .screenshot-showcase__image--dark {
+  display: none;
+}
+
+.theme-light .screenshot-showcase__image--light {
+  display: block;
+}
+
+.screenshot-showcase__caption {
+  padding: 15px 18px 18px;
+}
+
+.screenshot-showcase__caption-title {
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin: 0 0 6px;
+  color: var(--standard-primary-site-text-color, #ffffff);
+}
+
+.screenshot-showcase__caption-text {
+  font-size: 13px;
+  line-height: 1.6;
+  margin: 0;
+  color: var(--standard-secondary-site-text-color, #a2a2a2);
+}
+
+.screenshot-showcase__badge {
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 3px 9px;
+  border-radius: 999px;
+  color: var(--screenshot-showcase-badge-text, #4ade80);
+  background: var(--screenshot-showcase-badge-bg, rgba(74, 222, 128, 0.13));
+}
+
+/* ------------------------------------------------------------ light theme */
+.theme-light .screenshot-showcase,
+.screenshot-showcase.theme-light {
+  color: var(--standard-primary-site-text-color, #111827);
+}
+
+.theme-light .screenshot-showcase__frame,
+.screenshot-showcase.theme-light .screenshot-showcase__frame {
+  background: var(--screenshot-showcase-frame-bg, #ffffff);
+  border-color: var(--screenshot-showcase-frame-border, rgba(0, 0, 0, 0.1));
+  box-shadow: var(--screenshot-showcase-frame-shadow, 0 18px 50px rgba(0, 0, 0, 0.13));
+}
+
+.theme-light .screenshot-showcase__chrome,
+.screenshot-showcase.theme-light .screenshot-showcase__chrome {
+  background: var(--screenshot-showcase-chrome-bg, rgba(0, 0, 0, 0.04));
+  border-bottom-color: var(--screenshot-showcase-frame-border, rgba(0, 0, 0, 0.08));
+}
+
+.theme-light .screenshot-showcase__dots span,
+.screenshot-showcase.theme-light .screenshot-showcase__dots span {
+  background: var(--screenshot-showcase-dot-color, rgba(0, 0, 0, 0.16));
+}
+
+.theme-light .screenshot-showcase__url,
+.screenshot-showcase.theme-light .screenshot-showcase__url {
+  background: var(--screenshot-showcase-url-bg, rgba(0, 0, 0, 0.05));
+  color: var(--screenshot-showcase-url-text, rgba(0, 0, 0, 0.55));
+}
+
+/* --------------------------------------------------------------- responsive */
+@media (min-width: 768px) {
+  .screenshot-showcase {
+    padding: 100px 24px;
+  }
+  .screenshot-showcase__grid--2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (min-width: 1024px) {
+  .screenshot-showcase__grid--3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .screenshot-showcase__frame {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .screenshot-showcase__frame.is-visible {
+    transform: none;
+  }
+}
+

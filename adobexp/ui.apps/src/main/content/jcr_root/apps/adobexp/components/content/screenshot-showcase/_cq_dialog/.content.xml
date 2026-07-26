@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="nt:unstructured"
+    jcr:title="Screenshot Showcase"
+    sling:resourceType="cq/gui/components/authoring/dialog">
+    <content
+        granite:class="cmp-screenshot-showcase__editor"
+        jcr:primaryType="nt:unstructured"
+        sling:resourceType="granite/ui/components/coral/foundation/container">
+        <items jcr:primaryType="nt:unstructured">
+            <tabs
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="granite/ui/components/coral/foundation/tabs"
+                maximized="{Boolean}true">
+                <items jcr:primaryType="nt:unstructured">
+                    <!-- Tab 1: Content -->
+                    <contentTab
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Content"
+                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                        margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <title
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Title"
+                                                fieldDescription="Section title above the screenshot frames"
+                                                name="./title"/>
+                                            <subtitle
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+                                                fieldLabel="Subtitle"
+                                                fieldDescription="Supporting text below the title"
+                                                name="./subtitle"
+                                                rows="{Long}3"/>
+                                            <ariaLabel
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Aria Label"
+                                                fieldDescription="Accessible label for the section (e.g., 'Product screenshots')"
+                                                name="./ariaLabel"
+                                                value="Product screenshots"/>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </contentTab>
+                    <!-- Tab 2: Frames -->
+                    <frames
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Frames"
+                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                        margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <frames
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                                composite="{Boolean}true"
+                                                fieldLabel="Screenshot Frames"
+                                                fieldDescription="Add a screenshot for each browser chrome frame. Frames without a dark theme image are skipped.">
+                                                <field
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/container"
+                                                    name="./frames">
+                                                    <items jcr:primaryType="nt:unstructured">
+                                                        <imageDark
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                                                            fieldLabel="Screenshot (Dark Theme)"
+                                                            fieldDescription="DAM asset shown in the dark theme. Required - frames without it are not rendered."
+                                                            name="imageDark"
+                                                            rootPath="/content/dam"/>
+                                                        <imageLight
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                                                            fieldLabel="Screenshot (Light Theme)"
+                                                            fieldDescription="DAM asset shown in the light theme. Leave empty to reuse the dark theme screenshot."
+                                                            name="imageLight"
+                                                            rootPath="/content/dam"/>
+                                                        <altText
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                            fieldLabel="Alt Text"
+                                                            fieldDescription="Alternative text for both screenshots. Falls back to the Frame Title when empty."
+                                                            name="altText"/>
+                                                        <urlLabel
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                            fieldLabel="Address Bar Text"
+                                                            fieldDescription="Text shown in the fake browser address bar (e.g., app.infralytiqs.com/#/infralytiqs/reports)"
+                                                            name="urlLabel"/>
+                                                        <badge
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                            fieldLabel="Caption Badge"
+                                                            fieldDescription="Short uppercase pill above the caption heading (e.g., 'Report dashboard')"
+                                                            name="badge"/>
+                                                        <frameTitle
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                            fieldLabel="Caption Title"
+                                                            fieldDescription="Caption heading below the screenshot"
+                                                            name="frameTitle"/>
+                                                        <description
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+                                                            fieldLabel="Caption Description"
+                                                            fieldDescription="Caption paragraph below the caption title"
+                                                            name="description"
+                                                            rows="{Long}3"/>
+                                                        <depth
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
+                                                            fieldLabel="Parallax Depth"
+                                                            fieldDescription="Multiplier applied to the parallax drift of this frame (default: 1). Use higher values to make a frame travel further."
+                                                            name="depth"
+                                                            min="{Double}0"
+                                                            step="{Double}0.1"
+                                                            value="{Double}1"/>
+                                                        <imageWidth
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
+                                                            fieldLabel="Image Width (px)"
+                                                            fieldDescription="Intrinsic width of the screenshot, used to reserve space and avoid layout shift (default: 1280)"
+                                                            name="imageWidth"
+                                                            min="{Double}1"
+                                                            value="{Double}1280"/>
+                                                        <imageHeight
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
+                                                            fieldLabel="Image Height (px)"
+                                                            fieldDescription="Intrinsic height of the screenshot, used to reserve space and avoid layout shift (default: 720)"
+                                                            name="imageHeight"
+                                                            min="{Double}1"
+                                                            value="{Double}720"/>
+                                                    </items>
+                                                </field>
+                                            </frames>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </frames>
+                    <!-- Tab 3: Appearance -->
+                    <appearance
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Appearance"
+                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                        margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <style
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                fieldLabel="Section Style"
+                                                fieldDescription="Background treatment of the showcase section"
+                                                name="./style">
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <none
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="None"
+                                                        value=""
+                                                        selected="{Boolean}true"/>
+                                                    <withBg
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="With Background"
+                                                        value="screenshot-showcase--with-bg"/>
+                                                    <muted
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="Muted Background"
+                                                        value="screenshot-showcase--muted"/>
+                                                </items>
+                                            </style>
+                                            <columnsCount
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                fieldLabel="Grid Columns"
+                                                fieldDescription="Number of frames per row on tablet and above"
+                                                name="./columns">
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <one
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="1 Column"
+                                                        value="1"
+                                                        selected="{Boolean}true"/>
+                                                    <two
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="2 Columns"
+                                                        value="2"/>
+                                                </items>
+                                            </columnsCount>
+                                            <parallaxStrength
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
+                                                fieldLabel="Parallax Strength (px)"
+                                                fieldDescription="Scroll drift distance in pixels (default: 26). Set to 0 to disable the parallax effect."
+                                                name="./parallaxStrength"
+                                                min="{Double}0"
+                                                max="{Double}200"
+                                                value="{Double}26"/>
+                                            <enableTilt
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                fieldDescription="Tilt frames toward the pointer on devices that support hover"
+                                                name="./enableTilt"
+                                                text="Enable Pointer Tilt"
+                                                checked="{Boolean}true"
+                                                uncheckedValue="false"
+                                                value="true"/>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </appearance>
+                </items>
+            </tabs>
+        </items>
+    </content>
+</jcr:root>

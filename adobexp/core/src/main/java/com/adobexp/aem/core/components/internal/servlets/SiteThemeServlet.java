@@ -36,12 +36,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.adobexp.aem.core.components.config.SiteThemeGlobalConfig;
+import com.adobexp.aem.core.components.config.components.AnalyticsChartThemeConfig;
 import com.adobexp.aem.core.components.config.components.ArticleTileThemeConfig;
 import com.adobexp.aem.core.components.config.components.BlobImageSectionThemeConfig;
 import com.adobexp.aem.core.components.config.components.ButtonThemeConfig;
 import com.adobexp.aem.core.components.config.components.CallToActionThemeConfig;
 import com.adobexp.aem.core.components.config.components.CardsThemeConfig;
+import com.adobexp.aem.core.components.config.components.CodeSnippetThemeConfig;
 import com.adobexp.aem.core.components.config.components.DataTableThemeConfig;
+import com.adobexp.aem.core.components.config.components.FlowDiagramThemeConfig;
+import com.adobexp.aem.core.components.config.components.MetricTilesThemeConfig;
+import com.adobexp.aem.core.components.config.components.ScreenshotShowcaseThemeConfig;
+import com.adobexp.aem.core.components.config.components.StepsTimelineThemeConfig;
 import com.adobexp.aem.core.components.config.components.CompareSubscriptionThemeConfig;
 import com.adobexp.aem.core.components.config.components.ComparisonThemeConfig;
 import com.adobexp.aem.core.components.config.components.CountUpThemeConfig;
@@ -197,7 +203,13 @@ public class SiteThemeServlet extends SlingSafeMethodsServlet {
                 configBuilder.as(VideoArticleGridThemeConfig.class),
                 configBuilder.as(CardsThemeConfig.class),
                 configBuilder.as(CallToActionThemeConfig.class),
-                configBuilder.as(DataTableThemeConfig.class)
+                configBuilder.as(DataTableThemeConfig.class),
+                configBuilder.as(AnalyticsChartThemeConfig.class),
+                configBuilder.as(MetricTilesThemeConfig.class),
+                configBuilder.as(CodeSnippetThemeConfig.class),
+                configBuilder.as(StepsTimelineThemeConfig.class),
+                configBuilder.as(FlowDiagramThemeConfig.class),
+                configBuilder.as(ScreenshotShowcaseThemeConfig.class)
         );
     }
 
@@ -426,6 +438,18 @@ public class SiteThemeServlet extends SlingSafeMethodsServlet {
         writer.println("  --form-builder-card-bg: " + getOrDefault(configs.formBuilderConfig, c -> c.darkFormBuilderCardBg(), "#2a2a2a") + ";");
         writer.println();
         writeVideoArticleGridTheme(writer, configs.videoArticleGridConfig, true);
+        writer.println();
+        writeAnalyticsChartTheme(writer, configs.analyticsChartConfig, true);
+        writer.println();
+        writeMetricTilesTheme(writer, configs.metricTilesConfig, true);
+        writer.println();
+        writeCodeSnippetTheme(writer, configs.codeSnippetConfig, true);
+        writer.println();
+        writeStepsTimelineTheme(writer, configs.stepsTimelineConfig, true);
+        writer.println();
+        writeFlowDiagramTheme(writer, configs.flowDiagramConfig, true);
+        writer.println();
+        writeScreenshotShowcaseTheme(writer, configs.screenshotShowcaseConfig, true);
         writer.println("}");
         writer.println();
         
@@ -653,6 +677,18 @@ public class SiteThemeServlet extends SlingSafeMethodsServlet {
         writer.println("  --form-builder-card-bg: " + getOrDefault(configs.formBuilderConfig, c -> c.lightFormBuilderCardBg(), "#f2fffd") + ";");
         writer.println();
         writeVideoArticleGridTheme(writer, configs.videoArticleGridConfig, false);
+        writer.println();
+        writeAnalyticsChartTheme(writer, configs.analyticsChartConfig, false);
+        writer.println();
+        writeMetricTilesTheme(writer, configs.metricTilesConfig, false);
+        writer.println();
+        writeCodeSnippetTheme(writer, configs.codeSnippetConfig, false);
+        writer.println();
+        writeStepsTimelineTheme(writer, configs.stepsTimelineConfig, false);
+        writer.println();
+        writeFlowDiagramTheme(writer, configs.flowDiagramConfig, false);
+        writer.println();
+        writeScreenshotShowcaseTheme(writer, configs.screenshotShowcaseConfig, false);
         writer.println("}");
     }
 
@@ -717,6 +753,196 @@ public class SiteThemeServlet extends SlingSafeMethodsServlet {
         }
     }
 
+    private void writeAnalyticsChartTheme(PrintWriter writer, AnalyticsChartThemeConfig config, boolean dark) {
+        writer.println("  /* AnalyticsChart */");
+        if (dark) {
+            writer.println("  --analytics-chart-bg: " + getOrDefault(config, c -> c.darkAnalyticsChartBg(), "linear-gradient(180deg, #0c0c0c 0%, var(--site-body-bg, #1e1e1e) 100%)") + ";");
+            writer.println("  --analytics-chart-muted-bg: " + getOrDefault(config, c -> c.darkAnalyticsChartMutedBg(), "var(--site-body-bg, #1e1e1e)") + ";");
+            writer.println("  --analytics-chart-panel-bg: " + getOrDefault(config, c -> c.darkAnalyticsChartPanelBg(), "#2a2a2a") + ";");
+            writer.println("  --analytics-chart-panel-border: " + getOrDefault(config, c -> c.darkAnalyticsChartPanelBorder(), "rgba(255, 255, 255, 0.08)") + ";");
+            writer.println("  --analytics-chart-panel-shadow: " + getOrDefault(config, c -> c.darkAnalyticsChartPanelShadow(), "0 6px 24px rgba(0, 0, 0, 0.28)") + ";");
+            writer.println("  --analytics-chart-panel-shadow-hover: " + getOrDefault(config, c -> c.darkAnalyticsChartPanelShadowHover(), "0 16px 44px rgba(0, 0, 0, 0.38)") + ";");
+            writer.println("  --analytics-chart-grid-color: " + getOrDefault(config, c -> c.darkAnalyticsChartGridColor(), "rgba(255, 255, 255, 0.09)") + ";");
+            writer.println("  --analytics-chart-tick-color: " + getOrDefault(config, c -> c.darkAnalyticsChartTickColor(), "rgba(255, 255, 255, 0.45)") + ";");
+            writer.println("  --analytics-chart-track-color: " + getOrDefault(config, c -> c.darkAnalyticsChartTrackColor(), "rgba(255, 255, 255, 0.08)") + ";");
+            writer.println("  --analytics-chart-badge-bg: " + getOrDefault(config, c -> c.darkAnalyticsChartBadgeBg(), "rgba(74, 222, 128, 0.14)") + ";");
+            writer.println("  --analytics-chart-badge-border: " + getOrDefault(config, c -> c.darkAnalyticsChartBadgeBorder(), "rgba(74, 222, 128, 0.3)") + ";");
+            writer.println("  --analytics-chart-badge-text: " + getOrDefault(config, c -> c.darkAnalyticsChartBadgeText(), "#4ade80") + ";");
+        } else {
+            writer.println("  --analytics-chart-bg: " + getOrDefault(config, c -> c.lightAnalyticsChartBg(), "linear-gradient(180deg, var(--site-body-bg, #ffffff) 0%, rgba(0, 0, 0, 0.03) 100%)") + ";");
+            writer.println("  --analytics-chart-muted-bg: " + getOrDefault(config, c -> c.lightAnalyticsChartMutedBg(), "var(--site-body-bg, #ffffff)") + ";");
+            writer.println("  --analytics-chart-panel-bg: " + getOrDefault(config, c -> c.lightAnalyticsChartPanelBg(), "#ffffff") + ";");
+            writer.println("  --analytics-chart-panel-border: " + getOrDefault(config, c -> c.lightAnalyticsChartPanelBorder(), "rgba(0, 0, 0, 0.08)") + ";");
+            writer.println("  --analytics-chart-panel-shadow: " + getOrDefault(config, c -> c.lightAnalyticsChartPanelShadow(), "0 4px 18px rgba(0, 0, 0, 0.07)") + ";");
+            writer.println("  --analytics-chart-panel-shadow-hover: " + getOrDefault(config, c -> c.lightAnalyticsChartPanelShadowHover(), "0 14px 38px rgba(0, 0, 0, 0.12)") + ";");
+            writer.println("  --analytics-chart-grid-color: " + getOrDefault(config, c -> c.lightAnalyticsChartGridColor(), "rgba(0, 0, 0, 0.09)") + ";");
+            writer.println("  --analytics-chart-tick-color: " + getOrDefault(config, c -> c.lightAnalyticsChartTickColor(), "rgba(0, 0, 0, 0.5)") + ";");
+            writer.println("  --analytics-chart-track-color: " + getOrDefault(config, c -> c.lightAnalyticsChartTrackColor(), "rgba(0, 0, 0, 0.08)") + ";");
+            writer.println("  --analytics-chart-badge-bg: " + getOrDefault(config, c -> c.lightAnalyticsChartBadgeBg(), "rgba(5, 150, 105, 0.1)") + ";");
+            writer.println("  --analytics-chart-badge-border: " + getOrDefault(config, c -> c.lightAnalyticsChartBadgeBorder(), "rgba(5, 150, 105, 0.25)") + ";");
+            writer.println("  --analytics-chart-badge-text: " + getOrDefault(config, c -> c.lightAnalyticsChartBadgeText(), "#047857") + ";");
+        }
+    }
+
+    private void writeMetricTilesTheme(PrintWriter writer, MetricTilesThemeConfig config, boolean dark) {
+        writer.println("  /* MetricTiles */");
+        if (dark) {
+            writer.println("  --metric-tiles-bg: " + getOrDefault(config, c -> c.darkMetricTilesBg(), "linear-gradient(180deg, #0c0c0c 0%, var(--site-body-bg, #1e1e1e) 100%)") + ";");
+            writer.println("  --metric-tiles-muted-bg: " + getOrDefault(config, c -> c.darkMetricTilesMutedBg(), "var(--site-body-bg, #1e1e1e)") + ";");
+            writer.println("  --metric-tiles-card-bg: " + getOrDefault(config, c -> c.darkMetricTilesCardBg(), "#2a2a2a") + ";");
+            writer.println("  --metric-tiles-card-border: " + getOrDefault(config, c -> c.darkMetricTilesCardBorder(), "rgba(255, 255, 255, 0.08)") + ";");
+            writer.println("  --metric-tiles-face-bg: " + getOrDefault(config, c -> c.darkMetricTilesFaceBg(), "linear-gradient(115deg, #f8fafc 0%, #dbeafe 45%, var(--metric-tiles-face-accent, #3b82f6) 100%)") + ";");
+            writer.println("  --metric-tiles-face-accent: " + getOrDefault(config, c -> c.darkMetricTilesFaceAccent(), "#3b82f6") + ";");
+            writer.println("  --metric-tiles-face-text: " + getOrDefault(config, c -> c.darkMetricTilesFaceText(), "#0f172a") + ";");
+        } else {
+            writer.println("  --metric-tiles-bg: " + getOrDefault(config, c -> c.lightMetricTilesBg(), "linear-gradient(180deg, var(--site-body-bg, #ffffff) 0%, rgba(0, 0, 0, 0.03) 100%)") + ";");
+            writer.println("  --metric-tiles-muted-bg: " + getOrDefault(config, c -> c.lightMetricTilesMutedBg(), "var(--site-body-bg, #ffffff)") + ";");
+            writer.println("  --metric-tiles-card-bg: " + getOrDefault(config, c -> c.lightMetricTilesCardBg(), "#ffffff") + ";");
+            writer.println("  --metric-tiles-card-border: " + getOrDefault(config, c -> c.lightMetricTilesCardBorder(), "rgba(0, 0, 0, 0.08)") + ";");
+            writer.println("  --metric-tiles-face-bg: " + getOrDefault(config, c -> c.lightMetricTilesFaceBg(), "linear-gradient(115deg, #ffffff 0%, #eff6ff 45%, var(--metric-tiles-face-accent, #2563eb) 100%)") + ";");
+            writer.println("  --metric-tiles-face-accent: " + getOrDefault(config, c -> c.lightMetricTilesFaceAccent(), "#2563eb") + ";");
+            writer.println("  --metric-tiles-face-text: " + getOrDefault(config, c -> c.lightMetricTilesFaceText(), "#0f172a") + ";");
+        }
+    }
+
+    private void writeCodeSnippetTheme(PrintWriter writer, CodeSnippetThemeConfig config, boolean dark) {
+        writer.println("  /* CodeSnippet */");
+        if (dark) {
+            writer.println("  --code-snippet-bg: " + getOrDefault(config, c -> c.darkCodeSnippetBg(), "linear-gradient(180deg, #0c0c0c 0%, var(--site-body-bg, #1e1e1e) 100%)") + ";");
+            writer.println("  --code-snippet-muted-bg: " + getOrDefault(config, c -> c.darkCodeSnippetMutedBg(), "var(--site-body-bg, #1e1e1e)") + ";");
+            writer.println("  --code-snippet-shell-bg: " + getOrDefault(config, c -> c.darkCodeSnippetShellBg(), "#16161d") + ";");
+            writer.println("  --code-snippet-shell-border: " + getOrDefault(config, c -> c.darkCodeSnippetShellBorder(), "rgba(255, 255, 255, 0.1)") + ";");
+            writer.println("  --code-snippet-bar-bg: " + getOrDefault(config, c -> c.darkCodeSnippetBarBg(), "rgba(255, 255, 255, 0.05)") + ";");
+            writer.println("  --code-snippet-text: " + getOrDefault(config, c -> c.darkCodeSnippetText(), "#e6e6ef") + ";");
+            writer.println("  --code-snippet-tab-text: " + getOrDefault(config, c -> c.darkCodeSnippetTabText(), "rgba(255, 255, 255, 0.6)") + ";");
+            writer.println("  --code-snippet-tab-hover-bg: " + getOrDefault(config, c -> c.darkCodeSnippetTabHoverBg(), "rgba(255, 255, 255, 0.07)") + ";");
+            writer.println("  --code-snippet-tab-active-bg: " + getOrDefault(config, c -> c.darkCodeSnippetTabActiveBg(), "rgba(255, 255, 255, 0.13)") + ";");
+            writer.println("  --code-snippet-tab-active-text: " + getOrDefault(config, c -> c.darkCodeSnippetTabActiveText(), "#ffffff") + ";");
+            writer.println("  --code-snippet-copy-bg: " + getOrDefault(config, c -> c.darkCodeSnippetCopyBg(), "rgba(255, 255, 255, 0.08)") + ";");
+            writer.println("  --code-snippet-copy-hover-bg: " + getOrDefault(config, c -> c.darkCodeSnippetCopyHoverBg(), "rgba(255, 255, 255, 0.16)") + ";");
+            writer.println("  --code-snippet-copied-color: " + getOrDefault(config, c -> c.darkCodeSnippetCopiedColor(), "#4ade80") + ";");
+            writer.println("  --code-snippet-gutter-color: " + getOrDefault(config, c -> c.darkCodeSnippetGutterColor(), "rgba(255, 255, 255, 0.25)") + ";");
+            writer.println("  --code-snippet-tok-key: " + getOrDefault(config, c -> c.darkCodeSnippetTokKey(), "#c792ea") + ";");
+            writer.println("  --code-snippet-tok-str: " + getOrDefault(config, c -> c.darkCodeSnippetTokStr(), "#a5e075") + ";");
+            writer.println("  --code-snippet-tok-num: " + getOrDefault(config, c -> c.darkCodeSnippetTokNum(), "#f78c6c") + ";");
+            writer.println("  --code-snippet-tok-comment: " + getOrDefault(config, c -> c.darkCodeSnippetTokComment(), "#6b7789") + ";");
+            writer.println("  --code-snippet-tok-tag: " + getOrDefault(config, c -> c.darkCodeSnippetTokTag(), "#7fd1f7") + ";");
+            writer.println("  --code-snippet-tok-attr: " + getOrDefault(config, c -> c.darkCodeSnippetTokAttr(), "#ffcb6b") + ";");
+        } else {
+            writer.println("  --code-snippet-bg: " + getOrDefault(config, c -> c.lightCodeSnippetBg(), "linear-gradient(180deg, var(--site-body-bg, #ffffff) 0%, rgba(0, 0, 0, 0.03) 100%)") + ";");
+            writer.println("  --code-snippet-muted-bg: " + getOrDefault(config, c -> c.lightCodeSnippetMutedBg(), "var(--site-body-bg, #ffffff)") + ";");
+            writer.println("  --code-snippet-shell-bg: " + getOrDefault(config, c -> c.lightCodeSnippetShellBg(), "#1b1b25") + ";");
+            writer.println("  --code-snippet-shell-border: " + getOrDefault(config, c -> c.lightCodeSnippetShellBorder(), "rgba(0, 0, 0, 0.14)") + ";");
+            writer.println("  --code-snippet-bar-bg: " + getOrDefault(config, c -> c.lightCodeSnippetBarBg(), "rgba(255, 255, 255, 0.05)") + ";");
+            writer.println("  --code-snippet-text: " + getOrDefault(config, c -> c.lightCodeSnippetText(), "#e6e6ef") + ";");
+            writer.println("  --code-snippet-tab-text: " + getOrDefault(config, c -> c.lightCodeSnippetTabText(), "rgba(255, 255, 255, 0.6)") + ";");
+            writer.println("  --code-snippet-tab-hover-bg: " + getOrDefault(config, c -> c.lightCodeSnippetTabHoverBg(), "rgba(255, 255, 255, 0.07)") + ";");
+            writer.println("  --code-snippet-tab-active-bg: " + getOrDefault(config, c -> c.lightCodeSnippetTabActiveBg(), "rgba(255, 255, 255, 0.13)") + ";");
+            writer.println("  --code-snippet-tab-active-text: " + getOrDefault(config, c -> c.lightCodeSnippetTabActiveText(), "#ffffff") + ";");
+            writer.println("  --code-snippet-copy-bg: " + getOrDefault(config, c -> c.lightCodeSnippetCopyBg(), "rgba(255, 255, 255, 0.08)") + ";");
+            writer.println("  --code-snippet-copy-hover-bg: " + getOrDefault(config, c -> c.lightCodeSnippetCopyHoverBg(), "rgba(255, 255, 255, 0.16)") + ";");
+            writer.println("  --code-snippet-copied-color: " + getOrDefault(config, c -> c.lightCodeSnippetCopiedColor(), "#4ade80") + ";");
+            writer.println("  --code-snippet-gutter-color: " + getOrDefault(config, c -> c.lightCodeSnippetGutterColor(), "rgba(255, 255, 255, 0.25)") + ";");
+            writer.println("  --code-snippet-tok-key: " + getOrDefault(config, c -> c.lightCodeSnippetTokKey(), "#c792ea") + ";");
+            writer.println("  --code-snippet-tok-str: " + getOrDefault(config, c -> c.lightCodeSnippetTokStr(), "#a5e075") + ";");
+            writer.println("  --code-snippet-tok-num: " + getOrDefault(config, c -> c.lightCodeSnippetTokNum(), "#f78c6c") + ";");
+            writer.println("  --code-snippet-tok-comment: " + getOrDefault(config, c -> c.lightCodeSnippetTokComment(), "#6b7789") + ";");
+            writer.println("  --code-snippet-tok-tag: " + getOrDefault(config, c -> c.lightCodeSnippetTokTag(), "#7fd1f7") + ";");
+            writer.println("  --code-snippet-tok-attr: " + getOrDefault(config, c -> c.lightCodeSnippetTokAttr(), "#ffcb6b") + ";");
+        }
+    }
+
+    private void writeStepsTimelineTheme(PrintWriter writer, StepsTimelineThemeConfig config, boolean dark) {
+        writer.println("  /* StepsTimeline */");
+        if (dark) {
+            writer.println("  --steps-timeline-bg: " + getOrDefault(config, c -> c.darkStepsTimelineBg(), "linear-gradient(180deg, #0c0c0c 0%, var(--site-body-bg, #1e1e1e) 100%)") + ";");
+            writer.println("  --steps-timeline-muted-bg: " + getOrDefault(config, c -> c.darkStepsTimelineMutedBg(), "var(--site-body-bg, #1e1e1e)") + ";");
+            writer.println("  --steps-timeline-rail-bg: " + getOrDefault(config, c -> c.darkStepsTimelineRailBg(), "rgba(255, 255, 255, 0.12)") + ";");
+            writer.println("  --steps-timeline-rail-fill: " + getOrDefault(config, c -> c.darkStepsTimelineRailFill(), "var(--main-theme-color, #e3a002)") + ";");
+            writer.println("  --steps-timeline-marker-bg: " + getOrDefault(config, c -> c.darkStepsTimelineMarkerBg(), "#2a2a2a") + ";");
+            writer.println("  --steps-timeline-marker-border: " + getOrDefault(config, c -> c.darkStepsTimelineMarkerBorder(), "rgba(255, 255, 255, 0.14)") + ";");
+            writer.println("  --steps-timeline-marker-active-border: " + getOrDefault(config, c -> c.darkStepsTimelineMarkerActiveBorder(), "var(--main-theme-color, #e3a002)") + ";");
+            writer.println("  --steps-timeline-marker-glow: " + getOrDefault(config, c -> c.darkStepsTimelineMarkerGlow(), "rgba(227, 160, 2, 0.18)") + ";");
+            writer.println("  --steps-timeline-meta-bg: " + getOrDefault(config, c -> c.darkStepsTimelineMetaBg(), "rgba(74, 222, 128, 0.13)") + ";");
+            writer.println("  --steps-timeline-meta-text: " + getOrDefault(config, c -> c.darkStepsTimelineMetaText(), "#4ade80") + ";");
+            writer.println("  --steps-timeline-code-bg: " + getOrDefault(config, c -> c.darkStepsTimelineCodeBg(), "rgba(255, 255, 255, 0.08)") + ";");
+        } else {
+            writer.println("  --steps-timeline-bg: " + getOrDefault(config, c -> c.lightStepsTimelineBg(), "linear-gradient(180deg, var(--site-body-bg, #ffffff) 0%, rgba(0, 0, 0, 0.03) 100%)") + ";");
+            writer.println("  --steps-timeline-muted-bg: " + getOrDefault(config, c -> c.lightStepsTimelineMutedBg(), "var(--site-body-bg, #ffffff)") + ";");
+            writer.println("  --steps-timeline-rail-bg: " + getOrDefault(config, c -> c.lightStepsTimelineRailBg(), "rgba(0, 0, 0, 0.1)") + ";");
+            writer.println("  --steps-timeline-rail-fill: " + getOrDefault(config, c -> c.lightStepsTimelineRailFill(), "var(--main-theme-color, #42f4fd)") + ";");
+            writer.println("  --steps-timeline-marker-bg: " + getOrDefault(config, c -> c.lightStepsTimelineMarkerBg(), "#ffffff") + ";");
+            writer.println("  --steps-timeline-marker-border: " + getOrDefault(config, c -> c.lightStepsTimelineMarkerBorder(), "rgba(0, 0, 0, 0.12)") + ";");
+            writer.println("  --steps-timeline-marker-active-border: " + getOrDefault(config, c -> c.lightStepsTimelineMarkerActiveBorder(), "var(--main-theme-color, #42f4fd)") + ";");
+            writer.println("  --steps-timeline-marker-glow: " + getOrDefault(config, c -> c.lightStepsTimelineMarkerGlow(), "rgba(66, 244, 253, 0.2)") + ";");
+            writer.println("  --steps-timeline-meta-bg: " + getOrDefault(config, c -> c.lightStepsTimelineMetaBg(), "rgba(5, 150, 105, 0.1)") + ";");
+            writer.println("  --steps-timeline-meta-text: " + getOrDefault(config, c -> c.lightStepsTimelineMetaText(), "#047857") + ";");
+            writer.println("  --steps-timeline-code-bg: " + getOrDefault(config, c -> c.lightStepsTimelineCodeBg(), "rgba(0, 0, 0, 0.06)") + ";");
+        }
+    }
+
+    private void writeFlowDiagramTheme(PrintWriter writer, FlowDiagramThemeConfig config, boolean dark) {
+        writer.println("  /* FlowDiagram */");
+        if (dark) {
+            writer.println("  --flow-diagram-bg: " + getOrDefault(config, c -> c.darkFlowDiagramBg(), "linear-gradient(180deg, #0c0c0c 0%, var(--site-body-bg, #1e1e1e) 100%)") + ";");
+            writer.println("  --flow-diagram-muted-bg: " + getOrDefault(config, c -> c.darkFlowDiagramMutedBg(), "var(--site-body-bg, #1e1e1e)") + ";");
+            writer.println("  --flow-diagram-node-bg: " + getOrDefault(config, c -> c.darkFlowDiagramNodeBg(), "#2a2a2a") + ";");
+            writer.println("  --flow-diagram-node-border: " + getOrDefault(config, c -> c.darkFlowDiagramNodeBorder(), "rgba(255, 255, 255, 0.1)") + ";");
+            writer.println("  --flow-diagram-node-hover-border: " + getOrDefault(config, c -> c.darkFlowDiagramNodeHoverBorder(), "var(--main-theme-color, #e3a002)") + ";");
+            writer.println("  --flow-diagram-node-shadow: " + getOrDefault(config, c -> c.darkFlowDiagramNodeShadow(), "0 6px 22px rgba(0, 0, 0, 0.3)") + ";");
+            writer.println("  --flow-diagram-node-shadow-hover: " + getOrDefault(config, c -> c.darkFlowDiagramNodeShadowHover(), "0 14px 36px rgba(0, 0, 0, 0.4)") + ";");
+            writer.println("  --flow-diagram-link-color: " + getOrDefault(config, c -> c.darkFlowDiagramLinkColor(), "rgba(255, 255, 255, 0.16)") + ";");
+            writer.println("  --flow-diagram-pulse-color: " + getOrDefault(config, c -> c.darkFlowDiagramPulseColor(), "var(--main-theme-color, #e3a002)") + ";");
+            writer.println("  --flow-diagram-tag-bg: " + getOrDefault(config, c -> c.darkFlowDiagramTagBg(), "rgba(74, 222, 128, 0.13)") + ";");
+            writer.println("  --flow-diagram-tag-text: " + getOrDefault(config, c -> c.darkFlowDiagramTagText(), "#4ade80") + ";");
+        } else {
+            writer.println("  --flow-diagram-bg: " + getOrDefault(config, c -> c.lightFlowDiagramBg(), "linear-gradient(180deg, var(--site-body-bg, #ffffff) 0%, rgba(0, 0, 0, 0.03) 100%)") + ";");
+            writer.println("  --flow-diagram-muted-bg: " + getOrDefault(config, c -> c.lightFlowDiagramMutedBg(), "var(--site-body-bg, #ffffff)") + ";");
+            writer.println("  --flow-diagram-node-bg: " + getOrDefault(config, c -> c.lightFlowDiagramNodeBg(), "#ffffff") + ";");
+            writer.println("  --flow-diagram-node-border: " + getOrDefault(config, c -> c.lightFlowDiagramNodeBorder(), "rgba(0, 0, 0, 0.09)") + ";");
+            writer.println("  --flow-diagram-node-hover-border: " + getOrDefault(config, c -> c.lightFlowDiagramNodeHoverBorder(), "var(--main-theme-color, #42f4fd)") + ";");
+            writer.println("  --flow-diagram-node-shadow: " + getOrDefault(config, c -> c.lightFlowDiagramNodeShadow(), "0 4px 18px rgba(0, 0, 0, 0.07)") + ";");
+            writer.println("  --flow-diagram-node-shadow-hover: " + getOrDefault(config, c -> c.lightFlowDiagramNodeShadowHover(), "0 12px 32px rgba(0, 0, 0, 0.12)") + ";");
+            writer.println("  --flow-diagram-link-color: " + getOrDefault(config, c -> c.lightFlowDiagramLinkColor(), "rgba(0, 0, 0, 0.16)") + ";");
+            writer.println("  --flow-diagram-pulse-color: " + getOrDefault(config, c -> c.lightFlowDiagramPulseColor(), "var(--main-theme-color, #42f4fd)") + ";");
+            writer.println("  --flow-diagram-tag-bg: " + getOrDefault(config, c -> c.lightFlowDiagramTagBg(), "rgba(5, 150, 105, 0.1)") + ";");
+            writer.println("  --flow-diagram-tag-text: " + getOrDefault(config, c -> c.lightFlowDiagramTagText(), "#047857") + ";");
+        }
+    }
+
+    private void writeScreenshotShowcaseTheme(PrintWriter writer, ScreenshotShowcaseThemeConfig config, boolean dark) {
+        writer.println("  /* ScreenshotShowcase */");
+        if (dark) {
+            writer.println("  --screenshot-showcase-bg: " + getOrDefault(config, c -> c.darkScreenshotShowcaseBg(), "linear-gradient(180deg, #0c0c0c 0%, var(--site-body-bg, #1e1e1e) 100%)") + ";");
+            writer.println("  --screenshot-showcase-muted-bg: " + getOrDefault(config, c -> c.darkScreenshotShowcaseMutedBg(), "var(--site-body-bg, #1e1e1e)") + ";");
+            writer.println("  --screenshot-showcase-frame-bg: " + getOrDefault(config, c -> c.darkScreenshotShowcaseFrameBg(), "#16161d") + ";");
+            writer.println("  --screenshot-showcase-frame-border: " + getOrDefault(config, c -> c.darkScreenshotShowcaseFrameBorder(), "rgba(255, 255, 255, 0.12)") + ";");
+            writer.println("  --screenshot-showcase-frame-shadow: " + getOrDefault(config, c -> c.darkScreenshotShowcaseFrameShadow(), "0 24px 70px rgba(0, 0, 0, 0.45)") + ";");
+            writer.println("  --screenshot-showcase-frame-shadow-hover: " + getOrDefault(config, c -> c.darkScreenshotShowcaseFrameShadowHover(), "0 30px 90px rgba(0, 0, 0, 0.55)") + ";");
+            writer.println("  --screenshot-showcase-chrome-bg: " + getOrDefault(config, c -> c.darkScreenshotShowcaseChromeBg(), "rgba(255, 255, 255, 0.06)") + ";");
+            writer.println("  --screenshot-showcase-dot-color: " + getOrDefault(config, c -> c.darkScreenshotShowcaseDotColor(), "rgba(255, 255, 255, 0.22)") + ";");
+            writer.println("  --screenshot-showcase-url-bg: " + getOrDefault(config, c -> c.darkScreenshotShowcaseUrlBg(), "rgba(0, 0, 0, 0.3)") + ";");
+            writer.println("  --screenshot-showcase-url-text: " + getOrDefault(config, c -> c.darkScreenshotShowcaseUrlText(), "rgba(255, 255, 255, 0.6)") + ";");
+            writer.println("  --screenshot-showcase-media-bg: " + getOrDefault(config, c -> c.darkScreenshotShowcaseMediaBg(), "#0e0e14") + ";");
+            writer.println("  --screenshot-showcase-badge-bg: " + getOrDefault(config, c -> c.darkScreenshotShowcaseBadgeBg(), "rgba(74, 222, 128, 0.13)") + ";");
+            writer.println("  --screenshot-showcase-badge-text: " + getOrDefault(config, c -> c.darkScreenshotShowcaseBadgeText(), "#4ade80") + ";");
+        } else {
+            writer.println("  --screenshot-showcase-bg: " + getOrDefault(config, c -> c.lightScreenshotShowcaseBg(), "linear-gradient(180deg, var(--site-body-bg, #ffffff) 0%, rgba(0, 0, 0, 0.03) 100%)") + ";");
+            writer.println("  --screenshot-showcase-muted-bg: " + getOrDefault(config, c -> c.lightScreenshotShowcaseMutedBg(), "var(--site-body-bg, #ffffff)") + ";");
+            writer.println("  --screenshot-showcase-frame-bg: " + getOrDefault(config, c -> c.lightScreenshotShowcaseFrameBg(), "#ffffff") + ";");
+            writer.println("  --screenshot-showcase-frame-border: " + getOrDefault(config, c -> c.lightScreenshotShowcaseFrameBorder(), "rgba(0, 0, 0, 0.1)") + ";");
+            writer.println("  --screenshot-showcase-frame-shadow: " + getOrDefault(config, c -> c.lightScreenshotShowcaseFrameShadow(), "0 18px 50px rgba(0, 0, 0, 0.13)") + ";");
+            writer.println("  --screenshot-showcase-frame-shadow-hover: " + getOrDefault(config, c -> c.lightScreenshotShowcaseFrameShadowHover(), "0 26px 70px rgba(0, 0, 0, 0.18)") + ";");
+            writer.println("  --screenshot-showcase-chrome-bg: " + getOrDefault(config, c -> c.lightScreenshotShowcaseChromeBg(), "rgba(0, 0, 0, 0.04)") + ";");
+            writer.println("  --screenshot-showcase-dot-color: " + getOrDefault(config, c -> c.lightScreenshotShowcaseDotColor(), "rgba(0, 0, 0, 0.16)") + ";");
+            writer.println("  --screenshot-showcase-url-bg: " + getOrDefault(config, c -> c.lightScreenshotShowcaseUrlBg(), "rgba(0, 0, 0, 0.05)") + ";");
+            writer.println("  --screenshot-showcase-url-text: " + getOrDefault(config, c -> c.lightScreenshotShowcaseUrlText(), "rgba(0, 0, 0, 0.55)") + ";");
+            writer.println("  --screenshot-showcase-media-bg: " + getOrDefault(config, c -> c.lightScreenshotShowcaseMediaBg(), "#f3f4f6") + ";");
+            writer.println("  --screenshot-showcase-badge-bg: " + getOrDefault(config, c -> c.lightScreenshotShowcaseBadgeBg(), "rgba(5, 150, 105, 0.1)") + ";");
+            writer.println("  --screenshot-showcase-badge-text: " + getOrDefault(config, c -> c.lightScreenshotShowcaseBadgeText(), "#047857") + ";");
+        }
+    }
+
     private <T> String getOrDefault(T config, Function<T, String> getter, String defaultValue) {
         if (config == null) {
             return defaultValue;
@@ -760,6 +986,12 @@ public class SiteThemeServlet extends SlingSafeMethodsServlet {
         private final CardsThemeConfig cardsConfig;
         private final CallToActionThemeConfig callToActionConfig;
         private final DataTableThemeConfig dataTableConfig;
+        private final AnalyticsChartThemeConfig analyticsChartConfig;
+        private final MetricTilesThemeConfig metricTilesConfig;
+        private final CodeSnippetThemeConfig codeSnippetConfig;
+        private final StepsTimelineThemeConfig stepsTimelineConfig;
+        private final FlowDiagramThemeConfig flowDiagramConfig;
+        private final ScreenshotShowcaseThemeConfig screenshotShowcaseConfig;
 
         private ThemeConfigs(
                 SiteThemeGlobalConfig globalConfig,
@@ -790,7 +1022,13 @@ public class SiteThemeServlet extends SlingSafeMethodsServlet {
                 VideoArticleGridThemeConfig videoArticleGridConfig,
                 CardsThemeConfig cardsConfig,
                 CallToActionThemeConfig callToActionConfig,
-                DataTableThemeConfig dataTableConfig
+                DataTableThemeConfig dataTableConfig,
+                AnalyticsChartThemeConfig analyticsChartConfig,
+                MetricTilesThemeConfig metricTilesConfig,
+                CodeSnippetThemeConfig codeSnippetConfig,
+                StepsTimelineThemeConfig stepsTimelineConfig,
+                FlowDiagramThemeConfig flowDiagramConfig,
+                ScreenshotShowcaseThemeConfig screenshotShowcaseConfig
         ) {
             this.globalConfig = globalConfig;
             this.headerConfig = headerConfig;
@@ -821,10 +1059,22 @@ public class SiteThemeServlet extends SlingSafeMethodsServlet {
             this.cardsConfig = cardsConfig;
             this.callToActionConfig = callToActionConfig;
             this.dataTableConfig = dataTableConfig;
+            this.analyticsChartConfig = analyticsChartConfig;
+            this.metricTilesConfig = metricTilesConfig;
+            this.codeSnippetConfig = codeSnippetConfig;
+            this.stepsTimelineConfig = stepsTimelineConfig;
+            this.flowDiagramConfig = flowDiagramConfig;
+            this.screenshotShowcaseConfig = screenshotShowcaseConfig;
         }
 
         private static ThemeConfigs empty() {
             return new ThemeConfigs(
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
                     null,
                     null,
                     null,

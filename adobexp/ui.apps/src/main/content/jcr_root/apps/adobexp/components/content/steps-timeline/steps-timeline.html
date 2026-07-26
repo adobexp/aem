@@ -1,0 +1,41 @@
+<!--/*
+    Steps Timeline Component - AEM Sightly Template
+
+    Renders a numbered walkthrough with:
+    - Optional section title and subtitle
+    - An ordered list of steps, each with a numbered marker, title, rich text body
+      and an optional meta chip
+    - A vertical rail whose fill tracks the reader's scroll position
+
+    Note: Theme (dark/light) is controlled via page template, not this component.
+*/-->
+
+<sly data-sly-use.templates="adobexp/components/commons/v1/templates.html"/>
+<sly data-sly-use.stepsTimeline="com.adobexp.aem.core.components.models.StepsTimelineModel"/>
+
+<!-- STEPS TIMELINE COMPONENT HTML MARKUP STARTS HERE -->
+<section class="steps-timeline ${stepsTimeline.variant}"
+         data-component="steps-timeline"
+         aria-label="${stepsTimeline.ariaLabel}"
+         data-sly-test="${stepsTimeline.hasContent}">
+    <div class="steps-timeline__inner">
+        <div class="steps-timeline__header" data-sly-test="${stepsTimeline.title || stepsTimeline.subtitle}">
+            <h2 class="steps-timeline__title" data-sly-test="${stepsTimeline.title}">${stepsTimeline.title}</h2>
+            <p class="steps-timeline__subtitle" data-sly-test="${stepsTimeline.subtitle}">${stepsTimeline.subtitle}</p>
+        </div>
+        <ol class="steps-timeline__list" data-sly-test="${stepsTimeline.hasSteps}">
+            <div class="steps-timeline__rail" aria-hidden="true"><span class="steps-timeline__rail-fill"></span></div>
+            <sly data-sly-list.step="${stepsTimeline.steps}">
+                <li class="steps-timeline__step">
+                    <span class="steps-timeline__marker" aria-hidden="true">${step.stepNumber}</span>
+                    <h3 class="steps-timeline__step-title" data-sly-test="${step.stepTitle}">${step.stepTitle}</h3>
+                    <div class="steps-timeline__step-body" data-sly-test="${step.description}">${step.description @ context='html'}</div>
+                    <span class="steps-timeline__meta" data-sly-test="${step.meta}">${step.meta}</span>
+                </li>
+            </sly>
+        </ol>
+    </div>
+</section>
+<!-- STEPS TIMELINE COMPONENT HTML MARKUP ENDS HERE -->
+
+<sly data-sly-call="${templates.placeholder @ isEmpty = !stepsTimeline.hasContent, classAppend='steps-timeline'}"></sly>
