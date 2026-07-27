@@ -196,7 +196,7 @@
                                                             jcr:primaryType="nt:unstructured"
                                                             sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
                                                             fieldLabel="Series"
-                                                            fieldDescription="One series per line, pipe delimited: Name|#colour|v1,v2,v3 - Example: Unique users|#10b981|12,18,24,19 - Both the name and the colour are optional, so |#10b981|1,2,3 and 1,2,3 also work."
+                                                            fieldDescription="One series per line, pipe delimited: Name|#colour|v1,v2,v3 - Example: Unique users|#10b981|12,18,24,19 - Both the name and the colour are optional, so |#10b981|1,2,3 and 1,2,3 also work. Donut, stacked bar and ranked bar charts colour each category from the site palette instead; to override that, list one colour per category separated by / - Example: Sessions|#f4c15e/#5b9dff/#4ecdc4|58,34,8"
                                                             name="series"
                                                             rows="{Long}5"/>
                                                         <unit
@@ -287,6 +287,28 @@
                                                                     value="linear"/>
                                                             </items>
                                                         </curve>
+                                                        <colorBy
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                            fieldLabel="Colour By"
+                                                            fieldDescription="Automatic gives each category its own colour on donut, stacked bar, ranked bar and single-series bar charts, and one colour per series elsewhere. Choose Series to colour a single-series chart with one colour instead."
+                                                            name="colorBy">
+                                                            <items jcr:primaryType="nt:unstructured">
+                                                                <auto
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    text="Automatic"
+                                                                    value=""
+                                                                    selected="{Boolean}true"/>
+                                                                <category
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    text="Category"
+                                                                    value="category"/>
+                                                                <series
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    text="Series"
+                                                                    value="series"/>
+                                                            </items>
+                                                        </colorBy>
                                                         <showGrid
                                                             jcr:primaryType="nt:unstructured"
                                                             sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"

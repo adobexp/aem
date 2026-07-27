@@ -6,8 +6,13 @@
  *
  *   data-chart-type    area | line | bar | hbar | stacked-bar | donut | gauge | sparkline
  *   data-chart-labels  JSON string[]  - category / x-axis labels
- *   data-chart-series  JSON Series[]  - [{ name, color, values: number[] }]
+ *   data-chart-series  JSON Series[]  - [{ name, color, colors, values: number[] }]
  *   data-chart-config  JSON Config    - { unit, yMax, total, valueFormat, showGrid, ... }
+ *
+ * Multi-series types (area, line, bar) take one colour per series from `color`.
+ * Single-series categorical types (donut, stacked-bar, hbar) plot each category
+ * as its own slice, so they take one colour per category from `colors` when the
+ * author supplied them and otherwise from the theme palette.
  */
 (function() {
     'use strict';
@@ -23,6 +28,19 @@
         '#6366f1',
         '#ef4444',
         '#84cc16'
+    ];
+
+    // Fallbacks only: the live values come from --analytics-chart-cat-N, which
+    // SiteThemeServlet writes per theme from AnalyticsChartThemeConfig.
+    var CATEGORY_FALLBACKS = [
+        '#f4c15e',
+        '#5b9dff',
+        '#4ecdc4',
+        '#f2789f',
+        '#a78bfa',
+        '#ff9f5a',
+        '#7ddf7d',
+        '#d9d24f'
     ];
 
     var PLOT = { width: 640, height: 260, left: 44, right: 12, top: 16, bottom: 28 };
@@ -96,7 +114,16 @@
                     }
                 }
             }
-            series.push({ name: entry.name, color: entry.color, values: values });
+            var colors = [];
+            var rawColors = entry.colors;
+            if (rawColors && typeof rawColors.length === 'number') {
+                for (var k = 0; k < rawColors.length; k += 1) {
+                    if (typeof rawColors[k] === 'string' && rawColors[k]) {
+                        colors.push(rawColors[k]);
+                    }
+                }
+            }
+            series.push({ name: entry.name, color: entry.color, colors: colors, values: values });
         }
         return series;
     }
@@ -241,6 +268,60 @@
             return series.color;
         }
         return FALLBACK_PALETTE[index % FALLBACK_PALETTE.length];
+    }
+
+    /**
+     * Resolve the colour of one category within a single-series chart, so that
+     * each slice, segment or ranked bar is told apart by colour rather than by
+     * position alone. Returns a var() reference so a runtime theme switch
+     * recolours the chart without re-rendering it.
+     * @param {Object} series - Series the categories belong to
+     * @param {number} index - Category position
+     * @returns {string} - CSS colour
+     */
+    function categoryColorAt(series, index) {
+        if (series && series.colors && series.colors[index]) {
+            return series.colors[index];
+        }
+        var slot = index % CATEGORY_FALLBACKS.length;
+        return 'var(--analytics-chart-cat-' + (slot + 1) + ', ' + CATEGORY_FALLBACKS[slot] + ')';
+    }
+
+    /**
+     * Decide whether a chart takes a colour per category or a colour per series.
+     * A chart that plots one series as a set of categories is only readable when
+     * each category has its own colour; a chart that overlays several series
+     * needs one colour per series so the series can be told apart instead.
+     * @param {string} type - Chart type
+     * @param {Array} series - Normalised series
+     * @param {Object} config - Chart config
+     * @returns {boolean} - True when categories carry the colour
+     */
+    function colorsByCategory(type, series, config) {
+        if (config && config.colorBy === 'category') {
+            return true;
+        }
+        if (config && config.colorBy === 'series') {
+            return false;
+        }
+        if (type === 'donut' || type === 'stacked-bar' || type === 'hbar') {
+            return true;
+        }
+        return type === 'bar' && series.length === 1;
+    }
+
+    /**
+     * Colour for one plotted value, honouring the chart's colouring mode
+     * @param {Object} context - Render context
+     * @param {Object} series - Series the value belongs to
+     * @param {number} seriesIndex - Position of the series
+     * @param {number} categoryIndex - Position of the value within the series
+     * @returns {string} - CSS colour
+     */
+    function plotColorAt(context, series, seriesIndex, categoryIndex) {
+        return context.byCategory
+            ? categoryColorAt(series, categoryIndex)
+            : colorAt(series, seriesIndex);
     }
 
     /**
@@ -551,7 +632,6 @@
         var baseline = PLOT.top + innerHeight;
 
         series.forEach(function(entry, seriesIndex) {
-            var color = colorAt(entry, seriesIndex);
             entry.values.forEach(function(value, index) {
                 var height = innerHeight * Math.min(value / maxValue, 1);
                 var x = PLOT.left + slot * index + slot * 0.19 + barWidth * seriesIndex;
@@ -561,9 +641,10 @@
                     width: barWidth,
                     height: Math.max(height, 0),
                     rx: Math.min(barWidth / 2, 3),
-                    fill: color,
                     'class': 'analytics-chart__bar'
                 });
+                // Set through style, not the attribute: var() only resolves in a declaration.
+                rect.style.fill = plotColorAt(context, entry, seriesIndex, index);
                 svg.appendChild(rect);
 
                 if (!REDUCED_MOTION) {
@@ -608,7 +689,7 @@
 
             var fill = document.createElement('span');
             fill.className = 'analytics-chart__hbar-fill';
-            fill.style.background = colorAt(primary, index);
+            fill.style.background = plotColorAt(context, primary, 0, index);
             var ratio = Math.min(value / maxValue, 1);
             track.appendChild(fill);
 
@@ -661,7 +742,7 @@
             var ratio = total > 0 ? value / total : 0;
             var segment = document.createElement('span');
             segment.className = 'analytics-chart__stack-seg';
-            segment.style.background = colorAt(primary, index);
+            segment.style.background = plotColorAt(context, primary, 0, index);
             segment.title = (labels[index] ? labels[index] : '') + ': ' + formatValue(value, config);
 
             var percent = document.createElement('em');
@@ -688,7 +769,7 @@
 
         wrap.appendChild(bar);
         wrap.appendChild(caption);
-        wrap.appendChild(buildValueLegend(labels, values, primary, config, false));
+        wrap.appendChild(buildValueLegend(context, values, primary, false));
         context.host.appendChild(wrap);
     }
 
@@ -737,10 +818,11 @@
             var arc = el('path', {
                 d: describeArc(size / 2, size / 2, radius, angle + 1, angle + Math.max(sweep - 1, 0.5)),
                 fill: 'none',
-                stroke: colorAt(primary, index),
                 'stroke-width': '26',
                 'stroke-linecap': 'butt'
             });
+            // Set through style, not the attribute: var() only resolves in a declaration.
+            arc.style.stroke = plotColorAt(context, primary, 0, index);
             svg.appendChild(arc);
             drawOn(arc, index * 130, 1000);
             angle += sweep;
@@ -771,20 +853,22 @@
         }
 
         wrap.appendChild(figure);
-        wrap.appendChild(buildValueLegend(labels, values, primary, config, true));
+        wrap.appendChild(buildValueLegend(context, values, primary, true));
         context.host.appendChild(wrap);
     }
 
     /**
-     * Build a legend listing each value against its category label
-     * @param {Array} labels - Category labels
+     * Build a legend listing each value against its category label, using the
+     * same colours the chart itself plotted.
+     * @param {Object} context - Render context
      * @param {Array} values - Plotted values
      * @param {Object} series - Series the colours are taken from
-     * @param {Object} config - Chart config
      * @param {boolean} stacked - Whether to use the stacked legend layout
      * @returns {HTMLElement} - The legend list
      */
-    function buildValueLegend(labels, values, series, config, stacked) {
+    function buildValueLegend(context, values, series, stacked) {
+        var labels = context.labels;
+        var config = context.config;
         var legend = document.createElement('ul');
         legend.className = stacked
             ? 'analytics-chart__legend analytics-chart__legend--stacked'
@@ -796,7 +880,7 @@
 
             var dot = document.createElement('span');
             dot.className = 'analytics-chart__legend-dot';
-            dot.style.background = colorAt(series, index);
+            dot.style.background = plotColorAt(context, series, 0, index);
 
             var text = document.createElement('span');
             text.textContent = (labels[index] ? labels[index] : '') + ' · ' + formatValue(value, config);
@@ -954,7 +1038,13 @@
         }
 
         host.innerHTML = '';
-        renderer({ host: host, labels: labels, series: series, config: config });
+        renderer({
+            host: host,
+            labels: labels,
+            series: series,
+            config: config,
+            byCategory: colorsByCategory(type, series, config)
+        });
         host.setAttribute('data-rendered', 'true');
 
         if (config.showLegend && series.length > 1 && !host.querySelector('.analytics-chart__legend')) {

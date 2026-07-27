@@ -77,6 +77,9 @@ public class AnalyticsChartModelImpl implements AnalyticsChartModel {
     private static final Set<String> CURVES =
         Collections.unmodifiableSet(new HashSet<>(Arrays.asList("smooth", "linear")));
 
+    private static final Set<String> COLOR_MODES =
+        Collections.unmodifiableSet(new HashSet<>(Arrays.asList("category", "series")));
+
     @SlingObject
     private Resource currentResource;
 
@@ -202,6 +205,10 @@ public class AnalyticsChartModelImpl implements AnalyticsChartModel {
     /**
      * Parses one series per line in the form {@code Name|#colour|v1,v2,v3}, where both the
      * name and the colour are optional.
+     * <p>
+     * The colour slot may hold several colours separated by {@code /}, as in
+     * {@code Sessions|#f4c15e/#5b9dff/#4ecdc4|58,34,8}. Donut, stacked bar and ranked bar
+     * charts then use one colour per category instead of the theme palette.
      */
     @SuppressWarnings("deprecation")
     private static String buildSeriesJson(String raw) {
@@ -255,6 +262,10 @@ public class AnalyticsChartModelImpl implements AnalyticsChartModel {
                 }
                 if (color != null) {
                     entry.put("color", color);
+                    JSONArray colors = splitColors(color);
+                    if (colors.length() > 1) {
+                        entry.put("colors", colors);
+                    }
                 }
                 entry.put("values", values);
             } catch (Exception e) {
@@ -264,6 +275,21 @@ public class AnalyticsChartModelImpl implements AnalyticsChartModel {
         }
 
         return series.toString();
+    }
+
+    /**
+     * Splits the colour slot into its individual colours.
+     */
+    @SuppressWarnings("deprecation")
+    private static JSONArray splitColors(String raw) {
+        JSONArray colors = new JSONArray();
+        for (String token : raw.split("/")) {
+            String color = StringUtils.trimToNull(token);
+            if (color != null) {
+                colors.put(color);
+            }
+        }
+        return colors;
     }
 
     /**
@@ -285,6 +311,7 @@ public class AnalyticsChartModelImpl implements AnalyticsChartModel {
             putBoolean(config, "showLegend", readString(props, "showLegend"));
             putBoolean(config, "showAxis", readString(props, "showAxis"));
             putString(config, "curve", readString(props, "curve"), CURVES);
+            putString(config, "colorBy", readString(props, "colorBy"), COLOR_MODES);
         } catch (Exception e) {
             return EMPTY_OBJECT;
         }

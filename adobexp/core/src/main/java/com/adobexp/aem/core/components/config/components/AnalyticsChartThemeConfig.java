@@ -98,4 +98,20 @@ public @interface AnalyticsChartThemeConfig {
 
     @Property(label = "Analytics Chart Badge Text (Light)", description = "Panel type badge text colour in light theme")
     String lightAnalyticsChartBadgeText() default "#047857";
+
+    @Property(
+            label = "Analytics Chart Category Colours (Dark)",
+            description = "Comma-separated palette giving each category of a donut, stacked bar or ranked bar chart "
+                    + "its own colour in dark theme. Colours are cycled when a chart has more categories than colours."
+    )
+    String darkAnalyticsChartCategoryColors()
+            default "#f4c15e, #5b9dff, #4ecdc4, #f2789f, #a78bfa, #ff9f5a, #7ddf7d, #d9d24f";
+
+    @Property(
+            label = "Analytics Chart Category Colours (Light)",
+            description = "Comma-separated palette giving each category of a donut, stacked bar or ranked bar chart "
+                    + "its own colour in light theme. Colours are cycled when a chart has more categories than colours."
+    )
+    String lightAnalyticsChartCategoryColors()
+            default "#b8860b, #2f6bd8, #12897d, #c2456f, #6d4bd8, #cf5f18, #2f8f3f, #86811c";
 }

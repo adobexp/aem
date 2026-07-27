@@ -22,6 +22,38 @@ This component can be configured through the following tabs:
   - **Series**: One series per line, pipe delimited: `Name|#colour|v1,v2,v3`. Both the name and the
     colour are optional, so `|#10b981|1,2,3` and `1,2,3` also work.
     Example: `Unique users|#10b981|12,18,24,19`
+
+## Colours
+
+A chart is coloured either by series or by category, and **Colour By** (default *Automatic*)
+decides which:
+
+| Chart | Automatic behaviour |
+| --- | --- |
+| Donut, stacked bar, horizontal bar | By category — every value is a separate slice |
+| Bar with one series | By category — the bars are categories, not a trend |
+| Bar with several series, area, line | By series — the series have to be told apart |
+| Gauge, sparkline | Single value, series colour |
+
+Charts coloured by series take their colour from the **Series** field. Charts coloured by
+category take one colour per category from the site palette, cycling it when there are more
+categories than colours; the series colour is ignored because a single colour would make the
+slices indistinguishable. The palette is set per site in the **AdobeXP - Analytics Chart Theme
+Configuration** context-aware configuration (*Analytics Chart Category Colours*, dark and
+light), and reaches the browser as `--analytics-chart-cat-1` … `--analytics-chart-cat-8`.
+
+To override the palette on one panel, list one colour per category in the colour slot,
+separated by `/`:
+
+```
+Sessions|#f4c15e/#5b9dff/#4ecdc4|58,34,8
+```
+
+Set **Colour By** to *Series* to keep a single-series bar chart in one colour.
+
+Because the palette is referenced as `var(--analytics-chart-cat-N)` rather than a resolved
+value, charts recolour themselves when the visitor toggles between dark and light without
+being redrawn.
   - **Unit**: Suffix appended to plain numbers (e.g. 'ms')
   - **Value Format**: Number, Compact (1.2K), Bytes (TB / GB) or Percent (default: Number)
   - **Decimal Places**: Decimal places used when formatting values

@@ -17,6 +17,8 @@ package com.adobexp.aem.core.components.internal.servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Function;
 
 import javax.servlet.Servlet;
@@ -111,6 +113,13 @@ public class SiteThemeServlet extends SlingSafeMethodsServlet {
     private static final long serialVersionUID = 1L;
     private static final Logger LOG = LoggerFactory.getLogger(SiteThemeServlet.class);
     private static final String CONTENT_TYPE_CSS = "text/css;charset=UTF-8";
+
+    /** Number of --analytics-chart-cat-N slots the chart client library looks for. */
+    private static final int CATEGORY_COLOR_SLOTS = 8;
+    private static final String DARK_CATEGORY_COLORS =
+            "#f4c15e, #5b9dff, #4ecdc4, #f2789f, #a78bfa, #ff9f5a, #7ddf7d, #d9d24f";
+    private static final String LIGHT_CATEGORY_COLORS =
+            "#b8860b, #2f6bd8, #12897d, #c2456f, #6d4bd8, #cf5f18, #2f8f3f, #86811c";
 
     @Reference
     private transient ConfigurationResolver configurationResolver;
@@ -768,6 +777,8 @@ public class SiteThemeServlet extends SlingSafeMethodsServlet {
             writer.println("  --analytics-chart-badge-bg: " + getOrDefault(config, c -> c.darkAnalyticsChartBadgeBg(), "rgba(74, 222, 128, 0.14)") + ";");
             writer.println("  --analytics-chart-badge-border: " + getOrDefault(config, c -> c.darkAnalyticsChartBadgeBorder(), "rgba(74, 222, 128, 0.3)") + ";");
             writer.println("  --analytics-chart-badge-text: " + getOrDefault(config, c -> c.darkAnalyticsChartBadgeText(), "#4ade80") + ";");
+            writeCategoryColors(writer, getOrDefault(config, c -> c.darkAnalyticsChartCategoryColors(),
+                    DARK_CATEGORY_COLORS), DARK_CATEGORY_COLORS);
         } else {
             writer.println("  --analytics-chart-bg: " + getOrDefault(config, c -> c.lightAnalyticsChartBg(), "linear-gradient(180deg, var(--site-body-bg, #ffffff) 0%, rgba(0, 0, 0, 0.03) 100%)") + ";");
             writer.println("  --analytics-chart-muted-bg: " + getOrDefault(config, c -> c.lightAnalyticsChartMutedBg(), "var(--site-body-bg, #ffffff)") + ";");
@@ -781,6 +792,60 @@ public class SiteThemeServlet extends SlingSafeMethodsServlet {
             writer.println("  --analytics-chart-badge-bg: " + getOrDefault(config, c -> c.lightAnalyticsChartBadgeBg(), "rgba(5, 150, 105, 0.1)") + ";");
             writer.println("  --analytics-chart-badge-border: " + getOrDefault(config, c -> c.lightAnalyticsChartBadgeBorder(), "rgba(5, 150, 105, 0.25)") + ";");
             writer.println("  --analytics-chart-badge-text: " + getOrDefault(config, c -> c.lightAnalyticsChartBadgeText(), "#047857") + ";");
+            writeCategoryColors(writer, getOrDefault(config, c -> c.lightAnalyticsChartCategoryColors(),
+                    LIGHT_CATEGORY_COLORS), LIGHT_CATEGORY_COLORS);
+        }
+    }
+
+    /**
+     * Writes the categorical chart palette as --analytics-chart-cat-1..N. The
+     * component asks for a fixed number of slots and cycles the configured
+     * colours to fill them, so a shorter palette still colours every category.
+     */
+    private void writeCategoryColors(PrintWriter writer, String configured, String fallback) {
+        List<String> colors = splitTopLevel(configured);
+        if (colors.isEmpty()) {
+            colors = splitTopLevel(fallback);
+        }
+        for (int slot = 0; slot < CATEGORY_COLOR_SLOTS; slot++) {
+            writer.println("  --analytics-chart-cat-" + (slot + 1) + ": "
+                    + colors.get(slot % colors.size()) + ";");
+        }
+    }
+
+    /**
+     * Splits a comma-separated CSS value list, ignoring commas nested inside
+     * functional notation such as {@code rgba(0, 0, 0, 0.5)}.
+     */
+    private static List<String> splitTopLevel(String raw) {
+        List<String> parts = new ArrayList<>();
+        if (raw == null) {
+            return parts;
+        }
+        StringBuilder current = new StringBuilder();
+        int depth = 0;
+        for (int i = 0; i < raw.length(); i++) {
+            char ch = raw.charAt(i);
+            if (ch == '(') {
+                depth++;
+            } else if (ch == ')') {
+                depth = Math.max(depth - 1, 0);
+            }
+            if (ch == ',' && depth == 0) {
+                addTrimmed(parts, current);
+                current.setLength(0);
+            } else {
+                current.append(ch);
+            }
+        }
+        addTrimmed(parts, current);
+        return parts;
+    }
+
+    private static void addTrimmed(List<String> parts, StringBuilder value) {
+        String trimmed = value.toString().trim();
+        if (!trimmed.isEmpty()) {
+            parts.add(trimmed);
         }
     }
 
