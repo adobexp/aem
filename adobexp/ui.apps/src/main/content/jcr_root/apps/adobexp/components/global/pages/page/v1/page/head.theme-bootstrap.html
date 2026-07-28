@@ -1,0 +1,76 @@
+<!--/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ~ Copyright 2025 AdobeXP
+  ~
+  ~ Early theme bootstrap (runs before paint).
+  ~ Reads localStorage key `header-theme` (dark|light|auto) and applies
+  ~ `theme-light` / `theme-dark` on <html> so all components that style under
+  ~ those ancestors (AnalyticsChart, Header, MetricTiles, etc.) stay in sync.
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
+<script>
+  (function () {
+    var KEY = 'header-theme';
+    var VALID = { dark: 1, light: 1, auto: 1 };
+    function resolveAuto() {
+      var h = new Date().getHours();
+      return h >= 7 && h < 18 ? 'light' : 'dark';
+    }
+    function resolve(mode) {
+      if (mode === 'auto') return resolveAuto();
+      return mode === 'light' ? 'light' : 'dark';
+    }
+    var mode = 'dark';
+    try {
+      var stored = localStorage.getItem(KEY);
+      if (stored && VALID[stored]) mode = stored;
+    } catch (e) {}
+    var theme = resolve(mode);
+    var root = document.documentElement;
+    root.classList.remove('theme-light', 'theme-dark');
+    root.classList.add('theme-' + theme);
+    root.setAttribute('data-theme', theme);
+    window.AdobeXPTheme = {
+      STORAGE_KEY: KEY,
+      EVENT_NAME: 'adobexp:themechange',
+      getMode: function () {
+        try {
+          var m = localStorage.getItem(KEY);
+          return m && VALID[m] ? m : 'dark';
+        } catch (e) {
+          return 'dark';
+        }
+      },
+      getTheme: function () {
+        return resolve(this.getMode());
+      },
+      resolve: resolve,
+      apply: function (nextMode, opts) {
+        opts = opts || {};
+        var m = nextMode && VALID[nextMode] ? nextMode : this.getMode();
+        var t = resolve(m);
+        try {
+          if (opts.persist !== false) localStorage.setItem(KEY, m);
+        } catch (e) {}
+        root.classList.remove('theme-light', 'theme-dark');
+        root.classList.add('theme-' + t);
+        root.setAttribute('data-theme', t);
+        if (document.body) {
+          document.body.classList.remove('theme-light', 'theme-dark');
+          document.body.setAttribute('data-theme', t);
+        }
+        if (!opts.silent) {
+          try {
+            document.dispatchEvent(new CustomEvent('adobexp:themechange', { detail: { mode: m, theme: t } }));
+          } catch (e) {}
+        }
+        return { mode: m, theme: t };
+      },
+      initialTheme: theme
+    };
+    document.addEventListener('DOMContentLoaded', function () {
+      if (document.body) {
+        document.body.classList.remove('theme-light', 'theme-dark');
+        document.body.setAttribute('data-theme', theme);
+      }
+    });
+  })();
+</script>

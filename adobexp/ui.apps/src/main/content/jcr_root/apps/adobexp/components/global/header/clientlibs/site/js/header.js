@@ -52,13 +52,23 @@
         const applyTheme = (mode) => {
           currentMode = mode;
           const effectiveTheme = getEffectiveTheme(mode);
-          themeRoot.classList.remove("theme-dark", "theme-light");
-          themeRoot.classList.add(`theme-${effectiveTheme}`);
-          try {
+          const central = window.AdobeXPTheme;
+          if (!usesExplicitThemeRoot && central?.apply) {
+            central.apply(mode, { silent: false });
+          } else {
+            themeRoot.classList.remove("theme-dark", "theme-light");
+            themeRoot.classList.add(`theme-${effectiveTheme}`);
             if (!usesExplicitThemeRoot) {
-              localStorage.setItem(THEME_STORAGE_KEY, mode);
+              try {
+                localStorage.setItem(THEME_STORAGE_KEY, mode);
+              } catch {
+              }
+              document.documentElement.setAttribute("data-theme", effectiveTheme);
+              if (document.body) {
+                document.body.classList.remove("theme-dark", "theme-light");
+                document.body.setAttribute("data-theme", effectiveTheme);
+              }
             }
-          } catch {
           }
         };
         const resolveInitialMode = () => {
