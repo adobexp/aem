@@ -1,0 +1,83 @@
+<!--/*
+    Lead Carousel Component - AEM Sightly Template
+
+    Full-bleed hero slideshow:
+    - Authored slides (image, title, text, CTA, optional promo stats)
+    - Autoplay with pause/play and progress-fill pagination
+    - Theme (dark/light) is controlled via page template, not this component
+*/-->
+
+<sly data-sly-use.templates="adobexp/components/commons/v1/templates.html"/>
+<sly data-sly-use.carousel="com.adobexp.aem.core.components.models.LeadCarouselModel"/>
+
+<!-- LEAD CAROUSEL COMPONENT HTML MARKUP STARTS HERE -->
+<section class="lead-carousel"
+         data-component="lead-carousel"
+         data-autoplay="${carousel.autoplay ? 'true' : 'false'}"
+         data-interval="${carousel.interval}"
+         data-playing="${carousel.autoplay ? 'true' : 'false'}"
+         tabindex="0"
+         aria-roledescription="carousel"
+         aria-label="${carousel.ariaLabel}"
+         data-sly-test="${carousel.hasSlides}">
+    <div class="lead-carousel__viewport">
+        <sly data-sly-list.slide="${carousel.slides}">
+            <article class="lead-carousel__slide${slideList.first ? ' is-active' : ''}"
+                     data-lead-carousel-slide
+                     aria-hidden="${slideList.first ? 'false' : 'true'}">
+                <div class="lead-carousel__media" data-sly-test="${slide.imagePath}">
+                    <sly data-sly-use.imageUrl="${'adobexp/components/commons/v1/helper/transformurls.js' @ internalUrl=slide.imagePath}">
+                        <img src="${imageUrl}" alt="${slide.imageAlt || slide.title || 'Slide image'}"/>
+                    </sly>
+                </div>
+                <div class="lead-carousel__shade" aria-hidden="true"></div>
+                <aside class="lead-carousel__promo"
+                       aria-label="Highlights"
+                       data-sly-test="${slide.hasPromo}">
+                    <div class="lead-carousel__promo-stat" data-sly-test="${slide.promoLeftValue}">
+                        <span class="lead-carousel__promo-value">${slide.promoLeftValue}</span>
+                        <span class="lead-carousel__promo-label" data-sly-test="${slide.promoLeftLabel}">${slide.promoLeftLabel}</span>
+                    </div>
+                    <span class="lead-carousel__promo-plus"
+                          aria-hidden="true"
+                          data-sly-test="${slide.promoLeftValue && slide.promoRightValue}">+</span>
+                    <div class="lead-carousel__promo-stat" data-sly-test="${slide.promoRightValue}">
+                        <span class="lead-carousel__promo-value">${slide.promoRightValue}</span>
+                        <span class="lead-carousel__promo-label" data-sly-test="${slide.promoRightLabel}">${slide.promoRightLabel}</span>
+                    </div>
+                </aside>
+                <div class="lead-carousel__copy" data-sly-test="${slide.title || slide.text || slide.hasCta}">
+                    <h2 class="lead-carousel__title" data-sly-test="${slide.title}">${slide.title}</h2>
+                    <p class="lead-carousel__text" data-sly-test="${slide.text}">${slide.text}</p>
+                    <sly data-sly-test="${slide.hasCta}">
+                        <a data-sly-use.ctaUrl="${'adobexp/components/commons/v1/helper/checkProp.js' @ propName='link', propValue=slide.ctaLink}"
+                           class="lead-carousel__cta"
+                           href="${ctaUrl.value || '#'}"
+                           target="${slide.ctaExternal ? '_blank' : ''}"
+                           rel="${slide.ctaExternal ? 'noopener noreferrer' : ''}">${slide.ctaText}</a>
+                    </sly>
+                </div>
+            </article>
+        </sly>
+    </div>
+
+    <div class="lead-carousel__controls">
+        <button class="lead-carousel__playpause"
+                type="button"
+                data-lead-carousel-playpause
+                aria-label="${carousel.autoplay ? 'Pause slideshow' : 'Play slideshow'}"
+                aria-pressed="${carousel.autoplay ? 'true' : 'false'}">
+            <svg class="lead-carousel__icon lead-carousel__icon--pause" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <rect x="7" y="6" width="3.5" height="12" rx="1" fill="currentColor"/>
+                <rect x="13.5" y="6" width="3.5" height="12" rx="1" fill="currentColor"/>
+            </svg>
+            <svg class="lead-carousel__icon lead-carousel__icon--play" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M8.5 6.5v11l9-5.5-9-5.5z" fill="currentColor"/>
+            </svg>
+        </button>
+        <div class="lead-carousel__dots" data-lead-carousel-dots role="tablist" aria-label="Choose slide"></div>
+    </div>
+</section>
+<!-- LEAD CAROUSEL COMPONENT HTML MARKUP ENDS HERE -->
+
+<sly data-sly-call="${templates.placeholder @ isEmpty = !carousel.hasSlides, classAppend='lead-carousel'}"></sly>

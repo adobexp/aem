@@ -67,6 +67,12 @@ public @interface SiteThemeGlobalConfig {
     @Property(label = "Standard Site Font Weight", description = "Standard font weight for the site")
     String standardSiteFontWeight() default "400";
 
+    @Property(label = "Site Font Family", description = "Body and copy font family for the site")
+    String siteFontFamily() default "\"Hubot Sans\", \"Framer Display\", \"Instrument Serif\", \"Segoe UI\", Arial, sans-serif";
+
+    @Property(label = "Heading Font Family", description = "Heading font family for the site")
+    String headingFontFamily() default "\"Hubot Sans\", \"Framer Display\", \"Instrument Serif\", \"Segoe UI\", Arial, sans-serif";
+
     // ==================== BLOCKQUOTE VARIABLES ====================
 
     @Property(label = "Blockquote Border Color (Dark)", description = "Blockquote border color in dark theme")

@@ -161,6 +161,16 @@
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/text"
                                                 text="Configure buttons displayed to the left of the theme toggle in the header. Each button links to a page."/>
+                                            <enableLanguageSelector
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                name="./enableLanguageSelector"
+                                                text="Enable Language Selector"
+                                                fieldLabel="Enable Language Selector"
+                                                fieldDescription="When enabled, shows a language dropdown for sibling language roots under the current site branch."
+                                                value="{Boolean}true"
+                                                uncheckedValue="{Boolean}false"
+                                                checked="{Boolean}false"/>
                                             <topNavButtonsContainer
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/foundation/container">

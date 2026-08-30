@@ -605,13 +605,14 @@
 
 body {
   margin: 0;
-  font-family: "Hubot Sans", "Framer Display", "Instrument Serif", "Segoe UI", Arial, sans-serif;
+  font-family: var(--site-font-family, "Hubot Sans", "Framer Display", "Instrument Serif", "Segoe UI", Arial, sans-serif);
   background: var(--site-body-bg, #ffffff);
   color: var(--site-body-text, var(--standard-primary-site-text-color, #111827));
 }
 
 /* Global H1 typography */
 h1 {
+  font-family: var(--site-heading-font-family, "Hubot Sans", "Framer Display", "Instrument Serif", "Segoe UI", Arial, sans-serif);
   font-size: 52px;
   font-style: normal;
   font-weight: 400;
@@ -647,7 +648,7 @@ h1 i b {
   width: 100%;
   padding: 20px;
   color: var(--standard-primary-site-text-color, #111827);
-  font-family: "Hubot Sans", "Framer Display", "Instrument Serif", "Segoe UI", Arial, sans-serif;
+  font-family: var(--site-font-family, "Hubot Sans", "Framer Display", "Instrument Serif", "Segoe UI", Arial, sans-serif);
   font-synthesis: weight style;
 }
 

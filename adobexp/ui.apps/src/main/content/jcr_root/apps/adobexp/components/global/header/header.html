@@ -1,10 +1,11 @@
-<!--/*
+    <!--/*
     Header Component - AEM Sightly Template
     
     This component renders a responsive header with:
     - Logo section with dark/light theme support
-    - Header title and subtitle
-    - Hamburger menu with overlay
+    - Header title and subtitle (overlay variation)
+    - Top-bar primary nav mirrored from sidebar (sidebar variation, when closed)
+    - Hamburger / overlay menu or resizable sidebar
     - Accordion navigation menu
     - Menu options list
     - Social media links
@@ -80,8 +81,14 @@
         </a>
     </sly>
 
-    <!-- Logo Text Header Content -->
-    <div class="header__content" data-sly-test="${header.headerTitle || header.headerSubtitle}">
+    <!-- Top-level sidebar options (shown when sidebar is closed; populated by header.js) -->
+    <nav class="header__topnav"
+         aria-label="Primary"
+         data-sly-test="${header.sidebarMenu}"></nav>
+
+    <!-- Title / subtitle: overlay variation only (sidebar uses topnav instead) -->
+    <div class="header__content"
+         data-sly-test="${header.overlayMenu && (header.headerTitle || header.headerSubtitle)}">
         <p class="header__title" data-sly-test="${header.headerTitle}">${header.headerTitle}</p>
         <p class="header__subtitle" data-sly-test="${header.headerSubtitle}">${header.headerSubtitle}</p>
     </div>
@@ -101,6 +108,33 @@
 
     <!-- Actions group: inline on desktop; kebab dropdown panel on small devices -->
     <div id="header-actions-group" class="header__actions-group">
+        <!-- Language selector (inside kebab on small devices) -->
+        <nav class="header__lang"
+             data-sly-test="${header.enableLanguageSelector && header.languageLinks}"
+             aria-label="Language">
+            <button type="button"
+                    class="header__lang-toggle btn-icon-only"
+                    aria-expanded="false"
+                    aria-haspopup="listbox"
+                    aria-controls="header-lang-menu"
+                    aria-label="Select language">
+                <span class="header__lang-current">${header.currentLanguageCode}</span>
+                <svg class="header__lang-chevron" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+            <ul id="header-lang-menu" class="header__lang-menu" role="listbox" hidden>
+                <sly data-sly-list.lang="${header.languageLinks}">
+                    <li role="option" aria-selected="${lang.current}">
+                        <a class="header__lang-link${lang.current ? ' header__lang-link--current' : ''}"
+                           href="${lang.href @ context='uri'}"
+                           hreflang="${lang.code}"
+                           lang="${lang.code}">${lang.label}</a>
+                    </li>
+                </sly>
+            </ul>
+        </nav>
+
         <!-- Header Action Buttons (placed to the left of the theme toggle) -->
         <sly data-sly-test="${header.hasTopNavButtons}">
             <div class="header__actions">
@@ -360,22 +394,18 @@
             </div>
 
             <nav class="header__sidebar-nav" aria-label="Main navigation">
-                <!-- Leaf Menu Option: independent sidebar links (not wrapped in an accordion) -->
-                <ul class="header__sidebar-list header__sidebar-list--standalone"
-                    data-sly-test="${header.hasLeafSidebarMenuItems}">
-                    <sly data-sly-list.menuItem="${header.sidebarMenuItems}">
-                        <li class="header__sidebar-item" data-sly-test="${menuItem.leaf}">
+                <!-- Preserve authored order: leaf links and container accordions can be mixed. -->
+                <sly data-sly-list.menuItem="${header.sidebarMenuItems}">
+                    <ul class="header__sidebar-list header__sidebar-list--standalone"
+                        data-sly-test="${menuItem.leaf}">
+                        <li class="header__sidebar-item">
                             <a data-sly-use.sidebarMenuLinkFilter="${'adobexp/components/commons/v1/helper/checkProp.js' @ propName='link', propValue=menuItem.menuLink}"
                                href="${sidebarMenuLinkFilter.value}"
                                class="header__sidebar-link">
                                 <span class="header__sidebar-link-text">${menuItem.menuTitle}</span>
                             </a>
                         </li>
-                    </sly>
-                </ul>
-
-                <!-- Menu Container: accordion titled with Menu Title; Sub Menu Items inside -->
-                <sly data-sly-list.menuItem="${header.sidebarMenuItems}">
+                    </ul>
                     <div class="header__sidebar-group${header.sidebarAccordionExpanded ? ' header__sidebar-group--open' : ''}"
                          data-sly-test="${menuItem.container}">
                         <button class="header__sidebar-group-toggle" type="button"
@@ -394,15 +424,28 @@
                                         <span class="header__sidebar-link-text">${subMenuItem.subMenuTitle}</span>
                                     </a>
                                 </li>
-                                <sly data-sly-test="${subMenuItem.container}" data-sly-list.level3Item="${subMenuItem.level3MenuItems}">
-                                    <li class="header__sidebar-item">
-                                        <a data-sly-use.sidebarLevel3LinkFilter="${'adobexp/components/commons/v1/helper/checkProp.js' @ propName='link', propValue=level3Item.level3MenuLink}"
-                                           href="${sidebarLevel3LinkFilter.value}"
-                                           class="header__sidebar-link">
-                                            <span class="header__sidebar-link-text">${level3Item.level3MenuTitle}</span>
-                                        </a>
-                                    </li>
-                                </sly>
+                                <li class="header__sidebar-item" data-sly-test="${subMenuItem.container}">
+                                    <div class="header__sidebar-group${header.sidebarAccordionExpanded ? ' header__sidebar-group--open' : ''}">
+                                        <button class="header__sidebar-group-toggle" type="button"
+                                                aria-expanded="${header.sidebarAccordionExpanded ? 'true' : 'false'}">
+                                            <span>${subMenuItem.subMenuTitle}</span>
+                                            <svg class="header__sidebar-group-chevron" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                                <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                        </button>
+                                        <ul class="header__sidebar-list">
+                                            <sly data-sly-list.level3Item="${subMenuItem.level3MenuItems}">
+                                                <li class="header__sidebar-item">
+                                                    <a data-sly-use.sidebarLevel3LinkFilter="${'adobexp/components/commons/v1/helper/checkProp.js' @ propName='link', propValue=level3Item.level3MenuLink}"
+                                                       href="${sidebarLevel3LinkFilter.value}"
+                                                       class="header__sidebar-link">
+                                                        <span class="header__sidebar-link-text">${level3Item.level3MenuTitle}</span>
+                                                    </a>
+                                                </li>
+                                            </sly>
+                                        </ul>
+                                    </div>
+                                </li>
                             </sly>
                         </ul>
                     </div>

@@ -26,8 +26,13 @@ import org.apache.sling.api.resource.ResourceUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
@@ -36,11 +41,119 @@ import java.util.stream.StreamSupport;
  */
 public final class LocalizationUtils {
 
+    private static final String DAM_ROOT = "/content/dam/";
+    private static final String GLOBAL_SEGMENT = "/global/";
+    private static final String GLOBAL_SUFFIX = "/global";
+    private static final String LANGUAGE_MASTERS_SEGMENT = "/language-masters/";
+
     /**
      * Private constructor to prevent instantiation of utility class.
      */
     private LocalizationUtils() {
         // NOOP
+    }
+
+    /**
+     * Resolves a DAM path under a {@code /global} language root to the sibling language-copy
+     * folder for the current page language (for example {@code /content/dam/vw/global/...}
+     * → {@code /content/dam/vw/de/...}). Falls back to {@code damPath} when the page is English,
+     * the path is not a global DAM path, or the localized resource does not exist.
+     *
+     * @param damPath authored DAM path
+     * @param currentPage current page (used for language)
+     * @param resourceResolver resource resolver
+     * @return localized DAM path when it exists, otherwise the authored path
+     */
+    @Nullable
+    public static String localizeDamLanguageCopyPath(@Nullable final String damPath,
+                                                     @Nullable final Page currentPage,
+                                                     @Nullable final ResourceResolver resourceResolver) {
+        if (damPath == null || damPath.isEmpty() || currentPage == null || resourceResolver == null) {
+            return damPath;
+        }
+        if (!damPath.startsWith(DAM_ROOT)) {
+            return damPath;
+        }
+        for (String lang : languageCopyFolderCandidates(currentPage)) {
+            if (isEnglishDamFolder(lang)) {
+                continue;
+            }
+            String localized = rewriteGlobalDamPath(damPath, lang);
+            if (localized == null || localized.equals(damPath)) {
+                continue;
+            }
+            if (resourceResolver.getResource(localized) != null) {
+                return localized;
+            }
+        }
+        return damPath;
+    }
+
+    /**
+     * Folder names to try when mapping {@code /content/dam/{tenant}/global/...} to a sibling
+     * language copy. Prefers the language-masters node name ({@code fr_ca}) over
+     * {@link Locale#getLanguage()} ({@code fr}), which drops the region.
+     */
+    @NotNull
+    static List<String> languageCopyFolderCandidates(@NotNull final Page currentPage) {
+        Set<String> langs = new LinkedHashSet<>();
+        String pathLang = languageMastersFolderName(currentPage.getPath());
+        addFolderCandidate(langs, pathLang);
+        Locale locale = currentPage.getLanguage(false);
+        if (locale != null) {
+            addFolderCandidate(langs, locale.toLanguageTag().replace('-', '_'));
+            addFolderCandidate(langs, locale.getLanguage());
+        }
+        return new ArrayList<>(langs);
+    }
+
+    private static void addFolderCandidate(@NotNull final Set<String> langs, @Nullable final String raw) {
+        if (raw == null || raw.isEmpty()) {
+            return;
+        }
+        String normalized = raw.toLowerCase(Locale.ROOT);
+        if (!normalized.isEmpty()) {
+            langs.add(normalized);
+        }
+    }
+
+    @Nullable
+    static String languageMastersFolderName(@Nullable final String path) {
+        if (path == null) {
+            return null;
+        }
+        int idx = path.indexOf(LANGUAGE_MASTERS_SEGMENT);
+        if (idx < 0) {
+            return null;
+        }
+        int start = idx + LANGUAGE_MASTERS_SEGMENT.length();
+        int end = path.indexOf('/', start);
+        if (end < 0) {
+            end = path.length();
+        }
+        if (end <= start) {
+            return null;
+        }
+        return path.substring(start, end);
+    }
+
+    static boolean isEnglishDamFolder(@Nullable final String lang) {
+        return lang == null || lang.isEmpty()
+            || "en".equalsIgnoreCase(lang)
+            || "global".equalsIgnoreCase(lang);
+    }
+
+    @Nullable
+    static String rewriteGlobalDamPath(@NotNull final String damPath, @NotNull final String language) {
+        int globalIdx = damPath.indexOf(GLOBAL_SEGMENT);
+        if (globalIdx >= 0) {
+            return damPath.substring(0, globalIdx) + "/" + language + "/"
+                + damPath.substring(globalIdx + GLOBAL_SEGMENT.length());
+        }
+        if (damPath.endsWith(GLOBAL_SUFFIX)) {
+            return damPath.substring(0, damPath.length() - GLOBAL_SUFFIX.length()) + "/" + language;
+        }
+        return damPath;
     }
 
     /**

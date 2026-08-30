@@ -1,0 +1,45 @@
+<!--/*
+    Product Card Grid Component - AEM Sightly Template
+
+    Renders a responsive grid of products from Content Fragments.
+*/-->
+
+<sly data-sly-use.templates="adobexp/components/commons/v1/templates.html"/>
+<sly data-sly-use.grid="com.adobexp.aem.core.components.models.ProductCardGridModel"/>
+
+<section class="product-card-grid"
+         data-component="product-card-grid"
+         aria-label="${properties.ariaLabel || 'Products'}"
+         data-sly-test="${grid.hasContent}">
+    <div class="product-card-grid__inner">
+        <div class="product-card-grid__cards">
+            <sly data-sly-list.item="${grid.items}">
+                <article class="product-card-grid__card">
+                    <a class="product-card-grid__card-link"
+                       data-sly-use.detailUrl="${'adobexp/components/commons/v1/helper/checkProp.js' @ propName='link', propValue=item.detailLink}"
+                       href="${detailUrl.value || '#'}">
+                        <div class="product-card-grid__image-wrap" data-sly-test="${item.primaryImage}">
+                            <sly data-sly-use.primaryUrl="${'adobexp/components/commons/v1/helper/transformurls.js' @ internalUrl=item.primaryImage}">
+                                <img class="product-card-grid__image"
+                                     src="${primaryUrl}"
+                                     alt="${item.displayTitle || item.name}"/>
+                            </sly>
+                        </div>
+                        <div class="product-card-grid__content">
+                            <p class="product-card-grid__meta" data-sly-test="${item.year || item.category}">
+                                <span data-sly-test="${item.year}">${item.year}</span>
+                                <span data-sly-test="${item.year && item.category}"> · </span>
+                                <span data-sly-test="${item.category}">${item.category}</span>
+                            </p>
+                            <h3 class="product-card-grid__title">${item.displayTitle || item.name}</h3>
+                            <p class="product-card-grid__tagline" data-sly-test="${item.tagline}">${item.tagline}</p>
+                            <span class="product-card-grid__cta">${properties.ctaLabel || 'Explore'}</span>
+                        </div>
+                    </a>
+                </article>
+            </sly>
+        </div>
+    </div>
+</section>
+
+<sly data-sly-call="${templates.placeholder @ isEmpty = !grid.hasContent, classAppend='product-card-grid'}"></sly>

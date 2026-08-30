@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0"
+    jcr:primaryType="cq:Component"
+    jcr:title="Product Card Grid"
+    jcr:description="Displays a responsive grid of products from Content Fragments in a DAM folder."
+    componentGroup="Adobe XP Components - Content"/>

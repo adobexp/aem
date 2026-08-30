@@ -56,6 +56,7 @@ import com.adobexp.aem.core.components.config.components.VideoArticleGridThemeCo
 import com.adobexp.aem.core.components.config.components.HeaderOverlayThemeConfig;
 import com.adobexp.aem.core.components.config.components.HeaderThemeConfig;
 import com.adobexp.aem.core.components.config.components.LeadBannerThemeConfig;
+import com.adobexp.aem.core.components.config.components.LeadCarouselThemeConfig;
 import com.adobexp.aem.core.components.config.components.LeadMediaSectionThemeConfig;
 import com.adobexp.aem.core.components.config.components.LoopingCircleGalleryThemeConfig;
 import com.adobexp.aem.core.components.config.components.MarqueeCarouselThemeConfig;
@@ -152,6 +153,8 @@ public class ThemeVersionModel {
                     configBuilder.as(FlowDiagramThemeConfig.class), FlowDiagramThemeConfig.class);
             appendAllConfigValues(configFingerprint,
                     configBuilder.as(ScreenshotShowcaseThemeConfig.class), ScreenshotShowcaseThemeConfig.class);
+            appendAllConfigValues(configFingerprint,
+                    configBuilder.as(LeadCarouselThemeConfig.class), LeadCarouselThemeConfig.class);
 
             // Generate a short hash from the fingerprint
             this.version = generateShortHash(configFingerprint.toString());
@@ -225,6 +228,8 @@ public class ThemeVersionModel {
         appendConfigValue(sb, config, SiteThemeGlobalConfig::lightStandardSecondarySiteTextColor);
         appendConfigValue(sb, config, SiteThemeGlobalConfig::standardSiteFontSize);
         appendConfigValue(sb, config, SiteThemeGlobalConfig::standardSiteFontWeight);
+        appendConfigValue(sb, config, SiteThemeGlobalConfig::siteFontFamily);
+        appendConfigValue(sb, config, SiteThemeGlobalConfig::headingFontFamily);
         appendConfigValue(sb, config, SiteThemeGlobalConfig::darkBlockquoteBorderColor);
         appendConfigValue(sb, config, SiteThemeGlobalConfig::lightBlockquoteBorderColor);
         appendConfigValue(sb, config, SiteThemeGlobalConfig::darkBlockquoteBg);

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0"
+    jcr:primaryType="cq:Component"
+    jcr:title="Lead Carousel"
+    jcr:description="Full-bleed hero slideshow with overlay copy, optional promo stats, autoplay, pause/play, and progress-fill pagination."
+    componentGroup="Adobe XP Components - Content"/>

@@ -63,6 +63,7 @@ import com.adobexp.aem.core.components.config.components.VideoArticleGridThemeCo
 import com.adobexp.aem.core.components.config.components.HeaderOverlayThemeConfig;
 import com.adobexp.aem.core.components.config.components.HeaderThemeConfig;
 import com.adobexp.aem.core.components.config.components.LeadBannerThemeConfig;
+import com.adobexp.aem.core.components.config.components.LeadCarouselThemeConfig;
 import com.adobexp.aem.core.components.config.components.LeadMediaSectionThemeConfig;
 import com.adobexp.aem.core.components.config.components.LoopingCircleGalleryThemeConfig;
 import com.adobexp.aem.core.components.config.components.MarqueeCarouselThemeConfig;
@@ -218,7 +219,8 @@ public class SiteThemeServlet extends SlingSafeMethodsServlet {
                 configBuilder.as(CodeSnippetThemeConfig.class),
                 configBuilder.as(StepsTimelineThemeConfig.class),
                 configBuilder.as(FlowDiagramThemeConfig.class),
-                configBuilder.as(ScreenshotShowcaseThemeConfig.class)
+                configBuilder.as(ScreenshotShowcaseThemeConfig.class),
+                configBuilder.as(LeadCarouselThemeConfig.class)
         );
     }
 
@@ -239,6 +241,8 @@ public class SiteThemeServlet extends SlingSafeMethodsServlet {
         writer.println("  --standard-secondary-site-text-color: " + getOrDefault(configs.globalConfig, c -> c.darkStandardSecondarySiteTextColor(), "#a2a2a2") + ";");
         writer.println("  --standard-site-font-size: " + getOrDefault(configs.globalConfig, c -> c.standardSiteFontSize(), "16px") + ";");
         writer.println("  --standard-site-font-weight: " + getOrDefault(configs.globalConfig, c -> c.standardSiteFontWeight(), "400") + ";");
+        writer.println("  --site-font-family: " + getOrDefault(configs.globalConfig, c -> c.siteFontFamily(), "\"Hubot Sans\", \"Framer Display\", \"Instrument Serif\", \"Segoe UI\", Arial, sans-serif") + ";");
+        writer.println("  --site-heading-font-family: " + getOrDefault(configs.globalConfig, c -> c.headingFontFamily(), "\"Hubot Sans\", \"Framer Display\", \"Instrument Serif\", \"Segoe UI\", Arial, sans-serif") + ";");
         writer.println("  --blockquote-border-color: " + getOrDefault(configs.globalConfig, c -> c.darkBlockquoteBorderColor(), "var(--primary-text-color)") + ";");
         writer.println("  --blockquote-bg: " + getOrDefault(configs.globalConfig, c -> c.darkBlockquoteBg(), "#2f2f2f") + ";");
         writer.println("  --blockquote-quote-color: " + getOrDefault(configs.globalConfig, c -> c.darkBlockquoteQuoteColor(), "var(--primary-text-color)") + ";");
@@ -410,6 +414,8 @@ public class SiteThemeServlet extends SlingSafeMethodsServlet {
         writer.println("  /* Hero */");
         writer.println("  --hero-bg: " + getOrDefault(configs.heroConfig, c -> c.darkHeroBg(), "linear-gradient(135deg, var(--lead-banner-gradient-start, #212020) 0%, var(--lead-banner-gradient-stop-25, #aa7802) 50%, var(--lead-banner-gradient-end, #212020) 100%)") + ";");
         writer.println();
+        writeLeadCarouselTheme(writer, configs.leadCarouselConfig, true);
+        writer.println();
         writer.println("  /* BlobImageSection */");
         writer.println("  --blob-image-section-bg: " + getOrDefault(configs.blobImageSectionConfig, c -> c.darkBlobImageSectionBg(), "linear-gradient(180deg, #0c0c0c 0%, var(--site-body-bg) 100%)") + ";");
         writer.println("  --blob-image-section-card-bg: " + getOrDefault(configs.blobImageSectionConfig, c -> c.darkBlobImageSectionCardBg(), "#2a2a2a") + ";");
@@ -478,6 +484,8 @@ public class SiteThemeServlet extends SlingSafeMethodsServlet {
         writer.println("  --standard-secondary-site-text-color: " + getOrDefault(configs.globalConfig, c -> c.lightStandardSecondarySiteTextColor(), "#4b5563") + ";");
         writer.println("  --standard-site-font-size: " + getOrDefault(configs.globalConfig, c -> c.standardSiteFontSize(), "16px") + ";");
         writer.println("  --standard-site-font-weight: " + getOrDefault(configs.globalConfig, c -> c.standardSiteFontWeight(), "400") + ";");
+        writer.println("  --site-font-family: " + getOrDefault(configs.globalConfig, c -> c.siteFontFamily(), "\"Hubot Sans\", \"Framer Display\", \"Instrument Serif\", \"Segoe UI\", Arial, sans-serif") + ";");
+        writer.println("  --site-heading-font-family: " + getOrDefault(configs.globalConfig, c -> c.headingFontFamily(), "\"Hubot Sans\", \"Framer Display\", \"Instrument Serif\", \"Segoe UI\", Arial, sans-serif") + ";");
         writer.println("  --blockquote-border-color: " + getOrDefault(configs.globalConfig, c -> c.lightBlockquoteBorderColor(), "var(--primary-text-color)") + ";");
         writer.println("  --blockquote-bg: " + getOrDefault(configs.globalConfig, c -> c.lightBlockquoteBg(), "#d0fafc") + ";");
         writer.println("  --blockquote-quote-color: " + getOrDefault(configs.globalConfig, c -> c.lightBlockquoteQuoteColor(), "var(--primary-text-color)") + ";");
@@ -648,6 +656,8 @@ public class SiteThemeServlet extends SlingSafeMethodsServlet {
         writer.println();
         writer.println("  /* Hero */");
         writer.println("  --hero-bg: " + getOrDefault(configs.heroConfig, c -> c.lightHeroBg(), "linear-gradient(135deg, var(--lead-banner-gradient-start, #ffffff) 0%, var(--lead-banner-gradient-stop-25, #aafbff) 50%, var(--lead-banner-gradient-end, #ffffff) 100%)") + ";");
+        writer.println();
+        writeLeadCarouselTheme(writer, configs.leadCarouselConfig, false);
         writer.println();
         writer.println("  /* BlobImageSection */");
         writer.println("  --blob-image-section-bg: " + getOrDefault(configs.blobImageSectionConfig, c -> c.lightBlobImageSectionBg(), "linear-gradient(180deg, var(--site-body-bg) 0%, #aafbff 10%, var(--main-theme-color) 50%, #aafbff 90%, var(--site-body-bg) 100%)") + ";");
@@ -1008,6 +1018,35 @@ public class SiteThemeServlet extends SlingSafeMethodsServlet {
         }
     }
 
+    private void writeLeadCarouselTheme(PrintWriter writer, LeadCarouselThemeConfig config, boolean dark) {
+        writer.println("  /* Lead Carousel */");
+        if (dark) {
+            writer.println("  --lead-carousel-bg: " + getOrDefault(config, c -> c.darkLeadCarouselBg(), "#111111") + ";");
+            writer.println("  --lead-carousel-text: " + getOrDefault(config, c -> c.darkLeadCarouselText(), "#ffffff") + ";");
+            writer.println("  --lead-carousel-text-muted: " + getOrDefault(config, c -> c.darkLeadCarouselTextMuted(), "rgba(255, 255, 255, 0.92)") + ";");
+            writer.println("  --lead-carousel-promo-text: " + getOrDefault(config, c -> c.darkLeadCarouselPromoText(), "#ffffff") + ";");
+            writer.println("  --lead-carousel-cta-bg: " + getOrDefault(config, c -> c.darkLeadCarouselCtaBg(), "#ffffff") + ";");
+            writer.println("  --lead-carousel-cta-text: " + getOrDefault(config, c -> c.darkLeadCarouselCtaText(), "#111111") + ";");
+            writer.println("  --lead-carousel-cta-hover-bg: " + getOrDefault(config, c -> c.darkLeadCarouselCtaHoverBg(), "#e8e8e8") + ";");
+            writer.println("  --lead-carousel-controls: " + getOrDefault(config, c -> c.darkLeadCarouselControls(), "#ffffff") + ";");
+            writer.println("  --lead-carousel-dot: " + getOrDefault(config, c -> c.darkLeadCarouselDot(), "rgba(255, 255, 255, 0.45)") + ";");
+            writer.println("  --lead-carousel-dot-track: " + getOrDefault(config, c -> c.darkLeadCarouselDotTrack(), "rgba(255, 255, 255, 0.28)") + ";");
+            writer.println("  --lead-carousel-dot-fill: " + getOrDefault(config, c -> c.darkLeadCarouselDotFill(), "#ffffff") + ";");
+        } else {
+            writer.println("  --lead-carousel-bg: " + getOrDefault(config, c -> c.lightLeadCarouselBg(), "#111111") + ";");
+            writer.println("  --lead-carousel-text: " + getOrDefault(config, c -> c.lightLeadCarouselText(), "#ffffff") + ";");
+            writer.println("  --lead-carousel-text-muted: " + getOrDefault(config, c -> c.lightLeadCarouselTextMuted(), "rgba(255, 255, 255, 0.92)") + ";");
+            writer.println("  --lead-carousel-promo-text: " + getOrDefault(config, c -> c.lightLeadCarouselPromoText(), "#ffffff") + ";");
+            writer.println("  --lead-carousel-cta-bg: " + getOrDefault(config, c -> c.lightLeadCarouselCtaBg(), "#ffffff") + ";");
+            writer.println("  --lead-carousel-cta-text: " + getOrDefault(config, c -> c.lightLeadCarouselCtaText(), "#111111") + ";");
+            writer.println("  --lead-carousel-cta-hover-bg: " + getOrDefault(config, c -> c.lightLeadCarouselCtaHoverBg(), "#e8e8e8") + ";");
+            writer.println("  --lead-carousel-controls: " + getOrDefault(config, c -> c.lightLeadCarouselControls(), "#ffffff") + ";");
+            writer.println("  --lead-carousel-dot: " + getOrDefault(config, c -> c.lightLeadCarouselDot(), "rgba(255, 255, 255, 0.45)") + ";");
+            writer.println("  --lead-carousel-dot-track: " + getOrDefault(config, c -> c.lightLeadCarouselDotTrack(), "rgba(255, 255, 255, 0.28)") + ";");
+            writer.println("  --lead-carousel-dot-fill: " + getOrDefault(config, c -> c.lightLeadCarouselDotFill(), "#ffffff") + ";");
+        }
+    }
+
     private <T> String getOrDefault(T config, Function<T, String> getter, String defaultValue) {
         if (config == null) {
             return defaultValue;
@@ -1057,6 +1096,7 @@ public class SiteThemeServlet extends SlingSafeMethodsServlet {
         private final StepsTimelineThemeConfig stepsTimelineConfig;
         private final FlowDiagramThemeConfig flowDiagramConfig;
         private final ScreenshotShowcaseThemeConfig screenshotShowcaseConfig;
+        private final LeadCarouselThemeConfig leadCarouselConfig;
 
         private ThemeConfigs(
                 SiteThemeGlobalConfig globalConfig,
@@ -1093,7 +1133,8 @@ public class SiteThemeServlet extends SlingSafeMethodsServlet {
                 CodeSnippetThemeConfig codeSnippetConfig,
                 StepsTimelineThemeConfig stepsTimelineConfig,
                 FlowDiagramThemeConfig flowDiagramConfig,
-                ScreenshotShowcaseThemeConfig screenshotShowcaseConfig
+                ScreenshotShowcaseThemeConfig screenshotShowcaseConfig,
+                LeadCarouselThemeConfig leadCarouselConfig
         ) {
             this.globalConfig = globalConfig;
             this.headerConfig = headerConfig;
@@ -1130,10 +1171,12 @@ public class SiteThemeServlet extends SlingSafeMethodsServlet {
             this.stepsTimelineConfig = stepsTimelineConfig;
             this.flowDiagramConfig = flowDiagramConfig;
             this.screenshotShowcaseConfig = screenshotShowcaseConfig;
+            this.leadCarouselConfig = leadCarouselConfig;
         }
 
         private static ThemeConfigs empty() {
             return new ThemeConfigs(
+                    null,
                     null,
                     null,
                     null,

@@ -198,6 +198,26 @@ public class ExperienceFragmentDataImpl {
         if (!resourceExists(localizedFragmentVariationPath) && resourceExists(xfContentPath)) {
             localizedFragmentVariationPath = xfContentPath;
         }
+
+        if (!resourceExists(localizedFragmentVariationPath) && currentPage != null) {
+            final Resource pageResource = currentPage.adaptTo(Resource.class);
+            final String currentPageRootPath = pageResource != null
+                ? LocalizationUtils.getLocalizationRoot(pageResource, resourceResolver, languageManager, relationshipManager)
+                : null;
+            if (StringUtils.isNotEmpty(currentPageRootPath)) {
+                String localizedXfRoot = StringUtils
+                    .replace(currentPageRootPath, CONTENT_ROOT, ExperienceFragmentsConstants.CONTENT_PATH, 1);
+                String componentId = resource.getValueMap().get("id", StringUtils.EMPTY);
+                String relative = "page-footer".equals(componentId) || StringUtils.contains(componentId, "footer")
+                    ? "/site-footer/master"
+                    : "/site-header/master";
+                String candidate = StringUtils.join(localizedXfRoot, relative, PATH_DELIMITER_CHAR, NN_CONTENT);
+                if (resourceExists(candidate) && isExperienceFragmentVariation(candidate)) {
+                    localizedFragmentVariationPath = candidate;
+                }
+            }
+        }
+
         if (!isExperienceFragmentVariation(localizedFragmentVariationPath)) {
             localizedFragmentVariationPath = null;
         }

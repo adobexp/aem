@@ -2,7 +2,9 @@
 <workspaceFilter version="1.0">
     <filter root="/apps/adobexp/clientlibs"/>
     <filter root="/apps/adobexp/components"/>
+    <filter root="/apps/cq/experience-fragments/components/experiencefragment"/>
     <filter root="/apps/adobexp/i18n"/>
     <filter root="/apps/adobexp/templates"/>
     <filter root="/apps/settings/wcm/designs/adobexp"/>
+    <filter root="/apps/settings/translation"/>
 </workspaceFilter>

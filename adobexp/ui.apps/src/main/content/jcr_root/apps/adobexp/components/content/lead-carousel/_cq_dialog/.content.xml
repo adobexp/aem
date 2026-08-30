@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="nt:unstructured"
+    jcr:title="Lead Carousel"
+    sling:resourceType="cq/gui/components/authoring/dialog">
+    <content
+        granite:class="cmp-lead-carousel__editor"
+        jcr:primaryType="nt:unstructured"
+        sling:resourceType="granite/ui/components/coral/foundation/container">
+        <items jcr:primaryType="nt:unstructured">
+            <tabs
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="granite/ui/components/coral/foundation/tabs"
+                maximized="{Boolean}true">
+                <items jcr:primaryType="nt:unstructured">
+                    <slides
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Slides"
+                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                        margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <slidesDescription
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/text"
+                                                text="Add full-bleed slides. Overlay copy sits bottom-left; optional promo stats sit top-right."/>
+                                            <slides
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                                composite="{Boolean}true"
+                                                fieldLabel="Slides"
+                                                fieldDescription="Each item is one carousel slide">
+                                                <field
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/container"
+                                                    name="./slides">
+                                                    <items jcr:primaryType="nt:unstructured">
+                                                        <wrapper
+                                                            jcr:primaryType="nt:unstructured"
+                                                            jcr:title="Click to expand slide"
+                                                            sling:resourceType="granite/ui/components/foundation/container">
+                                                            <layout
+                                                                jcr:primaryType="nt:unstructured"
+                                                                sling:resourceType="granite/ui/components/foundation/layouts/collapsible"/>
+                                                            <items jcr:primaryType="nt:unstructured">
+                                                                <imagePath
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                                                                    fieldLabel="Image"
+                                                                    fieldDescription="Select a DAM image for the full-bleed slide background"
+                                                                    name="imagePath"
+                                                                    rootPath="/content/dam"/>
+                                                                <imageAlt
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                    fieldLabel="Alt Text"
+                                                                    fieldDescription="Alternative text for the slide image"
+                                                                    name="imageAlt"/>
+                                                                <title
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                    fieldLabel="Title"
+                                                                    fieldDescription="Headline overlayed on the slide"
+                                                                    name="title"/>
+                                                                <text
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+                                                                    fieldLabel="Text"
+                                                                    fieldDescription="Supporting copy below the title"
+                                                                    name="text"
+                                                                    rows="{Long}3"/>
+                                                                <ctaHeading
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    sling:resourceType="granite/ui/components/coral/foundation/heading"
+                                                                    level="{Long}4"
+                                                                    text="CTA"/>
+                                                                <ctaText
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                    fieldLabel="CTA Text"
+                                                                    fieldDescription="Label for the pill button. Leave empty to hide the CTA."
+                                                                    name="ctaText"/>
+                                                                <ctaLink
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                                                                    fieldLabel="CTA Link"
+                                                                    fieldDescription="Internal page path or external URL"
+                                                                    name="ctaLink"
+                                                                    rootPath="/content"/>
+                                                                <ctaExternal
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                                    fieldDescription="Open the CTA in a new browser tab"
+                                                                    name="ctaExternal"
+                                                                    text="Open in new tab"
+                                                                    uncheckedValue="false"
+                                                                    value="true"/>
+                                                                <promoHeading
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    sling:resourceType="granite/ui/components/coral/foundation/heading"
+                                                                    level="{Long}4"
+                                                                    text="Promo stats (optional)"/>
+                                                                <promoLeftValue
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                    fieldLabel="Left Value"
+                                                                    fieldDescription="Large figure shown top-right (e.g. 3)"
+                                                                    name="promoLeftValue"/>
+                                                                <promoLeftLabel
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                    fieldLabel="Left Label"
+                                                                    fieldDescription="Caption under the left value"
+                                                                    name="promoLeftLabel"/>
+                                                                <promoRightValue
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                    fieldLabel="Right Value"
+                                                                    fieldDescription="Second figure shown after the plus sign"
+                                                                    name="promoRightValue"/>
+                                                                <promoRightLabel
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                    fieldLabel="Right Label"
+                                                                    fieldDescription="Caption under the right value"
+                                                                    name="promoRightLabel"/>
+                                                            </items>
+                                                        </wrapper>
+                                                    </items>
+                                                </field>
+                                            </slides>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </slides>
+                    <settings
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Settings"
+                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                        margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <ariaLabel
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Accessible Label"
+                                                fieldDescription="Screen-reader label for the carousel landmark (default: Featured stories)"
+                                                name="./ariaLabel"
+                                                value="Featured stories"/>
+                                            <autoplay
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                fieldDescription="Start the slideshow automatically when the page loads"
+                                                name="./autoplay"
+                                                text="Autoplay"
+                                                checked="{Boolean}true"
+                                                uncheckedValue="false"
+                                                value="true"/>
+                                            <interval
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
+                                                fieldLabel="Slide Interval (ms)"
+                                                fieldDescription="Time each slide is shown before advancing (default: 7000)"
+                                                name="./interval"
+                                                value="{Long}7000"
+                                                min="{Long}2000"
+                                                max="{Long}60000"
+                                                step="{Long}500"/>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </settings>
+                </items>
+            </tabs>
+        </items>
+    </content>
+</jcr:root>

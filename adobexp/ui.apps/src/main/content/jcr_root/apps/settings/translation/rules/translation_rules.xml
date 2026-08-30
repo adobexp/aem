@@ -1,0 +1,328 @@
+<nodelist>
+	<node path="/content">
+		<property name="accessibilityLabel" />
+		<property name="actionText" />
+		<property name="addLabel" />
+		<property name="allowedResponses" />
+		<property name="alt" />
+		<property name="altText" />
+		<property name="ariaLabel" />
+		<property name="articleDescription" />
+		<property name="articleImageAlt" />
+		<property name="articleTitle" />
+		<property name="attachFileLabel" />
+		<property name="authorName" />
+		<property name="authorOrganisation" />
+		<property name="badge" />
+		<property name="badgeTitle" />
+		<property name="benefits" />
+		<property name="buttonLabel" />
+		<property name="buttonText" />
+		<property name="canvasLabel" />
+		<property name="caption" />
+		<property name="centerLabel" />
+		<property name="centerValue" />
+		<property name="chartAlt" />
+		<property name="checkboxText" />
+		<property name="column1Description" />
+		<property name="column1Title" />
+		<property name="column2Description" />
+		<property name="column2Title" />
+		<property name="column3Description" />
+		<property name="column3Title" />
+		<property name="componentSubTitle" />
+		<property name="componentTitle" />
+		<property name="confirmationMessageToggle" />
+		<property name="confirmationMessageUntoggle" />
+		<property name="constraintMessage" />
+		<property name="contentLabel" />
+		<property name="copyrightText" />
+		<property name="cq:featuredimage/alt" />
+		<property name="cq:panelTitle" />
+		<property name="ctaLabel" />
+		<property name="ctaText" />
+		<property name="currencySymbol" />
+		<property name="customAssist" />
+		<property name="customUnit" />
+		<property name="denyText" />
+		<property name="description" />
+		<property name="detailDescription" />
+		<property name="displayMsg" />
+		<property name="emptyText" />
+		<property name="enforceEnumMessage" />
+		<property name="enumNames" />
+		<property name="errorMessage" />
+		<property name="faqAnswer" />
+		<property name="faqQuestion" />
+		<property name="faqTitle" />
+		<property name="feature" />
+		<property name="fieldLabel" />
+		<property name="footerHeading" />
+		<property name="footerLead" />
+		<property name="formatMessage" />
+		<property name="formDescription" />
+		<property name="formTitle" />
+		<property name="frameTitle" />
+		<property name="galleryMessage" />
+		<property name="greetingLabel" />
+		<property name="headerSubtitle" />
+		<property name="headerText" />
+		<property name="headerTitle" />
+		<property name="heading" />
+		<property name="helperText" />
+		<property name="helpMessage" />
+		<property name="iconBadgeAlt" />
+		<property name="image/alt" />
+		<property name="image/jcr:description" />
+		<property name="image/jcr:title" />
+		<property name="imageAlt" />
+		<property name="itemText" />
+		<property name="itemTitle" />
+		<property name="jcr:description" />
+		<property name="jcr:title" />
+		<property name="label" />
+		<property name="labels" />
+		<property name="level3MenuDescription" />
+		<property name="level3MenuTitle" />
+		<property name="listLabel" />
+		<property name="logoDarkAlt" />
+		<property name="logoLightAlt" />
+		<property name="longDescription" />
+		<property name="main" />
+		<property name="mainMenuTitle" />
+		<property name="mainTitle" />
+		<property name="mandatoryMessage" />
+		<property name="maximumMessage" />
+		<property name="maxItemsMessage" />
+		<property name="maxLengthMessage" />
+		<property name="mediaAlt" />
+		<property name="mediaTitle" />
+		<property name="menuDescription" />
+		<property name="menuItemTitle" />
+		<property name="menuTitle" />
+		<property name="messageText" />
+		<property name="minimumMessage" />
+		<property name="minItemsMessage" />
+		<property name="minLengthMessage" />
+		<property name="monthlyBillingNote" />
+		<property name="moreText" />
+		<property name="navTitle" />
+		<property name="nextPage" />
+		<property name="noItems" />
+		<property name="noResults" />
+		<property name="occupations" />
+		<property name="optionDescription" />
+		<property name="optionLabel" />
+		<property name="options" />
+		<property name="optionTitle" />
+		<property name="overlayCardSubtitle" />
+		<property name="overlayCardTitle" />
+		<property name="overlayImageAlt" />
+		<property name="pageIndicator" />
+		<property name="pageTitle" />
+		<property name="panelTitle" />
+		<property name="placeholder" />
+		<property name="placeholderDay" />
+		<property name="placeholderMonth" />
+		<property name="placeholderText" />
+		<property name="placeholderYear" />
+		<property name="plan1CreditsLabel" />
+		<property name="plan1CreditsUnit" />
+		<property name="plan1CreditsValue" />
+		<property name="plan1CtaText" />
+		<property name="plan1MonthlyPrice" />
+		<property name="plan1Name" />
+		<property name="plan1YearlyOriginalPrice" />
+		<property name="plan1YearlyPrice" />
+		<property name="plan2CreditsLabel" />
+		<property name="plan2CreditsUnit" />
+		<property name="plan2CreditsValue" />
+		<property name="plan2CtaText" />
+		<property name="plan2MonthlyPrice" />
+		<property name="plan2Name" />
+		<property name="plan2YearlyOriginalPrice" />
+		<property name="plan2YearlyPrice" />
+		<property name="plan3CreditsLabel" />
+		<property name="plan3CreditsUnit" />
+		<property name="plan3CreditsValue" />
+		<property name="plan3CtaText" />
+		<property name="plan3MonthlyPrice" />
+		<property name="plan3Name" />
+		<property name="plan3YearlyOriginalPrice" />
+		<property name="plan3YearlyPrice" />
+		<property name="plan4CreditsLabel" />
+		<property name="plan4CreditsUnit" />
+		<property name="plan4CreditsValue" />
+		<property name="plan4CtaText" />
+		<property name="plan4MonthlyPrice" />
+		<property name="plan4Name" />
+		<property name="plan4YearlyOriginalPrice" />
+		<property name="plan4YearlyPrice" />
+		<property name="pretitle" />
+		<property name="prevPage" />
+		<property name="primaryAssetAlt" />
+		<property name="primaryCtaText" />
+		<property name="primaryHeadline" />
+		<property name="primaryText" />
+		<property name="primaryVideoAlt" />
+		<property name="privacyPolicyTitle" />
+		<property name="quotePrimaryText" />
+		<property name="quoteTitle" />
+		<property name="requiredMessage" />
+		<property name="resetButtonText" />
+		<property name="resetTitle" />
+		<property name="searchPlaceholder" />
+		<property name="secondaryCtaText" />
+		<property name="secondaryHeadlineText" />
+		<property name="secondaryText" />
+		<property name="serviceDescription" />
+		<property name="serviceHeadline" />
+		<property name="servicesTitle" />
+		<property name="shortDescription" />
+		<property name="sidebarTitle" />
+		<property name="signInLabel" />
+		<property name="signOutLabel" />
+		<property name="socialSectionTitle" />
+		<property name="sortByCreatedDate" />
+		<property name="sortByLabel" />
+		<property name="sortByPublishedDate" />
+		<property name="sortByTitle" />
+		<property name="sortOrderAsc" />
+		<property name="sortOrderDsc" />
+		<property name="sortOrderLabel" />
+		<property name="stackImageAlt" />
+		<property name="stageLabel" />
+		<property name="stepMessage" />
+		<property name="stepNumber" />
+		<property name="stepTitle" />
+		<property name="subjectLabel" />
+		<property name="subMenuDescription" />
+		<property name="subMenuTitle" />
+		<property name="submitButtonText" />
+		<property name="subtitle" />
+		<property name="subTitle" />
+		<property name="successMessage" />
+		<property name="suggest" />
+		<property name="tabLabel" />
+		<property name="tableData" />
+		<property name="text" />
+		<property name="thankYouMessage" />
+		<property name="title" />
+		<property name="titleDay" />
+		<property name="titleDivContent" />
+		<property name="titleMonth" />
+		<property name="titleYear" />
+		<property name="tncCheckBoxContent" />
+		<property name="tncTextContent" />
+		<property name="toggleLabel" />
+		<property name="toggleText" />
+		<property name="tooltip" />
+		<property name="totalLabel" />
+		<property name="transitionLabel" />
+		<property name="typeMessage" />
+		<property name="uniqueItemsMessage" />
+		<property name="unit" />
+		<property name="untoggleLabel" />
+		<property name="urlLabel" />
+		<property name="usefulItemTitle" />
+		<property name="usefulMenuTitle" />
+		<property name="validateExpMessage" />
+		<property name="validatePictureClauseMessage" />
+		<property name="videoDescription" />
+		<property name="videoTitle" />
+		<property name="xAxisTitle" />
+		<property name="yAxisTitle" />
+		<property name="yearlyBillingNote" />
+		<property name="yearlyDiscountText" />
+		<property name="cq:language" updateDestinationLanguage="true"/>
+		<node pathContains="/cq:annotations">
+			<property name="text" translate="false"/>
+		</node>
+		<node resourceType="core/franklin/components/button/v1/button">
+			<property name="name" translate="false"/>
+			<property name="model" translate="false"/>
+		</node>
+		<node resourceType="core/franklin/components/image/v1/image">
+			<property name="name" translate="false"/>
+			<property name="model" translate="false"/>
+		</node>
+		<node resourceType="core/franklin/components/title/v1/title">
+			<property name="name" translate="false"/>
+			<property name="model" translate="false"/>
+		</node>
+		<node resourceType="core/franklin/components/block/v1/block">
+			<property name="name" translate="false"/>
+			<property name="model" translate="false"/>
+			<property name="filter" translate="false"/>
+		</node>
+		<node resourceType="core/franklin/components/block/v1/block/item">
+			<property name="name" translate="false"/>
+			<property name="model" translate="false"/>
+			<property name="filter" translate="false"/>
+		</node>
+	</node>
+	<node path="/content/forms">
+		<property name="text" translate="false"/>
+	</node>
+	<node path="/content/dam">
+		<property name="dc:description" />
+		<property name="dc:rights" />
+		<property name="dc:subject" />
+		<property name="dc:title" />
+		<property name="defaultContent" />
+		<property name="jcr:description" />
+		<property name="jcr:title" />
+		<property name="pdf:Title" />
+		<property name="xmpRights:UsageTerms" />
+		<property name="main" />
+		<property name="modelName" />
+		<property name="displayTitle" />
+		<property name="tagline" />
+		<property name="shortBlurb" />
+		<property name="longDescription" />
+		<property name="transmission" />
+		<property name="fuelOrRange" />
+		<property name="primaryCtaLabel" />
+		<node pathContains="/jcr:content/metadata/predictedTags">
+			<property name="name"/>
+		</node>
+	</node>
+	<node path="/content/campaigns">
+		<property name="subject" />
+		<property name="plaintext" />
+		<property name="preheader" />
+	</node>
+	<assetNode resourceType="cq/experience-fragments/editor/components/experiencefragment" assetReferenceAttribute="fragmentPath"/>
+	<assetNode resourceType="core/wcm/components/experiencefragment/v1/experiencefragment" assetReferenceAttribute="fragmentVariationPath"/>
+	<assetNode resourceType="core/wcm/components/experiencefragment/v2/experiencefragment" assetReferenceAttribute="fragmentVariationPath"/>
+	<assetNode resourceType="dam/cfm/components/contentfragment" assetReferenceAttribute="fileReference"/>
+	<assetNode resourceType="docs/components/download" />
+	<assetNode resourceType="docs/components/image" />
+	<assetNode resourceType="foundation/components/image" assetReferenceAttribute="fileReference"/>
+	<assetNode resourceType="foundation/components/video" assetReferenceAttribute="asset"/>
+	<assetNode resourceType="foundation/components/download" assetReferenceAttribute="fileReference"/>
+	<assetNode resourceType="core/wcm/components/download/v1/download" assetReferenceAttribute="fileReference"/>
+	<assetNode resourceType="wcm/foundation/components/image" assetReferenceAttribute="fileReference"/>
+	<assetNode resourceType="core/wcm/components/contentfragment/v1/contentfragment" assetReferenceAttribute="fragmentPath"/>
+	<assetNode resourceType="core/wcm/components/image/v2/image" assetReferenceAttribute="fileReference"/>
+	<assetNode resourceType="core/wcm/components/image/v3/image" assetReferenceAttribute="fileReference"/>
+	<assetNode resourceType="core/wcm/components/image/v3/image" assetReferenceAttribute="linkURL"/>
+	<assetNode resourceType="core/wcm/components/list/v2/list" assetReferenceAttribute="parentPage"/>
+	<assetNode resourceType="core/wcm/components/button/v1/button" assetReferenceAttribute="link"/>
+	<assetNode resourceType="core/wcm/components/button/v2/button" assetReferenceAttribute="linkURL"/>
+	<assetNode resourceType="core/wcm/components/teaser/v2/teaser" assetReferenceAttribute="linkURL"/>
+	<assetNode resourceType="core/wcm/components/teaser/v2/teaser" assetReferenceAttribute="link" checkInChildNodes="true"/>
+	<assetNode resourceType="core/wcm/components/teaser/v2/teaser" assetReferenceAttribute="fileReference"/>
+	<assetNode resourceType="core/wcm/components/list/v3/list" assetReferenceAttribute="parentPage"/>
+	<assetNode resourceType="core/franklin/components/image/v1/image" assetReferenceAttribute="fileReference"/>
+	<assetNode resourceType="adobexp/components/global/header" assetReferenceAttribute="logoLink"/>
+	<assetNode resourceType="adobexp/components/global/header" assetReferenceAttribute="menuLink" checkInChildNodes="true"/>
+	<assetNode resourceType="adobexp/components/global/header" assetReferenceAttribute="subMenuLink" checkInChildNodes="true"/>
+	<assetNode resourceType="adobexp/components/global/header" assetReferenceAttribute="level3MenuLink" checkInChildNodes="true"/>
+	<assetNode resourceType="adobexp/components/global/header" assetReferenceAttribute="optionLink" checkInChildNodes="true"/>
+	<assetNode resourceType="adobexp/components/global/header" assetReferenceAttribute="articleLink" checkInChildNodes="true"/>
+	<assetNode resourceType="adobexp/components/global/header" assetReferenceAttribute="buttonLink" checkInChildNodes="true"/>
+	<assetNode resourceType="adobexp/components/global/footer" assetReferenceAttribute="privacyPolicyLink"/>
+	<assetNode resourceType="adobexp/components/global/footer" assetReferenceAttribute="menuItemLink" checkInChildNodes="true"/>
+	<assetNode resourceType="adobexp/components/global/footer" assetReferenceAttribute="usefulItemLink" checkInChildNodes="true"/>
+</nodelist>

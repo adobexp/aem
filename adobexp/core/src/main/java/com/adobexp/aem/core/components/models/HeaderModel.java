@@ -240,6 +240,25 @@ public interface HeaderModel {
     boolean hasTopNavButtons();
 
     /**
+     * Whether the language selector dropdown is enabled.
+     * @return {@code true} when the language selector should be shown
+     */
+    boolean isEnableLanguageSelector();
+
+    /**
+     * Sibling language-root links for the current site branch.
+     * Empty when the selector is disabled or language roots cannot be resolved.
+     * @return list of language links
+     */
+    List<LanguageLink> getLanguageLinks();
+
+    /**
+     * Language code of the current page's language root (e.g. {@code EN}), for the selector toggle.
+     * @return current language code, or empty string when unavailable
+     */
+    String getCurrentLanguageCode();
+
+    /**
      * Represents a top navigation button displayed in the header.
      */
     interface TopNavButton {
@@ -260,6 +279,35 @@ public interface HeaderModel {
          * @return true if should open in new tab
          */
         boolean isButtonNewTab();
+    }
+
+    /**
+     * Represents a language-root link in the language selector.
+     */
+    interface LanguageLink {
+        /**
+         * Short language code (e.g. {@code EN}, {@code FR}).
+         * @return language code
+         */
+        String getCode();
+
+        /**
+         * Display label (e.g. language display name).
+         * @return language label
+         */
+        String getLabel();
+
+        /**
+         * Mapped href for the equivalent page in this language root.
+         * @return page href ending with {@code .html}
+         */
+        String getHref();
+
+        /**
+         * Whether this link is the current language root.
+         * @return {@code true} when this is the active language
+         */
+        boolean isCurrent();
     }
 
     /**

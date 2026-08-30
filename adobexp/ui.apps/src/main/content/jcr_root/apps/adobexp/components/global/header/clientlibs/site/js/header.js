@@ -31,9 +31,9 @@
         const menuVariant = menuVariantAttr === MENU_VARIANT_SIDEBAR ? MENU_VARIANT_SIDEBAR : MENU_VARIANT_OVERLAY;
         const sidebarDefaultOpen = (header.getAttribute("data-sidebar-default-open") || "").toLowerCase() === "true";
         const isSmallDevice = () => window.matchMedia(SMALL_DEVICE_MQ).matches;
-        const explicitThemeRoot = header.closest(".theme-light") || header.closest(".theme-dark");
-        const themeRoot = explicitThemeRoot ?? document.documentElement;
-        const usesExplicitThemeRoot = !!explicitThemeRoot;
+        const closestThemed = header.closest(".theme-light, .theme-dark");
+        const usesExplicitThemeRoot = !!(closestThemed && closestThemed !== document.documentElement && closestThemed !== document.body);
+        const themeRoot = usesExplicitThemeRoot ? closestThemed : document.documentElement;
         let currentMode = THEME_DARK;
         const resolveAutoTheme = () => {
           const hour = (/* @__PURE__ */ new Date()).getHours();
@@ -105,6 +105,55 @@
         const themeToggle = document.querySelector(".header__theme-toggle");
         const kebabBtn = document.querySelector(".header__kebab-btn");
         const actionsGroup = document.querySelector(".header__actions-group");
+        const langNav = header.querySelector(".header__lang");
+        const langToggle = header.querySelector(".header__lang-toggle");
+        const langMenu = header.querySelector(".header__lang-menu");
+        const LANG_OPEN_CLASS = "header__lang--open";
+        const LANG_COOKIE = "vw-lang";
+        const VW_LANGS = ["en", "de", "es", "fr"];
+        const isVwLang = (code) => !!code && VW_LANGS.includes(code);
+        const isBrandedVwHost = () => /(^|\.)demo-vw(\.|$)/i.test(location.hostname);
+        const isVwSite = () => isBrandedVwHost() || /\/content\/vw(?:\/|$)/.test(location.pathname) || /\/content\/experience-fragments\/vw(?:\/|$)/.test(location.pathname);
+        const setLangCookie = (code) => {
+          if (!isVwLang(code) || !isVwSite()) return;
+          const secure = location.protocol === "https:" ? "; Secure" : "";
+          document.cookie = `${LANG_COOKIE}=${code}; Path=/; Max-Age=31536000; SameSite=Lax${secure}`;
+        };
+        const langFromPath = () => {
+          const match = location.pathname.match(/\/language-masters\/(en|de|es|fr)(?:\/|\.html|$)/) || location.pathname.match(/^\/(en|de|es|fr)(?:\/|\.html|$)/);
+          return match && isVwLang(match[1]) ? match[1] : null;
+        };
+        const toPrettyLangHref = (href) => {
+          try {
+            const url = new URL(href, location.origin);
+            const match = url.pathname.match(
+              /^\/content\/vw\/language-masters\/(en|de|es|fr)(?:\.html)?(?:\/(.*))?$/
+            );
+            if (!match) return href;
+            const rest = (match[2] || "").replace(/\/$/, "");
+            return rest ? `/${match[1]}/${rest}` : `/${match[1]}`;
+          } catch {
+            return href;
+          }
+        };
+        const persistLangFromPage = () => {
+          if (!isVwSite()) return;
+          const fromPath = langFromPath();
+          if (fromPath) {
+            setLangCookie(fromPath);
+            return;
+          }
+          const current = header.querySelector(".header__lang-link--current");
+          const code = current?.getAttribute("hreflang") || current?.getAttribute("lang");
+          if (code) setLangCookie(code);
+        };
+        persistLangFromPage();
+        if (isBrandedVwHost()) {
+          langMenu?.querySelectorAll(".header__lang-link").forEach((link) => {
+            const href = link.getAttribute("href");
+            if (href) link.setAttribute("href", toPrettyLangHref(href));
+          });
+        }
         const updateOverlayPosition = () => {
           if (!overlay) return;
           const rect = header.getBoundingClientRect();
@@ -213,6 +262,7 @@
           updateThemeToggleButton();
           updateMenuButton();
           updateKebabButton();
+          updateLangToggle();
           updateOverlaySocialButtons();
           updateActionButtons();
           updateLogo();
@@ -273,6 +323,35 @@
           const isDark = effectiveTheme === THEME_DARK;
           kebabBtn.classList.remove("btn-theme-dark", "btn-theme-light");
           kebabBtn.classList.add(isDark ? "btn-theme-dark" : "btn-theme-light");
+        };
+        const isLangOpen = () => !!langNav?.classList.contains(LANG_OPEN_CLASS);
+        let suppressOutsideCloseUntil = 0;
+        const closeLang = () => {
+          if (!langNav || !langToggle || !langMenu) return;
+          langNav.classList.remove(LANG_OPEN_CLASS);
+          langMenu.hidden = true;
+          langToggle.setAttribute("aria-expanded", "false");
+        };
+        const openLang = () => {
+          if (!langNav || !langToggle || !langMenu) return;
+          langNav.classList.add(LANG_OPEN_CLASS);
+          langMenu.hidden = false;
+          langToggle.setAttribute("aria-expanded", "true");
+          suppressOutsideCloseUntil = Date.now() + 400;
+        };
+        const toggleLang = () => {
+          if (isLangOpen()) {
+            closeLang();
+          } else {
+            openLang();
+          }
+        };
+        const updateLangToggle = () => {
+          if (!langToggle) return;
+          const effectiveTheme = getEffectiveTheme(currentMode);
+          const isDark = effectiveTheme === THEME_DARK;
+          langToggle.classList.remove("btn-theme-dark", "btn-theme-light");
+          langToggle.classList.add(isDark ? "btn-theme-dark" : "btn-theme-light");
         };
         const lockBodyScroll = () => {
           document.body.style.overflow = "hidden";
@@ -489,6 +568,97 @@
               toggle.setAttribute("aria-expanded", willOpen ? "true" : "false");
             });
           });
+          const buildHeaderTopnav = () => {
+            const topnav = header.querySelector(".header__topnav");
+            if (!topnav) return;
+            topnav.replaceChildren();
+            const wrapItem = (child) => {
+              const wrap = document.createElement("div");
+              wrap.className = "header__topnav-item";
+              wrap.appendChild(child);
+              return wrap;
+            };
+            const addStandaloneLink = (link) => {
+              const label = link.querySelector(".header__sidebar-link-text")?.textContent?.trim() || link.textContent?.trim() || "";
+              if (!label) return;
+              const item = document.createElement("a");
+              item.className = "header__topnav-link";
+              item.href = link.getAttribute("href") || "#";
+              item.textContent = label;
+              if (link.classList.contains("header__sidebar-link--active") || link.getAttribute("aria-current") === "page") {
+                item.classList.add("header__topnav-link--active");
+                item.setAttribute("aria-current", "page");
+              }
+              topnav.appendChild(wrapItem(item));
+            };
+            const sidebarNav = sidebar.querySelector(".header__sidebar-nav");
+            const navChildren = sidebarNav ? Array.from(sidebarNav.children) : [];
+            let seenGroup = false;
+            navChildren.forEach((child) => {
+              if (child.classList.contains("header__sidebar-list--standalone")) {
+                if (seenGroup) {
+                  return;
+                }
+                child.querySelectorAll(".header__sidebar-link").forEach(addStandaloneLink);
+                return;
+              }
+              if (!child.classList.contains("header__sidebar-group")) {
+                return;
+              }
+              seenGroup = true;
+              const group = child;
+              const toggle = group.querySelector(".header__sidebar-group-toggle");
+              const label = toggle?.querySelector("span")?.textContent?.trim() || toggle?.childNodes[0]?.textContent?.trim() || "";
+              if (!label) return;
+              const childLinks = Array.from(
+                group.querySelectorAll(":scope > .header__sidebar-list .header__sidebar-link")
+              );
+              const wrap = document.createElement("div");
+              wrap.className = "header__topnav-item header__topnav-item--has-dropdown";
+              const trigger = document.createElement("button");
+              trigger.type = "button";
+              trigger.className = "header__topnav-link header__topnav-link--group";
+              trigger.setAttribute("aria-haspopup", childLinks.length > 0 ? "true" : "false");
+              trigger.setAttribute("aria-expanded", "false");
+              trigger.textContent = label;
+              trigger.addEventListener("click", () => {
+                openSidebar();
+                group.classList.add("header__sidebar-group--open");
+                toggle?.setAttribute("aria-expanded", "true");
+              });
+              wrap.appendChild(trigger);
+              if (childLinks.length > 0) {
+                const dropdown = document.createElement("div");
+                dropdown.className = "header__topnav-dropdown";
+                dropdown.setAttribute("role", "menu");
+                childLinks.forEach((link) => {
+                  const childLabel = link.querySelector(".header__sidebar-link-text")?.textContent?.trim() || link.textContent?.trim() || "";
+                  if (!childLabel) return;
+                  const child = document.createElement("a");
+                  child.className = "header__topnav-dropdown-link";
+                  child.href = link.getAttribute("href") || "#";
+                  child.setAttribute("role", "menuitem");
+                  child.textContent = childLabel;
+                  if (link.classList.contains("header__sidebar-link--active") || link.getAttribute("aria-current") === "page") {
+                    child.classList.add("header__topnav-dropdown-link--active");
+                    child.setAttribute("aria-current", "page");
+                  }
+                  dropdown.appendChild(child);
+                });
+                wrap.appendChild(dropdown);
+                const syncExpanded = () => {
+                  const open = wrap.matches(":hover, :focus-within");
+                  trigger.setAttribute("aria-expanded", open ? "true" : "false");
+                };
+                wrap.addEventListener("mouseenter", syncExpanded);
+                wrap.addEventListener("mouseleave", syncExpanded);
+                wrap.addEventListener("focusin", syncExpanded);
+                wrap.addEventListener("focusout", syncExpanded);
+              }
+              topnav.appendChild(wrap);
+            });
+          };
+          buildHeaderTopnav();
           sidebarSearchInput?.addEventListener("input", () => {
             const query = sidebarSearchInput.value.trim().toLowerCase();
             sidebar.querySelectorAll(".header__sidebar-list--standalone .header__sidebar-item").forEach((item) => {
@@ -575,6 +745,7 @@
         updateThemeToggleButton();
         updateMenuButton();
         updateKebabButton();
+        updateLangToggle();
         updateOverlaySocialButtons();
         updateActionButtons();
         updateLogo();
@@ -590,23 +761,45 @@
         themeToggle?.addEventListener("click", toggleTheme);
         kebabBtn?.addEventListener("click", (evt) => {
           evt.stopPropagation();
+          closeLang();
           toggleKebab();
+        });
+        langToggle?.addEventListener("click", (evt) => {
+          evt.preventDefault();
+          evt.stopPropagation();
+          toggleLang();
         });
         actionsGroup?.querySelectorAll(".header__action-btn").forEach((link) => {
           link.addEventListener("click", () => {
             closeKebab();
           });
         });
+        langMenu?.querySelectorAll(".header__lang-link").forEach((link) => {
+          link.addEventListener("click", () => {
+            const code = link.getAttribute("hreflang") || link.getAttribute("lang") || langFromPath();
+            if (code) setLangCookie(code);
+            closeLang();
+          });
+        });
         document.addEventListener("click", (evt) => {
-          if (!isKebabOpen()) return;
           const target = evt.target;
           if (!target) return;
-          if (actionsGroup?.contains(target) || kebabBtn?.contains(target)) return;
+          if (Date.now() < suppressOutsideCloseUntil) return;
+          if (isLangOpen() && !langNav?.contains(target)) {
+            closeLang();
+          }
+          if (!isKebabOpen()) return;
+          if (actionsGroup?.contains(target) || kebabBtn?.contains(target) || langNav?.contains(target)) return;
           closeKebab();
         });
         document.addEventListener("keydown", (evt) => {
-          if (evt.key === "Escape" && isKebabOpen()) {
-            closeKebab();
+          if (evt.key === "Escape") {
+            if (isLangOpen()) {
+              closeLang();
+            }
+            if (isKebabOpen()) {
+              closeKebab();
+            }
           }
         });
         overlay?.addEventListener("click", (evt) => {
@@ -621,6 +814,7 @@
             updateMenuButtonIcon();
             if (!isSmallDevice()) {
               closeKebab();
+              closeLang();
             }
             if (menuVariant === MENU_VARIANT_OVERLAY) {
               scheduleArticleTileCollapsedHeightUpdate();

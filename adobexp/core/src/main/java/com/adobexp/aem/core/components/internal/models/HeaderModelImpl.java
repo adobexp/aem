@@ -18,21 +18,30 @@ package com.adobexp.aem.core.components.internal.models;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 import javax.annotation.PostConstruct;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
+import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.api.resource.ValueMap;
 import org.apache.sling.models.annotations.Default;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
+import org.apache.sling.models.annotations.injectorspecific.OSGiService;
+import org.apache.sling.models.annotations.injectorspecific.ScriptVariable;
 import org.apache.sling.models.annotations.injectorspecific.SlingObject;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 
 import com.adobexp.aem.core.components.models.HeaderModel;
+import com.adobexp.aem.core.components.util.LocalizationUtils;
+import com.day.cq.wcm.api.LanguageManager;
+import com.day.cq.wcm.api.Page;
+import com.day.cq.wcm.api.PageManager;
 
 /**
  * Sling Model implementation for the Header component.
@@ -54,6 +63,8 @@ public class HeaderModelImpl implements HeaderModel {
     private static final String LEVEL3_MENU_ITEMS_NODE = "level3MenuItems";
     private static final String ARTICLE_TEASERS_NODE = "articleTeasers";
     private static final String TOP_NAV_BUTTONS_NODE = "topNavButtons";
+    private static final String PN_IS_LANGUAGE_ROOT = "cq:isLanguageRoot";
+    private static final String PN_LANGUAGE = "jcr:language";
     
     private static final String TYPE_LEAF = "leaf";
     private static final String TYPE_CONTAINER = "container";
@@ -63,6 +74,15 @@ public class HeaderModelImpl implements HeaderModel {
 
     @SlingObject
     private SlingHttpServletRequest request;
+
+    @OSGiService(injectionStrategy = InjectionStrategy.OPTIONAL)
+    private LanguageManager languageManager;
+
+    @ScriptVariable(injectionStrategy = InjectionStrategy.OPTIONAL)
+    private PageManager pageManager;
+
+    @ScriptVariable(injectionStrategy = InjectionStrategy.OPTIONAL)
+    private Page currentPage;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     private String logoDarkImage;
@@ -127,15 +147,23 @@ public class HeaderModelImpl implements HeaderModel {
     @Default(booleanValues = true)
     private boolean sidebarAccordionExpanded;
 
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Default(booleanValues = false)
+    private boolean enableLanguageSelector;
+
     private List<MenuItem> menuItems;
     private List<MenuItem> sidebarMenuItems;
     private List<MenuOption> menuOptions;
     private List<ArticleTeaser> articleTeasers;
     private List<TopNavButton> topNavButtons;
+    private List<LanguageLink> languageLinks;
+    private String currentLanguageCode;
 
     @PostConstruct
     protected void init() {
         Resource resource = getResource();
+        resolveCurrentPage(resource);
+        logoLink = localizeLink(logoLink);
         if (resource != null) {
             menuItems = parseMenuItems(resource, MENU_ITEMS_NODE);
             sidebarMenuItems = parseMenuItems(resource, SIDEBAR_MENU_ITEMS_NODE);
@@ -149,6 +177,8 @@ public class HeaderModelImpl implements HeaderModel {
             articleTeasers = Collections.emptyList();
             topNavButtons = Collections.emptyList();
         }
+        languageLinks = resolveLanguageLinks();
+        currentLanguageCode = resolveCurrentLanguageCode();
     }
 
     private Resource getResource() {
@@ -159,6 +189,206 @@ public class HeaderModelImpl implements HeaderModel {
             return request.getResource();
         }
         return null;
+    }
+
+    private void resolveCurrentPage(Resource resource) {
+        Page sitePage = LocalizationUtils.resolveSitePage(request, resource, pageManager);
+        if (sitePage != null) {
+            currentPage = sitePage;
+        }
+    }
+
+    /**
+     * Remap {@code /language-masters/{lang}/} paths to the current site page language root
+     * when the localized page exists. Phrase copies titles, not path fields.
+     */
+    private String localizeLink(String path) {
+        ResourceResolver resolver = null;
+        if (request != null) {
+            resolver = request.getResourceResolver();
+        } else if (currentResource != null) {
+            resolver = currentResource.getResourceResolver();
+        }
+        return LocalizationUtils.localizeLanguageMastersPath(path, currentPage, resolver);
+    }
+
+    private List<LanguageLink> resolveLanguageLinks() {
+        if (!enableLanguageSelector || currentPage == null || languageManager == null) {
+            return Collections.emptyList();
+        }
+
+        Resource contentResource = currentPage.getContentResource();
+        if (contentResource == null) {
+            return Collections.emptyList();
+        }
+
+        Page currentLanguageRoot = languageManager.getLanguageRoot(contentResource);
+        if (currentLanguageRoot == null) {
+            String rootPath = LocalizationUtils.getLanguageRoot(contentResource, languageManager);
+            if (StringUtils.isNotBlank(rootPath)) {
+                PageManager pm = pageManager != null
+                    ? pageManager
+                    : contentResource.getResourceResolver().adaptTo(PageManager.class);
+                if (pm != null) {
+                    currentLanguageRoot = pm.getPage(rootPath);
+                }
+            }
+        }
+        if (currentLanguageRoot == null) {
+            return Collections.emptyList();
+        }
+
+        Page siteBranch = currentLanguageRoot.getParent();
+        if (siteBranch == null) {
+            return Collections.emptyList();
+        }
+
+        String currentRootPath = currentLanguageRoot.getPath();
+        String currentPagePath = currentPage.getPath();
+        String relativePath = "";
+        if (currentPagePath.startsWith(currentRootPath)) {
+            relativePath = currentPagePath.substring(currentRootPath.length());
+        }
+
+        List<LanguageLink> links = new ArrayList<>();
+        Iterator<Page> children = siteBranch.listChildren();
+        while (children.hasNext()) {
+            Page sibling = children.next();
+            if (sibling == null || !isLanguageRootPage(sibling)) {
+                continue;
+            }
+            String code = resolveLanguageCode(sibling);
+            String label = resolveLanguageLabel(sibling, code);
+            String href = sibling.getPath() + relativePath + ".html";
+            boolean isCurrent = sibling.getPath().equals(currentRootPath);
+            links.add(new LanguageLinkImpl(code, label, href, isCurrent));
+        }
+        return links;
+    }
+
+    private boolean isLanguageRootPage(Page page) {
+        Resource content = page.getContentResource();
+        if (content == null) {
+            return false;
+        }
+        ValueMap props = content.getValueMap();
+        if (props.get(PN_IS_LANGUAGE_ROOT, false)) {
+            return true;
+        }
+        if (languageManager == null) {
+            return false;
+        }
+        Page detectedRoot = languageManager.getLanguageRoot(content);
+        return detectedRoot != null && detectedRoot.getPath().equals(page.getPath());
+    }
+
+    /**
+     * Resolves the locale for a language-root page.
+     * <p>
+     * Translation jobs copy English {@code jcr:language} onto the new root (for example
+     * {@code /content/.../fr_ca} with {@code jcr:language=en}). Prefer the language-root
+     * node name or {@code cq:languageRoot} when those parse as a locale and disagree with
+     * {@code jcr:language}.
+     */
+    private Locale resolveLocale(Page page) {
+        Resource content = page.getContentResource();
+        ValueMap props = content != null ? content.getValueMap() : ValueMap.EMPTY;
+        Locale fromRootHint = parseLocaleTag(props.get("cq:languageRoot", String.class));
+        Locale fromName = parseLocaleTag(page.getName());
+        Locale fromJcr = parseLocaleTag(props.get(PN_LANGUAGE, String.class));
+        Locale inherited = page.getLanguage(false);
+
+        if (isLanguageRootPage(page)) {
+            Locale structural = isUsableLocale(fromRootHint) ? fromRootHint : fromName;
+            if (isUsableLocale(structural) && localesDisagree(structural, fromJcr)) {
+                return structural;
+            }
+        }
+        if (isUsableLocale(fromJcr)) {
+            return fromJcr;
+        }
+        if (isUsableLocale(inherited)) {
+            return inherited;
+        }
+        return isUsableLocale(fromName) ? fromName : inherited;
+    }
+
+    private boolean isUsableLocale(Locale locale) {
+        return locale != null && StringUtils.isNotBlank(locale.getLanguage());
+    }
+
+    private boolean localesDisagree(Locale structural, Locale fromJcr) {
+        if (!isUsableLocale(fromJcr)) {
+            return true;
+        }
+        if (!structural.getLanguage().equalsIgnoreCase(fromJcr.getLanguage())) {
+            return true;
+        }
+        return StringUtils.isNotBlank(structural.getCountry())
+            && StringUtils.isBlank(fromJcr.getCountry());
+    }
+
+    private Locale parseLocaleTag(String raw) {
+        if (StringUtils.isBlank(raw)) {
+            return null;
+        }
+        String[] parts = raw.trim().replace('-', '_').split("_");
+        if (parts.length == 0 || !parts[0].matches("[a-zA-Z]{2,3}")) {
+            return null;
+        }
+        String language = parts[0].toLowerCase(Locale.ROOT);
+        if (parts.length == 1) {
+            return new Locale(language);
+        }
+        return new Locale(language, parts[1].toUpperCase(Locale.ROOT));
+    }
+
+    private String resolveLanguageCode(Page page) {
+        Locale locale = resolveLocale(page);
+        if (!isUsableLocale(locale)) {
+            return StringUtils.lowerCase(page.getName(), Locale.ROOT);
+        }
+        if (StringUtils.isNotBlank(locale.getCountry())) {
+            return locale.getLanguage().toLowerCase(Locale.ROOT)
+                + "-" + locale.getCountry().toLowerCase(Locale.ROOT);
+        }
+        return locale.getLanguage().toLowerCase(Locale.ROOT);
+    }
+
+    private String resolveLanguageLabel(Page page, String fallbackCode) {
+        Locale locale = resolveLocale(page);
+        if (isUsableLocale(locale)) {
+            // English display names so the selector is consistent (French, not Français).
+            // Include the region when present so fr and fr_ca are distinguishable.
+            String display = StringUtils.isNotBlank(locale.getCountry())
+                ? locale.getDisplayName(Locale.ENGLISH)
+                : locale.getDisplayLanguage(Locale.ENGLISH);
+            if (StringUtils.isNotBlank(display)) {
+                return display;
+            }
+        }
+        Resource content = page.getContentResource();
+        if (content != null) {
+            String jcrLanguage = content.getValueMap().get(PN_LANGUAGE, String.class);
+            if (StringUtils.isNotBlank(jcrLanguage)) {
+                return jcrLanguage.toUpperCase(Locale.ROOT);
+            }
+        }
+        return StringUtils.upperCase(StringUtils.defaultString(fallbackCode), Locale.ROOT);
+    }
+
+    private String resolveCurrentLanguageCode() {
+        if (languageLinks != null) {
+            for (LanguageLink link : languageLinks) {
+                if (link != null && link.isCurrent() && StringUtils.isNotBlank(link.getCode())) {
+                    return link.getCode();
+                }
+            }
+        }
+        if (currentPage != null) {
+            return resolveLanguageCode(currentPage);
+        }
+        return "";
     }
 
     /**
@@ -204,7 +434,7 @@ public class HeaderModelImpl implements HeaderModel {
             subMenuItems = parseSubMenuItems(itemResource);
         }
         
-        return new MenuItemImpl(menuItemType, menuTitle, menuDescription, menuLink, subMenuItems);
+        return new MenuItemImpl(menuItemType, menuTitle, menuDescription, localizeLink(menuLink), subMenuItems);
     }
 
     /**
@@ -250,7 +480,7 @@ public class HeaderModelImpl implements HeaderModel {
             level3Items = parseLevel3MenuItems(itemResource);
         }
         
-        return new SubMenuItemImpl(subMenuItemType, subMenuTitle, subMenuDescription, subMenuLink, level3Items);
+        return new SubMenuItemImpl(subMenuItemType, subMenuTitle, subMenuDescription, localizeLink(subMenuLink), level3Items);
     }
 
     /**
@@ -290,7 +520,7 @@ public class HeaderModelImpl implements HeaderModel {
             return null;
         }
         
-        return new Level3MenuItemImpl(level3MenuTitle, level3MenuDescription, level3MenuLink);
+        return new Level3MenuItemImpl(level3MenuTitle, level3MenuDescription, localizeLink(level3MenuLink));
     }
 
     /**
@@ -331,7 +561,7 @@ public class HeaderModelImpl implements HeaderModel {
             return null;
         }
         
-        return new MenuOptionImpl(optionTitle, optionDescription, optionLink, "true".equals(optionNewTab));
+        return new MenuOptionImpl(optionTitle, optionDescription, localizeLink(optionLink), "true".equals(optionNewTab));
     }
 
     /**
@@ -373,7 +603,7 @@ public class HeaderModelImpl implements HeaderModel {
             return null;
         }
         
-        return new ArticleTeaserImpl(articleTitle, articleDescription, articleLink, articleImage, articleImageAlt);
+        return new ArticleTeaserImpl(articleTitle, articleDescription, localizeLink(articleLink), articleImage, articleImageAlt);
     }
 
     /**
@@ -412,7 +642,7 @@ public class HeaderModelImpl implements HeaderModel {
             return null;
         }
 
-        return new TopNavButtonImpl(buttonLink, buttonLabel, "true".equals(buttonNewTab));
+        return new TopNavButtonImpl(localizeLink(buttonLink), buttonLabel, "true".equals(buttonNewTab));
     }
 
     // Getter implementations
@@ -561,6 +791,21 @@ public class HeaderModelImpl implements HeaderModel {
     @Override
     public boolean hasTopNavButtons() {
         return topNavButtons != null && !topNavButtons.isEmpty();
+    }
+
+    @Override
+    public boolean isEnableLanguageSelector() {
+        return enableLanguageSelector;
+    }
+
+    @Override
+    public List<LanguageLink> getLanguageLinks() {
+        return languageLinks != null ? languageLinks : Collections.emptyList();
+    }
+
+    @Override
+    public String getCurrentLanguageCode() {
+        return StringUtils.defaultString(currentLanguageCode);
     }
 
     // Inner classes for menu structures
@@ -816,5 +1061,41 @@ public class HeaderModelImpl implements HeaderModel {
             return buttonNewTab;
         }
     }
-}
 
+    /**
+     * Implementation of LanguageLink interface.
+     */
+    public static class LanguageLinkImpl implements LanguageLink {
+        private final String code;
+        private final String label;
+        private final String href;
+        private final boolean current;
+
+        public LanguageLinkImpl(String code, String label, String href, boolean current) {
+            this.code = code;
+            this.label = label;
+            this.href = href;
+            this.current = current;
+        }
+
+        @Override
+        public String getCode() {
+            return code;
+        }
+
+        @Override
+        public String getLabel() {
+            return label;
+        }
+
+        @Override
+        public String getHref() {
+            return href;
+        }
+
+        @Override
+        public boolean isCurrent() {
+            return current;
+        }
+    }
+}

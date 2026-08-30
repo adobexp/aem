@@ -1,0 +1,81 @@
+<!--/*
+    Product Detail Component - AEM Sightly Template
+
+    Renders product details from a Content Fragment.
+*/-->
+
+<sly data-sly-use.templates="adobexp/components/commons/v1/templates.html"/>
+<sly data-sly-use.model="com.adobexp.aem.core.components.models.ProductDetailModel"/>
+
+<section class="product-detail"
+         data-component="product-detail"
+         aria-label="${model.displayTitle || 'Product details'}"
+         data-sly-test="${model.hasContent}">
+    <div class="product-detail__hero" data-sly-test="${model.heroImage}">
+        <sly data-sly-use.heroUrl="${'adobexp/components/commons/v1/helper/transformurls.js' @ internalUrl=model.heroImage}">
+            <img class="product-detail__hero-image"
+                 src="${heroUrl}"
+                 alt="${model.displayTitle || model.productName}"/>
+        </sly>
+    </div>
+    <div class="product-detail__inner">
+        <header class="product-detail__header">
+            <p class="product-detail__eyebrow" data-sly-test="${model.year || model.category}">
+                <span data-sly-test="${model.year}">${model.year}</span>
+                <span data-sly-test="${model.year && model.category}"> · </span>
+                <span data-sly-test="${model.category}">${model.category}</span>
+            </p>
+            <h1 class="product-detail__title">${model.displayTitle || model.productName}</h1>
+            <p class="product-detail__tagline" data-sly-test="${model.tagline}">${model.tagline}</p>
+            <p class="product-detail__blurb" data-sly-test="${model.shortBlurb}">${model.shortBlurb}</p>
+        </header>
+
+        <div class="product-detail__body">
+            <div class="product-detail__visual" data-sly-test="${model.primaryImage}">
+                <sly data-sly-use.primaryUrl="${'adobexp/components/commons/v1/helper/transformurls.js' @ internalUrl=model.primaryImage}">
+                    <img class="product-detail__primary-image"
+                         src="${primaryUrl}"
+                         alt="${model.displayTitle || model.productName}"/>
+                </sly>
+            </div>
+            <div class="product-detail__content">
+                <div class="product-detail__description" data-sly-test="${model.longDescription}">
+                    ${model.longDescription @ context='html'}
+                </div>
+                <dl class="product-detail__specs">
+                    <div data-sly-test="${model.seatingCapacity}">
+                        <dt>Capacity</dt>
+                        <dd>${model.seatingCapacity}</dd>
+                    </div>
+                    <div data-sly-test="${model.power}">
+                        <dt>Power</dt>
+                        <dd>${model.power}</dd>
+                    </div>
+                    <div data-sly-test="${model.torque}">
+                        <dt>Torque</dt>
+                        <dd>${model.torque}</dd>
+                    </div>
+                    <div data-sly-test="${model.transmission}">
+                        <dt>Transmission</dt>
+                        <dd>${model.transmission}</dd>
+                    </div>
+                    <div data-sly-test="${model.efficiency}">
+                        <dt>Efficiency</dt>
+                        <dd>${model.efficiency}</dd>
+                    </div>
+                    <div data-sly-test="${model.capacity}">
+                        <dt>Volume</dt>
+                        <dd>${model.capacity}</dd>
+                    </div>
+                </dl>
+                <div class="product-detail__cta" data-sly-test="${model.primaryCtaLabel}">
+                    <a data-sly-use.ctaUrl="${'adobexp/components/commons/v1/helper/checkProp.js' @ propName='link', propValue=model.primaryCtaLink}"
+                       class="product-detail__cta-link"
+                       href="${ctaUrl.value || '#'}">${model.primaryCtaLabel}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<sly data-sly-call="${templates.placeholder @ isEmpty = !model.hasContent, classAppend='product-detail'}"></sly>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="nt:unstructured"
+    jcr:title="Product Card Grid"
+    sling:resourceType="cq/gui/components/authoring/dialog">
+    <content
+        jcr:primaryType="nt:unstructured"
+        sling:resourceType="granite/ui/components/coral/foundation/container">
+        <items jcr:primaryType="nt:unstructured">
+            <columns
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                margin="{Boolean}true">
+                <items jcr:primaryType="nt:unstructured">
+                    <column
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="granite/ui/components/coral/foundation/container">
+                        <items jcr:primaryType="nt:unstructured">
+                            <productsFolder
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                                fieldLabel="Products Folder"
+                                fieldDescription="DAM folder containing product Content Fragments."
+                                name="./productsFolder"
+                                rootPath="/content/dam"/>
+                            <categoryFilter
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                fieldLabel="Category Filter"
+                                fieldDescription="Optional. Leave empty to show all categories."
+                                name="./categoryFilter"
+                                emptyText="All categories">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <suv
+                                        jcr:primaryType="nt:unstructured"
+                                        text="SUV"
+                                        value="SUV"/>
+                                    <performance
+                                        jcr:primaryType="nt:unstructured"
+                                        text="Performance"
+                                        value="Performance"/>
+                                    <sedan
+                                        jcr:primaryType="nt:unstructured"
+                                        text="Sedan"
+                                        value="Sedan"/>
+                                    <ev
+                                        jcr:primaryType="nt:unstructured"
+                                        text="EV"
+                                        value="EV"/>
+                                </items>
+                            </categoryFilter>
+                            <detailPageParent
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                                fieldLabel="Detail Page Parent"
+                                fieldDescription="Parent path for product detail pages. Defaults to the current page parent."
+                                name="./detailPageParent"
+                                rootPath="/content"/>
+                            <ctaLabel
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                fieldLabel="Card CTA Label"
+                                fieldDescription="Link label shown on each product card (e.g. Explore)."
+                                name="./ctaLabel"
+                                value="Explore"/>
+                            <ariaLabel
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                fieldLabel="Grid Aria Label"
+                                fieldDescription="Accessible name for the product grid."
+                                name="./ariaLabel"
+                                value="Products"/>
+                        </items>
+                    </column>
+                </items>
+            </columns>
+        </items>
+    </content>
+</jcr:root>

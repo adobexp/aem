@@ -25,13 +25,18 @@ import javax.annotation.PostConstruct;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
+import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.api.resource.ValueMap;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
+import org.apache.sling.models.annotations.injectorspecific.ScriptVariable;
 import org.apache.sling.models.annotations.injectorspecific.SlingObject;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 
 import com.adobexp.aem.core.components.models.FooterModel;
+import com.adobexp.aem.core.components.util.LocalizationUtils;
+import com.day.cq.wcm.api.Page;
+import com.day.cq.wcm.api.PageManager;
 
 /**
  * Sling Model implementation for the Footer component.
@@ -54,6 +59,12 @@ public class FooterModelImpl implements FooterModel {
 
     @SlingObject
     private SlingHttpServletRequest request;
+
+    @ScriptVariable(injectionStrategy = InjectionStrategy.OPTIONAL)
+    private PageManager pageManager;
+
+    @ScriptVariable(injectionStrategy = InjectionStrategy.OPTIONAL)
+    private Page currentPage;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     private String footerHeading;
@@ -85,6 +96,11 @@ public class FooterModelImpl implements FooterModel {
     @PostConstruct
     protected void init() {
         Resource resource = getResource();
+        Page sitePage = LocalizationUtils.resolveSitePage(request, resource, pageManager);
+        if (sitePage != null) {
+            currentPage = sitePage;
+        }
+        privacyPolicyLink = localizeLink(privacyPolicyLink, false);
         if (resource != null) {
             mainMenuItems = parseMainMenuItems(resource);
             usefulMenuItems = parseUsefulMenuItems(resource);
@@ -92,6 +108,19 @@ public class FooterModelImpl implements FooterModel {
             mainMenuItems = Collections.emptyList();
             usefulMenuItems = Collections.emptyList();
         }
+    }
+
+    private String localizeLink(String path, boolean external) {
+        if (external) {
+            return path;
+        }
+        ResourceResolver resolver = null;
+        if (request != null) {
+            resolver = request.getResourceResolver();
+        } else if (currentResource != null) {
+            resolver = currentResource.getResourceResolver();
+        }
+        return LocalizationUtils.localizeLanguageMastersPath(path, currentPage, resolver);
     }
 
     private Resource getResource() {
@@ -141,7 +170,8 @@ public class FooterModelImpl implements FooterModel {
             return null;
         }
         
-        return new MainMenuItemImpl(menuItemTitle, menuItemLink, "true".equals(menuItemExternal));
+        boolean external = "true".equals(menuItemExternal);
+        return new MainMenuItemImpl(menuItemTitle, localizeLink(menuItemLink, external), external);
     }
 
     /**
@@ -181,7 +211,8 @@ public class FooterModelImpl implements FooterModel {
             return null;
         }
         
-        return new UsefulMenuItemImpl(usefulItemTitle, usefulItemLink, "true".equals(usefulItemExternal));
+        boolean external = "true".equals(usefulItemExternal);
+        return new UsefulMenuItemImpl(usefulItemTitle, localizeLink(usefulItemLink, external), external);
     }
 
     // Getter implementations
