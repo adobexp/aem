@@ -36,6 +36,10 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <componentGroupName>AdobeXP AEM</componentGroupName>
+    <!-- Must stay in lock-step with aem-dam-asset-picker (same JCR install path + same versions). -->
+    <io.wcm.caconfig.editor.version>1.16.6</io.wcm.caconfig.editor.version>
+    <io.wcm.caconfig.extensions.version>1.9.6</io.wcm.caconfig.extensions.version>
+    <wcmio.embed.path>/apps/wcm-io-packages/application/install</wcmio.embed.path>
     <uber-jar.version>6.5.22</uber-jar.version>
     <keyname>33C0330C91FCC3C1</keyname>
     <server>central</server>
@@ -739,12 +743,12 @@
       <dependency>
         <groupId>io.wcm</groupId>
         <artifactId>io.wcm.caconfig.editor</artifactId>
-        <version>1.16.6</version>
+        <version>${io.wcm.caconfig.editor.version}</version>
       </dependency>
       <dependency>
         <groupId>io.wcm</groupId>
         <artifactId>io.wcm.caconfig.extensions</artifactId>
-        <version>1.9.6</version>
+        <version>${io.wcm.caconfig.extensions.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>

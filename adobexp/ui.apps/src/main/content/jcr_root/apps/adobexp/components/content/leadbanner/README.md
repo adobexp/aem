@@ -7,7 +7,7 @@ AEM Component for displaying a banner with primary headline, secondary headline 
 This component can be configured through the following tabs:
 
 ### Content
-- **Primary Headline**: Enter the primary headline text (e.g., 'Publicis Production')
+- **Primary Headline**: Enter the primary headline text (e.g., 'Welcome')
 - **Secondary Headline Items**: List of items for the stack (each item has:
   - Stack Image: Select an image from DAM to display in the media stack
   - Image Alt Text: Alternative text for the stack image

@@ -28,6 +28,23 @@
                     </properties>
                     <packageType>container</packageType>
                     <showImportPackageReport>false</showImportPackageReport>
+                    <embeddeds>
+                        <!-- Same path as aem-dam-asset-picker so install order cannot duplicate WCM.io. -->
+                        <embedded>
+                            <groupId>io.wcm</groupId>
+                            <artifactId>io.wcm.caconfig.editor</artifactId>
+                            <target>${wcmio.embed.path}</target>
+                            <filter>true</filter>
+                            <isAllVersionsFilter>true</isAllVersionsFilter>
+                        </embedded>
+                        <embedded>
+                            <groupId>io.wcm</groupId>
+                            <artifactId>io.wcm.caconfig.extensions</artifactId>
+                            <target>${wcmio.embed.path}</target>
+                            <filter>true</filter>
+                            <isAllVersionsFilter>true</isAllVersionsFilter>
+                        </embedded>
+                    </embeddeds>
                     <repositoryStructurePackages>
                         <repositoryStructurePackage>
                             <groupId>com.adobexp</groupId>
@@ -49,6 +66,14 @@
             <artifactId>adobexp-aem-quickstart.ui.apps.structure</artifactId>
             <version>${project.version}</version>
             <type>zip</type>
+        </dependency>
+        <dependency>
+            <groupId>io.wcm</groupId>
+            <artifactId>io.wcm.caconfig.editor</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.wcm</groupId>
+            <artifactId>io.wcm.caconfig.extensions</artifactId>
         </dependency>
     </dependencies>
 </project>

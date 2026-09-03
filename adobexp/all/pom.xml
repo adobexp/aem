@@ -52,12 +52,16 @@
                         <embedded>
                             <groupId>io.wcm</groupId>
                             <artifactId>io.wcm.caconfig.editor</artifactId>
-                            <target>/apps/adobexp-packages/application/install</target>
+                            <target>${wcmio.embed.path}</target>
+                            <filter>true</filter>
+                            <isAllVersionsFilter>true</isAllVersionsFilter>
                         </embedded>
                         <embedded>
                             <groupId>io.wcm</groupId>
                             <artifactId>io.wcm.caconfig.extensions</artifactId>
-                            <target>/apps/adobexp-packages/application/install</target>
+                            <target>${wcmio.embed.path}</target>
+                            <filter>true</filter>
+                            <isAllVersionsFilter>true</isAllVersionsFilter>
                         </embedded>
                     </embeddeds>
                 </configuration>

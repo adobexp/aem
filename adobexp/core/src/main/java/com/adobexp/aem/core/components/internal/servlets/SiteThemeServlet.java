@@ -100,10 +100,7 @@ import com.adobexp.aem.core.components.config.components.SubscriptionPlansThemeC
         resourceTypes = {
                 "adobexp/components/global/pages/page/v1/page",
                 "adobexp/components/global/pages/rootpage/v1/rootpage",
-                "cq/experience-fragments/components/xfpage",
-                // Tenant Admin / DAM Platform pages that host AdobeXP components
-                "dam-platform/components/structure/page",
-                "dam-platform/components/structure/xfpage"
+                "cq/experience-fragments/components/xfpage"
         },
         methods = HttpConstants.METHOD_GET,
         selectors = "theme-variables",

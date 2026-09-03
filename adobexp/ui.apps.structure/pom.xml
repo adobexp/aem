@@ -56,6 +56,11 @@
                             <root>/apps/settings</root>
                         </filter>
 
+                        <!-- Shared with aem-dam-asset-picker: WCM.io CA Config editor + extensions -->
+                        <filter>
+                            <root>/apps/wcm-io-packages</root>
+                        </filter>
+
                         <!-- DAM folder root, will be created via repoinit -->
                         <filter>
                             <root>/content/dam/adobexp</root>

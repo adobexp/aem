@@ -34,7 +34,7 @@
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldLabel="Primary Headline"
-                                                fieldDescription="Enter the primary headline text (e.g., 'Publicis Production')"
+                                                fieldDescription="Enter the primary headline text (e.g., 'Welcome')"
                                                 name="./primaryHeadline"
                                                 required="{Boolean}true"/>
                                             

@@ -28,6 +28,9 @@ import org.apache.sling.scripting.sightly.use.ProviderOutcome;
 import org.apache.sling.scripting.sightly.use.UseProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -39,6 +42,10 @@ import org.osgi.service.component.annotations.Reference;
  * {@code com.adobexp.aem.core.components.models.Page}, which fails.
  *
  * This provider runs before JavaUseProvider and creates Sling Models via {@link ModelFactory#createModel(Object, Class)}.
+ *
+ * Sibling AdobeXP products (asset picker, integrators) also use {@code com.adobexp.*}. Classes that are
+ * not in this bundle must be loaded from the exporting bundle; a ClassNotFoundException must not abort
+ * the UseProvider chain (return empty failure so JavaUseProvider / other providers can try).
  */
 @Component(
         service = UseProvider.class,
@@ -57,6 +64,13 @@ public class SlingModelsUseProvider implements UseProvider {
 
     @Reference
     private ModelFactory modelFactory;
+
+    private BundleContext bundleContext;
+
+    @Activate
+    protected void activate(BundleContext bundleContext) {
+        this.bundleContext = bundleContext;
+    }
 
     @Override
     public ProviderOutcome provide(String identifier, RenderContext renderContext, Bindings arguments) {
@@ -103,12 +117,13 @@ public class SlingModelsUseProvider implements UseProvider {
 
         final Class<?> targetClass;
         try {
-            targetClass = this.getClass().getClassLoader().loadClass(identifier);
+            targetClass = loadUseClass(identifier);
         } catch (ClassNotFoundException e) {
             if (PAGE_MODEL_FQCN.equals(identifier)) {
                 LOG.warn("HTL UseProvider could not load class {}", identifier, e);
             }
-            return ProviderOutcome.failure(e);
+            // Empty failure: let later UseProviders handle classes from sibling bundles.
+            return ProviderOutcome.failure();
         }
 
         try {
@@ -165,6 +180,32 @@ public class SlingModelsUseProvider implements UseProvider {
             }
             return ProviderOutcome.failure(e);
         }
+    }
+
+    /**
+     * Resolve a {@code com.adobexp.*} HTL identifier from this bundle first, then any other
+     * active bundle (so asset-picker models are not loaded through this classloader).
+     */
+    private Class<?> loadUseClass(String identifier) throws ClassNotFoundException {
+        try {
+            return this.getClass().getClassLoader().loadClass(identifier);
+        } catch (ClassNotFoundException ignored) {
+            // sibling products share the com.adobexp prefix
+        }
+        if (bundleContext != null) {
+            Bundle self = bundleContext.getBundle();
+            for (Bundle bundle : bundleContext.getBundles()) {
+                if (bundle.getState() != Bundle.ACTIVE || bundle.equals(self)) {
+                    continue;
+                }
+                try {
+                    return bundle.loadClass(identifier);
+                } catch (ClassNotFoundException | IllegalStateException ignored) {
+                    // try next bundle
+                }
+            }
+        }
+        throw new ClassNotFoundException(identifier);
     }
 }
 
